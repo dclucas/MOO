@@ -7,8 +7,8 @@
 namespace Moo.Mappers
 {
     using System;
-    using Moo.Core;
     using System.Collections.Generic;
+    using Moo.Core;
 
     /// <summary>
     /// Base generic mapper class.
@@ -49,9 +49,9 @@ namespace Moo.Mappers
         /// </summary>
         /// <param name="source">The source object.</param>
         /// <param name="target">The target object.</param>
-        public override void Map(object source, object target)
+        public override object Map(object source, object target)
         {
-            this.Map((TSource)source, (TTarget)target);
+            return this.Map((TSource)source, (TTarget)target);
         }
 
         /// <summary>
@@ -59,7 +59,7 @@ namespace Moo.Mappers
         /// </summary>
         /// <param name="source">The source object.</param>
         /// <param name="target">The target object.</param>
-        public virtual void Map(TSource source, TTarget target)
+        public virtual TTarget Map(TSource source, TTarget target)
         {
             foreach (var mapping in this.TypeMapping.GetMappings())
             {
@@ -76,6 +76,7 @@ namespace Moo.Mappers
                     throw new MappingException(typeof(TSource), typeof(TTarget), mapping.SourceMemberName, mapping.TargetMemberName, exc);
                 }
             }
+            return target;
         }
 
         /// <summary>
@@ -106,16 +107,16 @@ namespace Moo.Mappers
         /// A filled target object.
         /// </returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Microsoft.Design", 
-            "CA1062:Validate arguments of public methods", 
-            MessageId = "1", 
-            Justification="The Guard call does that.")]
+            "Microsoft.Design",
+            "CA1062:Validate arguments of public methods",
+            MessageId = "1",
+            Justification = "The Guard call does that.")]
         public virtual TTarget Map(TSource source, Func<TTarget> createTarget)
         {
             Guard.CheckArgumentNotNull(createTarget, "createTarget");
             TTarget target = createTarget();
             Map(source, target);
-            return target;        
+            return target;
         }
 
         /// <summary>
@@ -152,7 +153,7 @@ namespace Moo.Mappers
             {
                 yield return Map(s, createTarget);
             }
-        }        
+        }
 
         /// <summary>
         /// Gets the default property converter.

@@ -6,9 +6,6 @@
 
 namespace Moo.Mappers
 {
-    using System;
-    using Moo.Core;
-
     /// <summary>
     /// Base, non-generic, mapper class.
     /// </summary>
@@ -19,6 +16,6 @@ namespace Moo.Mappers
         /// </summary>
         /// <param name="source">The source object.</param>
         /// <param name="target">The target object.</param>
-        public abstract void Map(object source, object target);
+        public abstract object Map(object source, object target);
     }
 }

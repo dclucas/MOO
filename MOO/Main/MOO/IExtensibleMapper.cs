@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections.Generic;
+
 namespace Moo
 {
     /// <summary>
@@ -41,7 +42,7 @@ namespace Moo
         /// </summary>
         /// <param name="source">The source object.</param>
         /// <param name="target">The target object.</param>
-        void Map(TSource source, TTarget target);
+        TTarget Map(TSource source, TTarget target);
 
         /// <summary>
         /// Maps the specified source to a target object.
