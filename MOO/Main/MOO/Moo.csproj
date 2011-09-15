@@ -82,6 +82,7 @@
     <Compile Include="Core\TypeMappingInfo.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="IExtensibleMapper.cs" />
+    <Compile Include="IMapper.cs" />
     <Compile Include="Mappers\AttributeMapper.cs" />
     <Compile Include="Mappers\BaseMapper.cs" />
     <Compile Include="Mappers\BaseMapper.Generic.cs" />

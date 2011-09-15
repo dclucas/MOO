@@ -55,7 +55,7 @@ namespace Moo.Mappers
         }
 
         /// <summary>
-        /// Maps sourceProperty the source targetProperty the target object.
+        /// Maps from the source to the target object.
         /// </summary>
         /// <param name="source">The source object.</param>
         /// <param name="target">The target object.</param>
