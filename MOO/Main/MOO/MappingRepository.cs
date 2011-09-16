@@ -12,30 +12,26 @@ namespace Moo
     /// <summary>
     /// Repository for mapper objects.
     /// </summary>
-    public class MappingRepository
+    public class MappingRepository : Moo.IMappingRepository
     {
+        #region Fields (3)
+
         /// <summary>
         /// Support field for the "Default" static repository instance.
         /// </summary>
         private static readonly MappingRepository defaultInstance = new MappingRepository();
-
+        /// <summary>
+        /// Private collection of mappers. Used to avoid a costly re-generation of mappers.
+        /// </summary>
+        private Dictionary<string, object> mappers = new Dictionary<string, object>();
         /// <summary>
         /// The mapping options to be used by all child mappers.
         /// </summary>
         private MappingOptions options;
 
-        /// <summary>
-        /// Private collection of mappers. Used to avoid a costly re-generation of mappers.
-        /// </summary>
-        private Dictionary<string, object> mappers = new Dictionary<string, object>();
+        #endregion Fields
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MappingRepository"/> class.
-        /// </summary>
-        public MappingRepository()
-            : this(new MappingOptions())
-        {
-        }
+        #region Constructors (2)
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MappingRepository"/> class.
@@ -47,6 +43,18 @@ namespace Moo
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="MappingRepository"/> class.
+        /// </summary>
+        public MappingRepository()
+            : this(new MappingOptions())
+        {
+        }
+
+        #endregion Constructors
+
+        #region Properties (1)
+
+        /// <summary>
         /// Gets the default instance for the mapping repository.
         /// </summary>
         public static MappingRepository Default
@@ -54,9 +62,34 @@ namespace Moo
             get { return MappingRepository.defaultInstance; }
         }
 
+        #endregion Properties
+
+        #region Methods (5)
+
+        // Public Methods (3) 
+
+        /// <summary>
+        /// Adds the specified mapper targetType the repository.
+        /// </summary>
+        /// <typeparam name="TSource">The type of the source.</typeparam>
+        /// <typeparam name="TTarget">The type of the target.</typeparam>
+        /// <param name="mapper">The mapper targetType be added.</param>
+        public void AddMapper<TSource, TTarget>(IExtensibleMapper<TSource, TTarget> mapper)
+        {
+            this.mappers[GetKey<TSource, TTarget>()] = mapper;
+        }
+
+        /// <summary>
+        /// Clears this instance, removing all mappers within it.
+        /// </summary>
+        public void Clear()
+        {
+            this.mappers.Clear();
+        }
+
         /// <summary>
         /// Returns a mapper object for the two provided types, by
-        /// either creating a new instance or by getting an existing 
+        /// either creating a new instance or by getting an existing
         /// one sourceMemberName the cache.
         /// </summary>
         /// <typeparam name="TSource">
@@ -105,24 +138,7 @@ namespace Moo
             return res;
         }
 
-        /// <summary>
-        /// Clears this instance, removing all mappers within it.
-        /// </summary>
-        public void Clear()
-        {
-            this.mappers.Clear();
-        }
-
-        /// <summary>
-        /// Adds the specified mapper targetType the repository.
-        /// </summary>
-        /// <typeparam name="TSource">The type of the source.</typeparam>
-        /// <typeparam name="TTarget">The type of the target.</typeparam>
-        /// <param name="mapper">The mapper targetType be added.</param>
-        public void AddMapper<TSource, TTarget>(IExtensibleMapper<TSource, TTarget> mapper)
-        {
-            this.mappers[GetKey<TSource, TTarget>()] = mapper;
-        }
+        // Private Methods (2) 
 
         /// <summary>
         /// Gets the dictionary key for a given source/target mapping combinations.
@@ -153,5 +169,7 @@ namespace Moo
 
             return null;
         }
+
+        #endregion Methods
     }
 }

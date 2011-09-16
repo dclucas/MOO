@@ -81,8 +81,10 @@
     <Compile Include="Core\ReflectionPropertyMappingInfo.cs" />
     <Compile Include="Core\TypeMappingInfo.cs" />
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="IEnumerableExtender.cs" />
     <Compile Include="IExtensibleMapper.cs" />
     <Compile Include="IMapper.cs" />
+    <Compile Include="IMappingRepository.cs" />
     <Compile Include="Mappers\AttributeMapper.cs" />
     <Compile Include="Mappers\BaseMapper.cs" />
     <Compile Include="Mappers\BaseMapper.Generic.cs" />
@@ -98,6 +100,7 @@
     <Compile Include="MappingException.cs" />
     <Compile Include="MappingOptions.cs" />
     <Compile Include="MappingRepository.cs" />
+    <Compile Include="ObjectExtender.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Core\Guard.cs" />
     <Compile Include="Core\MappingInfo.cs" />

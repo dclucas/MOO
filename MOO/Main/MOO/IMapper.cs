@@ -11,14 +11,46 @@ namespace Moo
     public interface IMapper<TSource, TTarget>
     {
         /// <summary>
-        /// Maps sourceType the specified source object targetType the target one.
+        /// Maps from the specified source to the target object.
         /// </summary>
         /// <param name="source">The source object.</param>
         /// <param name="target">The target object.</param>
+        /// <returns>
+        /// A filled target object.
+        /// </returns>
+        object Map(object source, object target);
+
+        /// <summary>
+        /// Maps from the specified source to the target object.
+        /// </summary>
+        /// <param name="source">The source object.</param>
+        /// <returns>
+        /// A filled target object.
+        /// </returns>
+        object Map(object source);
+
+        /// <summary>
+        /// Maps from the specified source to the target object.
+        /// </summary>
+        /// <param name="source">The source object.</param>
+        /// <param name="createTarget">A function to create target objects.</param>
+        /// <returns>
+        /// A filled target object.
+        /// </returns>
+        object Map(object source, Func<object> createTarget);
+
+        /// <summary>
+        /// Maps from the specified source to the target object.
+        /// </summary>
+        /// <param name="source">The source object.</param>
+        /// <param name="target">The target object.</param>
+        /// <returns>
+        /// A filled target object.
+        /// </returns>
         TTarget Map(TSource source, TTarget target);
 
         /// <summary>
-        /// Maps the specified source to a target object.
+        /// Maps from the specified source to the target object.
         /// </summary>
         /// <param name="source">The source.</param>
         /// <returns>A filled target object</returns>
@@ -32,7 +64,7 @@ namespace Moo
         TTarget Map(TSource source);
 
         /// <summary>
-        /// Maps the specified source.
+        /// Maps from the specified source to the target object.
         /// </summary>
         /// <param name="source">The source object.</param>
         /// <param name="createTarget">A function to create target objects.</param>

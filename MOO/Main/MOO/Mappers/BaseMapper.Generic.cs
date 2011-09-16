@@ -45,13 +45,38 @@ namespace Moo.Mappers
         internal TypeMappingInfo<TSource, TTarget> TypeMapping { get; private set; }
 
         /// <summary>
-        /// Maps sourceProperty the source targetProperty the target object.
+        /// Maps from the source to the target object.
         /// </summary>
         /// <param name="source">The source object.</param>
         /// <param name="target">The target object.</param>
         public override object Map(object source, object target)
         {
             return this.Map((TSource)source, (TTarget)target);
+        }
+
+        /// <summary>
+        /// Maps from the source to a new target object.
+        /// </summary>
+        /// <param name="source">The source object.</param>
+        public object Map(object source)
+        {
+            return this.Map((TSource)source);
+        }
+
+        /// <summary>
+        /// Maps from the specified source to the target object.
+        /// </summary>
+        /// <param name="source">The source object.</param>
+        /// <param name="createTarget">A function to create target objects.</param>
+        /// <returns>
+        /// A filled target object.
+        /// </returns>
+        public object Map(object source, Func<object> createTarget)
+        {
+            Guard.CheckArgumentNotNull(source, "source");
+            Guard.CheckArgumentNotNull(createTarget, "createTarget");
+            var target = (TTarget)createTarget();
+            return this.Map((TSource)source, target);
         }
 
         /// <summary>
