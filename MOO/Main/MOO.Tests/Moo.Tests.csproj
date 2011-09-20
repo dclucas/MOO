@@ -85,6 +85,7 @@
     <Compile Include="Mappers\ManualMapperTest.cs" />
     <Compile Include="MappingOptionsTest.cs" />
     <Compile Include="MappingRepositoryTest.cs" />
+    <Compile Include="ObjectMappingExtenderTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReflectionPropertyMappingInfoTest.cs" />
     <Compile Include="TestClasses.cs" />
