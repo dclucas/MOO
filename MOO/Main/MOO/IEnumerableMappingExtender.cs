@@ -9,7 +9,7 @@ namespace Moo
     /// <summary>
     /// Extends IEnumerable objects, providing mapping functionalities.
     /// </summary>
-    public static class IEnumerableExtender
+    public static class IEnumerableMappingExtender
     {
         /// <summary>
         /// Maps all source elements to an enumerable of target elements.

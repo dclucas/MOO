@@ -6,9 +6,7 @@ namespace Moo
     /// <summary>
     /// Base interface for all mappers.
     /// </summary>
-    /// <typeparam name="TSource">The type of the source.</typeparam>
-    /// <typeparam name="TTarget">The type of the target.</typeparam>
-    public interface IMapper<TSource, TTarget>
+    public interface IMapper
     {
         /// <summary>
         /// Maps from the specified source to the target object.
@@ -38,7 +36,15 @@ namespace Moo
         /// A filled target object.
         /// </returns>
         object Map(object source, Func<object> createTarget);
+    }
 
+    /// <summary>
+    /// Base interface for all mappers.
+    /// </summary>
+    /// <typeparam name="TSource">The type of the source.</typeparam>
+    /// <typeparam name="TTarget">The type of the target.</typeparam>
+    public interface IMapper<TSource, TTarget> : IMapper
+    {
         /// <summary>
         /// Maps from the specified source to the target object.
         /// </summary>

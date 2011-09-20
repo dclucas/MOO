@@ -9,7 +9,7 @@ using Moq;
 namespace Moo.Tests
 {
     [TestClass]
-    public class IEnumerableExtenderTest
+    public class IEnumerableMappingExtenderTest
     {
         [TestMethod]
         public void MapAll_ValidInput_CallsMapper()
@@ -27,7 +27,6 @@ namespace Moo.Tests
         public void MapAll_NullMapper_Throws()
         {
             var target = new TestClassC[1];
-            int x;
             target.MapAll<TestClassC, TestClassA>((IMapper<TestClassC, TestClassA>)null);
         }
     }

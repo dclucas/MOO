@@ -71,6 +71,7 @@ namespace Moo.Mappers
         /// <returns>
         /// A filled target object.
         /// </returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "1", Justification = "The call to Guard already does that.")]
         public object Map(object source, Func<object> createTarget)
         {
             Guard.CheckArgumentNotNull(source, "source");
