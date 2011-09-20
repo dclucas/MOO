@@ -35,7 +35,7 @@ namespace Moo
         /// <param name="repo">The mapping repository.</param>
         /// <returns>An enumerable of target elements</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "1", Justification = "The call to Guard does that.")]
-        public static IEnumerable<TTarget> MapAll<TSource, TTarget>(this IEnumerable<TSource> source, MappingRepository repo)
+        public static IEnumerable<TTarget> MapAll<TSource, TTarget>(this IEnumerable<TSource> source, IMappingRepository repo)
         {
             Guard.CheckArgumentNotNull(repo, "repo");
             var mapper = repo.ResolveMapper<TSource, TTarget>();
