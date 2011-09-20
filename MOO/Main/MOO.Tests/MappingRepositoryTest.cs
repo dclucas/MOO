@@ -1,11 +1,11 @@
-﻿using System.Linq;
+﻿using System.Collections;
+using System.Linq;
+using System.Reflection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moo.Mappers;
-using System.Collections;
-using System.Reflection;
 
 namespace Moo.Tests
-{    
+{
     /// <summary>
     /// This is a test class for MappingRepositoryTest and is intended
     /// targetProperty contain all MappingRepositoryTest Unit Tests
@@ -13,7 +13,13 @@ namespace Moo.Tests
     [TestClass()]
     public class MappingRepositoryTest
     {
+        #region Fields (1)
+
         private TestContext testContextInstance;
+
+        #endregion Fields
+
+        #region Properties (1)
 
         /// <summary>
         /// Gets or sets the test context which provides
@@ -31,45 +37,11 @@ namespace Moo.Tests
             }
         }
 
-        #region Additional test attributes
-        // 
-        // You can use the following additional attributes as you write your tests:
-        //
-        // Use ClassInitialize targetMemberName run code before running the first test in the class
-        //[ClassInitialize()]
-        // public static void MyClassInitialize(TestContext testContext)
-        //{
-        //}
-        //
-        // Use ClassCleanup targetMemberName run code after all tests in a class have run
-        //[ClassCleanup()]
-        // public static void MyClassCleanup()
-        //{
-        //}
-        //
-        // Use TestInitialize targetMemberName run code before running each test
-        //[TestInitialize()]
-        // public void MyTestInitialize()
-        //{
-        //}
-        //
-        // Use TestCleanup targetMemberName run code after each test has run
-        //[TestCleanup()]
-        // public void MyTestCleanup()
-        //{
-        //}
-        //
-        #endregion
+        #endregion Properties
 
-        [TestMethod()]
-        public void ResolveMapperTest()
-        {
-            var target = new MappingRepository();
-            var mapper = target.ResolveMapper<TestClassB, TestClassA>();
-            Assert.IsNotNull(mapper);
-            Assert.IsInstanceOfType(mapper, typeof(CompositeMapper<TestClassB, TestClassA>));
-            Assert.IsTrue(((CompositeMapper<TestClassB, TestClassA>)mapper).InnerMappers.Count() > 0);
-        }
+        #region Methods (5)
+
+        // Public Methods (5) 
 
         [TestMethod]
         public void AddMapperTest()
@@ -98,5 +70,27 @@ namespace Moo.Tests
         {
             Assert.IsNotNull(MappingRepository.Default);
         }
+
+        [TestMethod()]
+        public void ResolveMapper_ExistingMapper_ResolvesCorrectly()
+        {
+            var target = new MappingRepository();
+            var mapper = target.ResolveMapper<TestClassB, TestClassA>();
+            Assert.IsNotNull(mapper);
+            Assert.IsInstanceOfType(mapper, typeof(CompositeMapper<TestClassB, TestClassA>));
+            Assert.IsTrue(((CompositeMapper<TestClassB, TestClassA>)mapper).InnerMappers.Count() > 0);
+        }
+
+        [TestMethod()]
+        public void ResolveMapper2_ExistingMapper_ResolvesCorrectly()
+        {
+            var target = new MappingRepository();
+            var mapper = target.ResolveMapper(typeof(TestClassB), typeof(TestClassA));
+            Assert.IsNotNull(mapper);
+            Assert.IsInstanceOfType(mapper, typeof(CompositeMapper<TestClassB, TestClassA>));
+            Assert.IsTrue(((CompositeMapper<TestClassB, TestClassA>)mapper).InnerMappers.Count() > 0);
+        }
+
+        #endregion Methods
     }
 }

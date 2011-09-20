@@ -1,9 +1,9 @@
-﻿using Moo.Core;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
+﻿using System;
 using System.Reflection;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moo.Core;
 
-namespace Moo.Tests
+namespace Moo.Tests.Core
 {
     /// <summary>
     /// This is a test class for ReflectionPropertyMappingInfoTest and is intended
@@ -12,7 +12,13 @@ namespace Moo.Tests
     [TestClass()]
     public class ReflectionPropertyMappingInfoTest
     {
+        #region Fields (1)
+
         private TestContext testContextInstance;
+
+        #endregion Fields
+
+        #region Properties (1)
 
         /// <summary>
         /// Gets or sets the test context which provides
@@ -29,6 +35,12 @@ namespace Moo.Tests
                 testContextInstance = value;
             }
         }
+
+        #endregion Properties
+
+        #region Methods (1)
+
+        // Public Methods (1) 
 
         [TestMethod()]
         public void MapTest()
@@ -56,14 +68,30 @@ namespace Moo.Tests
             Assert.IsTrue(executed);
         }
 
+        #endregion Methods
+
+        #region Nested Classes (1)
+
         private class ConverterMock : PropertyConverter
         {
-            public Action<object, PropertyInfo, object, PropertyInfo, bool>  ConvertAction { get; set; }
+            #region Properties (1)
+
+            public Action<object, PropertyInfo, object, PropertyInfo, bool> ConvertAction { get; set; }
+
+            #endregion Properties
+
+            #region Methods (1)
+
+            // Public Methods (1) 
 
             public override void Convert(object source, PropertyInfo fromProperty, object target, PropertyInfo toProperty, bool strict)
             {
                 ConvertAction(source, fromProperty, target, toProperty, strict);
             }
+
+            #endregion Methods
         }
+
+        #endregion Nested Classes
     }
 }

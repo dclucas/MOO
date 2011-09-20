@@ -1,11 +1,11 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moo.Mappers;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moo.Mappers;
 
 namespace Moo.Tests.Mappers
-{   
+{
     /// <summary>
     /// This is a test class for ConventionMapperTest and is intended
     /// targetProperty contain all ConventionMapperTest Unit Tests
@@ -32,7 +32,8 @@ namespace Moo.Tests.Mappers
         }
 
         #region Additional test attributes
-        // 
+
+        //
         // You can use the following additional attributes as you write your tests:
         //
         // Use ClassInitialize targetMemberName run code before running the first test in the class
@@ -59,7 +60,8 @@ namespace Moo.Tests.Mappers
         //{
         //}
         //
-        #endregion
+
+        #endregion Additional test attributes
 
         [TestMethod]
         public void MapTest()
@@ -140,18 +142,37 @@ namespace Moo.Tests.Mappers
             var target = new ConventionMapper<TestClassA, TestClassB>();
             var source = GenerateList(50).ToList();
             var defaultDate = new DateTime(1789, 7, 14);
-            var result = target.MapMultiple(source, () => new TestClassB() { Code = defaultDate } ).ToList();
+            var result = target.MapMultiple(source, () => new TestClassB() { Code = defaultDate }).ToList();
             CheckLists(source, result);
             Assert.IsTrue(result.All(r => r.Code == defaultDate));
         }
 
         [TestMethod]
-        public void MapNonGenericTest()
+        public void Map_NonGeneric_MappingWorks()
         {
             var target = new ConventionMapper<TestClassA, TestClassB>();
             var source = GenerateSource();
             var result = new TestClassB();
             target.Map((object)source, (object)result);
+            CheckMapping(source, result);
+        }
+
+        [TestMethod]
+        public void Map_WithFactory_MappingWorks()
+        {
+            var target = new ConventionMapper<TestClassA, TestClassB>();
+            var source = GenerateSource();
+            var result = new TestClassB();
+            target.Map((object)source, () => result);
+            CheckMapping(source, result);
+        }
+
+        [TestMethod]
+        public void Map_NOTarget_MappingWorks()
+        {
+            var target = new ConventionMapper<TestClassA, TestClassB>();
+            var source = GenerateSource();
+            var result = (TestClassB)target.Map((object)source);
             CheckMapping(source, result);
         }
 
@@ -167,7 +188,7 @@ namespace Moo.Tests.Mappers
             };
 
             var result = target.Map(mapSource);
-            
+
             Assert.IsNull(result.InnerClassName);
             Assert.AreEqual(mapSource.Name, result.Name);
         }

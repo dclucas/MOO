@@ -21,6 +21,8 @@ namespace Moo.Mappers
     /// </remarks>
     public abstract class BaseMapper<TSource, TTarget> : BaseMapper
     {
+        #region Constructors (1)
+
         /// <summary>
         /// Initializes a new instance of the <see cref="BaseMapper&lt;TSource, TTarget&gt;"/> class.
         /// </summary>
@@ -29,10 +31,20 @@ namespace Moo.Mappers
             this.TypeMapping = new TypeMappingInfo<TSource, TTarget>();
         }
 
+        #endregion Constructors
+
+        #region Properties (1)
+
         /// <summary>
-        /// Occurs before one property is mapped targetMemberName another.
+        /// Gets the type mapping information.
         /// </summary>
-        public event EventHandler<MappingCancellationEventArgs<TSource, TTarget>> PropertyMapping;
+        internal TypeMappingInfo<TSource, TTarget> TypeMapping { get; private set; }
+
+        #endregion Properties
+
+        #region Delegates and Events (2)
+
+        // Events (2) 
 
         /// <summary>
         /// Occurs after one property is mapped targetMemberName another.
@@ -40,9 +52,43 @@ namespace Moo.Mappers
         public event EventHandler<MappingEventArgs<TSource, TTarget>> PropertyMapped;
 
         /// <summary>
-        /// Gets the type mapping information.
+        /// Occurs before one property is mapped targetMemberName another.
         /// </summary>
-        internal TypeMappingInfo<TSource, TTarget> TypeMapping { get; private set; }
+        public event EventHandler<MappingCancellationEventArgs<TSource, TTarget>> PropertyMapping;
+
+        #endregion Delegates and Events
+
+        #region Methods (14)
+
+        // Public Methods (8) 
+
+        /// <summary>
+        /// Maps from the source to a new target object.
+        /// </summary>
+        /// <param name="source">The source object.</param>
+        public object Map(object source)
+        {
+            return this.Map((TSource)source);
+        }
+
+        /// <summary>
+        /// Maps the specified source to a target object.
+        /// </summary>
+        /// <param name="source">The source.</param>
+        /// <returns>A filled target object</returns>
+        /// <remarks>
+        /// This method relies on the <see cref="System.Activator.CreateInstance&lt;T&gt;"/>
+        /// method to create target objects. This means that both there are
+        /// more efficient methods for that and that this limits the use of
+        /// this overload to target classes that are passible of contruction
+        /// through this framework method.
+        /// </remarks>
+        public virtual TTarget Map(TSource source)
+        {
+            TTarget target = Activator.CreateInstance<TTarget>();
+            Map(source, target);
+            return target;
+        }
 
         /// <summary>
         /// Maps from the source to the target object.
@@ -52,15 +98,6 @@ namespace Moo.Mappers
         public override object Map(object source, object target)
         {
             return this.Map((TSource)source, (TTarget)target);
-        }
-
-        /// <summary>
-        /// Maps from the source to a new target object.
-        /// </summary>
-        /// <param name="source">The source object.</param>
-        public object Map(object source)
-        {
-            return this.Map((TSource)source);
         }
 
         /// <summary>
@@ -102,25 +139,6 @@ namespace Moo.Mappers
                     throw new MappingException(typeof(TSource), typeof(TTarget), mapping.SourceMemberName, mapping.TargetMemberName, exc);
                 }
             }
-            return target;
-        }
-
-        /// <summary>
-        /// Maps the specified source to a target object.
-        /// </summary>
-        /// <param name="source">The source.</param>
-        /// <returns>A filled target object</returns>
-        /// <remarks>
-        /// This method relies on the <see cref="System.Activator.CreateInstance&lt;T&gt;"/>
-        /// method to create target objects. This means that both there are
-        /// more efficient methods for that and that this limits the use of
-        /// this overload to target classes that are passible of contruction
-        /// through this framework method.
-        /// </remarks>
-        public virtual TTarget Map(TSource source)
-        {
-            TTarget target = Activator.CreateInstance<TTarget>();
-            Map(source, target);
             return target;
         }
 
@@ -181,20 +199,7 @@ namespace Moo.Mappers
             }
         }
 
-        /// <summary>
-        /// Gets the default property converter.
-        /// </summary>
-        /// <returns>
-        /// An instance of the default property converter.
-        /// </returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Microsoft.Design",
-            "CA1024:UsePropertiesWhereAppropriate",
-            Justification = "This is a virtual getter, for chrissake's")]
-        internal virtual PropertyConverter GetPropertyConverter()
-        {
-            return PropertyConverter.Default;
-        }
+        // Protected Methods (3) 
 
         /// <summary>
         /// Adds the specified mapping info targetProperty the internal mappings table.
@@ -218,6 +223,8 @@ namespace Moo.Mappers
         /// </summary>
         /// <param name="typeMapping">The type mapping where discovered mappings will be added.</param>
         protected abstract void GenerateMappings(TypeMappingInfo<TSource, TTarget> typeMapping);
+
+        // Private Methods (2) 
 
         /// <summary>
         /// Called when a property is mapped.
@@ -269,5 +276,24 @@ namespace Moo.Mappers
 
             return true;
         }
+
+        // Internal Methods (1) 
+
+        /// <summary>
+        /// Gets the default property converter.
+        /// </summary>
+        /// <returns>
+        /// An instance of the default property converter.
+        /// </returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Microsoft.Design",
+            "CA1024:UsePropertiesWhereAppropriate",
+            Justification = "This is a virtual getter, for chrissake's")]
+        internal virtual PropertyConverter GetPropertyConverter()
+        {
+            return PropertyConverter.Default;
+        }
+
+        #endregion Methods
     }
 }

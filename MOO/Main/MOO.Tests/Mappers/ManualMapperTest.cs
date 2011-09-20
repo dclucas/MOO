@@ -1,8 +1,8 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moo.Mappers;
 using System.Linq;
 using System.Reflection;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moo.Mappers;
 
 namespace Moo.Tests.Mappers
 {
@@ -13,7 +13,13 @@ namespace Moo.Tests.Mappers
     [TestClass()]
     public class ManualMapperTest
     {
+        #region Fields (1)
+
         private TestContext testContextInstance;
+
+        #endregion Fields
+
+        #region Properties (1)
 
         /// <summary>
         /// Gets or sets the test context which provides
@@ -31,48 +37,31 @@ namespace Moo.Tests.Mappers
             }
         }
 
-        #region Additional test attributes
-        // 
-        // You can use the following additional attributes as you write your tests:
-        //
-        // Use ClassInitialize targetMemberName run code before running the first test in the class
-        //[ClassInitialize()]
-        // public static void MyClassInitialize(TestContext testContext)
-        //{
-        //}
-        //
-        // Use ClassCleanup targetMemberName run code after all tests in a class have run
-        //[ClassCleanup()]
-        // public static void MyClassCleanup()
-        //{
-        //}
-        //
-        // Use TestInitialize targetMemberName run code before running each test
-        //[TestInitialize()]
-        // public void MyTestInitialize()
-        //{
-        //}
-        //
-        // Use TestCleanup targetMemberName run code after each test has run
-        //[TestCleanup()]
-        // public void MyTestCleanup()
-        //{
-        //}
-        //
-        #endregion
+        #endregion Properties
 
-        public class FromTestClass
+        #region Methods (4)
+
+        // Public Methods (4) 
+
+        [TestMethod]
+        public void GenerateMappingsTest()
         {
-            public int Id { get; set; }
-            public string Description { get; set; }
-            public DateTime SampleDate { get; set; }
+            var target = new ManualMapper<FromTestClass, ToTestClass>();
+            MethodInfo methodInfo = target.GetType().GetMethod("GenerateMappings",
+                BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+            methodInfo.Invoke(target, new object[] { target.TypeMapping });
+            Assert.IsFalse(target.TypeMapping.GetMappings().Any());
         }
 
-        public class ToTestClass
+        [ExpectedException(typeof(MappingException))]
+        [TestMethod()]
+        public void ManualMapperMapErrorTest()
         {
-            public int Code { get; set; }
-            public string Name { get; set; }
-            public string SampleDateInStrFormat { get; set; }
+            var target = new ManualMapper<FromTestClass, ToTestClass>();
+            var source = new FromTestClass() { Id = 5, Description = "test" };
+            var targetObj = new ToTestClass();
+            target.AddMappingAction("Id", "Code", (f, t) => { throw new InvalidOperationException(); });
+            target.Map(source, targetObj);
         }
 
         [TestMethod()]
@@ -90,17 +79,6 @@ namespace Moo.Tests.Mappers
             Assert.AreEqual(source.SampleDate.ToShortDateString(), targetObj.SampleDateInStrFormat);
         }
 
-        [ExpectedException(typeof(MappingException))]
-        [TestMethod()]
-        public void ManualMapperMapErrorTest()
-        {
-            var target = new ManualMapper<FromTestClass, ToTestClass>();
-            var source = new FromTestClass() { Id = 5, Description = "test" };
-            var targetObj = new ToTestClass();
-            target.AddMappingAction("Id", "Code", (f, t) => { throw new InvalidOperationException(); });
-            target.Map(source, targetObj);
-        }
-
         [TestMethod]
         public void TestPropertyMappingEvents()
         {
@@ -110,7 +88,7 @@ namespace Moo.Tests.Mappers
             ToTestClass to = new ToTestClass();
             target.AddMappingAction("Id", "Code", (f, t) => t.Code = f.Id);
             target.AddMappingAction("Description", "Name", (f, t) => t.Name = f.Description);
-            
+
             bool raisedId = false;
             bool raisedDescription = false;
             target.PropertyMapping += new EventHandler<MappingCancellationEventArgs<FromTestClass, ToTestClass>>(
@@ -143,14 +121,36 @@ namespace Moo.Tests.Mappers
             Assert.IsNull(to.Name);
         }
 
-        [TestMethod]
-        public void GenerateMappingsTest()
+        #endregion Methods
+
+        #region Nested Classes (2)
+
+        public class FromTestClass
         {
-            var target = new ManualMapper<FromTestClass, ToTestClass>();
-            MethodInfo methodInfo = target.GetType().GetMethod("GenerateMappings",
-                BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly);
-            methodInfo.Invoke(target, new object[] { target.TypeMapping });
-            Assert.IsFalse(target.TypeMapping.GetMappings().Any());
+            #region Properties (3)
+
+            public string Description { get; set; }
+
+            public int Id { get; set; }
+
+            public DateTime SampleDate { get; set; }
+
+            #endregion Properties
         }
+
+        public class ToTestClass
+        {
+            #region Properties (3)
+
+            public int Code { get; set; }
+
+            public string Name { get; set; }
+
+            public string SampleDateInStrFormat { get; set; }
+
+            #endregion Properties
+        }
+
+        #endregion Nested Classes
     }
 }

@@ -1,7 +1,7 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moo.Core;
-using System;
 
 namespace Moo.Tests.Core
 {
@@ -12,9 +12,13 @@ namespace Moo.Tests.Core
     [TestClass()]
     public class PropertyConverterTest
     {
-
+        #region Fields (1)
 
         private TestContext testContextInstance;
+
+        #endregion Fields
+
+        #region Properties (1)
 
         /// <summary>
         /// Gets or sets the test context which provides
@@ -32,42 +36,27 @@ namespace Moo.Tests.Core
             }
         }
 
-        private void TestMatch(string fromProp, string toProp, bool expected)
+        #endregion Properties
+
+        #region Methods (8)
+
+        // Public Methods (7) 
+
+        [TestMethod()]
+        public void ConvertTestComplex()
         {
             PropertyConverter target = new PropertyConverter();
-            PropertyInfo from = typeof(TestClassA).GetProperty(fromProp);
-            PropertyInfo to = typeof(TestClassB).GetProperty(toProp);
-            bool actual;
-            string finalName;
-            actual = target.CanConvert(from, to, out finalName);
-            Assert.AreEqual(expected, actual);
-        }
-
-        /// <summary>
-        /// A test for PropertiesMatch
-        ///</summary>
-        [TestMethod()]
-        public void PropertiesMatchSimpleTest()
-        {
-            TestMatch("Name", "Name", true);
-        }
-
-        [TestMethod]
-        public void PropertiesMatchSimpleNegativeTest()
-        {
-            TestMatch("Code", "Code", false);
-        }
-
-        [TestMethod]
-        public void PropertiesMatchFlattenTest()
-        {
-            TestMatch("InnerClass", "InnerClassName", true);
-        }
-
-        [TestMethod]
-        public void PropertiesMatchFlattenNegativeTest()
-        {
-            TestMatch("InnerClass", "InnerClassCode", false);
+            TestClassA source = new TestClassA();
+            source.InnerClass = new TestClassC();
+            var expected = "test";
+            source.InnerClass.Name = expected;
+            PropertyInfo fromProperty = typeof(TestClassA).GetProperty("InnerClass");
+            TestClassB targetObject = new TestClassB();
+            targetObject.InnerClassName = "wrongString";
+            PropertyInfo toProperty = typeof(TestClassB).GetProperty("InnerClassName");
+            target.Convert(source, fromProperty, targetObject, toProperty);
+            Assert.AreEqual(expected, targetObject.InnerClassName);
+            Assert.AreEqual(expected, source.InnerClass.Name);
         }
 
         /// <summary>
@@ -83,27 +72,37 @@ namespace Moo.Tests.Core
             PropertyInfo fromProperty = typeof(TestClassA).GetProperty("Name");
             TestClassB targetObject = new TestClassB();
             targetObject.Name = "wrongString";
-            PropertyInfo toProperty= typeof(TestClassB).GetProperty("Name");
+            PropertyInfo toProperty = typeof(TestClassB).GetProperty("Name");
             target.Convert(source, fromProperty, targetObject, toProperty);
             Assert.AreEqual(expected, targetObject.Name);
             Assert.AreEqual(expected, source.Name);
         }
 
-        [TestMethod()]
-        public void ConvertTestComplex()
+        [TestMethod]
+        public void PropertiesMatchFlattenNegativeTest()
         {
-            PropertyConverter target = new PropertyConverter();
-            TestClassA source= new TestClassA();
-            source.InnerClass = new TestClassC();
-            var expected = "test";
-            source.InnerClass.Name = expected;
-            PropertyInfo fromProperty = typeof(TestClassA).GetProperty("InnerClass");
-            TestClassB targetObject = new TestClassB();
-            targetObject.InnerClassName = "wrongString";
-            PropertyInfo toProperty= typeof(TestClassB).GetProperty("InnerClassName");
-            target.Convert(source, fromProperty, targetObject, toProperty);
-            Assert.AreEqual(expected, targetObject.InnerClassName);
-            Assert.AreEqual(expected, source.InnerClass.Name);
+            TestMatch("InnerClass", "InnerClassCode", false);
+        }
+
+        [TestMethod]
+        public void PropertiesMatchFlattenTest()
+        {
+            TestMatch("InnerClass", "InnerClassName", true);
+        }
+
+        [TestMethod]
+        public void PropertiesMatchSimpleNegativeTest()
+        {
+            TestMatch("Code", "Code", false);
+        }
+
+        /// <summary>
+        /// A test for PropertiesMatch
+        ///</summary>
+        [TestMethod()]
+        public void PropertiesMatchSimpleTest()
+        {
+            TestMatch("Name", "Name", true);
         }
 
         [TestMethod]
@@ -123,5 +122,20 @@ namespace Moo.Tests.Core
                 resultProperty,
                 false);
         }
+
+        // Private Methods (1) 
+
+        private void TestMatch(string fromProp, string toProp, bool expected)
+        {
+            PropertyConverter target = new PropertyConverter();
+            PropertyInfo from = typeof(TestClassA).GetProperty(fromProp);
+            PropertyInfo to = typeof(TestClassB).GetProperty(toProp);
+            bool actual;
+            string finalName;
+            actual = target.CanConvert(from, to, out finalName);
+            Assert.AreEqual(expected, actual);
+        }
+
+        #endregion Methods
     }
 }
