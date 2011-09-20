@@ -65,9 +65,9 @@ namespace Moo
 
         #endregion Properties
 
-        #region Methods (5)
+        #region Methods (8)
 
-        // Public Methods (3) 
+        // Public Methods (4) 
 
         /// <summary>
         /// Adds the specified mapper targetType the repository.
@@ -153,40 +153,19 @@ namespace Moo
             Justification = "No can do - the generic parameter is only used on the method return.")]
         public IMapper ResolveMapper(Type sourceType, Type targetType)
         {
-            throw new NotImplementedException();
-
-            //IExtensibleMapper<TSource, TTarget> res = TryGetMapper<TSource, TTarget>();
-            //if (res == null)
-            //{
-            //    lock (this.options)
-            //    {
-            //        List<BaseMapper<TSource, TTarget>> innerMappers = new List<BaseMapper<TSource, TTarget>>();
-
-            //        var mapperTypes = this.options.MapperOrder;
-
-            //        foreach (var t in mapperTypes)
-            //        {
-            //            Type targetType = t;
-            //            if (targetType.IsGenericType)
-            //            {
-            //                targetType = targetType.GetGenericTypeDefinition();
-            //                targetType = targetType.MakeGenericType(new Type[] { typeof(TSource), typeof(TTarget) });
-            //            }
-
-            //            BaseMapper<TSource, TTarget> m = (BaseMapper<TSource, TTarget>)Activator.CreateInstance(targetType);
-
-            //            innerMappers.Add(m);
-            //        }
-
-            //        res = new CompositeMapper<TSource, TTarget>(innerMappers.ToArray());
-            //        AddMapper(res);
-            //    }
-            //}
-
-            //return res;
+            var res = TryGetMapper(sourceType, targetType);
+            if (res == null)
+            {
+                //HACK: turn this generic conversion into calls to non-generic methods. This will require
+                //the refactoring of a number of additional classes.
+                var methodInfo = this.GetType().GetMethod("ResolveMapper", new Type[0]);
+                var genMethodInfo = methodInfo.MakeGenericMethod(sourceType, targetType);
+                res = (IMapper)genMethodInfo.Invoke(this, null);
+            }
+            return res;
         }
 
-        // Private Methods (2) 
+        // Private Methods (4) 
 
         /// <summary>
         /// Gets the dictionary key for a given source/target mapping combinations.
@@ -197,6 +176,14 @@ namespace Moo
         private static string GetKey<TSource, TTarget>()
         {
             return GetKey(typeof(TSource), typeof(TTarget));
+        }
+
+        private static string GetKey(Type sourceType, Type targetType)
+        {
+            Guard.CheckArgumentNotNull(sourceType, "sourceType");
+            Guard.CheckArgumentNotNull(targetType, "targetType");
+            // TODO: why not override GetHashCode in TypeMappingInfo and just use a HashSet here?
+            return sourceType.AssemblyQualifiedName + ">" + targetType.AssemblyQualifiedName;
         }
 
         /// <summary>
@@ -220,14 +207,6 @@ namespace Moo
             }
 
             return null;
-        }
-
-        private static string GetKey(Type sourceType, Type targetType)
-        {
-            Guard.CheckArgumentNotNull(sourceType, "sourceType");
-            Guard.CheckArgumentNotNull(targetType, "targetType");
-            // TODO: why not override GetHashCode in TypeMappingInfo and just use a HashSet here?
-            return sourceType.AssemblyQualifiedName + ">" + targetType.AssemblyQualifiedName;
         }
 
         #endregion Methods

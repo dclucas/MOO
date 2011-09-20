@@ -50,6 +50,7 @@ namespace Moo
         public static TTarget MapTo<TTarget>(this Object source, TTarget target, IMapper mapper)
         {
             Guard.CheckArgumentNotNull(source, "source");
+            Guard.CheckArgumentNotNull(target, "target");
             Guard.CheckArgumentNotNull(mapper, "mapper");
             return (TTarget)mapper.Map(source, target);
         }
@@ -94,6 +95,7 @@ namespace Moo
         public static TTarget MapTo<TTarget>(this Object source, TTarget target, IMappingRepository repo)
         {
             Guard.CheckArgumentNotNull(source, "source");
+            Guard.CheckArgumentNotNull(target, "target");
             Guard.CheckArgumentNotNull(repo, "repo");
             var mapper = repo.ResolveMapper(source.GetType(), typeof(TTarget));
             return (TTarget)mapper.Map(source, target);
