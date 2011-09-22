@@ -1,8 +1,21 @@
-﻿//-----------------------------------------------------------------------
-// <copyright file="TypeMappingInfo.cs" company="Moo">
-//     Copyright (c) . All rights reserved.
-// </copyright>
-//-----------------------------------------------------------------------
+﻿/*-----------------------------------------------------------------------------
+Copyright 2010 Diogo Lucas
+
+This file is part of Moo.
+
+Foobar is free software: you can redistribute it and/or modify it under the
+terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or (at your option) any later
+version.
+
+Moo is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY
+; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+Moo. If not, see http://www.gnu.org/licenses/.
+---------------------------------------------------------------------------- */
+
 namespace Moo.Core
 {
     using System;
@@ -45,11 +58,11 @@ namespace Moo.Core
         /// <typeparamref name="TSource"/> and <typeparamref name="TTarget"/>.
         /// </returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Microsoft.Design", 
+            "Microsoft.Design",
             "CA1024:UsePropertiesWhereAppropriate",
-            Justification = "Optional rule, solemnly ignored here -- this get might be costly/have side effects in the future."), 
+            Justification = "Optional rule, solemnly ignored here -- this get might be costly/have side effects in the future."),
         System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Microsoft.Design", 
+            "Microsoft.Design",
             "CA1006:DoNotNestGenericTypesInMemberSignatures",
             Justification = "Easier said than done. Not willing to sacrifice type safety here.")]
         public IEnumerable<MemberMappingInfo<TSource, TTarget>> GetMappings()
@@ -62,8 +75,8 @@ namespace Moo.Core
         /// </summary>
         /// <param name="mappingInfo">The member mapping info.</param>
         [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Microsoft.Design", 
-            "CA1062:Validate arguments of public methods", 
+            "Microsoft.Design",
+            "CA1062:Validate arguments of public methods",
             MessageId = "0",
             Justification = "The call to Guard does that.")]
         public void Add(MemberMappingInfo<TSource, TTarget> mappingInfo)

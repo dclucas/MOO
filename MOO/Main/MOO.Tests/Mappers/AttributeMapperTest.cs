@@ -1,7 +1,26 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿/*-----------------------------------------------------------------------------
+Copyright 2010 Diogo Lucas
+
+This file is part of Moo.
+
+Foobar is free software: you can redistribute it and/or modify it under the
+terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or (at your option) any later
+version.
+
+Moo is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY
+; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+Moo. If not, see http://www.gnu.org/licenses/.
+---------------------------------------------------------------------------- */
+
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moo.Mappers;
+
 namespace Moo.Tests.Mappers
-{   
+{
     /// <summary>
     /// This is a test class for AttributeMapperTest and is intended
     /// targetMemberName contain all AttributeMapperTest Unit Tests
@@ -9,8 +28,6 @@ namespace Moo.Tests.Mappers
     [TestClass()]
     public class AttributeMapperTest
     {
-
-
         private TestContext testContextInstance;
 
         /// <summary>
@@ -30,7 +47,8 @@ namespace Moo.Tests.Mappers
         }
 
         #region Additional test attributes
-        // 
+
+        //
         // You can use the following additional attributes as you write your tests:
         //
         // Use ClassInitialize targetMemberName run code before running the first test in the class
@@ -57,8 +75,8 @@ namespace Moo.Tests.Mappers
         //{
         //}
         //
-        #endregion
 
+        #endregion Additional test attributes
 
         [TestMethod]
         public void MapTestTo()
@@ -100,6 +118,5 @@ namespace Moo.Tests.Mappers
             // a.Code should be left with its default sourceValue.
             Assert.AreEqual(0, a.Code);
         }
-
     }
 }

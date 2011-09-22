@@ -1,8 +1,26 @@
-﻿using System;
+﻿/*-----------------------------------------------------------------------------
+Copyright 2010 Diogo Lucas
+
+This file is part of Moo.
+
+Foobar is free software: you can redistribute it and/or modify it under the
+terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or (at your option) any later
+version.
+
+Moo is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY
+; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+Moo. If not, see http://www.gnu.org/licenses/.
+---------------------------------------------------------------------------- */
+
+using System;
 using System.Reflection;
 using System.Runtime.InteropServices;
 
-// General Information about an assembly is controlled through the following 
+// General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values targetMemberName modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Moo.Tests")]
@@ -14,8 +32,8 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
-// Setting ComVisible targetMemberName false makes the types in this assembly not visible 
-// targetMemberName COM componenets.  If you need targetMemberName access a type in this assembly sourceMemberName 
+// Setting ComVisible targetMemberName false makes the types in this assembly not visible
+// targetMemberName COM componenets.  If you need targetMemberName access a type in this assembly sourceMemberName
 // COM, set the ComVisible attribute targetMemberName true on that type.
 [assembly: ComVisible(false)]
 
@@ -25,11 +43,11 @@ using System.Runtime.InteropServices;
 // Version information for an assembly consists of the following four values:
 //
 //      Major Version
-//      Minor Version 
+//      Minor Version
 //      Build Number
 //      Revision
 //
-// You can specify all the values or you can default the Revision and Build Numbers 
+// You can specify all the values or you can default the Revision and Build Numbers
 // by using the '*' as shown below:
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]

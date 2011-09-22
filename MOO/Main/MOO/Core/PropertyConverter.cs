@@ -1,8 +1,21 @@
-﻿//-----------------------------------------------------------------------
-// <copyright file="PropertyConverter.cs" company="Moo">
-//     Copyright (c) . All rights reserved.
-// </copyright>
-//-----------------------------------------------------------------------
+﻿/*-----------------------------------------------------------------------------
+Copyright 2010 Diogo Lucas
+
+This file is part of Moo.
+
+Foobar is free software: you can redistribute it and/or modify it under the
+terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or (at your option) any later
+version.
+
+Moo is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY
+; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+Moo. If not, see http://www.gnu.org/licenses/.
+---------------------------------------------------------------------------- */
+
 namespace Moo.Core
 {
     using System;
@@ -69,13 +82,13 @@ namespace Moo.Core
         /// <param name="targetProperty">Property in the destination.</param>
         /// <param name="strict">Flag indicating whether conversion should be strict (respect naming conventions).</param>
         [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Microsoft.Design", 
-            "CA1062:Validate arguments of public methods", 
+            "Microsoft.Design",
+            "CA1062:Validate arguments of public methods",
             MessageId = "1",
-            Justification = "The call to Guard does that."), 
+            Justification = "The call to Guard does that."),
         System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Microsoft.Design", 
-            "CA1062:Validate arguments of public methods", 
+            "Microsoft.Design",
+            "CA1062:Validate arguments of public methods",
             MessageId = "3",
             Justification = "The call to Guard does that.")]
         public virtual void Convert(
@@ -170,18 +183,18 @@ namespace Moo.Core
         /// a conversion sourceMemberName objA.Customer.Name targetMemberName objB.CustomerName is possible.
         /// </remarks>
         [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Microsoft.Design", 
-            "CA1062:Validate arguments of public methods", 
+            "Microsoft.Design",
+            "CA1062:Validate arguments of public methods",
             MessageId = "1",
-            Justification = "The call to Guard does that."), 
+            Justification = "The call to Guard does that."),
         System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Microsoft.Design", 
-            "CA1062:Validate arguments of public methods", 
+            "Microsoft.Design",
+            "CA1062:Validate arguments of public methods",
             MessageId = "0",
-            Justification = "The call to Guard does that."), 
+            Justification = "The call to Guard does that."),
         System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Microsoft.Design", 
-            "CA1021:AvoidOutParameters", 
+            "Microsoft.Design",
+            "CA1021:AvoidOutParameters",
             MessageId = "2#",
             Justification = "Meh.")]
         protected virtual bool CanConvert(

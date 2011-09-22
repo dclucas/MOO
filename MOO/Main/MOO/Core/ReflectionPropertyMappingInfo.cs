@@ -1,8 +1,21 @@
-﻿//-----------------------------------------------------------------------
-// <copyright file="ReflectionPropertyMappingInfo.cs" company="Moo">
-//     Copyright (c) . All rights reserved.
-// </copyright>
-//-----------------------------------------------------------------------
+﻿/*-----------------------------------------------------------------------------
+Copyright 2010 Diogo Lucas
+
+This file is part of Moo.
+
+Foobar is free software: you can redistribute it and/or modify it under the
+terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or (at your option) any later
+version.
+
+Moo is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY
+; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+Moo. If not, see http://www.gnu.org/licenses/.
+---------------------------------------------------------------------------- */
+
 namespace Moo.Core
 {
     using System.Reflection;
@@ -21,8 +34,8 @@ namespace Moo.Core
         /// <param name="targetProperty">The target property.</param>
         /// <param name="strict">if set to <c>true</c>, performs a strict mapping.</param>
         internal ReflectionPropertyMappingInfo(
-            PropertyInfo sourceProperty, 
-            PropertyInfo targetProperty, 
+            PropertyInfo sourceProperty,
+            PropertyInfo targetProperty,
             bool strict = false)
             : this(sourceProperty, targetProperty, strict, PropertyConverter.Default)
         {
@@ -36,8 +49,8 @@ namespace Moo.Core
         /// <param name="strict">if set to <c>true</c>, performs a strict mapping.</param>
         /// <param name="converter">The property converter to be used.</param>
         internal ReflectionPropertyMappingInfo(
-            PropertyInfo sourceProperty, 
-            PropertyInfo targetProperty, 
+            PropertyInfo sourceProperty,
+            PropertyInfo targetProperty,
             bool strict,
             PropertyConverter converter)
         {
@@ -74,8 +87,8 @@ namespace Moo.Core
         ///   <c>true</c> if strict; otherwise, <c>false</c>.
         /// </value>
         /// <remarks>
-        /// This property determines whether conversion needs to be strict (the exact same members in the 
-        /// sourceMemberName and targetMemberName arguments) fields must be used or lose 
+        /// This property determines whether conversion needs to be strict (the exact same members in the
+        /// sourceMemberName and targetMemberName arguments) fields must be used or lose
         /// (which allows property folding/unfolding).
         /// </remarks>
         public bool Strict { get; private set; }

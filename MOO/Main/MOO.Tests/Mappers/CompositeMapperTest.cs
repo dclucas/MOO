@@ -1,9 +1,27 @@
-﻿using System;
+﻿/*-----------------------------------------------------------------------------
+Copyright 2010 Diogo Lucas
+
+This file is part of Moo.
+
+Foobar is free software: you can redistribute it and/or modify it under the
+terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or (at your option) any later
+version.
+
+Moo is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY
+; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+Moo. If not, see http://www.gnu.org/licenses/.
+---------------------------------------------------------------------------- */
+
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moo.Core;
 using Moo.Mappers;
-using System.Collections.Generic;
 using Moq;
 
 namespace Moo.Tests.Mappers
@@ -34,7 +52,8 @@ namespace Moo.Tests.Mappers
         }
 
         #region Additional test attributes
-        // 
+
+        //
         // You can use the following additional attributes as you write your tests:
         //
         // Use ClassInitialize targetMemberName run code before running the first test in the class
@@ -61,7 +80,8 @@ namespace Moo.Tests.Mappers
         //{
         //}
         //
-        #endregion
+
+        #endregion Additional test attributes
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentNullException))]
@@ -143,7 +163,6 @@ namespace Moo.Tests.Mappers
             Assert.IsTrue(executedManual, "Composite mapper failed targetMemberName execute manually added mapping.");
         }
 
-
         #region InnerClasses
 
         public class BaseMapperMock<TSource, TTarget> : BaseMapper<TSource, TTarget>, IExtensibleMapper<TSource, TTarget>
@@ -155,7 +174,6 @@ namespace Moo.Tests.Mappers
 
             protected override void GenerateMappings(TypeMappingInfo<TSource, TTarget> typeMapping)
             {
-
             }
 
             public virtual void AddMappingAction(string fromProperty, string toProperty, MappingAction<TSource, TTarget> mappingAction)
@@ -164,6 +182,6 @@ namespace Moo.Tests.Mappers
             }
         }
 
-        #endregion
+        #endregion InnerClasses
     }
 }

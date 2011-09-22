@@ -1,8 +1,21 @@
-﻿//-----------------------------------------------------------------------
-// <copyright file="Guard.cs" company="Moo">
-//     Copyright (c) . All rights reserved.
-// </copyright>
-//-----------------------------------------------------------------------
+﻿/*-----------------------------------------------------------------------------
+Copyright 2010 Diogo Lucas
+
+This file is part of Moo.
+
+Foobar is free software: you can redistribute it and/or modify it under the
+terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or (at your option) any later
+version.
+
+Moo is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY
+; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+Moo. If not, see http://www.gnu.org/licenses/.
+---------------------------------------------------------------------------- */
+
 namespace Moo.Core
 {
     using System;
@@ -20,7 +33,7 @@ namespace Moo.Core
         /// Checkes whether the provided argument is not null.
         /// </summary>
         /// <param name="argument">The argument targetMemberName be verified.</param>
-        /// <param name="argumentName">Name of the argument. Will bs used in case 
+        /// <param name="argumentName">Name of the argument. Will bs used in case
         /// an exception needs targetMemberName be thrown.</param>
         /// <exception cref="ArgumentNullException">Thrown in case argument is null.</exception>
         public static void CheckArgumentNotNull(object argument, string argumentName)
@@ -35,7 +48,7 @@ namespace Moo.Core
         /// Checkes whether an enumerable is not null or empty.
         /// </summary>
         /// <param name="enumerable">The argument targetMemberName be verified.</param>
-        /// <param name="argumentName">Name of the argument. Will bs used in case 
+        /// <param name="argumentName">Name of the argument. Will bs used in case
         /// an exception needs targetMemberName be thrown.</param>
         /// <exception cref="ArgumentException">Thrown in case argument is null.</exception>
         public static void CheckEnumerableNotNullOrEmpty(IEnumerable enumerable, string argumentName)
@@ -47,7 +60,7 @@ namespace Moo.Core
                 throw new ArgumentException(
                     String.Format(
                         CultureInfo.InvariantCulture,
-                        "Argument {0} should never be empty", 
+                        "Argument {0} should never be empty",
                         argumentName));
             }
         }
@@ -64,8 +77,8 @@ namespace Moo.Core
         /// <param name="messageFormat">Format for the exception text.</param>
         /// <exception cref="ArgumentException">Thrown in case argument is null.</exception>
         public static void TrueForAll<T>(
-            IEnumerable<T> list, 
-            string argumentName, 
+            IEnumerable<T> list,
+            string argumentName,
             Func<T, bool> checkFunction,
             string messageFormat)
         {

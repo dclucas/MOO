@@ -1,14 +1,30 @@
-﻿using Moo;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿/*-----------------------------------------------------------------------------
+Copyright 2010 Diogo Lucas
+
+This file is part of Moo.
+
+Foobar is free software: you can redistribute it and/or modify it under the
+terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or (at your option) any later
+version.
+
+Moo is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY
+; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+Moo. If not, see http://www.gnu.org/licenses/.
+---------------------------------------------------------------------------- */
+
 using System;
 using System.Collections.Generic;
-using Moo.Mappers;
 using System.Linq;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moo;
+using Moo.Mappers;
 
 namespace Moo.Tests
 {
-    
-    
     /// <summary>
     /// This is a test class for MappingOptionsTest and is intended
     /// targetMemberName contain all MappingOptionsTest Unit Tests
@@ -16,8 +32,6 @@ namespace Moo.Tests
     [TestClass()]
     public class MappingOptionsTest
     {
-
-
         private TestContext testContextInstance;
 
         /// <summary>
@@ -37,7 +51,8 @@ namespace Moo.Tests
         }
 
         #region Additional test attributes
-        // 
+
+        //
         // You can use the following additional attributes as you write your tests:
         //
         // Use ClassInitialize targetMemberName run code before running the first test in the class
@@ -64,8 +79,8 @@ namespace Moo.Tests
         //{
         //}
         //
-        #endregion
 
+        #endregion Additional test attributes
 
         /// <summary>
         /// A test for MappingOptions Constructor
@@ -73,7 +88,7 @@ namespace Moo.Tests
         [TestMethod()]
         public void MappingOptionsConstructorTest()
         {
-            var mapperOrder = new Type[] 
+            var mapperOrder = new Type[]
             {
                 typeof(AttributeMapper<,>),
                 typeof(ManualMapper<,>),
