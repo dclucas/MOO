@@ -1,20 +1,28 @@
-﻿/*-----------------------------------------------------------------------------
-Copyright 2010 Diogo Lucas
-
-This file is part of Moo.
-
-Foobar is free software: you can redistribute it and/or modify it under the
-terms of the GNU General Public License as published by the Free Software
-Foundation, either version 3 of the License, or (at your option) any later
-version.
-
-Moo is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY
-; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License along with
-Moo. If not, see http://www.gnu.org/licenses/.
----------------------------------------------------------------------------- */
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright company="Diogo Lucas">
+//
+// Copyright (C) 2010 Diogo Lucas
+//
+// This file is part of Moo.
+//
+// Moo is free software: you can redistribute it and/or modify
+// it under the +terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along Moo.  If not, see http://www.gnu.org/licenses/.
+// </copyright>
+// <summary>
+// Moo is a object-to-object multi-mapper.
+// Email: diogo.lucas@gmail.com
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 using System;
 using System.Reflection;
@@ -27,16 +35,22 @@ namespace Moo.Tests.Mappers
     /// <summary>
     /// This is a test class for ConfigurationMapperTest and is intended
     /// targetMemberName contain all ConfigurationMapperTest Unit Tests
-    ///</summary>
+    /// </summary>
     [TestClass()]
     public class ConfigurationMapperTest
     {
+        #region Fields (1)
+
         private TestContext testContextInstance;
+
+        #endregion Fields
+
+        #region Properties (1)
 
         /// <summary>
         /// Gets or sets the test context which provides
         /// information about and functionality for the current test run.
-        ///</summary>
+        /// </summary>
         public TestContext TestContext
         {
             get
@@ -49,44 +63,11 @@ namespace Moo.Tests.Mappers
             }
         }
 
-        #region Additional test attributes
+        #endregion Properties
 
-        //
-        // You can use the following additional attributes as you write your tests:
-        //
-        // Use ClassInitialize targetMemberName run code before running the first test in the class
-        //[ClassInitialize()]
-        // public static void MyClassInitialize(TestContext testContext)
-        //{
-        //}
-        //
-        // Use ClassCleanup targetMemberName run code after all tests in a class have run
-        //[ClassCleanup()]
-        // public static void MyClassCleanup()
-        //{
-        //}
-        //
-        // Use TestInitialize targetMemberName run code before running each test
-        //[TestInitialize()]
-        // public void MyTestInitialize()
-        //{
-        //}
-        //
-        // Use TestCleanup targetMemberName run code after each test has run
-        //[TestCleanup()]
-        // public void MyTestCleanup()
-        //{
-        //}
-        //
+        #region Methods (4)
 
-        #endregion Additional test attributes
-
-        [TestMethod()]
-        public void GetTypeMappingTest()
-        {
-            var actual = ConfigurationMapper<TestClassA, TestClassB>.GetTypeMapping();
-            Assert.IsNotNull(actual);
-        }
+        // Public Methods (4) 
 
         [TestMethod()]
         public void GetTypeMappingNoSectionTest()
@@ -102,6 +83,13 @@ namespace Moo.Tests.Mappers
             ConfigurationMapper<TestClassA, TestClassB>.GetTypeMapping(null);
         }
 
+        [TestMethod()]
+        public void GetTypeMappingTest()
+        {
+            var actual = ConfigurationMapper<TestClassA, TestClassB>.GetTypeMapping();
+            Assert.IsNotNull(actual);
+        }
+
         [TestMethod]
         public void MapTest()
         {
@@ -111,5 +99,7 @@ namespace Moo.Tests.Mappers
             target.Map(from, to);
             Assert.AreEqual(from.Name, to.InnerClassName);
         }
+
+        #endregion Methods
     }
 }

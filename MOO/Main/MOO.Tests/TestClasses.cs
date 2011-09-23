@@ -1,53 +1,87 @@
-﻿/*-----------------------------------------------------------------------------
-Copyright 2010 Diogo Lucas
-
-This file is part of Moo.
-
-Foobar is free software: you can redistribute it and/or modify it under the 
-terms of the GNU General Public License as published by the Free Software 
-Foundation, either version 3 of the License, or (at your option) any later 
-version.
-
-Moo is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY
-; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
-PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License along with 
-Moo. If not, see http://www.gnu.org/licenses/.
----------------------------------------------------------------------------- */
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright company="Diogo Lucas">
+//
+// Copyright (C) 2010 Diogo Lucas
+//
+// This file is part of Moo.
+//
+// Moo is free software: you can redistribute it and/or modify
+// it under the +terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along Moo.  If not, see http://www.gnu.org/licenses/. 
+// </copyright>
+// <summary>
+// Moo is a object-to-object multi-mapper.
+// Email: diogo.lucas@gmail.com
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 using System;
+
 namespace Moo.Tests
 {
     public class TestClassA
     {
-        public string Name { get; set; }
+        #region Properties (3)
+
         public int Code { get; set; }
+
         public TestClassC InnerClass { get; set; }
+
+        public string Name { get; set; }
+
+        #endregion Properties
     }
 
     public class TestClassB
     {
-        public string Name { get; set; }
+        #region Properties (5)
+
         public DateTime Code { get; set; }
-        public string InnerClassName { get; set; }
+
         public int InnerClassCode { get; set; }
+
         public double InnerClassFraction { get; set; }
+
+        public string InnerClassName { get; set; }
+
+        public string Name { get; set; }
+
+        #endregion Properties
     }
 
     public class TestClassC
     {
-        public string Name { get; set; }
+        #region Properties (3)
+
         public DateTime Code { get; set; }
+
         public double Fraction { get; set; }
+
+        public string Name { get; set; }
+
+        #endregion Properties
     }
 
     public class TestClassD
     {
-        [Mapping(MappingDirections.Both, typeof(TestClassA), "Name")]
-        public string SomeOtherName { get; set; }
+        #region Properties (2)
+
         [Mapping(MappingDirections.To, typeof(TestClassA), "Code")]
         public int AnotherCode { get; set; }
+
+        [Mapping(MappingDirections.Both, typeof(TestClassA), "Name")]
+        public string SomeOtherName { get; set; }
+
+        #endregion Properties
     }
 
     public class TestClassE : TestClassA

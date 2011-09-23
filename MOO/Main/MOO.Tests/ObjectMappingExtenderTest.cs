@@ -1,20 +1,28 @@
-﻿/*-----------------------------------------------------------------------------
-Copyright 2010 Diogo Lucas
-
-This file is part of Moo.
-
-Foobar is free software: you can redistribute it and/or modify it under the
-terms of the GNU General Public License as published by the Free Software
-Foundation, either version 3 of the License, or (at your option) any later
-version.
-
-Moo is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY
-; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License along with
-Moo. If not, see http://www.gnu.org/licenses/.
----------------------------------------------------------------------------- */
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright company="Diogo Lucas">
+//
+// Copyright (C) 2010 Diogo Lucas
+//
+// This file is part of Moo.
+//
+// Moo is free software: you can redistribute it and/or modify
+// it under the +terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along Moo.  If not, see http://www.gnu.org/licenses/.
+// </copyright>
+// <summary>
+// Moo is a object-to-object multi-mapper.
+// Email: diogo.lucas@gmail.com
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 using System;
 using System.Collections.Generic;
@@ -31,13 +39,13 @@ namespace Moo.Tests
     {
         #region Methods (18)
 
-        // Public Methods (18) 
+        // Public Methods (18) 
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void MapTo_NullMapper_Throws_1()
         {
-            var source = new TestClassE(); ;
+            var source = new TestClassE();
             source.MapTo<TestClassB>((IMapper)null);
         }
 
@@ -45,7 +53,7 @@ namespace Moo.Tests
         [ExpectedException(typeof(ArgumentNullException))]
         public void MapTo_NullMapper_Throws_2()
         {
-            var source = new TestClassE(); ;
+            var source = new TestClassE();
             source.MapTo<TestClassB>(new TestClassB(), (IMapper)null);
         }
 
@@ -53,7 +61,7 @@ namespace Moo.Tests
         [ExpectedException(typeof(ArgumentNullException))]
         public void MapTo_NullRepo_Throws_1()
         {
-            var source = new TestClassD(); ;
+            var source = new TestClassD();
             source.MapTo<TestClassA>(new TestClassA(), (IMappingRepository)null);
         }
 
@@ -61,7 +69,7 @@ namespace Moo.Tests
         [ExpectedException(typeof(ArgumentNullException))]
         public void MapTo_NullRepo_Throws_2()
         {
-            var source = new TestClassD(); ;
+            var source = new TestClassD();
             source.MapTo<TestClassA>((IMappingRepository)null);
         }
 
@@ -109,7 +117,7 @@ namespace Moo.Tests
         [ExpectedException(typeof(ArgumentNullException))]
         public void MapTo_NullTarget_Throws_1()
         {
-            var source = new TestClassB(); ;
+            var source = new TestClassB();
             source.MapTo<TestClassC>((TestClassC)null);
         }
 
@@ -117,7 +125,7 @@ namespace Moo.Tests
         [ExpectedException(typeof(ArgumentNullException))]
         public void MapTo_NullTarget_Throws_2()
         {
-            var source = new TestClassB(); ;
+            var source = new TestClassB();
             source.MapTo<TestClassC>((TestClassC)null, new Mock<IMapper>().Object);
         }
 
@@ -125,7 +133,7 @@ namespace Moo.Tests
         [ExpectedException(typeof(ArgumentNullException))]
         public void MapTo_NullTarget_Throws_3()
         {
-            var source = new TestClassB(); ;
+            var source = new TestClassB();
             source.MapTo<TestClassC>((TestClassC)null, new Mock<IMappingRepository>().Object);
         }
 

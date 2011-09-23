@@ -1,29 +1,36 @@
-﻿/*-----------------------------------------------------------------------------
-Copyright 2010 Diogo Lucas
-
-This file is part of Moo.
-
-Foobar is free software: you can redistribute it and/or modify it under the
-terms of the GNU General Public License as published by the Free Software
-Foundation, either version 3 of the License, or (at your option) any later
-version.
-
-Moo is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY
-; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License along with
-Moo. If not, see http://www.gnu.org/licenses/.
----------------------------------------------------------------------------- */
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Moo.Core;
-
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright company="Diogo Lucas">
+//
+// Copyright (C) 2010 Diogo Lucas
+//
+// This file is part of Moo.
+//
+// Moo is free software: you can redistribute it and/or modify
+// it under the +terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along Moo.  If not, see http://www.gnu.org/licenses/.
+// </copyright>
+// <summary>
+// Moo is a object-to-object multi-mapper.
+// Email: diogo.lucas@gmail.com
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 namespace Moo
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using Moo.Core;
+
     /// <summary>
     /// Extends the <c>Object</c> class, providing mapping capabilities for all objects.
     /// </summary>
@@ -31,7 +38,7 @@ namespace Moo
     {
         #region Methods (6)
 
-        // Public Methods (6) 
+        // Public Methods (6) 
 
         /// <summary>
         /// Maps the values on object the to a target type.
@@ -42,7 +49,7 @@ namespace Moo
         /// The target object, filled according to the mapping instructions in the mapper provided provided by the default repository.
         /// </returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0", Justification = "The call to Guard already does that.")]
-        public static TTarget MapTo<TTarget>(this Object source)
+        public static TTarget MapTo<TTarget>(this object source)
         {
             return MapTo<TTarget>(source, MappingRepository.Default);
         }
@@ -60,7 +67,7 @@ namespace Moo
             "Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0", Justification = "The call to Guard already does that."),
         System.Diagnostics.CodeAnalysis.SuppressMessage(
             "Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "1", Justification = "The call to Guard already does that.")]
-        public static TTarget MapTo<TTarget>(this Object source, IMapper mapper)
+        public static TTarget MapTo<TTarget>(this object source, IMapper mapper)
         {
             Guard.CheckArgumentNotNull(source, "source");
             Guard.CheckArgumentNotNull(mapper, "mapper");
@@ -80,7 +87,7 @@ namespace Moo
             "Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0", Justification = "The call to Guard already does that."),
         System.Diagnostics.CodeAnalysis.SuppressMessage(
             "Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "1", Justification = "The call to Guard already does that.")]
-        public static TTarget MapTo<TTarget>(this Object source, IMappingRepository repo)
+        public static TTarget MapTo<TTarget>(this object source, IMappingRepository repo)
         {
             Guard.CheckArgumentNotNull(source, "source");
             Guard.CheckArgumentNotNull(repo, "repo");
@@ -101,7 +108,7 @@ namespace Moo
             "Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0", Justification = "The call to Guard already does that."),
         System.Diagnostics.CodeAnalysis.SuppressMessage(
             "Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "1", Justification = "The call to Guard already does that.")]
-        public static TTarget MapTo<TTarget>(this Object source, TTarget target)
+        public static TTarget MapTo<TTarget>(this object source, TTarget target)
         {
             return MapTo<TTarget>(source, target, MappingRepository.Default);
         }
@@ -122,7 +129,7 @@ namespace Moo
             "Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "1", Justification = "The call to Guard already does that."),
         System.Diagnostics.CodeAnalysis.SuppressMessage(
             "Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "2", Justification = "The call to Guard already does that.")]
-        public static TTarget MapTo<TTarget>(this Object source, TTarget target, IMapper mapper)
+        public static TTarget MapTo<TTarget>(this object source, TTarget target, IMapper mapper)
         {
             Guard.CheckArgumentNotNull(source, "source");
             Guard.CheckArgumentNotNull(target, "target");
@@ -146,7 +153,7 @@ namespace Moo
             "Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "1", Justification = "The call to Guard already does that."),
         System.Diagnostics.CodeAnalysis.SuppressMessage(
             "Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "2", Justification = "The call to Guard already does that.")]
-        public static TTarget MapTo<TTarget>(this Object source, TTarget target, IMappingRepository repo)
+        public static TTarget MapTo<TTarget>(this object source, TTarget target, IMappingRepository repo)
         {
             Guard.CheckArgumentNotNull(source, "source");
             Guard.CheckArgumentNotNull(target, "target");

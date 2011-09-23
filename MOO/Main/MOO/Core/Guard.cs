@@ -1,20 +1,28 @@
-﻿/*-----------------------------------------------------------------------------
-Copyright 2010 Diogo Lucas
-
-This file is part of Moo.
-
-Foobar is free software: you can redistribute it and/or modify it under the
-terms of the GNU General Public License as published by the Free Software
-Foundation, either version 3 of the License, or (at your option) any later
-version.
-
-Moo is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY
-; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License along with
-Moo. If not, see http://www.gnu.org/licenses/.
----------------------------------------------------------------------------- */
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright company="Diogo Lucas">
+//
+// Copyright (C) 2010 Diogo Lucas
+//
+// This file is part of Moo.
+//
+// Moo is free software: you can redistribute it and/or modify
+// it under the +terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along Moo.  If not, see http:// www.gnu.org/licenses/.
+// </copyright>
+// <summary>
+// Moo is a object-to-object multi-mapper.
+// Email: diogo.lucas@gmail.com
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace Moo.Core
 {
@@ -31,7 +39,7 @@ namespace Moo.Core
     {
         #region Methods (4)
 
-        // Public Methods (4) 
+        // Public Methods (4) 
 
         /// <summary>
         /// Checkes whether the provided argument is not null.
@@ -62,7 +70,7 @@ namespace Moo.Core
             if (!enumerable.Cast<object>().Any())
             {
                 throw new ArgumentException(
-                    String.Format(
+                    string.Format(
                         CultureInfo.InvariantCulture,
                         "Argument {0} should never be empty",
                         argumentName));
@@ -109,7 +117,7 @@ namespace Moo.Core
             if (list.Any(o => !checkFunction(o)))
             {
                 throw new ArgumentException(
-                    String.Format(CultureInfo.InvariantCulture, messageFormat, argumentName));
+                    string.Format(CultureInfo.InvariantCulture, messageFormat, argumentName));
             }
         }
 

@@ -1,20 +1,29 @@
-﻿/*-----------------------------------------------------------------------------
-Copyright 2010 Diogo Lucas
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright company="Diogo Lucas">
+//
+// Copyright (C) 2010 Diogo Lucas
+//
+// This file is part of Moo.
+//
+// Moo is free software: you can redistribute it and/or modify
+// it under the +terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along Moo.  If not, see http://www.gnu.org/licenses/.
+// </copyright>
+// <summary>
+// Moo is a object-to-object multi-mapper.
+// Email: diogo.lucas@gmail.com
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
-This file is part of Moo.
-
-Foobar is free software: you can redistribute it and/or modify it under the 
-terms of the GNU General Public License as published by the Free Software 
-Foundation, either version 3 of the License, or (at your option) any later 
-version.
-
-Moo is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY
-; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
-PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License along with 
-Moo. If not, see http://www.gnu.org/licenses/.
----------------------------------------------------------------------------- */
 namespace Moo
 {
     using System;
@@ -33,10 +42,12 @@ namespace Moo
         /// Support field for the "Default" static repository instance.
         /// </summary>
         private static readonly MappingRepository defaultInstance = new MappingRepository();
+
         /// <summary>
         /// Private collection of mappers. Used to avoid a costly re-generation of mappers.
         /// </summary>
         private Dictionary<string, object> mappers = new Dictionary<string, object>();
+
         /// <summary>
         /// The mapping options to be used by all child mappers.
         /// </summary>
@@ -79,7 +90,7 @@ namespace Moo
 
         #region Methods (8)
 
-        // Public Methods (4) 
+        // Public Methods (4) 
 
         /// <summary>
         /// Adds the specified mapper targetType the repository.
@@ -156,6 +167,8 @@ namespace Moo
         /// either creating a new instance or by getting an existing
         /// one sourceMemberName the cache.
         /// </summary>
+        /// <param name="sourceType">Type of the source.</param>
+        /// <param name="targetType">Type of the target.</param>
         /// <returns>
         /// An instance of a <see>IExtensibleMapper</see> object.
         /// </returns>
@@ -168,16 +181,17 @@ namespace Moo
             var res = TryGetMapper(sourceType, targetType);
             if (res == null)
             {
-                //HACK: turn this generic conversion into calls to non-generic methods. This will require
-                //the refactoring of a number of additional classes.
+                // HACK: turn this generic conversion into calls to non-generic methods. This will require
+                // the refactoring of a number of additional classes.
                 var methodInfo = this.GetType().GetMethod("ResolveMapper", new Type[0]);
                 var genMethodInfo = methodInfo.MakeGenericMethod(sourceType, targetType);
                 res = (IMapper)genMethodInfo.Invoke(this, null);
             }
+
             return res;
         }
 
-        // Private Methods (4) 
+        // Private Methods (4) 
 
         /// <summary>
         /// Gets the dictionary key for a given source/target mapping combinations.
@@ -190,10 +204,17 @@ namespace Moo
             return GetKey(typeof(TSource), typeof(TTarget));
         }
 
+        /// <summary>
+        /// Gets the dictionary key for a given source and target type combination.
+        /// </summary>
+        /// <param name="sourceType">Type of the source.</param>
+        /// <param name="targetType">Type of the target.</param>
+        /// <returns>The dictionary key for the combination.</returns>
         private static string GetKey(Type sourceType, Type targetType)
         {
             Guard.CheckArgumentNotNull(sourceType, "sourceType");
             Guard.CheckArgumentNotNull(targetType, "targetType");
+
             // TODO: why not override GetHashCode in TypeMappingInfo and just use a HashSet here?
             return sourceType.AssemblyQualifiedName + ">" + targetType.AssemblyQualifiedName;
         }
@@ -209,6 +230,14 @@ namespace Moo
             return (IExtensibleMapper<TSource, TTarget>)TryGetMapper(typeof(TSource), typeof(TTarget));
         }
 
+        /// <summary>
+        /// Tries the get a mapper for a given source/target mapping combination.
+        /// </summary>
+        /// <param name="sourceType">Type of the source.</param>
+        /// <param name="targetType">Type of the target.</param>
+        /// <returns>
+        /// A mapper instance, if one is found.
+        /// </returns>
         private IMapper TryGetMapper(Type sourceType, Type targetType)
         {
             string key = GetKey(sourceType, targetType);

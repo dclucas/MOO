@@ -1,20 +1,29 @@
-﻿/*-----------------------------------------------------------------------------
-Copyright 2010 Diogo Lucas
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright company="Diogo Lucas">
+//
+// Copyright (C) 2010 Diogo Lucas
+//
+// This file is part of Moo.
+//
+// Moo is free software: you can redistribute it and/or modify
+// it under the +terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along Moo.  If not, see http://www.gnu.org/licenses/.
+// </copyright>
+// <summary>
+// Moo is a object-to-object multi-mapper.
+// Email: diogo.lucas@gmail.com
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
-This file is part of Moo.
-
-Foobar is free software: you can redistribute it and/or modify it under the 
-terms of the GNU General Public License as published by the Free Software 
-Foundation, either version 3 of the License, or (at your option) any later 
-version.
-
-Moo is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY
-; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
-PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License along with 
-Moo. If not, see http://www.gnu.org/licenses/.
----------------------------------------------------------------------------- */
 namespace Moo.Mappers
 {
     using System;
@@ -44,18 +53,9 @@ namespace Moo.Mappers
 
         #endregion Constructors
 
-        #region Properties (1)
-
-        /// <summary>
-        /// Gets the type mapping information.
-        /// </summary>
-        internal TypeMappingInfo<TSource, TTarget> TypeMapping { get; private set; }
-
-        #endregion Properties
-
         #region Delegates and Events (2)
 
-        // Events (2) 
+        // Events (2) 
 
         /// <summary>
         /// Occurs after one property is mapped targetMemberName another.
@@ -69,14 +69,24 @@ namespace Moo.Mappers
 
         #endregion Delegates and Events
 
+        #region Properties (1)
+
+        /// <summary>
+        /// Gets the type mapping information.
+        /// </summary>
+        internal TypeMappingInfo<TSource, TTarget> TypeMapping { get; private set; }
+
+        #endregion Properties
+
         #region Methods (14)
 
-        // Public Methods (8) 
+        // Public Methods (8) 
 
         /// <summary>
         /// Maps from the source to a new target object.
         /// </summary>
         /// <param name="source">The source object.</param>
+        /// <returns>A filled target object.</returns>
         public object Map(object source)
         {
             return this.Map((TSource)source);
@@ -106,6 +116,7 @@ namespace Moo.Mappers
         /// </summary>
         /// <param name="source">The source object.</param>
         /// <param name="target">The target object.</param>
+        /// <returns>The target object, with its properties filled.</returns>
         public override object Map(object source, object target)
         {
             return this.Map((TSource)source, (TTarget)target);
@@ -133,6 +144,7 @@ namespace Moo.Mappers
         /// </summary>
         /// <param name="source">The source object.</param>
         /// <param name="target">The target object.</param>
+        /// <returns>The target object, with its properties filled.</returns>
         public virtual TTarget Map(TSource source, TTarget target)
         {
             foreach (var mapping in this.TypeMapping.GetMappings())
@@ -150,6 +162,7 @@ namespace Moo.Mappers
                     throw new MappingException(typeof(TSource), typeof(TTarget), mapping.SourceMemberName, mapping.TargetMemberName, exc);
                 }
             }
+
             return target;
         }
 
@@ -210,7 +223,7 @@ namespace Moo.Mappers
             }
         }
 
-        // Protected Methods (3) 
+        // Protected Methods (3) 
 
         /// <summary>
         /// Adds the specified mapping info targetProperty the internal mappings table.
@@ -235,7 +248,7 @@ namespace Moo.Mappers
         /// <param name="typeMapping">The type mapping where discovered mappings will be added.</param>
         protected abstract void GenerateMappings(TypeMappingInfo<TSource, TTarget> typeMapping);
 
-        // Private Methods (2) 
+        // Private Methods (2) 
 
         /// <summary>
         /// Called when a property is mapped.
@@ -288,7 +301,7 @@ namespace Moo.Mappers
             return true;
         }
 
-        // Internal Methods (1) 
+        // Internal Methods (1) 
 
         /// <summary>
         /// Gets the default property converter.
