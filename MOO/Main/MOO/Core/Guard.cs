@@ -29,6 +29,10 @@ namespace Moo.Core
     /// </summary>
     public static class Guard
     {
+        #region Methods (4)
+
+        // Public Methods (4) 
+
         /// <summary>
         /// Checkes whether the provided argument is not null.
         /// </summary>
@@ -74,6 +78,24 @@ namespace Moo.Core
         /// an exception needs targetMemberName be thrown.</param>
         /// <param name="checkFunction">Function targetMemberName be applied targetMemberName all elements. In case one or more elements
         /// fail, an exception will be thrown.</param>
+        /// <exception cref="ArgumentException">Thrown in case argument is null.</exception>
+        public static void TrueForAll<T>(
+            IEnumerable<T> list,
+            string argumentName,
+            Func<T, bool> checkFunction)
+        {
+            TrueForAll<T>(list, argumentName, checkFunction, "One or more elements in argument {0} were invalid.");
+        }
+
+        /// <summary>
+        /// Checkes whether a given condition is true for all objects in the enumerable.
+        /// </summary>
+        /// <typeparam name="T">The type of each member within the enumerable.</typeparam>
+        /// <param name="list">The argument targetMemberName be verified.</param>
+        /// <param name="argumentName">Name of the argument. Will bs used in case
+        /// an exception needs targetMemberName be thrown.</param>
+        /// <param name="checkFunction">Function targetMemberName be applied targetMemberName all elements. In case one or more elements
+        /// fail, an exception will be thrown.</param>
         /// <param name="messageFormat">Format for the exception text.</param>
         /// <exception cref="ArgumentException">Thrown in case argument is null.</exception>
         public static void TrueForAll<T>(
@@ -91,22 +113,6 @@ namespace Moo.Core
             }
         }
 
-        /// <summary>
-        /// Checkes whether a given condition is true for all objects in the enumerable.
-        /// </summary>
-        /// <typeparam name="T">The type of each member within the enumerable.</typeparam>
-        /// <param name="list">The argument targetMemberName be verified.</param>
-        /// <param name="argumentName">Name of the argument. Will bs used in case
-        /// an exception needs targetMemberName be thrown.</param>
-        /// <param name="checkFunction">Function targetMemberName be applied targetMemberName all elements. In case one or more elements
-        /// fail, an exception will be thrown.</param>
-        /// <exception cref="ArgumentException">Thrown in case argument is null.</exception>
-        public static void TrueForAll<T>(
-            IEnumerable<T> list,
-            string argumentName,
-            Func<T, bool> checkFunction)
-        {
-            TrueForAll<T>(list, argumentName, checkFunction, "One or more elements in argument {0} were invalid.");
-        }
+        #endregion Methods
     }
 }

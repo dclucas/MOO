@@ -26,6 +26,10 @@ namespace Moo.Core
     /// </summary>
     public class ValueConverter
     {
+        #region Methods (2)
+
+        // Public Methods (2) 
+
         /// <summary>
         /// Checks whether this class can make the convertion between the two provided types.
         /// </summary>
@@ -98,5 +102,7 @@ namespace Moo.Core
 
             return System.Convert.ChangeType(sourceValue, targetType, CultureInfo.InvariantCulture);
         }
+
+        #endregion Methods
     }
 }

@@ -25,6 +25,8 @@ namespace Moo.Configuration
     /// </summary>
     public class MappingConfigurationSection : ConfigurationSection
     {
+        #region Constructors (1)
+
         /// <summary>
         /// Initializes a new instance of the <see cref="MappingConfigurationSection"/> class.
         /// </summary>
@@ -32,6 +34,10 @@ namespace Moo.Configuration
         {
             this["TypeMappings"] = new TypeMappingCollection();
         }
+
+        #endregion Constructors
+
+        #region Properties (1)
 
         /// <summary>
         /// Gets the type mapping configuration entries within the section.
@@ -45,5 +51,7 @@ namespace Moo.Configuration
                 return mappings;
             }
         }
+
+        #endregion Properties
     }
 }

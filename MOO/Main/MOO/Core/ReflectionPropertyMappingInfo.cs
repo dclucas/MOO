@@ -27,19 +27,7 @@ namespace Moo.Core
     /// <typeparam name="TTarget">The type of the target.</typeparam>
     internal class ReflectionPropertyMappingInfo<TSource, TTarget> : MemberMappingInfo<TSource, TTarget>
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ReflectionPropertyMappingInfo&lt;TSource, TTarget&gt;"/> class.
-        /// </summary>
-        /// <param name="sourceProperty">The source property.</param>
-        /// <param name="targetProperty">The target property.</param>
-        /// <param name="strict">if set to <c>true</c>, performs a strict mapping.</param>
-        internal ReflectionPropertyMappingInfo(
-            PropertyInfo sourceProperty,
-            PropertyInfo targetProperty,
-            bool strict = false)
-            : this(sourceProperty, targetProperty, strict, PropertyConverter.Default)
-        {
-        }
+        #region Constructors (2)
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ReflectionPropertyMappingInfo&lt;TSource, TTarget&gt;"/> class.
@@ -66,6 +54,24 @@ namespace Moo.Core
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="ReflectionPropertyMappingInfo&lt;TSource, TTarget&gt;"/> class.
+        /// </summary>
+        /// <param name="sourceProperty">The source property.</param>
+        /// <param name="targetProperty">The target property.</param>
+        /// <param name="strict">if set to <c>true</c>, performs a strict mapping.</param>
+        internal ReflectionPropertyMappingInfo(
+            PropertyInfo sourceProperty,
+            PropertyInfo targetProperty,
+            bool strict = false)
+            : this(sourceProperty, targetProperty, strict, PropertyConverter.Default)
+        {
+        }
+
+        #endregion Constructors
+
+        #region Properties (4)
+
+        /// <summary>
         /// Gets the converter.
         /// </summary>
         public PropertyConverter Converter { get; private set; }
@@ -74,11 +80,6 @@ namespace Moo.Core
         /// Gets from property info.
         /// </summary>
         public PropertyInfo FromPropertyInfo { get; private set; }
-
-        /// <summary>
-        /// Gets to property info.
-        /// </summary>
-        public PropertyInfo ToPropertyInfo { get; private set; }
 
         /// <summary>
         /// Gets a value indicating whether this <see cref="ReflectionPropertyMappingInfo&lt;TSource, TTarget&gt;"/> is strict.
@@ -94,6 +95,17 @@ namespace Moo.Core
         public bool Strict { get; private set; }
 
         /// <summary>
+        /// Gets to property info.
+        /// </summary>
+        public PropertyInfo ToPropertyInfo { get; private set; }
+
+        #endregion Properties
+
+        #region Methods (1)
+
+        // Public Methods (1) 
+
+        /// <summary>
         /// Maps from the specified source to the specified target.
         /// </summary>
         /// <param name="source">The mapping source.</param>
@@ -102,5 +114,7 @@ namespace Moo.Core
         {
             this.Converter.Convert(source, this.FromPropertyInfo, target, this.ToPropertyInfo, this.Strict);
         }
+
+        #endregion Methods
     }
 }

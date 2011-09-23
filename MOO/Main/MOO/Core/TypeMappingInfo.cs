@@ -28,11 +28,17 @@ namespace Moo.Core
     /// <typeparam name="TTarget">The type of the target.</typeparam>
     public class TypeMappingInfo<TSource, TTarget>
     {
+        #region Fields (1)
+
         /// <summary>
         /// Backing field for the internal member mapping collection.
         /// </summary>
         private Dictionary<string, MemberMappingInfo<TSource, TTarget>> memberMappings =
             new Dictionary<string, MemberMappingInfo<TSource, TTarget>>();
+
+        #endregion Fields
+
+        #region Properties (2)
 
         /// <summary>
         /// Gets or sets the type of the source.
@@ -49,6 +55,27 @@ namespace Moo.Core
         /// The type of the target.
         /// </sourceValue>
         public Type TargetType { get; set; }
+
+        #endregion Properties
+
+        #region Methods (2)
+
+        // Public Methods (2) 
+
+        /// <summary>
+        /// Adds the specified member mapping info.
+        /// </summary>
+        /// <param name="mappingInfo">The member mapping info.</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Microsoft.Design",
+            "CA1062:Validate arguments of public methods",
+            MessageId = "0",
+            Justification = "The call to Guard does that.")]
+        public void Add(MemberMappingInfo<TSource, TTarget> mappingInfo)
+        {
+            Guard.CheckArgumentNotNull(mappingInfo, "mappingInfo");
+            this.memberMappings[mappingInfo.TargetMemberName] = mappingInfo;
+        }
 
         /// <summary>
         /// Gets the member mappings.
@@ -70,19 +97,6 @@ namespace Moo.Core
             return this.memberMappings.Values;
         }
 
-        /// <summary>
-        /// Adds the specified member mapping info.
-        /// </summary>
-        /// <param name="mappingInfo">The member mapping info.</param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Microsoft.Design",
-            "CA1062:Validate arguments of public methods",
-            MessageId = "0",
-            Justification = "The call to Guard does that.")]
-        public void Add(MemberMappingInfo<TSource, TTarget> mappingInfo)
-        {
-            Guard.CheckArgumentNotNull(mappingInfo, "mappingInfo");
-            this.memberMappings[mappingInfo.TargetMemberName] = mappingInfo;
-        }
+        #endregion Methods
     }
 }

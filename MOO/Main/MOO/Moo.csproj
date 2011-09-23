@@ -103,7 +103,6 @@
     <Compile Include="ObjectMappingExtender.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Core\Guard.cs" />
-    <Compile Include="Core\MappingInfo.cs" />
     <Compile Include="Core\PropertyConverter.cs" />
     <Compile Include="Core\ValueConverter.cs" />
   </ItemGroup>

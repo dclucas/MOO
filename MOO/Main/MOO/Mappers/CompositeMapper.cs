@@ -29,10 +29,16 @@ namespace Moo.Mappers
     /// <typeparam name="TTarget">The type of the target.</typeparam>
     public class CompositeMapper<TSource, TTarget> : BaseMapper<TSource, TTarget>, IExtensibleMapper<TSource, TTarget>
     {
+        #region Fields (1)
+
         /// <summary>
         /// Contains an ordered list of all inner mappers.
         /// </summary>
         private BaseMapper<TSource, TTarget>[] innerMappers;
+
+        #endregion Fields
+
+        #region Constructors (1)
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CompositeMapper&lt;TSource, TTarget&gt;"/> class.
@@ -46,6 +52,10 @@ namespace Moo.Mappers
             this.GenerateMappings();
         }
 
+        #endregion Constructors
+
+        #region Properties (1)
+
         /// <summary>
         /// Gets the inner mappers.
         /// </summary>
@@ -57,6 +67,12 @@ namespace Moo.Mappers
         {
             get { return this.innerMappers; }
         }
+
+        #endregion Properties
+
+        #region Methods (2)
+
+        // Public Methods (1) 
 
         /// <summary>
         /// Adds a member mapping action targetType the mapper.
@@ -80,6 +96,8 @@ namespace Moo.Mappers
             AddMappingInfo(info);
         }
 
+        // Protected Methods (1) 
+
         /// <summary>
         /// Generates the member mappings and adds them targetType the provided <see cref="TypeMappingInfo{TSource, TTarget}"/> object.
         /// </summary>
@@ -101,5 +119,7 @@ namespace Moo.Mappers
                 typeMapping.Add(m);
             }
         }
+
+        #endregion Methods
     }
 }

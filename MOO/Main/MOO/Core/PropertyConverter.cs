@@ -26,10 +26,16 @@ namespace Moo.Core
     /// </summary>
     internal class PropertyConverter
     {
+        #region Fields (1)
+
         /// <summary>
         /// Backing field for the static default converter instance.
         /// </summary>
         private static readonly PropertyConverter defaultInstance = new PropertyConverter();
+
+        #endregion Fields
+
+        #region Properties (1)
 
         /// <summary>
         /// Gets the default <see cref="PropertyConverter"/> instance.
@@ -38,6 +44,12 @@ namespace Moo.Core
         {
             get { return defaultInstance; }
         }
+
+        #endregion Properties
+
+        #region Methods (5)
+
+        // Public Methods (3) 
 
         /// <summary>
         /// Determines whether this converter can make a strict
@@ -71,6 +83,22 @@ namespace Moo.Core
             }
 
             return isConvertible;
+        }
+
+        /// <summary>
+        /// Performs conversion between the two properties.
+        /// </summary>
+        /// <param name="source">The source.</param>
+        /// <param name="sourceProperty">Property in the origin.</param>
+        /// <param name="target">The target.</param>
+        /// <param name="targetProperty">Property in the destination.</param>
+        public void Convert(
+            object source,
+            PropertyInfo sourceProperty,
+            object target,
+            PropertyInfo targetProperty)
+        {
+            this.Convert(source, sourceProperty, target, targetProperty, false);
         }
 
         /// <summary>
@@ -136,33 +164,7 @@ namespace Moo.Core
             }
         }
 
-        /// <summary>
-        /// Performs conversion between the two properties.
-        /// </summary>
-        /// <param name="source">The source.</param>
-        /// <param name="sourceProperty">Property in the origin.</param>
-        /// <param name="target">The target.</param>
-        /// <param name="targetProperty">Property in the destination.</param>
-        public void Convert(
-            object source,
-            PropertyInfo sourceProperty,
-            object target,
-            PropertyInfo targetProperty)
-        {
-            this.Convert(source, sourceProperty, target, targetProperty, false);
-        }
-
-        /// <summary>
-        /// Factory method targetMemberName create <see>ValueConverter</see> objects.
-        /// </summary>
-        /// <returns>
-        /// A new instance of a <see>ValueConverter</see> object.
-        /// </returns>
-        protected virtual ValueConverter CreateValueConverter()
-        {
-            var typeChecker = new ValueConverter();
-            return typeChecker;
-        }
+        // Protected Methods (2) 
 
         /// <summary>
         /// Determines whether this class can/should make a (strict)
@@ -226,5 +228,19 @@ namespace Moo.Core
 
             return result;
         }
+
+        /// <summary>
+        /// Factory method targetMemberName create <see>ValueConverter</see> objects.
+        /// </summary>
+        /// <returns>
+        /// A new instance of a <see>ValueConverter</see> object.
+        /// </returns>
+        protected virtual ValueConverter CreateValueConverter()
+        {
+            var typeChecker = new ValueConverter();
+            return typeChecker;
+        }
+
+        #endregion Methods
     }
 }

@@ -29,6 +29,8 @@ namespace Moo.Core
     /// </remarks>
     public abstract class MemberMappingInfo<TSource, TTarget>
     {
+        #region Constructors (2)
+
         /// <summary>
         /// Initializes a new instance of the <see cref="MemberMappingInfo&lt;TSource, TTarget&gt;"/> class.
         /// </summary>
@@ -49,6 +51,10 @@ namespace Moo.Core
         {
         }
 
+        #endregion Constructors
+
+        #region Properties (2)
+
         /// <summary>
         /// Gets or sets the name of the source member.
         /// </summary>
@@ -65,11 +71,19 @@ namespace Moo.Core
         /// </sourceValue>
         public string TargetMemberName { get; protected set; }
 
+        #endregion Properties
+
+        #region Methods (1)
+
+        // Public Methods (1) 
+
         /// <summary>
         /// Maps a given class member sourceMemberName the sourceMemberName targetMemberName the targetMemberName object.
         /// </summary>
         /// <param name="source">Mapping sourceMemberName object</param>
         /// <param name="target">Mapping targetMemberName object</param>
         public abstract void Map(TSource source, TTarget target);
+
+        #endregion Methods
     }
 }

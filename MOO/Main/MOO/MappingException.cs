@@ -3,18 +3,19 @@ Copyright 2010 Diogo Lucas
 
 This file is part of Moo.
 
-Foobar is free software: you can redistribute it and/or modify it under the 
-terms of the GNU General Public License as published by the Free Software 
-Foundation, either version 3 of the License, or (at your option) any later 
+Foobar is free software: you can redistribute it and/or modify it under the
+terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or (at your option) any later
 version.
 
 Moo is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY
-; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
+; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
 PARTICULAR PURPOSE. See the GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License along with 
+You should have received a copy of the GNU General Public License along with
 Moo. If not, see http://www.gnu.org/licenses/.
 ---------------------------------------------------------------------------- */
+
 namespace Moo
 {
     using System;
@@ -28,11 +29,32 @@ namespace Moo
     [DebuggerNonUserCode]
     public class MappingException : Exception
     {
+        #region Constructors (6)
+
         /// <summary>
         /// Initializes a new instance of the <see cref="MappingException"/> class.
         /// </summary>
-        public MappingException() 
-        { 
+        /// <param name="sourceType">Type of the source.</param>
+        /// <param name="targetType">Type of the target.</param>
+        /// <param name="sourceMember">The source member.</param>
+        /// <param name="targetMember">The target member.</param>
+        /// <param name="innerException">The inner exception.</param>
+        public MappingException(
+            Type sourceType,
+            Type targetType,
+            string sourceMember,
+            string targetMember,
+            Exception innerException)
+            : this(
+                String.Format(
+                    CultureInfo.InvariantCulture,
+                    "Error mapping source {0}.{1} to {2}.{3}",
+                    sourceType,
+                    sourceMember,
+                    targetType,
+                    targetMember),
+                innerException)
+        {
         }
 
         /// <summary>
@@ -59,44 +81,11 @@ namespace Moo
         /// <summary>
         /// Initializes a new instance of the <see cref="MappingException"/> class.
         /// </summary>
-        /// <param name="sourceType">Type of the source.</param>
-        /// <param name="targetType">Type of the target.</param>
-        /// <param name="sourceMember">The source member.</param>
-        /// <param name="targetMember">The target member.</param>
-        /// <param name="innerException">The inner exception.</param>
-        public MappingException(
-            Type sourceType, 
-            Type targetType, 
-            string sourceMember, 
-            string targetMember, 
-            Exception innerException)
-            : this(
-                String.Format(
-                    CultureInfo.InvariantCulture,
-                    "Error mapping source {0}.{1} to {2}.{3}", 
-                    sourceType, 
-                    sourceMember, 
-                    targetType, 
-                    targetMember), 
-                innerException)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MappingException"/> class.
-        /// </summary>
-        /// <param name="message">The message.</param>
-        public MappingException(string message) : base(message) 
-        { 
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MappingException"/> class.
-        /// </summary>
         /// <param name="message">The exception message.</param>
         /// <param name="inner">The inner exception.</param>
-        public MappingException(string message, Exception inner) : base(message, inner)
-        { 
+        public MappingException(string message, Exception inner)
+            : base(message, inner)
+        {
         }
 
         /// <summary>
@@ -113,8 +102,26 @@ namespace Moo
         protected MappingException(
           System.Runtime.Serialization.SerializationInfo info,
           System.Runtime.Serialization.StreamingContext context)
-            : base(info, context) 
-        { 
+            : base(info, context)
+        {
         }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MappingException"/> class.
+        /// </summary>
+        /// <param name="message">The message.</param>
+        public MappingException(string message)
+            : base(message)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MappingException"/> class.
+        /// </summary>
+        public MappingException()
+        {
+        }
+
+        #endregion Constructors
     }
 }

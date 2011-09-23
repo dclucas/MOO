@@ -27,6 +27,10 @@ namespace Moo.Mappers
     /// <typeparam name="TTarget">The type of the target.</typeparam>
     public class ManualMapper<TSource, TTarget> : BaseMapper<TSource, TTarget>, IExtensibleMapper<TSource, TTarget>
     {
+        #region Methods (2)
+
+        // Public Methods (1) 
+
         /// <summary>
         /// Adds the mapping action.
         /// </summary>
@@ -42,6 +46,8 @@ namespace Moo.Mappers
             this.AddMappingInfo(info);
         }
 
+        // Protected Methods (1) 
+
         /// <summary>
         /// Generates the member mappings and adds them targetType the provided <see cref="TypeMappingInfo{TSource, TTarget}"/> object.
         /// </summary>
@@ -53,5 +59,7 @@ namespace Moo.Mappers
         protected override void GenerateMappings(TypeMappingInfo<TSource, TTarget> typeMapping)
         {
         }
+
+        #endregion Methods
     }
 }

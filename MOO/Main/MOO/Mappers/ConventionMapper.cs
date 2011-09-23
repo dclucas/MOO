@@ -29,6 +29,8 @@ namespace Moo.Mappers
     /// <typeparam name="TTarget">The type of the target.</typeparam>
     public class ConventionMapper<TSource, TTarget> : BaseMapper<TSource, TTarget>
     {
+        #region Constructors (1)
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ConventionMapper&lt;TSource, TTarget&gt;"/> class.
         /// </summary>
@@ -40,6 +42,12 @@ namespace Moo.Mappers
         {
             this.GenerateMappings();
         }
+
+        #endregion Constructors
+
+        #region Methods (1)
+
+        // Protected Methods (1) 
 
         /// <summary>
         /// Generates the member mappings and adds them targetType the provided <see cref="TypeMappingInfo{TSource, TTarget}"/> object.
@@ -77,5 +85,7 @@ namespace Moo.Mappers
                 }
             }
         }
+
+        #endregion Methods
     }
 }

@@ -29,6 +29,10 @@ namespace Moo.Configuration
         Justification = "The base class does not implement it. And there's no need for the generic interface implementation (YAGNI).")]
     public class TypeMappingCollection : ConfigurationElementCollection
     {
+        #region Methods (3)
+
+        // Public Methods (1) 
+
         /// <summary>
         /// Adds the specified element.
         /// </summary>
@@ -36,6 +40,19 @@ namespace Moo.Configuration
         public void Add(TypeMappingElement element)
         {
             BaseAdd(element);
+        }
+
+        // Protected Methods (2) 
+
+        /// <summary>
+        /// Creates a new <see cref="T:System.Configuration.ConfigurationElement"/>.
+        /// </summary>
+        /// <returns>
+        /// A new <see cref="T:System.Configuration.ConfigurationElement"/>.
+        /// </returns>
+        protected override ConfigurationElement CreateNewElement()
+        {
+            return new TypeMappingElement();
         }
 
         /// <summary>
@@ -51,15 +68,6 @@ namespace Moo.Configuration
             return mapping.SourceType + ">" + mapping.TargetType;
         }
 
-        /// <summary>
-        /// Creates a new <see cref="T:System.Configuration.ConfigurationElement"/>.
-        /// </summary>
-        /// <returns>
-        /// A new <see cref="T:System.Configuration.ConfigurationElement"/>.
-        /// </returns>
-        protected override ConfigurationElement CreateNewElement()
-        {
-            return new TypeMappingElement();
-        }
+        #endregion Methods
     }
 }

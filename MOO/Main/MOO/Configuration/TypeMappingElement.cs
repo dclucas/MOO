@@ -25,6 +25,17 @@ namespace Moo.Configuration
     /// </summary>
     public class TypeMappingElement : ConfigurationElement
     {
+        #region Properties (3)
+
+        /// <summary>
+        /// Gets the member mappings.
+        /// </summary>
+        [ConfigurationProperty("MemberMappings")]
+        public MemberMappingCollection MemberMappings
+        {
+            get { return (MemberMappingCollection)this["MemberMappings"]; }
+        }
+
         /// <summary>
         /// Gets or sets the name of the source type.
         /// </summary>
@@ -51,13 +62,6 @@ namespace Moo.Configuration
             set { this["TargetType"] = value; }
         }
 
-        /// <summary>
-        /// Gets the member mappings.
-        /// </summary>
-        [ConfigurationProperty("MemberMappings")]
-        public MemberMappingCollection MemberMappings
-        {
-            get { return (MemberMappingCollection)this["MemberMappings"]; }
-        }
+        #endregion Properties
     }
 }

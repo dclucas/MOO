@@ -25,6 +25,8 @@ namespace Moo.Configuration
     /// </summary>
     public class MemberMappingElement : ConfigurationElement
     {
+        #region Properties (2)
+
         /// <summary>
         /// Gets or sets the name of the source member.
         /// </summary>
@@ -50,5 +52,7 @@ namespace Moo.Configuration
             get { return (string)this["TargetMemberName"]; }
             set { this["TargetMemberName"] = value; }
         }
+
+        #endregion Properties
     }
 }
