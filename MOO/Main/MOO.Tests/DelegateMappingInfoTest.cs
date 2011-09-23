@@ -73,7 +73,8 @@ namespace Moo.Tests
             bool executed = false;
 
             var target = new DelegateMappingInfo<TestClassC, TestClassD>(
-                "sourceMemberName", "targetMemberName",
+                "sourceMemberName",
+                "targetMemberName",
                 (f, t) => executed = true);
             target.Map(new TestClassC(), new TestClassD());
 

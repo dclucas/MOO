@@ -128,8 +128,10 @@ namespace Moo.Tests.Core
             Assert.AreEqual(
                 expected,
                 target.CanConvert(fromType, toType),
-                String.Format("CanConvert should have returned {0} for types {1} and {2}",
-                    expected, fromType, toType));
+                "CanConvert should have returned {0} for types {1} and {2}",
+                expected,
+                fromType,
+                toType);
         }
 
         private void DoConvertTest(object value, object expected)
