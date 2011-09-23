@@ -48,19 +48,19 @@ namespace Moo.Tests.Configuration
                 BindingFlags.Instance | BindingFlags.NonPublic);
             StringBuilder sb = new StringBuilder();
 
-            var writer = XmlWriter.Create(sb);
-
-            var res = methodInfo.Invoke(
-                target,
-                new object[]
+            using (var writer = XmlWriter.Create(sb))
+            {
+                var res = methodInfo.Invoke(
+                    target,
+                    new object[]
                 {
                     writer,
                     false
                 }
-                );
+                    );
 
-            writer.Flush();
-            writer.Close();
+                writer.Flush();
+            }
 
             StringAssert.Contains(sb.ToString(), @"<MemberMappings><add TargetMemberName=""A"" SourceMemberName=""B"" /></MemberMappings>");
         }
