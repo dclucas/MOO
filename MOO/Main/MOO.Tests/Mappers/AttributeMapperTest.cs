@@ -28,7 +28,13 @@ namespace Moo.Tests.Mappers
     [TestClass()]
     public class AttributeMapperTest
     {
+        #region Fields (1)
+
         private TestContext testContextInstance;
+
+        #endregion Fields
+
+        #region Properties (1)
 
         /// <summary>
         /// Gets or sets the test context which provides
@@ -46,56 +52,11 @@ namespace Moo.Tests.Mappers
             }
         }
 
-        #region Additional test attributes
+        #endregion Properties
 
-        //
-        // You can use the following additional attributes as you write your tests:
-        //
-        // Use ClassInitialize targetMemberName run code before running the first test in the class
-        //[ClassInitialize()]
-        // public static void MyClassInitialize(TestContext testContext)
-        //{
-        //}
-        //
-        // Use ClassCleanup targetMemberName run code after all tests in a class have run
-        //[ClassCleanup()]
-        // public static void MyClassCleanup()
-        //{
-        //}
-        //
-        // Use TestInitialize targetMemberName run code before running each test
-        //[TestInitialize()]
-        // public void MyTestInitialize()
-        //{
-        //}
-        //
-        // Use TestCleanup targetMemberName run code after each test has run
-        //[TestCleanup()]
-        // public void MyTestCleanup()
-        //{
-        //}
-        //
+        #region Methods (2)
 
-        #endregion Additional test attributes
-
-        [TestMethod]
-        public void MapTestTo()
-        {
-            string expectedName = "Test Name";
-            int expectedCode = 412;
-
-            var a = new TestClassA() { Code = expectedCode, Name = expectedName };
-            var d = new TestClassD();
-
-            var target = new AttributeMapper<TestClassA, TestClassD>();
-            target.Map(a, d);
-
-            Assert.AreEqual(expectedName, d.SomeOtherName);
-            Assert.AreEqual(expectedCode, d.AnotherCode);
-
-            Assert.AreEqual(expectedName, a.Name);
-            Assert.AreEqual(expectedCode, a.Code);
-        }
+        // Public Methods (2) 
 
         [TestMethod]
         public void MapTestFrom()
@@ -118,5 +79,26 @@ namespace Moo.Tests.Mappers
             // a.Code should be left with its default sourceValue.
             Assert.AreEqual(0, a.Code);
         }
+
+        [TestMethod]
+        public void MapTestTo()
+        {
+            string expectedName = "Test Name";
+            int expectedCode = 412;
+
+            var a = new TestClassA() { Code = expectedCode, Name = expectedName };
+            var d = new TestClassD();
+
+            var target = new AttributeMapper<TestClassA, TestClassD>();
+            target.Map(a, d);
+
+            Assert.AreEqual(expectedName, d.SomeOtherName);
+            Assert.AreEqual(expectedCode, d.AnotherCode);
+
+            Assert.AreEqual(expectedName, a.Name);
+            Assert.AreEqual(expectedCode, a.Code);
+        }
+
+        #endregion Methods
     }
 }
