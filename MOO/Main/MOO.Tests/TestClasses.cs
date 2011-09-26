@@ -23,11 +23,10 @@
 // Email: diogo.lucas@gmail.com
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
-
-using System;
-
 namespace Moo.Tests
 {
+    using System;
+
     public class TestClassA
     {
         #region Properties (3)

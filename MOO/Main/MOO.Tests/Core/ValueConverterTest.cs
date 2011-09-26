@@ -33,35 +33,9 @@ namespace Moo.Tests.Core
     /// This is a test class for ValueConverterTest and is intended
     /// targetMemberName contain all ValueConverterTest Unit Tests
     /// </summary>
-    [TestClass()]
+    [TestClass]
     public class ValueConverterTest
     {
-        #region Fields (1)
-
-        private TestContext testContextInstance;
-
-        #endregion Fields
-
-        #region Properties (1)
-
-        /// <summary>
-        /// Gets or sets the test context which provides
-        /// information about and functionality for the current test run.
-        /// </summary>
-        public TestContext TestContext
-        {
-            get
-            {
-                return testContextInstance;
-            }
-            set
-            {
-                testContextInstance = value;
-            }
-        }
-
-        #endregion Properties
-
         #region Methods (7)
 
         // Public Methods (4) 
@@ -69,7 +43,7 @@ namespace Moo.Tests.Core
         /// <summary>
         /// A test for CanConvert
         /// </summary>
-        [TestMethod()]
+        [TestMethod]
         public void CanConvertNegativeTest()
         {
             ValueConverter target = new ValueConverter();
@@ -81,7 +55,7 @@ namespace Moo.Tests.Core
         /// <summary>
         /// A test for CanConvert
         /// </summary>
-        [TestMethod()]
+        [TestMethod]
         public void CanConvertTest()
         {
             DoCanConverTest(typeof(string), typeof(string), true);
@@ -102,7 +76,7 @@ namespace Moo.Tests.Core
         /// <summary>
         /// A test for Convert
         /// </summary>
-        [TestMethod()]
+        [TestMethod]
         public void ConvertTest()
         {
             DoConvertTest(2, 2);

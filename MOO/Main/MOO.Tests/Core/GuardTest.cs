@@ -36,35 +36,9 @@ namespace Moo.Tests.Core
     /// This is a test class for GuardTest and is intended
     /// targetMemberName contain all GuardTest Unit Tests
     /// </summary>
-    [TestClass()]
+    [TestClass]
     public class GuardTest
     {
-        #region Fields (1)
-
-        private TestContext testContextInstance;
-
-        #endregion Fields
-
-        #region Properties (1)
-
-        /// <summary>
-        /// Gets or sets the test context which provides
-        /// information about and functionality for the current test run.
-        /// </summary>
-        public TestContext TestContext
-        {
-            get
-            {
-                return testContextInstance;
-            }
-            set
-            {
-                testContextInstance = value;
-            }
-        }
-
-        #endregion Properties
-
         #region Methods (5)
 
         // Public Methods (5) 
@@ -72,7 +46,7 @@ namespace Moo.Tests.Core
         /// <summary>
         /// A test for CheckArgumentNotNull
         /// </summary>
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void CheckArgumentNotNullTest()
         {
@@ -82,7 +56,7 @@ namespace Moo.Tests.Core
         /// <summary>
         /// A test for CheckEnumerableNotNullOrEmpty
         /// </summary>
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void CheckEnumerableNotNullOrEmptyEmptyTest()
         {
@@ -92,7 +66,7 @@ namespace Moo.Tests.Core
         /// <summary>
         /// A test for CheckEnumerableNotNullOrEmpty
         /// </summary>
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void CheckEnumerableNotNullOrEmptyNullTest()
         {

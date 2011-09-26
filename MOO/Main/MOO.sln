@@ -3,6 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B1A8AB5C-43DE-4DA1-A825-CBF60F644C56}"
 	ProjectSection(SolutionItems) = preProject
+		BuildTestRun.testrunconfig = BuildTestRun.testrunconfig
 		LocalTestRun.testrunconfig = LocalTestRun.testrunconfig
 		MOO.vsmdi = MOO.vsmdi
 	EndProjectSection
@@ -76,5 +77,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(SpecExplorer.ActivityCompletionStatus) = preSolution
+		SpecExplorer.ActivityCompletionStatus = TestExisting: ;ModelFromScratch: 
 	EndGlobalSection
 EndGlobal

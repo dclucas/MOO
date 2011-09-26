@@ -54,8 +54,10 @@ namespace Moo.Tests.Configuration
             propMapping.SourceMemberName = "B";
             typeMapping.MemberMappings.Add(propMapping);
             target.TypeMappings.Add(typeMapping);
+
             // TODO: change this call to SerializeSection
-            var methodInfo = target.GetType().GetMethod("SerializeElement",
+            var methodInfo = target.GetType().GetMethod(
+                "SerializeElement",
                 BindingFlags.Instance | BindingFlags.NonPublic);
             StringBuilder sb = new StringBuilder();
 
@@ -63,11 +65,7 @@ namespace Moo.Tests.Configuration
             {
                 var res = methodInfo.Invoke(
                     target,
-                    new object[]
-                {
-                    writer,
-                    false
-                });
+                    new object[] { writer, false });
 
                 writer.Flush();
             }

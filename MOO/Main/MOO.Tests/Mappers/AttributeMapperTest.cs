@@ -23,45 +23,18 @@
 // Email: diogo.lucas@gmail.com
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
-
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moo.Mappers;
-
 namespace Moo.Tests.Mappers
 {
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using Moo.Mappers;
+
     /// <summary>
     /// This is a test class for AttributeMapperTest and is intended
     /// targetMemberName contain all AttributeMapperTest Unit Tests
     /// </summary>
-    [TestClass()]
+    [TestClass]
     public class AttributeMapperTest
     {
-        #region Fields (1)
-
-        private TestContext testContextInstance;
-
-        #endregion Fields
-
-        #region Properties (1)
-
-        /// <summary>
-        /// Gets or sets the test context which provides
-        /// information about and functionality for the current test run.
-        /// </summary>
-        public TestContext TestContext
-        {
-            get
-            {
-                return testContextInstance;
-            }
-            set
-            {
-                testContextInstance = value;
-            }
-        }
-
-        #endregion Properties
-
         #region Methods (2)
 
         // Public Methods (2) 

@@ -37,35 +37,9 @@ namespace Moo.Tests.Mappers
     /// This is a test class for CompositeMapperTest and is intended
     /// targetProperty contain all CompositeMapperTest Unit Tests
     /// </summary>
-    [TestClass()]
+    [TestClass]
     public class CompositeMapperTest
     {
-        #region Fields (1)
-
-        private TestContext testContextInstance;
-
-        #endregion Fields
-
-        #region Properties (1)
-
-        /// <summary>
-        /// Gets or sets the test context which provides
-        /// information about and functionality for the current test run.
-        /// </summary>
-        public TestContext TestContext
-        {
-            get
-            {
-                return testContextInstance;
-            }
-            set
-            {
-                testContextInstance = value;
-            }
-        }
-
-        #endregion Properties
-
         #region Methods (5)
 
         // Public Methods (5) 
@@ -127,21 +101,21 @@ namespace Moo.Tests.Mappers
             mockRep.VerifyAll();
         }
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void MapTestEmptyTest()
         {
             var target = new CompositeMapper<TestClassA, TestClassB>(new BaseMapper<TestClassA, TestClassB>[0]);
         }
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void MapTestNullMapperTest()
         {
             var target = new CompositeMapper<TestClassA, TestClassB>(new BaseMapper<TestClassA, TestClassB>[1]);
         }
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void MapTestNullTest()
         {

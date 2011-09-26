@@ -23,48 +23,21 @@
 // Email: diogo.lucas@gmail.com
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moo.Mappers;
-
 namespace Moo.Tests.Mappers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using Moo.Mappers;
+
     /// <summary>
     /// This is a test class for ConventionMapperTest and is intended
     /// targetProperty contain all ConventionMapperTest Unit Tests
     /// </summary>
-    [TestClass()]
+    [TestClass]
     public class ConventionMapperTest
     {
-        #region Fields (1)
-
-        private TestContext testContextInstance;
-
-        #endregion Fields
-
-        #region Properties (1)
-
-        /// <summary>
-        /// Gets or sets the test context which provides
-        /// information about and functionality for the current test run.
-        /// </summary>
-        public TestContext TestContext
-        {
-            get
-            {
-                return testContextInstance;
-            }
-            set
-            {
-                testContextInstance = value;
-            }
-        }
-
-        #endregion Properties
-
         #region Methods (11)
 
         // Public Methods (7) 

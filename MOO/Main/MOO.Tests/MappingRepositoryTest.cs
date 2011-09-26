@@ -35,7 +35,7 @@ namespace Moo.Tests
     /// This is a test class for MappingRepositoryTest and is intended
     /// targetProperty contain all MappingRepositoryTest Unit Tests
     /// </summary>
-    [TestClass()]
+    [TestClass]
     public class MappingRepositoryTest
     {
         #region Methods (5)
@@ -70,7 +70,7 @@ namespace Moo.Tests
             Assert.IsNotNull(MappingRepository.Default);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ResolveMapper_ExistingMapper_ResolvesCorrectly()
         {
             var target = new MappingRepository();
@@ -80,7 +80,7 @@ namespace Moo.Tests
             Assert.IsTrue(((CompositeMapper<TestClassB, TestClassA>)mapper).InnerMappers.Count() > 0);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ResolveMapper2_ExistingMapper_ResolvesCorrectly()
         {
             var target = new MappingRepository();

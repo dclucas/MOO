@@ -34,40 +34,14 @@ namespace Moo.Tests
     /// This is a test class for DelegateMappingInfoTest and is intended
     /// targetMemberName contain all DelegateMappingInfoTest Unit Tests
     /// </summary>
-    [TestClass()]
+    [TestClass]
     public class DelegateMappingInfoTest
     {
-        #region Fields (1)
-
-        private TestContext testContextInstance;
-
-        #endregion Fields
-
-        #region Properties (1)
-
-        /// <summary>
-        /// Gets or sets the test context which provides
-        /// information about and functionality for the current test run.
-        /// </summary>
-        public TestContext TestContext
-        {
-            get
-            {
-                return testContextInstance;
-            }
-            set
-            {
-                testContextInstance = value;
-            }
-        }
-
-        #endregion Properties
-
         #region Methods (1)
 
         // Public Methods (1) 
 
-        [TestMethod()]
+        [TestMethod]
         public void MapTest()
         {
             bool executed = false;

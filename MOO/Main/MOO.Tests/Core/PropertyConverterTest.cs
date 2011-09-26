@@ -23,52 +23,25 @@
 // Email: diogo.lucas@gmail.com
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
-
-using System;
-using System.Reflection;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moo.Core;
-
 namespace Moo.Tests.Core
 {
+    using System;
+    using System.Reflection;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using Moo.Core;
+
     /// <summary>
     /// This is a test class for PropertyMatcherTest and is intended
     /// targetProperty contain all PropertyMatcherTest Unit Tests
     /// </summary>
-    [TestClass()]
+    [TestClass]
     public class PropertyConverterTest
     {
-        #region Fields (1)
-
-        private TestContext testContextInstance;
-
-        #endregion Fields
-
-        #region Properties (1)
-
-        /// <summary>
-        /// Gets or sets the test context which provides
-        /// information about and functionality for the current test run.
-        /// </summary>
-        public TestContext TestContext
-        {
-            get
-            {
-                return testContextInstance;
-            }
-            set
-            {
-                testContextInstance = value;
-            }
-        }
-
-        #endregion Properties
-
         #region Methods (8)
 
         // Public Methods (7) 
 
-        [TestMethod()]
+        [TestMethod]
         public void ConvertTestComplex()
         {
             PropertyConverter target = new PropertyConverter();
@@ -88,7 +61,7 @@ namespace Moo.Tests.Core
         /// <summary>
         /// A test for Convert
         /// </summary>
-        [TestMethod()]
+        [TestMethod]
         public void ConvertTestSimple()
         {
             PropertyConverter target = new PropertyConverter();
@@ -125,7 +98,7 @@ namespace Moo.Tests.Core
         /// <summary>
         /// A test for PropertiesMatch
         /// </summary>
-        [TestMethod()]
+        [TestMethod]
         public void PropertiesMatchSimpleTest()
         {
             TestMatch("Name", "Name", true);

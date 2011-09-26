@@ -35,35 +35,9 @@ namespace Moo.Tests.Mappers
     /// This is a test class for ManualMapperTest and is intended
     /// targetProperty contain all ManualMapperTest Unit Tests
     /// </summary>
-    [TestClass()]
+    [TestClass]
     public class ManualMapperTest
     {
-        #region Fields (1)
-
-        private TestContext testContextInstance;
-
-        #endregion Fields
-
-        #region Properties (1)
-
-        /// <summary>
-        /// Gets or sets the test context which provides
-        /// information about and functionality for the current test run.
-        /// </summary>
-        public TestContext TestContext
-        {
-            get
-            {
-                return testContextInstance;
-            }
-            set
-            {
-                testContextInstance = value;
-            }
-        }
-
-        #endregion Properties
-
         #region Methods (4)
 
         // Public Methods (4) 
@@ -72,24 +46,26 @@ namespace Moo.Tests.Mappers
         public void GenerateMappingsTest()
         {
             var target = new ManualMapper<FromTestClass, ToTestClass>();
-            MethodInfo methodInfo = target.GetType().GetMethod("GenerateMappings",
+            MethodInfo methodInfo = target.GetType().GetMethod(
+                "GenerateMappings",
                 BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly);
             methodInfo.Invoke(target, new object[] { target.TypeMapping });
             Assert.IsFalse(target.TypeMapping.GetMappings().Any());
         }
 
         [ExpectedException(typeof(MappingException))]
-        [TestMethod()]
+        [TestMethod]
         public void ManualMapperMapErrorTest()
         {
             var target = new ManualMapper<FromTestClass, ToTestClass>();
             var source = new FromTestClass() { Id = 5, Description = "test" };
+
             var targetObj = new ToTestClass();
             target.AddMappingAction("Id", "Code", (f, t) => { throw new InvalidOperationException(); });
             target.Map(source, targetObj);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ManualMapperMapTest()
         {
             var target = new ManualMapper<FromTestClass, ToTestClass>();
@@ -120,7 +96,9 @@ namespace Moo.Tests.Mappers
                 (s, e) =>
                 {
                     if (e.SourceMember == "Id")
+                    {
                         raisedId = true;
+                    }
 
                     if (e.SourceMember == "Description")
                     {
@@ -140,6 +118,7 @@ namespace Moo.Tests.Mappers
 
             Assert.IsTrue(raisedId);
             Assert.IsTrue(raisedDescription);
+
             // checking whether the cancellation really interrupted the mapping of "Description" targetMemberName "Name".
             Assert.IsNull(to.Name);
         }

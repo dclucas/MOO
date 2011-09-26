@@ -23,67 +23,40 @@
 // Email: diogo.lucas@gmail.com
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
-
-using System;
-using System.Reflection;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moo.Configuration;
-using Moo.Mappers;
-
 namespace Moo.Tests.Mappers
 {
+    using System;
+    using System.Reflection;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using Moo.Configuration;
+    using Moo.Mappers;
+
     /// <summary>
     /// This is a test class for ConfigurationMapperTest and is intended
     /// targetMemberName contain all ConfigurationMapperTest Unit Tests
     /// </summary>
-    [TestClass()]
+    [TestClass]
     public class ConfigurationMapperTest
     {
-        #region Fields (1)
-
-        private TestContext testContextInstance;
-
-        #endregion Fields
-
-        #region Properties (1)
-
-        /// <summary>
-        /// Gets or sets the test context which provides
-        /// information about and functionality for the current test run.
-        /// </summary>
-        public TestContext TestContext
-        {
-            get
-            {
-                return testContextInstance;
-            }
-            set
-            {
-                testContextInstance = value;
-            }
-        }
-
-        #endregion Properties
-
         #region Methods (4)
 
         // Public Methods (4) 
 
-        [TestMethod()]
+        [TestMethod]
         public void GetTypeMappingNoSectionTest()
         {
             var actual = ConfigurationMapper<TestClassA, TestClassB>.GetTypeMapping("thisConfigDoesNotExist");
             Assert.IsNull(actual);
         }
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void GetTypeMappingNullSectionTest()
         {
             ConfigurationMapper<TestClassA, TestClassB>.GetTypeMapping(null);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void GetTypeMappingTest()
         {
             var actual = ConfigurationMapper<TestClassA, TestClassB>.GetTypeMapping();

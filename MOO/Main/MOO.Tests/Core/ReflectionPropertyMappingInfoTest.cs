@@ -34,40 +34,14 @@ namespace Moo.Tests.Core
     /// This is a test class for ReflectionPropertyMappingInfoTest and is intended
     /// targetMemberName contain all ReflectionPropertyMappingInfoTest Unit Tests
     /// </summary>
-    [TestClass()]
+    [TestClass]
     public class ReflectionPropertyMappingInfoTest
     {
-        #region Fields (1)
-
-        private TestContext testContextInstance;
-
-        #endregion Fields
-
-        #region Properties (1)
-
-        /// <summary>
-        /// Gets or sets the test context which provides
-        /// information about and functionality for the current test run.
-        /// </summary>
-        public TestContext TestContext
-        {
-            get
-            {
-                return testContextInstance;
-            }
-            set
-            {
-                testContextInstance = value;
-            }
-        }
-
-        #endregion Properties
-
         #region Methods (1)
 
         // Public Methods (1) 
 
-        [TestMethod()]
+        [TestMethod]
         public void MapTest()
         {
             TestClassA a = new TestClassA();
@@ -76,6 +50,7 @@ namespace Moo.Tests.Core
             var toProp = typeof(TestClassA).GetProperty("Name");
             ConverterMock mock = new ConverterMock();
             bool executed = false;
+
             // TODO: refactor this to use Moq
             mock.ConvertAction = (f, fp, t, tp, s) =>
                 {

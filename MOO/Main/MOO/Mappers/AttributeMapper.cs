@@ -39,7 +39,7 @@ namespace Moo.Mappers
     /// <typeparam name="TTarget">The type of the target.</typeparam>
     public class AttributeMapper<TSource, TTarget> : BaseMapper<TSource, TTarget>
     {
-        #region Constructors (1)
+        #region Constructors (1) 
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AttributeMapper&lt;TSource, TTarget&gt;"/> class.
@@ -50,9 +50,9 @@ namespace Moo.Mappers
             this.GenerateMappings();
         }
 
-        #endregion Constructors
+        #endregion Constructors 
 
-        #region Methods (2)
+        #region Methods (3) 
 
         // Protected Methods (1) 
 
@@ -60,13 +60,59 @@ namespace Moo.Mappers
         /// Generates the member mappings and adds them targetType the provided <see cref="TypeMappingInfo{TSource, TTarget}"/> object.
         /// </summary>
         /// <param name="typeMapping">The type mapping where discovered mappings will be added.</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Microsoft.Design", 
+            "CA1062:Validate arguments of public methods", 
+            MessageId = "0",
+            Justification = "The call to Guard does that.")]
         protected override void GenerateMappings(TypeMappingInfo<TSource, TTarget> typeMapping)
         {
+            Guard.CheckArgumentNotNull(typeMapping, "typeMapping");
             var fromType = typeof(TSource);
             var toType = typeof(TTarget);
 
-            AddMappings(fromType, toType, MappingDirections.From, typeMapping);
-            AddMappings(toType, fromType, MappingDirections.To, typeMapping);
+            foreach (var m in GetMappings(fromType, toType, MappingDirections.From))
+            {
+                typeMapping.Add(m);
+            }
+
+            foreach (var m in GetMappings(toType, fromType, MappingDirections.To))
+            {
+                typeMapping.Add(m);
+            }
+        }
+
+        // Private Methods (2)
+
+        /// <summary>
+        /// Gets the property mapping for two property types.
+        /// </summary>
+        /// <param name="firstProp">The first property.</param>
+        /// <param name="secondProp">The second property.</param>
+        /// <param name="direction">The direction of the mapping.</param>
+        /// <returns>A property mapping object.</returns>
+        private static ReflectionPropertyMappingInfo<TSource, TTarget> GetMapping(
+            PropertyInfo firstProp, 
+            PropertyInfo secondProp,
+            MappingDirections direction)
+        {
+            ReflectionPropertyMappingInfo<TSource, TTarget> mappingInfo = null;
+            if (direction == MappingDirections.From)
+            {
+                mappingInfo = new ReflectionPropertyMappingInfo<TSource, TTarget>(
+                    firstProp,
+                    secondProp,
+                    true);
+            }
+            else
+            {
+                mappingInfo = new ReflectionPropertyMappingInfo<TSource, TTarget>(
+                    secondProp,
+                    firstProp,
+                    true);
+            }
+
+            return mappingInfo;
         }
 
         // Private Methods (1) 
@@ -77,41 +123,19 @@ namespace Moo.Mappers
         /// <param name="sourceType">Type of the source.</param>
         /// <param name="targetType">Type of the target.</param>
         /// <param name="direction">The mapping direction.</param>
-        /// <param name="typeMapping">The object where mappings will be added.</param>
-        private static void AddMappings(
+        /// <returns>An enumeration of property mappings.</returns>
+        private static IEnumerable<ReflectionPropertyMappingInfo<TSource, TTarget>> GetMappings(
             Type sourceType,
             Type targetType,
-            MappingDirections direction,
-            TypeMappingInfo<TSource, TTarget> typeMapping)
+            MappingDirections direction)
         {
-            var q = from prop in sourceType.GetProperties()
-                    from MappingAttribute m in prop.GetCustomAttributes(typeof(MappingAttribute), false)
-                    where (m.Direction & direction) == direction
-                    where m.OtherType.IsAssignableFrom(targetType)
-                    select new KeyValuePair<PropertyInfo, MappingAttribute>(prop, m);
-
-            foreach (var kvp in q)
-            {
-                ReflectionPropertyMappingInfo<TSource, TTarget> mappingInfo = null;
-                if (direction == MappingDirections.From)
-                {
-                    mappingInfo = new ReflectionPropertyMappingInfo<TSource, TTarget>(
-                        kvp.Key,
-                        targetType.GetProperty(kvp.Value.OtherMemberName),
-                        true);
-                }
-                else
-                {
-                    mappingInfo = new ReflectionPropertyMappingInfo<TSource, TTarget>(
-                        targetType.GetProperty(kvp.Value.OtherMemberName),
-                        kvp.Key,
-                        true);
-                }
-
-                typeMapping.Add(mappingInfo);
-            }
+            return from prop in sourceType.GetProperties()
+                   from MappingAttribute m in prop.GetCustomAttributes(typeof(MappingAttribute), false)
+                   where (m.Direction & direction) == direction
+                   where m.OtherType.IsAssignableFrom(targetType)
+                   select GetMapping(prop, targetType.GetProperty(m.OtherMemberName), direction);
         }
 
-        #endregion Methods
+        #endregion Methods 
     }
 }

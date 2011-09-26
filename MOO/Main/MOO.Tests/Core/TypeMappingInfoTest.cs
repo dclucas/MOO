@@ -35,35 +35,9 @@ namespace Moo.Tests.Core
     /// This is a test class for TypeMappingInfoTest and is intended
     /// targetMemberName contain all TypeMappingInfoTest Unit Tests
     /// </summary>
-    [TestClass()]
+    [TestClass]
     public class TypeMappingInfoTest
     {
-        #region Fields (1)
-
-        private TestContext testContextInstance;
-
-        #endregion Fields
-
-        #region Properties (1)
-
-        /// <summary>
-        /// Gets or sets the test context which provides
-        /// information about and functionality for the current test run.
-        /// </summary>
-        public TestContext TestContext
-        {
-            get
-            {
-                return testContextInstance;
-            }
-            set
-            {
-                testContextInstance = value;
-            }
-        }
-
-        #endregion Properties
-
         #region Methods (3)
 
         // Public Methods (3) 
@@ -95,7 +69,7 @@ namespace Moo.Tests.Core
         /// <summary>
         /// A test for GetMappings
         /// </summary>
-        [TestMethod()]
+        [TestMethod]
         public void GetMappingsEmptyTest()
         {
             var target = new TypeMappingInfo<TestClassA, TestClassC>();

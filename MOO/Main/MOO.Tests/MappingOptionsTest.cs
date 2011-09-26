@@ -36,35 +36,9 @@ namespace Moo.Tests
     /// This is a test class for MappingOptionsTest and is intended
     /// targetMemberName contain all MappingOptionsTest Unit Tests
     /// </summary>
-    [TestClass()]
+    [TestClass]
     public class MappingOptionsTest
     {
-        #region Fields (1)
-
-        private TestContext testContextInstance;
-
-        #endregion Fields
-
-        #region Properties (1)
-
-        /// <summary>
-        /// Gets or sets the test context which provides
-        /// information about and functionality for the current test run.
-        /// </summary>
-        public TestContext TestContext
-        {
-            get
-            {
-                return testContextInstance;
-            }
-            set
-            {
-                testContextInstance = value;
-            }
-        }
-
-        #endregion Properties
-
         #region Methods (1)
 
         // Public Methods (1) 
@@ -72,7 +46,7 @@ namespace Moo.Tests
         /// <summary>
         /// A test for MappingOptions Constructor
         /// </summary>
-        [TestMethod()]
+        [TestMethod]
         public void MappingOptionsConstructorTest()
         {
             var mapperOrder = new Type[]
