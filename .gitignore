@@ -31,3 +31,5 @@ _ReSharper*/
 Help/
 *.?rx
 *.*_Diogo
+*.gpState
+*.smproj
