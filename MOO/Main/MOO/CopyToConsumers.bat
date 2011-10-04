@@ -1,1 +1,0 @@
-copy "C:\Users\Diogo\Documents\Visual Studio 2010\Projects\moo\MOO\Main\MOO\bin\Debug\MOO.dll" "C:\Users\Diogo\Documents\Visual Studio 2010\Projects\Prototypes\BarBuddy\BarBuddy\Libs\moo.dll" /y
