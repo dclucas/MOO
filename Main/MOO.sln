@@ -17,21 +17,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Third Party", "Third Party", "{2D94394C-C9CC-4F18-8034-ECEC61FD6D64}"
 EndProject
 Global
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 4
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs03
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = MOO.Tests\\Moo.Tests.csproj
-		SccProjectName1 = MOO.Tests
-		SccLocalPath1 = MOO.Tests
-		SccProjectUniqueName2 = MOO\\Moo.csproj
-		SccProjectName2 = MOO
-		SccLocalPath2 = MOO
-		SccProjectUniqueName3 = Moo.Demo\\Moo.Demo.csproj
-		SccProjectName3 = Moo.Demo
-		SccLocalPath3 = Moo.Demo
-	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = MOO.vsmdi
 	EndGlobalSection
