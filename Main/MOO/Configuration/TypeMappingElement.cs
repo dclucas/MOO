@@ -29,7 +29,7 @@ namespace Moo.Configuration
     using System.Configuration;
 
     /// <summary>
-    /// Contains configuration targetType map between two classes.
+    /// Contains configuration to map between two classes.
     /// </summary>
     public class TypeMappingElement : ConfigurationElement
     {

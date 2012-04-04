@@ -29,7 +29,7 @@ namespace Moo.Configuration
     using System.Configuration;
 
     /// <summary>
-    /// Represents a configuration element targetType map one class member into another.
+    /// Represents a configuration element to map one class member into another.
     /// </summary>
     public class MemberMappingElement : ConfigurationElement
     {

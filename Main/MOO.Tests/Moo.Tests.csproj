@@ -86,6 +86,7 @@
     <Compile Include="Mappers\AttributeMapperTest.cs" />
     <Compile Include="Mappers\CompositeMapperTest.cs" />
     <Compile Include="Mappers\ConventionMapperTest.cs" />
+    <Compile Include="Mappers\AssociationMapperTest.cs" />
     <Compile Include="Mappers\ManualMapperTest.cs" />
     <Compile Include="MappingOptionsTest.cs" />
     <Compile Include="MappingRepositoryTest.cs" />

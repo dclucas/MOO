@@ -57,7 +57,7 @@ namespace Moo.Mappers
         // Protected Methods (1) 
 
         /// <summary>
-        /// Generates the member mappings and adds them targetType the provided <see cref="TypeMappingInfo{TSource, TTarget}"/> object.
+        /// Generates the member mappings and adds them to the provided <see cref="TypeMappingInfo{TSource, TTarget}"/> object.
         /// </summary>
         /// <param name="typeMapping">The type mapping where discovered mappings will be added.</param>
         [System.Diagnostics.CodeAnalysis.SuppressMessage(

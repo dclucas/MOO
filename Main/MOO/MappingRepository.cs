@@ -93,11 +93,11 @@ namespace Moo
         // Public Methods (4) 
 
         /// <summary>
-        /// Adds the specified mapper targetType the repository.
+        /// Adds the specified mapper to the repository.
         /// </summary>
         /// <typeparam name="TSource">The type of the source.</typeparam>
         /// <typeparam name="TTarget">The type of the target.</typeparam>
-        /// <param name="mapper">The mapper targetType be added.</param>
+        /// <param name="mapper">The mapper to be added.</param>
         public void AddMapper<TSource, TTarget>(IExtensibleMapper<TSource, TTarget> mapper)
         {
             this.mappers[GetKey<TSource, TTarget>()] = mapper;
@@ -238,7 +238,7 @@ namespace Moo
         /// <returns>
         /// A mapper instance, if one is found.
         /// </returns>
-        private IMapper TryGetMapper(Type sourceType, Type targetType)
+        public IMapper TryGetMapper(Type sourceType, Type targetType)
         {
             string key = GetKey(sourceType, targetType);
             object mapper;

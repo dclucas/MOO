@@ -90,6 +90,7 @@
     <Compile Include="IExtensibleMapper.cs" />
     <Compile Include="IMapper.cs" />
     <Compile Include="IMappingRepository.cs" />
+    <Compile Include="Mappers\AssociationMapper.cs" />
     <Compile Include="Mappers\AttributeMapper.cs" />
     <Compile Include="Mappers\BaseMapper.cs" />
     <Compile Include="Mappers\BaseMapper.Generic.cs" />

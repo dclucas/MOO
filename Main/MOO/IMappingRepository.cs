@@ -33,11 +33,11 @@ namespace Moo
     public interface IMappingRepository
     {
         /// <summary>
-        /// Adds the specified mapper targetType the repository.
+        /// Adds the specified mapper to the repository.
         /// </summary>
         /// <typeparam name="TSource">The type of the source.</typeparam>
         /// <typeparam name="TTarget">The type of the target.</typeparam>
-        /// <param name="mapper">The mapper targetType be added.</param>
+        /// <param name="mapper">The mapper to be added.</param>
         void AddMapper<TSource, TTarget>(IExtensibleMapper<TSource, TTarget> mapper);
 
         /// <summary>
@@ -72,5 +72,17 @@ namespace Moo
         /// An instance of a <see>IMapper</see> object.
         /// </returns>
         IMapper ResolveMapper(Type sourceType, Type targetType);
+
+        /// <summary>
+        /// Checks whether the repo already contains a mapper for the specified
+        /// classes and returns one if it does.
+        /// </summary>
+        /// <param name="sourceType">Type of the source.</param>
+        /// <param name="targetType">Type of the target.</param>
+        /// <returns>
+        /// An instance of a <see>IMapper</see> object if any exists in the
+        /// repository, <c>null</c> otherwise.
+        /// </returns>
+        IMapper TryGetMapper(Type sourceType, Type targetType);
     }
 }

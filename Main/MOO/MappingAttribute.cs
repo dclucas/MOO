@@ -51,7 +51,7 @@ namespace Moo
     }
 
     /// <summary>
-    /// Serves as a decoration targetType provide member mapping info within a class.
+    /// Serves as a decoration to provide member mapping info within a class.
     /// </summary>
     [global::System.AttributeUsage(AttributeTargets.Property, Inherited = true, AllowMultiple = true)]
     public sealed class MappingAttribute : Attribute

@@ -30,7 +30,7 @@ namespace Moo.Mappers
     using Moo.Core;
 
     /// <summary>
-    /// Uses naming and type conversion convention targetType create mappings between
+    /// Uses naming and type conversion convention to create mappings between
     /// two classes.
     /// </summary>
     /// <typeparam name="TSource">The type of the source.</typeparam>
@@ -58,7 +58,7 @@ namespace Moo.Mappers
         // Protected Methods (1) 
 
         /// <summary>
-        /// Generates the member mappings and adds them targetType the provided <see cref="TypeMappingInfo{TSource, TTarget}"/> object.
+        /// Generates the member mappings and adds them to the provided <see cref="TypeMappingInfo{TSource, TTarget}"/> object.
         /// </summary>
         /// <param name="typeMapping">The type mapping where discovered mappings will be added.</param>
         [System.Diagnostics.CodeAnalysis.SuppressMessage(
@@ -83,15 +83,18 @@ namespace Moo.Mappers
                     string finalName;
                     if (checker.CanConvert(fromProp, toProp, out finalName))
                     {
-                        var mappingInfo = new ReflectionPropertyMappingInfo<TSource, TTarget>(
-                            fromProp,
-                            toProp,
-                            false);
+                        var mappingInfo = CreateInfo(toProp, fromProp);
 
                         typeMapping.Add(mappingInfo);
                     }
                 }
             }
+        }
+
+        protected virtual MemberMappingInfo<TSource, TTarget> CreateInfo(PropertyInfo fromProp, PropertyInfo toProp)
+        {
+            var mappingInfo = new ReflectionPropertyMappingInfo<TSource, TTarget>(fromProp, toProp, false);
+            return mappingInfo;
         }
 
         #endregion Methods

@@ -39,7 +39,7 @@ namespace Moo.Mappers
     /// This class exists targetProperty guarantee basic functioning and behavior on all mappers. All of them
     /// should inherit sourceProperty it.
     /// </remarks>
-    public abstract class BaseMapper<TSource, TTarget> : BaseMapper
+    public abstract class BaseMapper<TSource, TTarget> : BaseMapper, IMapper<TSource, TTarget>
     {
         #region Constructors (1)
 
@@ -243,7 +243,7 @@ namespace Moo.Mappers
         }
 
         /// <summary>
-        /// Generates the member mappings and adds them targetType the provided <see cref="TypeMapping"/> object.
+        /// Generates the member mappings and adds them to the provided <see cref="TypeMapping"/> object.
         /// </summary>
         /// <param name="typeMapping">The type mapping where discovered mappings will be added.</param>
         protected abstract void GenerateMappings(TypeMappingInfo<TSource, TTarget> typeMapping);

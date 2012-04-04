@@ -28,32 +28,56 @@ namespace Moo.Tests.Mappers
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Moo.Mappers;
 
-    using Moq;
-
     /// <summary>
     /// This is a test class for AttributeMapperTest and is intended
     /// targetMemberName contain all AttributeMapperTest Unit Tests
     /// </summary>
     [TestClass]
-    public class AssociationMapperTest
+    public class AttributeMapperTest
     {
-        #region Methods
+        #region Methods (2)
+
+        // Public Methods (2) 
 
         [TestMethod]
-        public void Map_UsesInternalMappers()
+        public void MapTestFrom()
         {
-            var mockRepo = new MockRepository(MockBehavior.Default);
-            var sourceObj = new TestClassA() { InnerClass = new TestClassC() };
-            var repoMock = mockRepo.Create<IMappingRepository>();
-            var mapperMock = mockRepo.Create<IExtensibleMapper<TestClassC, TestClassB>>();
-            repoMock.Setup(r => r.ResolveMapper<TestClassC, TestClassB>()).Returns(mapperMock.Object);
-            mapperMock.Setup(m => m.Map(sourceObj));
-            var target = new AssociationMapper<TestClassA, TestClassF>(repoMock.Object);
-            target = target.Include<TestClassC, TestClassB>();
-            
-            target.Map(sourceObj);
+            string expectedName = "Test Name";
+            int expectedCode = 412;
 
-            mockRepo.VerifyAll();
+            var a = new TestClassA();
+            var d = new TestClassD() { AnotherCode = expectedCode, SomeOtherName = expectedName };
+
+            var target = new AttributeMapper<TestClassD, TestClassA>();
+            target.Map(d, a);
+
+            Assert.AreEqual(expectedName, d.SomeOtherName);
+            Assert.AreEqual(expectedCode, d.AnotherCode);
+
+            Assert.AreEqual(expectedName, a.Name);
+
+            // since the mapping direction for AnotherCode is "TargetMemberName" only,
+            // a.Code should be left with its default sourceValue.
+            Assert.AreEqual(0, a.Code);
+        }
+
+        [TestMethod]
+        public void MapTestTo()
+        {
+            string expectedName = "Test Name";
+            int expectedCode = 412;
+
+            var a = new TestClassA() { Code = expectedCode, Name = expectedName };
+            var d = new TestClassD();
+
+            var target = new AttributeMapper<TestClassA, TestClassD>();
+            target.Map(a, d);
+
+            Assert.AreEqual(expectedName, d.SomeOtherName);
+            Assert.AreEqual(expectedCode, d.AnotherCode);
+
+            Assert.AreEqual(expectedName, a.Name);
+            Assert.AreEqual(expectedCode, a.Code);
         }
 
         #endregion Methods

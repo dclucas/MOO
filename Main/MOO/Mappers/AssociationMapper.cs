@@ -23,39 +23,50 @@
 // Email: diogo.lucas@gmail.com
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
-namespace Moo.Tests.Mappers
-{
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using Moo.Mappers;
 
-    using Moq;
+
+namespace Moo.Mappers
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+
+    using Moo.Core;
+    using System.Reflection;
 
     /// <summary>
-    /// This is a test class for AttributeMapperTest and is intended
-    /// targetMemberName contain all AttributeMapperTest Unit Tests
+    /// TODO: Update summary.
     /// </summary>
-    [TestClass]
-    public class AssociationMapperTest
+    public class AssociationMapper<TSource, TTarget> : ConventionMapper<TSource, TTarget> 
     {
-        #region Methods
+        private IMappingRepository mappingRepo;
 
-        [TestMethod]
-        public void Map_UsesInternalMappers()
+        public AssociationMapper()
+            : this(MappingRepository.Default)
         {
-            var mockRepo = new MockRepository(MockBehavior.Default);
-            var sourceObj = new TestClassA() { InnerClass = new TestClassC() };
-            var repoMock = mockRepo.Create<IMappingRepository>();
-            var mapperMock = mockRepo.Create<IExtensibleMapper<TestClassC, TestClassB>>();
-            repoMock.Setup(r => r.ResolveMapper<TestClassC, TestClassB>()).Returns(mapperMock.Object);
-            mapperMock.Setup(m => m.Map(sourceObj));
-            var target = new AssociationMapper<TestClassA, TestClassF>(repoMock.Object);
-            target = target.Include<TestClassC, TestClassB>();
-            
-            target.Map(sourceObj);
-
-            mockRepo.VerifyAll();
         }
 
-        #endregion Methods
+        public AssociationMapper(IMappingRepository mappingRepo)
+        {
+            this.mappingRepo = mappingRepo;
+        }
+
+        public AssociationMapper<TSource, TTarget> Include<T1, T2>()
+        {
+            mappingRepo.ResolveMapper<T1, T2>();
+            return this;
+        }
+
+        protected override MemberMappingInfo<TSource, TTarget> CreateInfo(PropertyInfo fromProp, PropertyInfo toProp)
+        {
+            var mapper = mappingRepo.TryGetMapper(fromProp.PropertyType, toProp.PropertyType);
+            if (mapper != null)
+            {
+                //new DelegateMappingInfo<TSource, TTarget>()
+            }
+
+            return base.CreateInfo(toProp, fromProp);
+        }
     }
 }

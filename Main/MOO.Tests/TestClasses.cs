@@ -86,4 +86,9 @@ namespace Moo.Tests
     public class TestClassE : TestClassA
     {
     }
+
+    public class TestClassF
+    {
+        public TestClassB InnerClass { get; set; }
+    }
 }

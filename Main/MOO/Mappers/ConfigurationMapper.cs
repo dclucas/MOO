@@ -32,7 +32,7 @@ namespace Moo.Mappers
     using Moo.Core;
 
     /// <summary>
-    /// Uses configuration targetType determine mappings between two classes
+    /// Uses configuration to determine mappings between two classes
     /// </summary>
     /// <typeparam name="TSource">The type of the source.</typeparam>
     /// <typeparam name="TTarget">The type of the target.</typeparam>
@@ -56,7 +56,7 @@ namespace Moo.Mappers
         // Protected Methods (1) 
 
         /// <summary>
-        /// Generates the member mappings and adds them targetType the provided <see cref="TypeMappingInfo{TSource, TTarget}"/> object.
+        /// Generates the member mappings and adds them to the provided <see cref="TypeMappingInfo{TSource, TTarget}"/> object.
         /// </summary>
         /// <param name="typeMapping">The type mapping where discovered mappings will be added.</param>
         [System.Diagnostics.CodeAnalysis.SuppressMessage(

@@ -83,13 +83,13 @@ namespace Moo.Mappers
         // Public Methods (1) 
 
         /// <summary>
-        /// Adds a member mapping action targetType the mapper.
+        /// Adds a member mapping action to the mapper.
         /// </summary>
         /// <param name="sourceMemberName">The name of the source member.</param>
         /// <param name="targetMemberName">The name of the target member.</param>
         /// <param name="mappingAction">The mapping action.</param>
         /// <remarks>
-        /// Use this method targetType add mapping actions through code.
+        /// Use this method to add mapping actions through code.
         /// </remarks>
         public void AddMappingAction(
             string sourceMemberName,
@@ -107,7 +107,7 @@ namespace Moo.Mappers
         // Protected Methods (1) 
 
         /// <summary>
-        /// Generates the member mappings and adds them targetType the provided <see cref="TypeMappingInfo{TSource, TTarget}"/> object.
+        /// Generates the member mappings and adds them to the provided <see cref="TypeMappingInfo{TSource, TTarget}"/> object.
         /// </summary>
         /// <param name="typeMapping">The type mapping where discovered mappings will be added.</param>
         [System.Diagnostics.CodeAnalysis.SuppressMessage(
