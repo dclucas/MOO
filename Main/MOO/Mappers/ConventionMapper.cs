@@ -83,7 +83,7 @@ namespace Moo.Mappers
                     string finalName;
                     if (checker.CanConvert(fromProp, toProp, out finalName))
                     {
-                        var mappingInfo = CreateInfo(toProp, fromProp);
+                        var mappingInfo = CreateInfo(fromProp, toProp);
 
                         typeMapping.Add(mappingInfo);
                     }
@@ -91,9 +91,21 @@ namespace Moo.Mappers
             }
         }
 
-        protected virtual MemberMappingInfo<TSource, TTarget> CreateInfo(PropertyInfo fromProp, PropertyInfo toProp)
+        /// <summary>
+        /// Creates a member mapping info object to map the selected properties
+        /// </summary>
+        /// <param name="sourceProperty">
+        /// The source property
+        /// </param>
+        /// <param name="targetProperty">
+        /// The target property
+        /// </param>
+        /// <returns>
+        /// A new member mapping info object.
+        /// </returns>
+        protected virtual ReflectionPropertyMappingInfo<TSource, TTarget> CreateInfo(PropertyInfo sourceProperty, PropertyInfo targetProperty)
         {
-            var mappingInfo = new ReflectionPropertyMappingInfo<TSource, TTarget>(fromProp, toProp, false);
+            var mappingInfo = new ReflectionPropertyMappingInfo<TSource, TTarget>(sourceProperty, targetProperty, false);
             return mappingInfo;
         }
 

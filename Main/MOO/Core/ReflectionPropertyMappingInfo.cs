@@ -33,7 +33,7 @@ namespace Moo.Core
     /// </summary>
     /// <typeparam name="TSource">The type of the source.</typeparam>
     /// <typeparam name="TTarget">The type of the target.</typeparam>
-    internal class ReflectionPropertyMappingInfo<TSource, TTarget> : MemberMappingInfo<TSource, TTarget>
+    public class ReflectionPropertyMappingInfo<TSource, TTarget> : MemberMappingInfo<TSource, TTarget>
     {
         #region Constructors (2)
 

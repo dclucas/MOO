@@ -32,7 +32,7 @@ namespace Moo.Core
     /// <summary>
     /// Provides functionalities for property conversion.
     /// </summary>
-    internal class PropertyConverter
+    public class PropertyConverter
     {
         #region Fields (1)
 
