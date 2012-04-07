@@ -46,12 +46,12 @@ namespace Moo
         /// <summary>
         /// Private collection of mappers. Used to avoid a costly re-generation of mappers.
         /// </summary>
-        private Dictionary<string, object> mappers = new Dictionary<string, object>();
+        private readonly Dictionary<string, object> mappers = new Dictionary<string, object>();
 
         /// <summary>
         /// The mapping options to be used by all child mappers.
         /// </summary>
-        private MappingOptions options;
+        private readonly MappingOptions options;
 
         #endregion Fields
 
@@ -83,7 +83,7 @@ namespace Moo
         /// </summary>
         public static MappingRepository Default
         {
-            get { return MappingRepository.defaultInstance; }
+            get { return defaultInstance; }
         }
 
         #endregion Properties
@@ -122,6 +122,7 @@ namespace Moo
         /// <typeparam name="TTarget">
         /// The destination type.
         /// </typeparam>
+        /// <param name="mapperInclusions">A list of additional, internal mappers to include.</param>
         /// <returns>
         /// An instance of a <see>IExtensibleMapper</see> object.
         /// </returns>
@@ -129,14 +130,14 @@ namespace Moo
             "Microsoft.Design",
             "CA1004:GenericMethodsShouldProvideTypeParameter",
             Justification = "No can do - the generic parameter is only used on the method return.")]
-        public IExtensibleMapper<TSource, TTarget> ResolveMapper<TSource, TTarget>()
+        public IExtensibleMapper<TSource, TTarget> ResolveMapper<TSource, TTarget>(params MapperInclusion[] mapperInclusions)
         {
-            IExtensibleMapper<TSource, TTarget> res = TryGetMapper<TSource, TTarget>();
+            IExtensibleMapper<TSource, TTarget> res = TryGetMapper<TSource, TTarget>(mapperInclusions);
             if (res == null)
             {
                 lock (this.options)
                 {
-                    List<BaseMapper<TSource, TTarget>> innerMappers = new List<BaseMapper<TSource, TTarget>>();
+                    var innerMappers = new List<BaseMapper<TSource, TTarget>>();
 
                     var mapperTypes = this.options.MapperOrder;
 
@@ -149,7 +150,7 @@ namespace Moo
                             targetType = targetType.MakeGenericType(new Type[] { typeof(TSource), typeof(TTarget) });
                         }
 
-                        BaseMapper<TSource, TTarget> m = (BaseMapper<TSource, TTarget>)Activator.CreateInstance(targetType);
+                        var m = (BaseMapper<TSource, TTarget>)Activator.CreateInstance(targetType);
 
                         innerMappers.Add(m);
                     }
@@ -169,6 +170,7 @@ namespace Moo
         /// </summary>
         /// <param name="sourceType">Type of the source.</param>
         /// <param name="targetType">Type of the target.</param>
+        /// <param name="mapperInclusions">A list of additional, internal mappers to include.</param>
         /// <returns>
         /// An instance of a <see>IExtensibleMapper</see> object.
         /// </returns>
@@ -176,16 +178,16 @@ namespace Moo
             "Microsoft.Design",
             "CA1004:GenericMethodsShouldProvideTypeParameter",
             Justification = "No can do - the generic parameter is only used on the method return.")]
-        public IMapper ResolveMapper(Type sourceType, Type targetType)
+        public IMapper ResolveMapper(Type sourceType, Type targetType, params MapperInclusion[] mapperInclusions)
         {
-            var res = TryGetMapper(sourceType, targetType);
+            var res = TryGetMapper(sourceType, targetType, mapperInclusions);
             if (res == null)
             {
                 // HACK: turn this generic conversion into calls to non-generic methods. This will require
                 // the refactoring of a number of additional classes.
-                var methodInfo = this.GetType().GetMethod("ResolveMapper", new Type[0]);
+                var methodInfo = this.GetType().GetMethod("ResolveMapper", new Type[] { typeof(MapperInclusion[]) });
                 var genMethodInfo = methodInfo.MakeGenericMethod(sourceType, targetType);
-                res = (IMapper)genMethodInfo.Invoke(this, null);
+                res = (IMapper)genMethodInfo.Invoke(this, new object[] { mapperInclusions });
             }
 
             return res;
@@ -198,10 +200,11 @@ namespace Moo
         /// </summary>
         /// <typeparam name="TSource">The type of the source.</typeparam>
         /// <typeparam name="TTarget">The type of the target.</typeparam>
+        /// <param name="mapperInclusions">A list of additional, internal mappers to include.</param>
         /// <returns>A string containing the dictionary key</returns>
-        private static string GetKey<TSource, TTarget>()
+        private static string GetKey<TSource, TTarget>(params MapperInclusion[] mapperInclusions)
         {
-            return GetKey(typeof(TSource), typeof(TTarget));
+            return GetKey(typeof(TSource), typeof(TTarget), mapperInclusions);
         }
 
         /// <summary>
@@ -209,13 +212,16 @@ namespace Moo
         /// </summary>
         /// <param name="sourceType">Type of the source.</param>
         /// <param name="targetType">Type of the target.</param>
+        /// <param name="mapperInclusions">A list of additional, internal mappers to include.</param>
         /// <returns>The dictionary key for the combination.</returns>
-        private static string GetKey(Type sourceType, Type targetType)
+        private static string GetKey(Type sourceType, Type targetType, params MapperInclusion[] mapperInclusions)
         {
             Guard.CheckArgumentNotNull(sourceType, "sourceType");
             Guard.CheckArgumentNotNull(targetType, "targetType");
+            const string MappingFormat = "{0}>{1}";
 
             // TODO: why not override GetHashCode in TypeMappingInfo and just use a HashSet here?
+            var key = string.Format(MappingFormat, sourceType.AssemblyQualifiedName, targetType.AssemblyQualifiedName);
             return sourceType.AssemblyQualifiedName + ">" + targetType.AssemblyQualifiedName;
         }
 
@@ -224,10 +230,11 @@ namespace Moo
         /// </summary>
         /// <typeparam name="TSource">The type of the source.</typeparam>
         /// <typeparam name="TTarget">The type of the target.</typeparam>
+        /// <param name="mapperInclusions">A list of additional, internal mappers to include.</param>
         /// <returns>A mapper instance, if one is found</returns>
-        private IExtensibleMapper<TSource, TTarget> TryGetMapper<TSource, TTarget>()
+        private IExtensibleMapper<TSource, TTarget> TryGetMapper<TSource, TTarget>(params MapperInclusion[] mapperInclusions)
         {
-            return (IExtensibleMapper<TSource, TTarget>)TryGetMapper(typeof(TSource), typeof(TTarget));
+            return (IExtensibleMapper<TSource, TTarget>)TryGetMapper(typeof(TSource), typeof(TTarget), mapperInclusions);
         }
 
         /// <summary>
@@ -235,12 +242,13 @@ namespace Moo
         /// </summary>
         /// <param name="sourceType">Type of the source.</param>
         /// <param name="targetType">Type of the target.</param>
+        /// <param name="mapperInclusions">A list of additional, internal mappers to include.</param>
         /// <returns>
         /// A mapper instance, if one is found.
         /// </returns>
-        public IMapper TryGetMapper(Type sourceType, Type targetType)
+        public IMapper TryGetMapper(Type sourceType, Type targetType, params MapperInclusion[] mapperInclusions)
         {
-            string key = GetKey(sourceType, targetType);
+            var key = GetKey(sourceType, targetType, mapperInclusions);
             object mapper;
             if (this.mappers.TryGetValue(key, out mapper))
             {

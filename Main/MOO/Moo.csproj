@@ -103,6 +103,8 @@
     <Compile Include="MappingCancellationEventArgs.cs" />
     <Compile Include="MappingEventArgs.cs" />
     <Compile Include="MappingException.cs" />
+    <Compile Include="MapperInclusion.cs" />
+    <Compile Include="MapperInclusion.Generic.cs" />
     <Compile Include="MappingOptions.cs" />
     <Compile Include="MappingRepository.cs" />
     <Compile Include="ObjectMappingExtender.cs" />

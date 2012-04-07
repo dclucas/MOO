@@ -56,10 +56,11 @@ namespace Moo
         /// <typeparam name="TTarget">
         /// The destination type.
         /// </typeparam>
+        /// <param name="mapperInclusions">A list of additional, internal mappers to include.</param>
         /// <returns>
         /// An instance of a <see>IExtensibleMapper</see> object.
         /// </returns>
-        IExtensibleMapper<TSource, TTarget> ResolveMapper<TSource, TTarget>();
+        IExtensibleMapper<TSource, TTarget> ResolveMapper<TSource, TTarget>(params MapperInclusion[] mapperInclusions);
 
         /// <summary>
         /// Returns a mapper object for the two provided types, by
@@ -68,10 +69,11 @@ namespace Moo
         /// </summary>
         /// <param name="sourceType">Type of the source.</param>
         /// <param name="targetType">Type of the target.</param>
+        /// <param name="mapperInclusions">A list of additional, internal mappers to include.</param>
         /// <returns>
-        /// An instance of a <see>IMapper</see> object.
+        /// An instance of a <see>IExtensibleMapper</see> object.
         /// </returns>
-        IMapper ResolveMapper(Type sourceType, Type targetType);
+        IMapper ResolveMapper(Type sourceType, Type targetType, params MapperInclusion[] mapperInclusions);
 
         /// <summary>
         /// Checks whether the repo already contains a mapper for the specified
@@ -79,10 +81,11 @@ namespace Moo
         /// </summary>
         /// <param name="sourceType">Type of the source.</param>
         /// <param name="targetType">Type of the target.</param>
+        /// <param name="mapperInclusions">A list of additional, internal mappers to include.</param>
         /// <returns>
         /// An instance of a <see>IMapper</see> object if any exists in the
         /// repository, <c>null</c> otherwise.
         /// </returns>
-        IMapper TryGetMapper(Type sourceType, Type targetType);
+        IMapper TryGetMapper(Type sourceType, Type targetType, params MapperInclusion[] mapperInclusions);
     }
 }
