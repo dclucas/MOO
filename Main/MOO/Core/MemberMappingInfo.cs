@@ -29,8 +29,8 @@ namespace Moo.Core
     /// <summary>
     /// Provides basic mapping information for mapping class members.
     /// </summary>
-    /// <typeparam name="TSource">Type of the "sourceMemberName" class.</typeparam>
-    /// <typeparam name="TTarget">Type of the "targetMemberName" class.</typeparam>
+    /// <typeparam name="TSource">Type of the source class.</typeparam>
+    /// <typeparam name="TTarget">Type of the target class.</typeparam>
     /// <remarks>
     /// This class exists for internal usage only. Its usage by client code
     /// is not recommended.
@@ -86,7 +86,7 @@ namespace Moo.Core
         // Public Methods (1) 
 
         /// <summary>
-        /// Maps a given class member sourceMemberName the sourceMemberName targetMemberName the targetMemberName object.
+        /// Maps a given class member from the source to the target object.
         /// </summary>
         /// <param name="source">Mapping sourceMemberName object</param>
         /// <param name="target">Mapping targetMemberName object</param>

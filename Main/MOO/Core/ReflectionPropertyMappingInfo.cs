@@ -53,8 +53,8 @@ namespace Moo.Core
             Guard.CheckArgumentNotNull(sourceProperty, "sourceMemberName");
             Guard.CheckArgumentNotNull(targetProperty, "targetMemberName");
             Guard.CheckArgumentNotNull(converter, "converter");
-            SourceMemberName = sourceProperty.Name;
-            TargetMemberName = targetProperty.Name;
+            this.SourceMemberName = sourceProperty.Name;
+            this.TargetMemberName = targetProperty.Name;
             this.FromPropertyInfo = sourceProperty;
             this.ToPropertyInfo = targetProperty;
             this.Converter = converter;

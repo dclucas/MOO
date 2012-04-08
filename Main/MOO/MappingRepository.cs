@@ -28,6 +28,8 @@ namespace Moo
 {
     using System;
     using System.Collections.Generic;
+    using System.Text;
+
     using Moo.Core;
     using Moo.Mappers;
 
@@ -150,7 +152,7 @@ namespace Moo
                             targetType = targetType.MakeGenericType(new Type[] { typeof(TSource), typeof(TTarget) });
                         }
 
-                        var m = (BaseMapper<TSource, TTarget>)Activator.CreateInstance(targetType);
+                        var m = this.CreatMapper<TSource, TTarget>(targetType, mapperInclusions);
 
                         innerMappers.Add(m);
                     }
@@ -161,6 +163,37 @@ namespace Moo
             }
 
             return res;
+        }
+
+        /// <summary>
+        /// Creates an instance of the specified mapper class
+        /// </summary>
+        /// <param name="targetType">
+        /// The target mapper type.
+        /// </param>
+        /// <param name="includedMappers">
+        /// The included mappers.
+        /// </param>
+        /// <typeparam name="TSource">
+        /// Type of the mapping source.
+        /// </typeparam>
+        /// <typeparam name="TTarget">
+        /// Type of the mapping target.
+        /// </typeparam>
+        /// <returns>
+        /// A new mapper object, of the specified type.
+        /// </returns>
+        protected virtual BaseMapper<TSource, TTarget> CreatMapper<TSource, TTarget>(
+            Type targetType, IEnumerable<MapperInclusion> includedMappers)
+        {
+            if (targetType.GetConstructor(new Type[] { typeof(MapperConstructorInfo) }) != null)
+            {
+                var info = new MapperConstructorInfo(this, includedMappers);
+                return (BaseMapper<TSource, TTarget>)Activator
+                    .CreateInstance(targetType, new object[] { info });
+            }
+
+            return (BaseMapper<TSource, TTarget>)Activator.CreateInstance(targetType);
         }
 
         /// <summary>
@@ -218,11 +251,26 @@ namespace Moo
         {
             Guard.CheckArgumentNotNull(sourceType, "sourceType");
             Guard.CheckArgumentNotNull(targetType, "targetType");
-            const string MappingFormat = "{0}>{1}";
 
             // TODO: why not override GetHashCode in TypeMappingInfo and just use a HashSet here?
-            var key = string.Format(MappingFormat, sourceType.AssemblyQualifiedName, targetType.AssemblyQualifiedName);
-            return sourceType.AssemblyQualifiedName + ">" + targetType.AssemblyQualifiedName;
+            var key = sourceType.AssemblyQualifiedName + ">" + targetType.AssemblyQualifiedName + AppendInclusions(mapperInclusions);
+            return key;
+        }
+
+        private static string AppendInclusions(MapperInclusion[] mapperInclusions)
+        {
+            if (mapperInclusions.Length > 0)
+            {
+                var sb = new StringBuilder();
+                foreach (var m in mapperInclusions)
+                {
+                    sb.AppendFormat("+{0}>{1}", m.SourceType.Name, m.TargetType.Name);
+                }
+
+                return sb.ToString();
+            }
+
+            return string.Empty;
         }
 
         /// <summary>

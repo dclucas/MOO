@@ -16,7 +16,7 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along Moo.  If not, see http://www.gnu.org/licenses/.
+// along Moo.  If not, see http:// www.gnu.org/licenses/.
 // </copyright>
 // <summary>
 // Moo is a object-to-object multi-mapper.
@@ -24,7 +24,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Moo
+namespace Moo.Core
 {
     using System;
     using System.Collections.Generic;
@@ -32,19 +32,34 @@ namespace Moo
     using System.Text;
 
     /// <summary>
-    /// Generic version of the MapperInclusion class
+    /// Context information for mapper construction.
     /// </summary>
-    /// <typeparam name="TSource">The mapper source type</typeparam>
-    /// <typeparam name="TTarget">The mapper target type</typeparam>
-    public class MapperInclusion<TSource, TTarget> : MapperInclusion
+    public struct MapperConstructorInfo
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="MapperInclusion{TSource,TTarget}"/> class. 
+        /// Initializes a new instance of the <see cref="MapperConstructorInfo"/> struct. 
         /// </summary>
-        public MapperInclusion()
+        /// <param name="parentRepo">
+        /// The parent repo.
+        /// </param>
+        /// <param name="includedMappers">
+        /// The included mappers.
+        /// </param>
+        public MapperConstructorInfo(IMappingRepository parentRepo, IEnumerable<MapperInclusion> includedMappers)
+            : this()
         {
-            this.SourceType = typeof(TSource);
-            this.TargetType = typeof(TTarget);
+            this.ParentRepo = parentRepo;
+            this.IncludedMappers = includedMappers;
         }
+
+        /// <summary>
+        /// Gets or sets parent mapping repository.
+        /// </summary>
+        public IMappingRepository ParentRepo { get; set; }
+
+        /// <summary>
+        /// Gets or sets the included mappers.
+        /// </summary>
+        public IEnumerable<MapperInclusion> IncludedMappers { get; set; }
     }
 }

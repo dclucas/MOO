@@ -28,6 +28,8 @@ namespace Moo.Mappers
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
+
     using Moo.Core;
 
     /// <summary>
@@ -201,10 +203,7 @@ namespace Moo.Mappers
         /// </remarks>
         public virtual IEnumerable<TTarget> MapMultiple(IEnumerable<TSource> sourceList)
         {
-            foreach (var s in sourceList)
-            {
-                yield return Map(s);
-            }
+            return sourceList.Select(s => this.Map(s));
         }
 
         /// <summary>
@@ -217,10 +216,7 @@ namespace Moo.Mappers
         /// </returns>
         public virtual IEnumerable<TTarget> MapMultiple(IEnumerable<TSource> sourceList, Func<TTarget> createTarget)
         {
-            foreach (var s in sourceList)
-            {
-                yield return Map(s, createTarget);
-            }
+            return sourceList.Select(s => this.Map(s, createTarget));
         }
 
         // Protected Methods (3) 
