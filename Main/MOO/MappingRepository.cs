@@ -152,7 +152,7 @@ namespace Moo
                             targetType = targetType.MakeGenericType(new Type[] { typeof(TSource), typeof(TTarget) });
                         }
 
-                        var m = this.CreatMapper<TSource, TTarget>(targetType, mapperInclusions);
+                        var m = this.CreateMapper<TSource, TTarget>(targetType, mapperInclusions);
 
                         innerMappers.Add(m);
                     }
@@ -183,9 +183,15 @@ namespace Moo
         /// <returns>
         /// A new mapper object, of the specified type.
         /// </returns>
-        protected virtual BaseMapper<TSource, TTarget> CreatMapper<TSource, TTarget>(
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Microsoft.Design",
+            "CA1062:Validate arguments of public methods",
+            MessageId = "0",
+            Justification = "The call to Guard does this check.")]
+        protected virtual BaseMapper<TSource, TTarget> CreateMapper<TSource, TTarget>(
             Type targetType, IEnumerable<MapperInclusion> includedMappers)
         {
+            Guard.CheckArgumentNotNull(targetType, "targetType");
             if (targetType.GetConstructor(new Type[] { typeof(MapperConstructorInfo) }) != null)
             {
                 var info = new MapperConstructorInfo(this, includedMappers);

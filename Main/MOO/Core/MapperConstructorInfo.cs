@@ -34,10 +34,10 @@ namespace Moo.Core
     /// <summary>
     /// Context information for mapper construction.
     /// </summary>
-    public struct MapperConstructorInfo
+    public class MapperConstructorInfo
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="MapperConstructorInfo"/> struct. 
+        /// Initializes a new instance of the <see cref="MapperConstructorInfo"/> class. 
         /// </summary>
         /// <param name="parentRepo">
         /// The parent repo.
@@ -46,20 +46,19 @@ namespace Moo.Core
         /// The included mappers.
         /// </param>
         public MapperConstructorInfo(IMappingRepository parentRepo, IEnumerable<MapperInclusion> includedMappers)
-            : this()
         {
             this.ParentRepo = parentRepo;
             this.IncludedMappers = includedMappers;
         }
 
         /// <summary>
-        /// Gets or sets parent mapping repository.
+        /// Gets the parent mapping repository.
         /// </summary>
-        public IMappingRepository ParentRepo { get; set; }
+        public IMappingRepository ParentRepo { get; private set; }
 
         /// <summary>
-        /// Gets or sets the included mappers.
+        /// Gets the included mappers.
         /// </summary>
-        public IEnumerable<MapperInclusion> IncludedMappers { get; set; }
+        public IEnumerable<MapperInclusion> IncludedMappers { get; private set; }
     }
 }

@@ -33,12 +33,12 @@ namespace Moo.Mappers
         /// <summary>
         /// Initializes a new instance of the <see cref="AssociationMapper{TSource,TTarget}"/> class. 
         /// </summary>
-        /// <param name="mapperInclusions">
-        /// Helpers mappers to be used.
-        /// </param>
-        /// <param name="mappingRepository">
-        /// The mapping repository.
-        /// </param>
+        /// <param name="constructorInfo">Mapper construction information.</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Microsoft.Design", 
+            "CA1062:Validate arguments of public methods", 
+            MessageId = "0",
+            Justification = "The call to Guard does that.")]
         public AssociationMapper(MapperConstructorInfo constructorInfo)
             : base()
         {
@@ -54,6 +54,11 @@ namespace Moo.Mappers
         /// Generates the member mappings and adds them to the provided <see cref="TypeMappingInfo{TSource, TTarget}"/> object.
         /// </summary>
         /// <param name="typeMapping">The type mapping where discovered mappings will be added.</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Microsoft.Design", 
+            "CA1062:Validate arguments of public methods", 
+            MessageId = "0", 
+            Justification = "The call to Guard does this check.")]
         protected override void GenerateMappings(TypeMappingInfo<TSource, TTarget> typeMapping)
         {
             Guard.CheckArgumentNotNull(typeMapping, "typeMapping");

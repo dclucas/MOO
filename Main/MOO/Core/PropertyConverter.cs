@@ -70,8 +70,20 @@ namespace Moo.Core
         ///   <c>true</c> if a strict conversion is possible (types are
         /// convertible and naming matches), <c>false</c> otherwise.
         /// </returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Microsoft.Design", 
+            "CA1021:AvoidOutParameters", 
+            MessageId = "2#",
+            Justification = "No easy way out of this, for the time being.")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Microsoft.Design",
+            "CA1062:Validate arguments of public methods",
+            MessageId = "0",
+            Justification = "The call to Guard does this check.")]
         public bool CanConvert(PropertyInfo sourceProperty, PropertyInfo targetProperty, out string finalName)
         {
+            Guard.CheckArgumentNotNull(sourceProperty, "sourceProperty");
+            Guard.CheckArgumentNotNull(targetProperty, "targetProperty");
             PropertyInfo innerProp;
             var isConvertible = this.CanConvert(sourceProperty, targetProperty, out innerProp);
             if (isConvertible)
