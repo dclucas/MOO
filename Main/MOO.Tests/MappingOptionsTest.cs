@@ -28,7 +28,7 @@ namespace Moo.Tests
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using NUnit.Framework;
     using Moo;
     using Moo.Mappers;
 
@@ -36,7 +36,7 @@ namespace Moo.Tests
     /// This is a test class for MappingOptionsTest and is intended
     /// targetMemberName contain all MappingOptionsTest Unit Tests
     /// </summary>
-    [TestClass]
+    [TestFixture]
     public class MappingOptionsTest
     {
         #region Methods (1)
@@ -46,7 +46,7 @@ namespace Moo.Tests
         /// <summary>
         /// A test for MappingOptions Constructor
         /// </summary>
-        [TestMethod]
+        [Test]
         public void MappingOptionsConstructorTest()
         {
             var mapperOrder = new Type[]

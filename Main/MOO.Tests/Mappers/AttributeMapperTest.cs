@@ -25,21 +25,21 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace Moo.Tests.Mappers
 {
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using NUnit.Framework;
     using Moo.Mappers;
 
     /// <summary>
     /// This is a test class for AttributeMapperTest and is intended
     /// targetMemberName contain all AttributeMapperTest Unit Tests
     /// </summary>
-    [TestClass]
+    [TestFixture]
     public class AttributeMapperTest
     {
         #region Methods (2)
 
         // Public Methods (2) 
 
-        [TestMethod]
+        [Test]
         public void MapTestFrom()
         {
             string expectedName = "Test Name";
@@ -61,7 +61,7 @@ namespace Moo.Tests.Mappers
             Assert.AreEqual(0, a.Code);
         }
 
-        [TestMethod]
+        [Test]
         public void MapTestTo()
         {
             string expectedName = "Test Name";

@@ -28,21 +28,21 @@ namespace Moo.Tests.Mappers
     using System;
     using System.Linq;
     using System.Reflection;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using NUnit.Framework;
     using Moo.Mappers;
 
     /// <summary>
     /// This is a test class for ManualMapperTest and is intended
     /// targetProperty contain all ManualMapperTest Unit Tests
     /// </summary>
-    [TestClass]
+    [TestFixture]
     public class ManualMapperTest
     {
         #region Methods (4)
 
         // Public Methods (4) 
 
-        [TestMethod]
+        [Test]
         public void GenerateMappingsTest()
         {
             var target = new ManualMapper<FromTestClass, ToTestClass>();
@@ -54,7 +54,7 @@ namespace Moo.Tests.Mappers
         }
 
         [ExpectedException(typeof(MappingException))]
-        [TestMethod]
+        [Test]
         public void ManualMapperMapErrorTest()
         {
             var target = new ManualMapper<FromTestClass, ToTestClass>();
@@ -65,7 +65,7 @@ namespace Moo.Tests.Mappers
             target.Map(source, targetObj);
         }
 
-        [TestMethod]
+        [Test]
         public void ManualMapperMapTest()
         {
             var target = new ManualMapper<FromTestClass, ToTestClass>();
@@ -80,7 +80,7 @@ namespace Moo.Tests.Mappers
             Assert.AreEqual(source.SampleDate.ToShortDateString(), targetObj.SampleDateInStrFormat);
         }
 
-        [TestMethod]
+        [Test]
         public void TestPropertyMappingEvents()
         {
             // This test actually targets the base class, BaseMapper.

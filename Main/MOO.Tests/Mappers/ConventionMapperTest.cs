@@ -28,21 +28,21 @@ namespace Moo.Tests.Mappers
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using NUnit.Framework;
     using Moo.Mappers;
 
     /// <summary>
     /// This is a test class for ConventionMapperTest and is intended
     /// targetProperty contain all ConventionMapperTest Unit Tests
     /// </summary>
-    [TestClass]
+    [TestFixture]
     public class ConventionMapperTest
     {
         #region Methods (11)
 
         // Public Methods (7) 
 
-        [TestMethod]
+        [Test]
         public void Map_NonGeneric_MappingWorks()
         {
             var target = new ConventionMapper<TestClassA, TestClassB>();
@@ -52,7 +52,7 @@ namespace Moo.Tests.Mappers
             CheckMapping(source, result);
         }
 
-        [TestMethod]
+        [Test]
         public void Map_NOTarget_MappingWorks()
         {
             var target = new ConventionMapper<TestClassA, TestClassB>();
@@ -61,7 +61,7 @@ namespace Moo.Tests.Mappers
             CheckMapping(source, result);
         }
 
-        [TestMethod]
+        [Test]
         public void Map_NullInner_PropertySkipped()
         {
             var target = new ConventionMapper<TestClassA, TestClassB>();
@@ -78,7 +78,7 @@ namespace Moo.Tests.Mappers
             Assert.AreEqual(mapSource.Name, result.Name);
         }
 
-        [TestMethod]
+        [Test]
         public void Map_WithFactory_MappingWorks()
         {
             var target = new ConventionMapper<TestClassA, TestClassB>();
@@ -88,7 +88,7 @@ namespace Moo.Tests.Mappers
             CheckMapping(source, result);
         }
 
-        [TestMethod]
+        [Test]
         public void MapMultipleFunctionTest()
         {
             var target = new ConventionMapper<TestClassA, TestClassB>();
@@ -99,7 +99,7 @@ namespace Moo.Tests.Mappers
             Assert.IsTrue(result.All(r => r.Code == defaultDate));
         }
 
-        [TestMethod]
+        [Test]
         public void MapMultipleTest()
         {
             var target = new ConventionMapper<TestClassA, TestClassB>();
@@ -108,7 +108,7 @@ namespace Moo.Tests.Mappers
             CheckLists(source, result);
         }
 
-        [TestMethod]
+        [Test]
         public void MapTest()
         {
             var target = new ConventionMapper<TestClassA, TestClassB>();

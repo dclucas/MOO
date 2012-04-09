@@ -29,18 +29,18 @@ namespace Moo.Tests
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using NUnit.Framework;
     using Moo;
     using Moq;
 
-    [TestClass]
+    [TestFixture]
     public class IEnumerableMappingExtenderTest
     {
         #region Methods (4)
 
         // Public Methods (4) 
 
-        [TestMethod]
+        [Test]
         [ExpectedException(typeof(ArgumentNullException))]
         public void MapAll_NullMapper_Throws()
         {
@@ -48,7 +48,7 @@ namespace Moo.Tests
             target.MapAll<TestClassC, TestClassA>((IMapper<TestClassC, TestClassA>)null);
         }
 
-        [TestMethod]
+        [Test]
         public void MapAll_ValidInput_CallsDefaultRepository()
         {
             MappingRepository.Default.Clear();
@@ -63,7 +63,7 @@ namespace Moo.Tests
             MappingRepository.Default.Clear();
         }
 
-        [TestMethod]
+        [Test]
         public void MapAll_ValidInput_CallsMapper()
         {
             var mapperMock = new Mock<IMapper<TestClassA, TestClassB>>(MockBehavior.Strict);
@@ -74,7 +74,7 @@ namespace Moo.Tests
             Assert.AreEqual(output, result);
         }
 
-        [TestMethod]
+        [Test]
         public void MapAll_ValidInput_CallsRepository()
         {
             var mapperMock = new Mock<IExtensibleMapper<TestClassE, TestClassC>>(MockBehavior.Strict);

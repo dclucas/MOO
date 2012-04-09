@@ -27,21 +27,21 @@ namespace Moo.Tests.Core
 {
     using System;
     using System.Reflection;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using NUnit.Framework;
     using Moo.Core;
 
     /// <summary>
     /// This is a test class for ReflectionPropertyMappingInfoTest and is intended
     /// targetMemberName contain all ReflectionPropertyMappingInfoTest Unit Tests
     /// </summary>
-    [TestClass]
+    [TestFixture]
     public class ReflectionPropertyMappingInfoTest
     {
         #region Methods (1)
 
         // Public Methods (1) 
 
-        [TestMethod]
+        [Test]
         public void MapTest()
         {
             TestClassA a = new TestClassA();

@@ -29,14 +29,14 @@ namespace Moo.Tests.Core
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using NUnit.Framework;
     using Moo.Core;
 
     /// <summary>
     /// This is a test class for GuardTest and is intended
     /// targetMemberName contain all GuardTest Unit Tests
     /// </summary>
-    [TestClass]
+    [TestFixture]
     public class GuardTest
     {
         #region Methods (5)
@@ -46,7 +46,7 @@ namespace Moo.Tests.Core
         /// <summary>
         /// A test for CheckArgumentNotNull
         /// </summary>
-        [TestMethod]
+        [Test]
         [ExpectedException(typeof(ArgumentNullException))]
         public void CheckArgumentNotNullTest()
         {
@@ -56,7 +56,7 @@ namespace Moo.Tests.Core
         /// <summary>
         /// A test for CheckEnumerableNotNullOrEmpty
         /// </summary>
-        [TestMethod]
+        [Test]
         [ExpectedException(typeof(ArgumentException))]
         public void CheckEnumerableNotNullOrEmptyEmptyTest()
         {
@@ -66,14 +66,14 @@ namespace Moo.Tests.Core
         /// <summary>
         /// A test for CheckEnumerableNotNullOrEmpty
         /// </summary>
-        [TestMethod]
+        [Test]
         [ExpectedException(typeof(ArgumentNullException))]
         public void CheckEnumerableNotNullOrEmptyNullTest()
         {
             Guard.CheckEnumerableNotNullOrEmpty(null, "argumentName");
         }
 
-        [TestMethod]
+        [Test]
         [ExpectedException(typeof(ArgumentException))]
         public void TrueForAllNegativeTest()
         {
@@ -83,7 +83,7 @@ namespace Moo.Tests.Core
                 b => b);
         }
 
-        [TestMethod]
+        [Test]
         public void TrueForAllTest()
         {
             var passed = new bool[4];

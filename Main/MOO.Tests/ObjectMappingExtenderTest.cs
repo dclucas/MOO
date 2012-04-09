@@ -29,18 +29,18 @@ namespace Moo.Tests
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using NUnit.Framework;
     using Moo;
     using Moq;
 
-    [TestClass]
+    [TestFixture]
     public class ObjectMappingExtenderTest
     {
         #region Methods (18)
 
         // Public Methods (18) 
 
-        [TestMethod]
+        [Test]
         [ExpectedException(typeof(ArgumentNullException))]
         public void MapTo_NullMapper_Throws_1()
         {
@@ -48,7 +48,7 @@ namespace Moo.Tests
             source.MapTo<TestClassB>((IMapper)null);
         }
 
-        [TestMethod]
+        [Test]
         [ExpectedException(typeof(ArgumentNullException))]
         public void MapTo_NullMapper_Throws_2()
         {
@@ -56,7 +56,7 @@ namespace Moo.Tests
             source.MapTo<TestClassB>(new TestClassB(), (IMapper)null);
         }
 
-        [TestMethod]
+        [Test]
         [ExpectedException(typeof(ArgumentNullException))]
         public void MapTo_NullRepo_Throws_1()
         {
@@ -64,7 +64,7 @@ namespace Moo.Tests
             source.MapTo<TestClassA>(new TestClassA(), (IMappingRepository)null);
         }
 
-        [TestMethod]
+        [Test]
         [ExpectedException(typeof(ArgumentNullException))]
         public void MapTo_NullRepo_Throws_2()
         {
@@ -72,7 +72,7 @@ namespace Moo.Tests
             source.MapTo<TestClassA>((IMappingRepository)null);
         }
 
-        [TestMethod]
+        [Test]
         [ExpectedException(typeof(ArgumentNullException))]
         public void MapTo_NullSource_Throws_1()
         {
@@ -80,7 +80,7 @@ namespace Moo.Tests
             source.MapTo<TestClassB>(new TestClassB());
         }
 
-        [TestMethod]
+        [Test]
         [ExpectedException(typeof(ArgumentNullException))]
         public void MapTo_NullSource_Throws_2()
         {
@@ -88,7 +88,7 @@ namespace Moo.Tests
             source.MapTo<TestClassB>();
         }
 
-        [TestMethod]
+        [Test]
         [ExpectedException(typeof(ArgumentNullException))]
         public void MapTo_NullSource_Throws_3()
         {
@@ -96,7 +96,7 @@ namespace Moo.Tests
             source.MapTo<TestClassB>(new Mock<IMapper>().Object);
         }
 
-        [TestMethod]
+        [Test]
         [ExpectedException(typeof(ArgumentNullException))]
         public void MapTo_NullSource_Throws_4()
         {
@@ -104,7 +104,7 @@ namespace Moo.Tests
             source.MapTo<TestClassB>(new Mock<IMappingRepository>().Object);
         }
 
-        [TestMethod]
+        [Test]
         [ExpectedException(typeof(ArgumentNullException))]
         public void MapTo_NullSource_Throws_5()
         {
@@ -112,7 +112,7 @@ namespace Moo.Tests
             source.MapTo<TestClassB>(new TestClassB(), new Mock<IMapper>().Object);
         }
 
-        [TestMethod]
+        [Test]
         [ExpectedException(typeof(ArgumentNullException))]
         public void MapTo_NullTarget_Throws_1()
         {
@@ -120,7 +120,7 @@ namespace Moo.Tests
             source.MapTo<TestClassC>((TestClassC)null);
         }
 
-        [TestMethod]
+        [Test]
         [ExpectedException(typeof(ArgumentNullException))]
         public void MapTo_NullTarget_Throws_2()
         {
@@ -128,7 +128,7 @@ namespace Moo.Tests
             source.MapTo<TestClassC>((TestClassC)null, new Mock<IMapper>().Object);
         }
 
-        [TestMethod]
+        [Test]
         [ExpectedException(typeof(ArgumentNullException))]
         public void MapTo_NullTarget_Throws_3()
         {
@@ -136,7 +136,7 @@ namespace Moo.Tests
             source.MapTo<TestClassC>((TestClassC)null, new Mock<IMappingRepository>().Object);
         }
 
-        [TestMethod]
+        [Test]
         public void MapTo_ValidInput_UsesDefaultRepo()
         {
             var source = new TestClassC();
@@ -151,7 +151,7 @@ namespace Moo.Tests
             MappingRepository.Default.Clear();
         }
 
-        [TestMethod]
+        [Test]
         public void MapTo_ValidInput_UsesProvidedMapper()
         {
             var source = new TestClassC();
@@ -164,7 +164,7 @@ namespace Moo.Tests
             MappingRepository.Default.Clear();
         }
 
-        [TestMethod]
+        [Test]
         public void MapTo_ValidInput_UsesProvidedRepo()
         {
             var source = new TestClassC();
@@ -180,7 +180,7 @@ namespace Moo.Tests
             MappingRepository.Default.Clear();
         }
 
-        [TestMethod]
+        [Test]
         public void MapTo_ValidInputAndTarget_UsesDefaultRepo()
         {
             var source = new TestClassC();
@@ -195,7 +195,7 @@ namespace Moo.Tests
             MappingRepository.Default.Clear();
         }
 
-        [TestMethod]
+        [Test]
         public void MapTo_ValidInputAndTarget_UsesProvidedMapper()
         {
             var source = new TestClassC();
@@ -208,7 +208,7 @@ namespace Moo.Tests
             MappingRepository.Default.Clear();
         }
 
-        [TestMethod]
+        [Test]
         public void MapTo_ValidInputAndTarget_UsesProvidedRepo()
         {
             var source = new TestClassC();

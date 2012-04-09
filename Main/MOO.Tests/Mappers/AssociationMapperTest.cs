@@ -26,7 +26,7 @@
 
 namespace Moo.Tests.Mappers
 {
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using NUnit.Framework;
 
     using Moo.Core;
     using Moo.Mappers;
@@ -35,10 +35,10 @@ namespace Moo.Tests.Mappers
     /// <summary>
     /// Summary description for AssociationMapperTest
     /// </summary>
-    [TestClass]
+    [TestFixture]
     public class AssociationMapperTest
     {
-        [TestMethod]
+        [Test]
         public void Map_UsesIncludedMasters()
         {
             var inclusions = new MapperInclusion[] { new MapperInclusion<TestClassC, TestClassB>() };

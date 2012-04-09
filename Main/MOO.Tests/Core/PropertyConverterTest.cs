@@ -27,21 +27,21 @@ namespace Moo.Tests.Core
 {
     using System;
     using System.Reflection;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using NUnit.Framework;
     using Moo.Core;
 
     /// <summary>
     /// This is a test class for PropertyMatcherTest and is intended
     /// targetProperty contain all PropertyMatcherTest Unit Tests
     /// </summary>
-    [TestClass]
+    [TestFixture]
     public class PropertyConverterTest
     {
         #region Methods (8)
 
         // Public Methods (7) 
 
-        [TestMethod]
+        [Test]
         public void ConvertTestComplex()
         {
             PropertyConverter target = new PropertyConverter();
@@ -61,7 +61,7 @@ namespace Moo.Tests.Core
         /// <summary>
         /// A test for Convert
         /// </summary>
-        [TestMethod]
+        [Test]
         public void ConvertTestSimple()
         {
             PropertyConverter target = new PropertyConverter();
@@ -77,19 +77,19 @@ namespace Moo.Tests.Core
             Assert.AreEqual(expected, source.Name);
         }
 
-        [TestMethod]
+        [Test]
         public void PropertiesMatchFlattenNegativeTest()
         {
             TestMatch("InnerClass", "InnerClassCode", false);
         }
 
-        [TestMethod]
+        [Test]
         public void PropertiesMatchFlattenTest()
         {
             TestMatch("InnerClass", "InnerClassName", true);
         }
 
-        [TestMethod]
+        [Test]
         public void PropertiesMatchSimpleNegativeTest()
         {
             TestMatch("Code", "Code", false);
@@ -98,13 +98,13 @@ namespace Moo.Tests.Core
         /// <summary>
         /// A test for PropertiesMatch
         /// </summary>
-        [TestMethod]
+        [Test]
         public void PropertiesMatchSimpleTest()
         {
             TestMatch("Name", "Name", true);
         }
 
-        [TestMethod]
+        [Test]
         [ExpectedException(typeof(InvalidOperationException))]
         public void PropertyConverterNegativeTest()
         {

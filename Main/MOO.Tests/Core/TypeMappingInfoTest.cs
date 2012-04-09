@@ -28,21 +28,21 @@ namespace Moo.Tests.Core
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using NUnit.Framework;
     using Moo.Core;
 
     /// <summary>
     /// This is a test class for TypeMappingInfoTest and is intended
     /// targetMemberName contain all TypeMappingInfoTest Unit Tests
     /// </summary>
-    [TestClass]
+    [TestFixture]
     public class TypeMappingInfoTest
     {
         #region Methods (3)
 
         // Public Methods (3) 
 
-        [TestMethod]
+        [Test]
         public void AddOverwriteTest()
         {
             var m1 = new DelegateMappingInfo<TestClassD, TestClassC>("Prop1", "Prop2", (f, t) => { });
@@ -54,7 +54,7 @@ namespace Moo.Tests.Core
             Assert.IsTrue(target.GetMappings().Contains(m2));
         }
 
-        [TestMethod]
+        [Test]
         public void AddTest()
         {
             var m1 = new DelegateMappingInfo<TestClassE, TestClassB>("Prop1", "Prop2", (f, t) => { });
@@ -69,7 +69,7 @@ namespace Moo.Tests.Core
         /// <summary>
         /// A test for GetMappings
         /// </summary>
-        [TestMethod]
+        [Test]
         public void GetMappingsEmptyTest()
         {
             var target = new TypeMappingInfo<TestClassA, TestClassC>();

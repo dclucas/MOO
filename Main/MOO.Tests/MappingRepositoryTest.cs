@@ -28,21 +28,23 @@ namespace Moo.Tests
     using System.Collections;
     using System.Linq;
     using System.Reflection;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
+
     using Moo.Mappers;
+
+    using NUnit.Framework;
 
     /// <summary>
     /// This is a test class for MappingRepositoryTest and is intended
     /// targetProperty contain all MappingRepositoryTest Unit Tests
     /// </summary>
-    [TestClass]
+    [TestFixture]
     public class MappingRepositoryTest
     {
         #region Methods (5)
 
         // Public Methods (5) 
 
-        [TestMethod]
+        [Test]
         public void AddMapperTest()
         {
             IExtensibleMapper<TestClassA, TestClassB> expected = new ManualMapper<TestClassA, TestClassB>();
@@ -52,7 +54,7 @@ namespace Moo.Tests
             Assert.AreEqual(expected, actual);
         }
 
-        [TestMethod]
+        [Test]
         public void ClearTest()
         {
             IExtensibleMapper<TestClassA, TestClassB> mapper = new ManualMapper<TestClassA, TestClassB>();
@@ -64,30 +66,30 @@ namespace Moo.Tests
             Assert.IsFalse(mappers.Cast<object>().Any());
         }
 
-        [TestMethod]
+        [Test]
         public void GetDefaultTest()
         {
             Assert.IsNotNull(MappingRepository.Default);
         }
 
-        [TestMethod]
+        [Test]
         public void ResolveMapper_ExistingMapper_ResolvesCorrectly()
         {
             var target = new MappingRepository();
             var mapper = target.ResolveMapper<TestClassB, TestClassA>();
             Assert.IsNotNull(mapper);
-            Assert.IsInstanceOfType(mapper, typeof(CompositeMapper<TestClassB, TestClassA>));
-            Assert.IsTrue(((CompositeMapper<TestClassB, TestClassA>)mapper).InnerMappers.Count() > 0);
+            Assert.IsInstanceOf<CompositeMapper<TestClassB, TestClassA>>(mapper);
+            Assert.IsTrue(((CompositeMapper<TestClassB, TestClassA>)mapper).InnerMappers.Any());
         }
 
-        [TestMethod]
+        [Test]
         public void ResolveMapper2_ExistingMapper_ResolvesCorrectly()
         {
             var target = new MappingRepository();
             var mapper = target.ResolveMapper(typeof(TestClassB), typeof(TestClassA));
             Assert.IsNotNull(mapper);
-            Assert.IsInstanceOfType(mapper, typeof(CompositeMapper<TestClassB, TestClassA>));
-            Assert.IsTrue(((CompositeMapper<TestClassB, TestClassA>)mapper).InnerMappers.Count() > 0);
+            Assert.IsInstanceOf<CompositeMapper<TestClassB, TestClassA>>(mapper);
+            Assert.IsTrue(((CompositeMapper<TestClassB, TestClassA>)mapper).InnerMappers.Any());
         }
 
         #endregion Methods

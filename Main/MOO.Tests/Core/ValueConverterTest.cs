@@ -26,14 +26,14 @@
 namespace Moo.Tests.Core
 {
     using System;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using NUnit.Framework;
     using Moo.Core;
 
     /// <summary>
     /// This is a test class for ValueConverterTest and is intended
     /// targetMemberName contain all ValueConverterTest Unit Tests
     /// </summary>
-    [TestClass]
+    [TestFixture]
     public class ValueConverterTest
     {
         #region Methods (7)
@@ -43,7 +43,7 @@ namespace Moo.Tests.Core
         /// <summary>
         /// A test for CanConvert
         /// </summary>
-        [TestMethod]
+        [Test]
         public void CanConvertNegativeTest()
         {
             ValueConverter target = new ValueConverter();
@@ -55,7 +55,7 @@ namespace Moo.Tests.Core
         /// <summary>
         /// A test for CanConvert
         /// </summary>
-        [TestMethod]
+        [Test]
         public void CanConvertTest()
         {
             DoCanConverTest(typeof(string), typeof(string), true);
@@ -66,7 +66,7 @@ namespace Moo.Tests.Core
         }
 
         [ExpectedException(typeof(InvalidOperationException))]
-        [TestMethod]
+        [Test]
         public void ConvertFailureTest()
         {
             ValueConverter target = new ValueConverter();
@@ -76,7 +76,7 @@ namespace Moo.Tests.Core
         /// <summary>
         /// A test for Convert
         /// </summary>
-        [TestMethod]
+        [Test]
         public void ConvertTest()
         {
             DoConvertTest(2, 2);

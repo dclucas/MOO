@@ -28,20 +28,20 @@ namespace Moo.Tests.Configuration
     using System.Reflection;
     using System.Text;
     using System.Xml;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using NUnit.Framework;
     using Moo.Configuration;
 
     /// <summary>
     /// Summary description for ConfigurationTest
     /// </summary>
-    [TestClass]
+    [TestFixture]
     public class ConfigurationTest
     {
         #region Methods (1)
 
         // Public Methods (1) 
 
-        [TestMethod]
+        [Test]
         public void MappingConfigurationTest()
         {
             MappingConfigurationSection target = new MappingConfigurationSection();
@@ -70,7 +70,8 @@ namespace Moo.Tests.Configuration
                 writer.Flush();
             }
 
-            StringAssert.Contains(sb.ToString(), @"<MemberMappings><add TargetMemberName=""A"" SourceMemberName=""B"" /></MemberMappings>");
+            const string expected = @"<MemberMappings><add TargetMemberName=""A"" SourceMemberName=""B"" /></MemberMappings>";
+            StringAssert.Contains(expected, sb.ToString());
         }
 
         #endregion Methods

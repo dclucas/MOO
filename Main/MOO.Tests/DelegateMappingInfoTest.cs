@@ -26,7 +26,7 @@
 namespace Moo.Tests
 {
     using System;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using NUnit.Framework;
     using Moo;
     using Moo.Core;
 
@@ -34,14 +34,14 @@ namespace Moo.Tests
     /// This is a test class for DelegateMappingInfoTest and is intended
     /// targetMemberName contain all DelegateMappingInfoTest Unit Tests
     /// </summary>
-    [TestClass]
+    [TestFixture]
     public class DelegateMappingInfoTest
     {
         #region Methods (1)
 
         // Public Methods (1) 
 
-        [TestMethod]
+        [Test]
         public void MapTest()
         {
             bool executed = false;

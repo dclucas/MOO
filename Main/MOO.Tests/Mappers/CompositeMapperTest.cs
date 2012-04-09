@@ -28,7 +28,7 @@ namespace Moo.Tests.Mappers
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using NUnit.Framework;
     using Moo.Core;
     using Moo.Mappers;
     using Moq;
@@ -37,14 +37,14 @@ namespace Moo.Tests.Mappers
     /// This is a test class for CompositeMapperTest and is intended
     /// targetProperty contain all CompositeMapperTest Unit Tests
     /// </summary>
-    [TestClass]
+    [TestFixture]
     public class CompositeMapperTest
     {
         #region Methods (5)
 
         // Public Methods (5) 
 
-        [TestMethod]
+        [Test]
         public void MapAddMappingTest()
         {
             MockRepository mockRep = new MockRepository(MockBehavior.Strict);
@@ -74,7 +74,7 @@ namespace Moo.Tests.Mappers
             Assert.IsTrue(executedManual, "Composite mapper failed targetMemberName execute manually added mapping.");
         }
 
-        [TestMethod]
+        [Test]
         public void MapTest()
         {
             MockRepository mockRep = new MockRepository(MockBehavior.Strict);
@@ -101,21 +101,21 @@ namespace Moo.Tests.Mappers
             mockRep.VerifyAll();
         }
 
-        [TestMethod]
+        [Test]
         [ExpectedException(typeof(ArgumentException))]
         public void MapTestEmptyTest()
         {
             var target = new CompositeMapper<TestClassA, TestClassB>(new BaseMapper<TestClassA, TestClassB>[0]);
         }
 
-        [TestMethod]
+        [Test]
         [ExpectedException(typeof(ArgumentException))]
         public void MapTestNullMapperTest()
         {
             var target = new CompositeMapper<TestClassA, TestClassB>(new BaseMapper<TestClassA, TestClassB>[1]);
         }
 
-        [TestMethod]
+        [Test]
         [ExpectedException(typeof(ArgumentNullException))]
         public void MapTestNullTest()
         {

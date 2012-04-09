@@ -27,7 +27,7 @@ namespace Moo.Tests.Mappers
 {
     using System;
     using System.Reflection;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using NUnit.Framework;
     using Moo.Configuration;
     using Moo.Mappers;
 
@@ -35,35 +35,35 @@ namespace Moo.Tests.Mappers
     /// This is a test class for ConfigurationMapperTest and is intended
     /// targetMemberName contain all ConfigurationMapperTest Unit Tests
     /// </summary>
-    [TestClass]
+    [TestFixture]
     public class ConfigurationMapperTest
     {
         #region Methods (4)
 
         // Public Methods (4) 
 
-        [TestMethod]
+        [Test]
         public void GetTypeMappingNoSectionTest()
         {
             var actual = ConfigurationMapper<TestClassA, TestClassB>.GetTypeMapping("thisConfigDoesNotExist");
             Assert.IsNull(actual);
         }
 
-        [TestMethod]
+        [Test]
         [ExpectedException(typeof(ArgumentNullException))]
         public void GetTypeMappingNullSectionTest()
         {
             ConfigurationMapper<TestClassA, TestClassB>.GetTypeMapping(null);
         }
 
-        [TestMethod]
+        [Test]
         public void GetTypeMappingTest()
         {
             var actual = ConfigurationMapper<TestClassA, TestClassB>.GetTypeMapping();
             Assert.IsNotNull(actual);
         }
 
-        [TestMethod]
+        [Test]
         public void MapTest()
         {
             ConfigurationMapper<TestClassA, TestClassB> target = new ConfigurationMapper<TestClassA, TestClassB>();
