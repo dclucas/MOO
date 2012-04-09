@@ -98,6 +98,7 @@
     <Compile Include="Core\PropertyConverterTest.cs" />
     <Compile Include="Core\TypeMappingInfoTest.cs" />
     <Compile Include="Core\ValueConverterTest.cs" />
+    <Compile Include="TestMappers.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MOO\Moo.csproj">
@@ -106,6 +107,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Integration\" />
     <Folder Include="Test References\" />
   </ItemGroup>
   <ItemGroup>

@@ -134,18 +134,18 @@ namespace Moo
             Justification = "No can do - the generic parameter is only used on the method return.")]
         public IExtensibleMapper<TSource, TTarget> ResolveMapper<TSource, TTarget>(params MapperInclusion[] mapperInclusions)
         {
-            IExtensibleMapper<TSource, TTarget> res = TryGetMapper<TSource, TTarget>(mapperInclusions);
+            var res = TryGetMapper<TSource, TTarget>(mapperInclusions);
             if (res == null)
             {
                 lock (this.options)
                 {
-                    var innerMappers = new List<BaseMapper<TSource, TTarget>>();
+                    var innerMappers = new List<IMapper<TSource, TTarget>>();
 
                     var mapperTypes = this.options.MapperOrder;
 
                     foreach (var t in mapperTypes)
                     {
-                        Type targetType = t;
+                        var targetType = t;
                         if (targetType.IsGenericType)
                         {
                             targetType = targetType.GetGenericTypeDefinition();
@@ -188,18 +188,18 @@ namespace Moo
             "CA1062:Validate arguments of public methods",
             MessageId = "0",
             Justification = "The call to Guard does this check.")]
-        protected virtual BaseMapper<TSource, TTarget> CreateMapper<TSource, TTarget>(
+        protected virtual IMapper<TSource, TTarget> CreateMapper<TSource, TTarget>(
             Type targetType, IEnumerable<MapperInclusion> includedMappers)
         {
             Guard.CheckArgumentNotNull(targetType, "targetType");
             if (targetType.GetConstructor(new Type[] { typeof(MapperConstructorInfo) }) != null)
             {
                 var info = new MapperConstructorInfo(this, includedMappers);
-                return (BaseMapper<TSource, TTarget>)Activator
+                return (IMapper<TSource, TTarget>)Activator
                     .CreateInstance(targetType, new object[] { info });
             }
 
-            return (BaseMapper<TSource, TTarget>)Activator.CreateInstance(targetType);
+            return (IMapper<TSource, TTarget>)Activator.CreateInstance(targetType);
         }
 
         /// <summary>

@@ -80,7 +80,7 @@ namespace Moo
                Guard.TrueForAll<Type>(
                     value, 
                     "sourceValue", 
-                    t => typeof(BaseMapper).IsAssignableFrom(t), 
+                    t => typeof(IMapper).IsAssignableFrom(t), 
                     "All types must implement the IMapper interface.");
                 this.mapperOrder = value; 
             }

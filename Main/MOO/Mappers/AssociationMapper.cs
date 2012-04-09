@@ -23,12 +23,12 @@ namespace Moo.Mappers
         /// <summary>
         /// Gets or sets mapper inclusions.
         /// </summary>
-        private IEnumerable<MapperInclusion> MapperInclusions { get; set; }
+        internal IEnumerable<MapperInclusion> MapperInclusions { get; set; }
 
         /// <summary>
         /// Gets or sets the related mapping repository.
         /// </summary>
-        private IMappingRepository MappingRepository { get; set; }
+        internal IMappingRepository MappingRepository { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AssociationMapper{TSource,TTarget}"/> class. 

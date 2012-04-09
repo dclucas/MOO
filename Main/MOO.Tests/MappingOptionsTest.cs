@@ -55,10 +55,11 @@ namespace Moo.Tests
                 typeof(ManualMapper<,>),
                 typeof(ConventionMapper<,>),
             };
-            MappingOptions target = new MappingOptions(mapperOrder);
+
+            var target = new MappingOptions(mapperOrder);
             var targetOrder = target.MapperOrder.ToArray();
 
-            for (int i = 0; i < mapperOrder.Length; ++i)
+            for (var i = 0; i < mapperOrder.Length; ++i)
             {
                 Assert.AreEqual(mapperOrder[i], targetOrder[i]);
             }

@@ -42,7 +42,7 @@ namespace Moo.Mappers
         /// <summary>
         /// Contains an ordered list of all inner mappers.
         /// </summary>
-        private BaseMapper<TSource, TTarget>[] innerMappers;
+        private IMapper<TSource, TTarget>[] innerMappers;
 
         #endregion Fields
 
@@ -52,10 +52,10 @@ namespace Moo.Mappers
         /// Initializes a new instance of the <see cref="CompositeMapper&lt;TSource, TTarget&gt;"/> class.
         /// </summary>
         /// <param name="innerMappers">The inner mappers.</param>
-        public CompositeMapper(params BaseMapper<TSource, TTarget>[] innerMappers)
+        public CompositeMapper(params IMapper<TSource, TTarget>[] innerMappers)
         {
             Guard.CheckEnumerableNotNullOrEmpty(innerMappers, "innerMappers");
-            Guard.TrueForAll<BaseMapper<TSource, TTarget>>(innerMappers, "innerMappers", m => m != null, "Mappers list cannot contain null elements.");
+            Guard.TrueForAll<IMapper<TSource, TTarget>>(innerMappers, "innerMappers", m => m != null, "Mappers list cannot contain null elements.");
             this.innerMappers = innerMappers;
             this.GenerateMappings();
         }
@@ -71,7 +71,7 @@ namespace Moo.Mappers
             "Microsoft.Design",
             "CA1006:DoNotNestGenericTypesInMemberSignatures",
             Justification = "Easier said than done. The alternative here would be to forego type safety.")]
-        public IEnumerable<BaseMapper<TSource, TTarget>> InnerMappers
+        public IEnumerable<IMapper<TSource, TTarget>> InnerMappers
         {
             get { return this.innerMappers; }
         }
@@ -118,7 +118,7 @@ namespace Moo.Mappers
         protected override void GenerateMappings(TypeMappingInfo<TSource, TTarget> typeMapping)
         {
             Guard.CheckArgumentNotNull(typeMapping, "typeMapping");
-            var q = from mapper in this.innerMappers.Cast<BaseMapper<TSource, TTarget>>()
+            var q = from mapper in this.innerMappers.OfType<BaseMapper<TSource, TTarget>>()
                     from mapping in mapper.TypeMapping.GetMappings()
                     select mapping;
 

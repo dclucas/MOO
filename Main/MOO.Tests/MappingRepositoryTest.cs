@@ -25,6 +25,7 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace Moo.Tests
 {
+    using System;
     using System.Collections;
     using System.Linq;
     using System.Reflection;
@@ -37,8 +38,8 @@ namespace Moo.Tests
     /// This is a test class for MappingRepositoryTest and is intended
     /// targetProperty contain all MappingRepositoryTest Unit Tests
     /// </summary>
-    [TestFixture]
-    public class MappingRepositoryTest
+    [TestFixture(typeof(TestClassA), typeof(TestClassF))]
+    public class MappingRepositoryTest<TSource, TTarget>
     {
         #region Methods (5)
 
@@ -47,17 +48,17 @@ namespace Moo.Tests
         [Test]
         public void AddMapperTest()
         {
-            IExtensibleMapper<TestClassA, TestClassB> expected = new ManualMapper<TestClassA, TestClassB>();
+            IExtensibleMapper<TSource, TTarget> expected = new ManualMapper<TSource, TTarget>();
             var target = new MappingRepository();
             target.AddMapper(expected);
-            var actual = target.ResolveMapper<TestClassA, TestClassB>();
+            var actual = target.ResolveMapper<TSource, TTarget>();
             Assert.AreEqual(expected, actual);
         }
 
         [Test]
         public void ClearTest()
         {
-            IExtensibleMapper<TestClassA, TestClassB> mapper = new ManualMapper<TestClassA, TestClassB>();
+            IExtensibleMapper<TSource, TTarget> mapper = new ManualMapper<TSource, TTarget>();
             var target = new MappingRepository();
             target.AddMapper(mapper);
             target.Clear();
@@ -76,20 +77,47 @@ namespace Moo.Tests
         public void ResolveMapper_ExistingMapper_ResolvesCorrectly()
         {
             var target = new MappingRepository();
-            var mapper = target.ResolveMapper<TestClassB, TestClassA>();
+            var mapper = target.ResolveMapper<TTarget, TSource>();
             Assert.IsNotNull(mapper);
-            Assert.IsInstanceOf<CompositeMapper<TestClassB, TestClassA>>(mapper);
-            Assert.IsTrue(((CompositeMapper<TestClassB, TestClassA>)mapper).InnerMappers.Any());
+            Assert.IsInstanceOf<CompositeMapper<TTarget, TSource>>(mapper);
+            Assert.IsTrue(((CompositeMapper<TTarget, TSource>)mapper).InnerMappers.Any());
         }
 
         [Test]
         public void ResolveMapper2_ExistingMapper_ResolvesCorrectly()
         {
             var target = new MappingRepository();
-            var mapper = target.ResolveMapper(typeof(TestClassB), typeof(TestClassA));
+            var mapper = target.ResolveMapper(typeof(TTarget), typeof(TSource));
             Assert.IsNotNull(mapper);
-            Assert.IsInstanceOf<CompositeMapper<TestClassB, TestClassA>>(mapper);
-            Assert.IsTrue(((CompositeMapper<TestClassB, TestClassA>)mapper).InnerMappers.Any());
+            Assert.IsInstanceOf<CompositeMapper<TTarget, TSource>>(mapper);
+            Assert.IsTrue(((CompositeMapper<TTarget, TSource>)mapper).InnerMappers.Any());
+        }
+
+        [Test]
+        public void ResolveMapper_WithConstructorInfo_PassesArgument()
+        {
+            var mappers = new Type[] { typeof(Mapper1<TSource, TTarget>), typeof(Mapper2<TSource, TTarget>) };
+            var options = new MappingOptions(mappers);
+            var target = new MappingRepository(options);
+            var inclusions = new MapperInclusion[]
+                {
+                    new MapperInclusion<TestClassE, TestClassF>()
+                };
+
+            var result = (CompositeMapper<TSource, TTarget>)target.ResolveMapper<TSource, TTarget>(inclusions);
+
+            Assert.IsNotNull(result);
+            var innerMappers = result.InnerMappers.ToArray();
+            CollectionAssert.IsNotEmpty(innerMappers);
+            Assert.AreEqual(mappers.Length, innerMappers.Length);
+            for (var i = 0; i < mappers.Length; ++i)
+            {
+                Assert.AreEqual(mappers[i], innerMappers[i].GetType());
+            }
+
+            var mapper2 = (Mapper2<TSource, TTarget>)innerMappers[1];
+            CollectionAssert.AreEqual(inclusions, mapper2.ConstructorInfo.IncludedMappers);
+            Assert.AreEqual(target, mapper2.ConstructorInfo.ParentRepo);
         }
 
         #endregion Methods
