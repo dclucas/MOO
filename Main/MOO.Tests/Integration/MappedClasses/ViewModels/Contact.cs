@@ -23,37 +23,16 @@
 // Email: diogo.lucas@gmail.com
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
-namespace Moo.Tests
+namespace Moo.Tests.Integration.MappedClasses.ViewModels
 {
-    using Moo.Core;
-
-    using NUnit.Framework;
-
-    /// <summary>
-    /// This is a test class for DelegateMappingInfoTest and is intended
-    /// targetMemberName contain all DelegateMappingInfoTest Unit Tests
-    /// </summary>
-    [TestFixture]
-    public class DelegateMappingInfoTest
+    public class ContactIndexModel
     {
-        #region Methods (1)
+        public string Email { get; set; }
 
-        // Public Methods (1) 
+        public string Telephone { get; set; }
 
-        [Test]
-        public void MapTest()
-        {
-            bool executed = false;
+        public string StreetAddress { get; set; }
 
-            var target = new DelegateMappingInfo<TestClassC, TestClassD>(
-                "sourceMemberName",
-                "targetMemberName",
-                (f, t) => executed = true);
-            target.Map(new TestClassC(), new TestClassD());
-
-            Assert.IsTrue(executed);
-        }
-
-        #endregion Methods
+        public string Kind { get; set; }
     }
 }

@@ -64,6 +64,12 @@
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.6.0.12054\lib\nunit.framework.dll</HintPath>
     </Reference>
+    <Reference Include="Ploeh.AutoFixture">
+      <HintPath>..\packages\AutoFixture.2.9.2\lib\Ploeh.AutoFixture.dll</HintPath>
+    </Reference>
+    <Reference Include="Ploeh.SemanticComparison">
+      <HintPath>..\packages\AutoFixture.2.9.2\lib\Ploeh.SemanticComparison.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core">
@@ -82,6 +88,13 @@
     <Compile Include="DelegateMappingInfoTest.cs" />
     <Compile Include="Core\GuardTest.cs" />
     <Compile Include="IEnumerableMappingExtenderTest.cs" />
+    <Compile Include="Integration\FullMappingTest.cs" />
+    <Compile Include="Integration\MappedClasses\DomainModels\Account.cs" />
+    <Compile Include="Integration\MappedClasses\DomainModels\Contact.cs" />
+    <Compile Include="Integration\MappedClasses\DomainModels\Manager.cs" />
+    <Compile Include="Integration\MappedClasses\DomainModels\Person.cs" />
+    <Compile Include="Integration\MappedClasses\ViewModels\Contact.cs" />
+    <Compile Include="Integration\MappedClasses\ViewModels\PersonModels.cs" />
     <Compile Include="Mappers\AssociationMapperTest.cs" />
     <Compile Include="Mappers\ConfigurationMapperTest.cs" />
     <Compile Include="Configuration\ConfigurationTest.cs" />
@@ -107,7 +120,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Integration\" />
+    <Folder Include="Integration\MappedClasses\DataContracts\" />
     <Folder Include="Test References\" />
   </ItemGroup>
   <ItemGroup>
@@ -140,6 +153,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="MappingExpectations.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Third party\Moq.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
