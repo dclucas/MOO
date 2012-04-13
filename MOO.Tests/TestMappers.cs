@@ -74,11 +74,11 @@ namespace Moo.Tests
 
     public class Mapper2<TSource, TTarget> : Mapper1<TSource, TTarget>
     {
-        public MapperConstructorInfo ConstructorInfo { get; private set; }
+        public MapperConstructionInfo ConstructionInfo { get; private set; }
 
-        public Mapper2(MapperConstructorInfo constructorInfo)
+        public Mapper2(MapperConstructionInfo constructionInfo)
         {
-            this.ConstructorInfo = constructorInfo;
+            this.ConstructionInfo = constructionInfo;
         }
     }
 }

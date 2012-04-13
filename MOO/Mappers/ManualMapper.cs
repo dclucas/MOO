@@ -35,6 +35,22 @@ namespace Moo.Mappers
     /// <typeparam name="TTarget">The type of the target.</typeparam>
     public class ManualMapper<TSource, TTarget> : BaseMapper<TSource, TTarget>, IExtensibleMapper<TSource, TTarget>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ManualMapper{TSource,TTarget}"/> class. 
+        /// </summary>
+        public ManualMapper()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ManualMapper{TSource,TTarget}"/> class. 
+        /// </summary>
+        /// <param name="constructionInfo">Mapper construction information.</param>
+        public ManualMapper(MapperConstructionInfo constructionInfo)
+            : base(constructionInfo)
+        {
+        }
+        
         #region Methods (2)
 
         // Public Methods (1) 

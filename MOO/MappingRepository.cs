@@ -192,9 +192,9 @@ namespace Moo
             Type targetType, IEnumerable<MapperInclusion> includedMappers)
         {
             Guard.CheckArgumentNotNull(targetType, "targetType");
-            if (targetType.GetConstructor(new Type[] { typeof(MapperConstructorInfo) }) != null)
+            if (targetType.GetConstructor(new Type[] { typeof(MapperConstructionInfo) }) != null)
             {
-                var info = new MapperConstructorInfo(this, includedMappers);
+                var info = new MapperConstructionInfo(this, includedMappers);
                 return (IMapper<TSource, TTarget>)Activator
                     .CreateInstance(targetType, new object[] { info });
             }

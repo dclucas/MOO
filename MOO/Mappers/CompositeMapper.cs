@@ -54,10 +54,22 @@ namespace Moo.Mappers
         /// <param name="innerMappers">The inner mappers.</param>
         public CompositeMapper(params IMapper<TSource, TTarget>[] innerMappers)
         {
-            Guard.CheckEnumerableNotNullOrEmpty(innerMappers, "innerMappers");
-            Guard.TrueForAll<IMapper<TSource, TTarget>>(innerMappers, "innerMappers", m => m != null, "Mappers list cannot contain null elements.");
-            this.innerMappers = innerMappers;
-            this.GenerateMappings();
+            this.Initialize(innerMappers);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CompositeMapper{TSource,TTarget}"/> class. 
+        /// </summary>
+        /// <param name="constructionInfo">
+        /// Mapper construction information.
+        /// </param>
+        /// <param name="innerMappers">
+        /// The inner mappers.
+        /// </param>
+        public CompositeMapper(MapperConstructionInfo constructionInfo, params IMapper<TSource, TTarget>[] innerMappers)
+            : base(constructionInfo)
+        {
+            this.Initialize(innerMappers);
         }
 
         #endregion Constructors
@@ -79,6 +91,14 @@ namespace Moo.Mappers
         #endregion Properties
 
         #region Methods (2)
+
+        private void Initialize(IMapper<TSource, TTarget>[] innerMappers)
+        {
+            Guard.CheckEnumerableNotNullOrEmpty(innerMappers, "innerMappers");
+            Guard.TrueForAll(innerMappers, "innerMappers", m => m != null, "Mappers list cannot contain null elements.");
+            this.innerMappers = innerMappers;
+            this.GenerateMappings();
+        }
 
         // Public Methods (1) 
 

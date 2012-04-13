@@ -45,7 +45,16 @@ namespace Moo.Mappers
         /// Initializes a new instance of the <see cref="AttributeMapper&lt;TSource, TTarget&gt;"/> class.
         /// </summary>
         public AttributeMapper()
-            : base()
+        {
+            this.GenerateMappings();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AttributeMapper{TSource,TTarget}"/> class. 
+        /// </summary>
+        /// <param name="constructionInfo">Mapper construction information.</param>
+        public AttributeMapper(MapperConstructionInfo constructionInfo)
+            : base(constructionInfo)
         {
             this.GenerateMappings();
         }

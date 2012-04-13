@@ -50,7 +50,7 @@ namespace Moo.Tests.Mappers
             var mapperReturn = new TestClassB();
             mapper.Setup(m => m.Map(sourceObj.InnerClass)).Returns(mapperReturn);
             var target = new AssociationMapper<TestClassA, TestClassF>(
-                new MapperConstructorInfo(repo.Object, inclusions));
+                new MapperConstructionInfo(repo.Object, inclusions));
 
             var result = target.Map(sourceObj);
 

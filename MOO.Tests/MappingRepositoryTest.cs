@@ -116,8 +116,8 @@ namespace Moo.Tests
             }
 
             var mapper2 = (Mapper2<TSource, TTarget>)innerMappers[1];
-            CollectionAssert.AreEqual(inclusions, mapper2.ConstructorInfo.IncludedMappers);
-            Assert.AreEqual(target, mapper2.ConstructorInfo.ParentRepo);
+            CollectionAssert.AreEqual(inclusions, mapper2.ConstructionInfo.IncludedMappers);
+            Assert.AreEqual(target, mapper2.ConstructionInfo.ParentRepo);
         }
 
         #endregion Methods

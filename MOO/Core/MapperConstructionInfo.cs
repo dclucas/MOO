@@ -34,10 +34,10 @@ namespace Moo.Core
     /// <summary>
     /// Context information for mapper construction.
     /// </summary>
-    public class MapperConstructorInfo
+    public class MapperConstructionInfo
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="MapperConstructorInfo"/> class. 
+        /// Initializes a new instance of the <see cref="MapperConstructionInfo"/> class. 
         /// </summary>
         /// <param name="parentRepo">
         /// The parent repo.
@@ -45,7 +45,7 @@ namespace Moo.Core
         /// <param name="includedMappers">
         /// The included mappers.
         /// </param>
-        public MapperConstructorInfo(IMappingRepository parentRepo, IEnumerable<MapperInclusion> includedMappers)
+        public MapperConstructionInfo(IMappingRepository parentRepo, IEnumerable<MapperInclusion> includedMappers)
         {
             this.ParentRepo = parentRepo;
             this.IncludedMappers = includedMappers;

@@ -2,25 +2,32 @@
 <MapperExpectations>
   <Mapper Type="ConventionMapper">
     <Pair SourceType="Person" TargetType="PersonEditModel">
-      <Property SourceProp="Name" TargetProp="Name" />
       <Property SourceProp="Id" TargetProp="Id" />
       <Property SourceProp="Account.Login" TargetProp="AccountLogin" />
       <Property SourceProp="Account.Password" TargetProp="AccountPassword" />
       <Property SourceProp="Manager.Id" TargetProp="ManagerId" />
     </Pair>
     <Pair SourceType="PersonEditModel" TargetType="Person">
-      <Property SourceProp="Name" TargetProp="Name" />
       <Property SourceProp="Id" TargetProp="Id" />
     </Pair>
     <Pair SourceType="Person" TargetType="PersonIndexModel">
-      <Property SourceProp="Name" TargetProp="Name" />
       <Property SourceProp="Id" TargetProp="Id" />
+      <Property SourceProp="MessyProp" TargetProp="MessyProp" />
       <Property SourceProp="Account.Login" TargetProp="AccountLogin" />
-      <Property SourceProp="Manager.Name" TargetProp="ManagerName" />
     </Pair>
     <Pair SourceType="PersonIndexModel" TargetType="Person">
-      <Property SourceProp="Name" TargetProp="Name" />
       <Property SourceProp="Id" TargetProp="Id" />
+    </Pair>
+  </Mapper>
+  <Mapper Type="AttributeMapper">
+    <Pair SourceType="Person" TargetType="PersonIndexModel">
+      <Property SourceProp="FirstName" TargetProp="Name" />
+      <Property SourceProp="LastName" TargetProp="MessyProp" />
+    </Pair>
+  </Mapper>
+  <Mapper Type="ManualMapper">
+    <Pair SourceType="Person" TargetType="PersonIndexModel">
+      <Property SourceProp="MessyProp" TargetProp="Name" />
     </Pair>
   </Mapper>
 </MapperExpectations>

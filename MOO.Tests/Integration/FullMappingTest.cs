@@ -59,17 +59,31 @@ namespace Moo.Tests.Integration
                         from mp in p.Descendants("Property")
                         select new
                             {
+                                mapper = m.Attribute("Type").Value,
                                 srcProp = mp.Attribute("SourceProp").Value,
                                 trgProp = mp.Attribute("TargetProp").Value,
                             };
 
+            var mappings = new Dictionary<string, string>();
             foreach (var p in props)
             {
-                Debug.WriteLine("Comparing properties {0}.{1} and {2}.{3}", srcType, p.srcProp, trgType, p.trgProp);
-                var srcVal = GetValue(p.srcProp, sourceObj);
-                var trgVal = GetValue(p.trgProp, targetObj);
-                Debug.WriteLine("Values are {0} and {1}", srcVal, trgVal);
-                Assert.AreEqual(srcVal, trgVal);
+                mappings[p.trgProp] = p.srcProp;
+            }
+
+            foreach (var p in mappings)
+            {
+                try
+                {
+                    Debug.WriteLine("Comparing properties {0}.{1} and {2}.{3}.", srcType, p.Value, trgType, p.Key);
+                    var srcVal = GetValue(p.Value, sourceObj);
+                    var trgVal = GetValue(p.Key, targetObj);
+                    Debug.WriteLine("Values are {0} and {1}", srcVal, trgVal);
+                    Assert.AreEqual(srcVal, trgVal);
+                }
+                catch (Exception e)
+                {
+                    throw new Exception(string.Format("Error when formatting from {0} to {1}", p.Value, p.Key), e);
+                }
             }
         }
 
@@ -86,6 +100,33 @@ namespace Moo.Tests.Integration
             return obj.GetType().GetProperty(propName).GetValue(obj, null);
         }
 
+        private void AddMappingActions(IExtensibleMapper<TSource, TTarget> mapper)
+        {
+            var doc = XDocument.Load("MappingExpectations.xml");
+            var srcType = typeof(TSource);
+            var trgType = typeof(TTarget);
+            var props = from m in doc.Descendants("Mapper")
+                        where m.Attribute("Type").Value == "ManualMapper"
+                        from p in m.Descendants("Pair")
+                        where srcType.Name.Equals(p.Attribute("SourceType").Value)
+                        where trgType.Name.Equals(p.Attribute("TargetType").Value)
+                        from mp in p.Descendants("Property")
+                        select new
+                        {
+                            srcProp = mp.Attribute("SourceProp").Value,
+                            trgProp = mp.Attribute("TargetProp").Value,
+                        };
+
+            foreach (var p in props)
+            {
+                mapper.AddMappingAction(p.srcProp, p.trgProp, (source, target) =>
+                    {
+                        var srcVal = typeof(TSource).GetProperty(p.srcProp).GetValue(source, null);
+                        typeof(TTarget).GetProperty(p.trgProp).SetValue(target, srcVal, null);
+                    });
+            }
+        }
+
         protected virtual IMapper<TSource, TTarget> CreateMapper(Type[] innerMappers)
         {
             IMappingRepository repo = null;
@@ -99,16 +140,16 @@ namespace Moo.Tests.Integration
                 repo = new MappingRepository();
             }
 
-            return repo.ResolveMapper<TSource, TTarget>();
+            var mapper = repo.ResolveMapper<TSource, TTarget>();
+            AddMappingActions(mapper);
+            return mapper;
         }
-        
+
         protected virtual TSource CreateSourceObject()
         {
             var fixture = new Fixture();
             fixture.Register(() => (IEnumerable<Contact>)fixture.CreateMany<Contact>());
             fixture.Register(() => (IEnumerable<Person>)fixture.CreateMany<Person>());
-            //fixture.Build<Manager>().Without(m => m.Managees);
-            //fixture.Build<Manager>().Without(m => m.Manager);
             var result = fixture
                 .Build<Manager>()
                 .Without(m => m.Managees)

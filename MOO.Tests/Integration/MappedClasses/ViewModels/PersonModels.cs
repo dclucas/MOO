@@ -25,10 +25,13 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace Moo.Tests.Integration.MappedClasses.ViewModels
 {
+    using Moo.Tests.Integration.MappedClasses.DomainModels;
+
     public class PersonIndexModel
     {
         public int Id { get; set; }
 
+        [Mapping(MappingDirections.To, typeof(Person), "FirstName")]
         public string Name { get; set; }
 
         public string AccountLogin { get; set; }
@@ -36,6 +39,9 @@ namespace Moo.Tests.Integration.MappedClasses.ViewModels
         public string Email { get; set; }
 
         public string ManagerName { get; set; }
+
+        [Mapping(MappingDirections.To, typeof(Person), "LastName")]
+        public string MessyProp { get; set; }
     }
 
     public class PersonEditModel

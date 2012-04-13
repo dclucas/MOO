@@ -51,6 +51,16 @@ namespace Moo.Mappers
             this.GenerateMappings();
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ConventionMapper{TSource,TTarget}"/> class. 
+        /// </summary>
+        /// <param name="constructionInfo">Mapper construction information.</param>
+        public ConventionMapper(MapperConstructionInfo constructionInfo)
+            : base(constructionInfo)
+        {
+            this.GenerateMappings();
+        }
+
         #endregion Constructors
 
         #region Methods (1)

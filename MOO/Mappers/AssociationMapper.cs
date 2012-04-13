@@ -21,33 +21,13 @@ namespace Moo.Mappers
     public class AssociationMapper<TSource, TTarget> : BaseMapper<TSource, TTarget>
     {
         /// <summary>
-        /// Gets or sets mapper inclusions.
-        /// </summary>
-        internal IEnumerable<MapperInclusion> MapperInclusions { get; set; }
-
-        /// <summary>
-        /// Gets or sets the related mapping repository.
-        /// </summary>
-        internal IMappingRepository MappingRepository { get; set; }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="AssociationMapper{TSource,TTarget}"/> class. 
         /// </summary>
-        /// <param name="constructorInfo">Mapper construction information.</param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Microsoft.Design", 
-            "CA1062:Validate arguments of public methods", 
-            MessageId = "0",
-            Justification = "The call to Guard does that.")]
-        public AssociationMapper(MapperConstructorInfo constructorInfo)
-            : base()
+        /// <param name="constructionInfo">Mapper construction information.</param>
+        public AssociationMapper(MapperConstructionInfo constructionInfo)
+            : base(constructionInfo)
         {
-            Guard.CheckArgumentNotNull(constructorInfo, "constructorInfo");
-
-            this.MapperInclusions = constructorInfo.IncludedMappers;
-            this.MappingRepository = constructorInfo.ParentRepo;
-            
-            base.GenerateMappings();
+            this.GenerateMappings();
         }
 
         /// <summary>
@@ -68,7 +48,7 @@ namespace Moo.Mappers
                           from m in MapperInclusions
                           where m.SourceType == sourceProperty.PropertyType
                           where m.TargetType == targetProperty.PropertyType
-                          let mapper = MappingRepository.ResolveMapper(m.SourceType, m.TargetType)
+                          let mapper = ParentRepo.ResolveMapper(m.SourceType, m.TargetType)
                           select new MapperMappingInfo<TSource, TTarget>(mapper, sourceProperty, targetProperty);
             
             foreach (var m in matches)

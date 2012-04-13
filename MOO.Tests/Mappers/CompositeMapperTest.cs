@@ -105,21 +105,21 @@ namespace Moo.Tests.Mappers
         [ExpectedException(typeof(ArgumentException))]
         public void MapTestEmptyTest()
         {
-            var target = new CompositeMapper<TestClassA, TestClassB>(new BaseMapper<TestClassA, TestClassB>[0]);
+            new CompositeMapper<TestClassA, TestClassB>(new BaseMapper<TestClassA, TestClassB>[0]);
         }
 
         [Test]
         [ExpectedException(typeof(ArgumentException))]
         public void MapTestNullMapperTest()
         {
-            var target = new CompositeMapper<TestClassA, TestClassB>(new BaseMapper<TestClassA, TestClassB>[1]);
+            new CompositeMapper<TestClassA, TestClassB>(new BaseMapper<TestClassA, TestClassB>[1]);
         }
 
         [Test]
         [ExpectedException(typeof(ArgumentNullException))]
         public void MapTestNullTest()
         {
-            var target = new CompositeMapper<TestClassA, TestClassB>(null);
+            new CompositeMapper<TestClassA, TestClassB>((MapperConstructionInfo)null, null);
         }
 
         #endregion Methods

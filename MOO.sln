@@ -2,11 +2,6 @@
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B1A8AB5C-43DE-4DA1-A825-CBF60F644C56}"
-	ProjectSection(SolutionItems) = preProject
-		BuildTestRun.testrunconfig = BuildTestRun.testrunconfig
-		LocalTestRun.testrunconfig = LocalTestRun.testrunconfig
-		MOO.vsmdi = MOO.vsmdi
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Moo", "MOO\Moo.csproj", "{7EADF25D-6278-460F-9150-EF8A7F738657}"
 EndProject
@@ -17,9 +12,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Third Party", "Third Party", "{2D94394C-C9CC-4F18-8034-ECEC61FD6D64}"
 EndProject
 Global
-	GlobalSection(TestCaseManagementSettings) = postSolution
-		CategoryFile = MOO.vsmdi
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|Mixed Platforms = Debug|Mixed Platforms

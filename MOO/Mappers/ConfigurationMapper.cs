@@ -44,7 +44,16 @@ namespace Moo.Mappers
         /// Initializes a new instance of the <see cref="ConfigurationMapper&lt;TSource, TTarget&gt;"/> class.
         /// </summary>
         public ConfigurationMapper()
-            : base()
+        {
+            this.GenerateMappings();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ConfigurationMapper{TSource,TTarget}"/> class. 
+        /// </summary>
+        /// <param name="constructionInfo">Mapper construction information.</param>
+        public ConfigurationMapper(MapperConstructionInfo constructionInfo)
+            : base(constructionInfo)
         {
             this.GenerateMappings();
         }

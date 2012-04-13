@@ -83,7 +83,7 @@
     <Compile Include="Configuration\MemberMappingElement.cs" />
     <Compile Include="Configuration\TypeMappingCollection.cs" />
     <Compile Include="Core\DelegateMappingInfo.cs" />
-    <Compile Include="Core\MapperConstructorInfo.cs" />
+    <Compile Include="Core\MapperConstructionInfo.cs" />
     <Compile Include="Core\MapperMappingInfo.cs" />
     <Compile Include="Core\ReflectionPropertyMappingInfo.cs" />
     <Compile Include="Core\TypeMappingInfo.cs" />

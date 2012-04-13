@@ -53,6 +53,20 @@ namespace Moo.Mappers
             this.TypeMapping = new TypeMappingInfo<TSource, TTarget>();
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BaseMapper{TSource,TTarget}"/> class.
+        /// </summary>
+        /// <param name="constructionInfo">
+        /// Contains additional mapper construction information.
+        /// </param>
+        protected BaseMapper(MapperConstructionInfo constructionInfo)
+            : this()
+        {
+            Guard.CheckArgumentNotNull(constructionInfo, "constructionInfo");
+            this.ParentRepo = constructionInfo.ParentRepo;
+            this.MapperInclusions = constructionInfo.IncludedMappers;
+        }
+        
         #endregion Constructors
 
         #region Delegates and Events (2)
@@ -77,6 +91,16 @@ namespace Moo.Mappers
         /// Gets the type mapping information.
         /// </summary>
         internal TypeMappingInfo<TSource, TTarget> TypeMapping { get; private set; }
+
+        /// <summary>
+        /// Gets or sets mapper inclusions.
+        /// </summary>
+        internal IEnumerable<MapperInclusion> MapperInclusions { get; set; }
+
+        /// <summary>
+        /// Gets the parent mapping repository.
+        /// </summary>
+        protected IMappingRepository ParentRepo { get; private set; }
 
         #endregion Properties
 
@@ -108,7 +132,7 @@ namespace Moo.Mappers
         /// </remarks>
         public virtual TTarget Map(TSource source)
         {
-            TTarget target = Activator.CreateInstance<TTarget>();
+            var target = Activator.CreateInstance<TTarget>();
             Map(source, target);
             return target;
         }
@@ -258,13 +282,14 @@ namespace Moo.Mappers
             var handler = this.PropertyMapped;
             if (handler != null)
             {
-                var args = new MappingEventArgs<TSource, TTarget>()
-                {
-                    Source = source,
-                    Target = target,
-                    SourceMember = fromProperty,
-                    TargetMember = toProperty
-                };
+                var args = new MappingEventArgs<TSource, TTarget>
+                    {
+                        Source = source, 
+                        Target = target, 
+                        SourceMember = fromProperty, 
+                        TargetMember = toProperty 
+                    };
+
                 handler(this, args);
             }
         }
@@ -282,13 +307,13 @@ namespace Moo.Mappers
             var handler = this.PropertyMapping;
             if (handler != null)
             {
-                var eventArgs = new MappingCancellationEventArgs<TSource, TTarget>()
-                {
-                    Source = source,
-                    Target = target,
-                    SourceMember = fromProperty,
-                    TargetMember = toProperty
-                };
+                var eventArgs = new MappingCancellationEventArgs<TSource, TTarget>
+                    {
+                        Source = source, 
+                        Target = target, 
+                        SourceMember = fromProperty, 
+                        TargetMember = toProperty
+                    };
 
                 handler(this, eventArgs);
                 return !eventArgs.Cancel;
