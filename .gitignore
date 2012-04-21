@@ -33,3 +33,5 @@ Help/
 *.*_Diogo
 *.gpState
 *.smproj
+[Pp]ackages/
+!nuget.exe
