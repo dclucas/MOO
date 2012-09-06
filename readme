@@ -1,0 +1,3 @@
+MOO is an object-to-object multimapper. 
+
+It allows you to combine a number of different mapping strategies (conventions, attributes, explicit code calls and config).
