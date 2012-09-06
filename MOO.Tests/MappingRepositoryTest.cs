@@ -33,6 +33,7 @@ namespace Moo.Tests
     using Moo.Mappers;
 
     using NUnit.Framework;
+    using Moq;
 
     /// <summary>
     /// This is a test class for MappingRepositoryTest and is intended
@@ -118,6 +119,22 @@ namespace Moo.Tests
             var mapper2 = (Mapper2<TSource, TTarget>)innerMappers[1];
             CollectionAssert.AreEqual(inclusions, mapper2.ConstructionInfo.IncludedMappers);
             Assert.AreEqual(target, mapper2.ConstructionInfo.ParentRepo);
+        }
+
+        [Test]
+        public void AddMappingGeneric_DefaultCase_RedirectsToMapper()
+        {
+            var target = new MappingRepository();
+            var mapperMock = new Mock<IExtensibleMapper<TSource, TTarget>>();
+            target.AddMapper<TSource, TTarget>(mapperMock.Object);
+            var sourceMemberName = "source";
+            var targetMemberName = "target";
+            var mappingAction = new MappingAction<TSource, TTarget>((s, t) => { });
+            mapperMock.Setup(m => m.AddMappingAction(sourceMemberName, targetMemberName, mappingAction));
+
+            target.AddMappingAction(sourceMemberName, targetMemberName, mappingAction);
+
+            mapperMock.VerifyAll();
         }
 
         #endregion Methods

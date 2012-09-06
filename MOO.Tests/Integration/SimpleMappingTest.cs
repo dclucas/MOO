@@ -71,6 +71,20 @@ namespace Moo.Tests.Integration
             result.ShouldNotBe(null);
         }
 
+        [Test]
+        public void ExtensionMap_CustomMappingActions_MapsCorrectly()
+        {
+            var source = CreateSource();
+            MappingRepository.Default
+                .AddMappingAction<Person, PersonEditModel>(
+                "FirstName + LastName", "Name", (s, t) => t.Name = s.FirstName + s.LastName);
+            var result = source.MapTo<PersonEditModel>();
+
+            result.ShouldNotBe(null);
+            CheckMapping(source, result);
+            result.Name.ShouldBe(source.FirstName + source.LastName);
+        }
+
         private void CheckMapping(Person p, PersonEditModel pe)
         {
             pe.ShouldNotBe(null);

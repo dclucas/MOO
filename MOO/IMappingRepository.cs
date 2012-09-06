@@ -87,5 +87,21 @@ namespace Moo
         /// repository, <c>null</c> otherwise.
         /// </returns>
         IMapper TryGetMapper(Type sourceType, Type targetType, params MapperInclusion[] mapperInclusions);
+
+        /// <summary>
+        /// Adds a mapping rule for the specified members.
+        /// </summary>
+        /// <typeparam name="TSource">Type of the source.</typeparam>
+        /// <typeparam name="TTarget">Type of the target.</typeparam>
+        /// <param name="sourceMemberName">
+        /// Source member.
+        /// </param>
+        /// <param name="targetMemberName">
+        /// Destination member.
+        /// </param>
+        /// <param name="mappingAction">
+        /// The delegate that will perform the conversion.
+        /// </param>
+        void AddMappingAction<TSource, TTarget>(string sourceMemberName, string targetMemberName, MappingAction<TSource, TTarget> mappingAction);
     }
 }

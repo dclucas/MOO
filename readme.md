@@ -28,7 +28,18 @@ This extension method does all the work under the hood, creating a mapper, a rep
 ### Mapping collections
 
 Mapping enumerables can be done this way:
+
     var source = CreateMany();
     var result = source.MapAll<Person, PersonEditModel>();
 
 Once again, using the extension method leaves Moo in charge of creating all required inner objects.
+
+### Adding mapping actions
+
+    var source = CreateSource();
+    MappingRepository.Default
+        .AddMappingAction<Person, PersonEditModel>(
+        "FirstName + LastName", "Name", (s, t) => t.Name = s.FirstName + s.LastName);
+    var result = source.MapTo<PersonEditModel>();
+
+A fluent API to simplify these calls is still a WIP, but the method below will be kept (and used under the hood).

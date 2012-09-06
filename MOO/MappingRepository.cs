@@ -36,7 +36,7 @@ namespace Moo
     /// <summary>
     /// Repository for mapper objects.
     /// </summary>
-    public class MappingRepository : Moo.IMappingRepository
+    public class MappingRepository : IMappingRepository
     {
         #region Fields (3)
 
@@ -312,6 +312,25 @@ namespace Moo
             return null;
         }
 
+        /// <summary>
+        /// Adds a mapping rule for the specified members.
+        /// </summary>
+        /// <typeparam name="TSource">Type of the source.</typeparam>
+        /// <typeparam name="TTarget">Type of the target.</typeparam>
+        /// <param name="sourceMemberName">
+        /// Source member.
+        /// </param>
+        /// <param name="targetMemberName">
+        /// Destination member.
+        /// </param>
+        /// <param name="mappingAction">
+        /// The delegate that will perform the conversion.
+        /// </param>
+        public void AddMappingAction<TSource, TTarget>(string sourceMemberName, string targetMemberName, MappingAction<TSource, TTarget> mappingAction)
+        {
+            var mapper = ResolveMapper<TSource, TTarget>();
+            mapper.AddMappingAction(sourceMemberName, targetMemberName, mappingAction);
+        }
         #endregion Methods
     }
 }

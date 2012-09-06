@@ -74,6 +74,9 @@
     <Reference Include="Ploeh.SemanticComparison">
       <HintPath>..\packages\AutoFixture.2.12.0\lib\Ploeh.SemanticComparison.dll</HintPath>
     </Reference>
+    <Reference Include="Shouldly">
+      <HintPath>..\packages\Shouldly.1.1.1.1\lib\35\Shouldly.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core">
@@ -99,6 +102,7 @@
     <Compile Include="Integration\MappedClasses\DomainModels\Person.cs" />
     <Compile Include="Integration\MappedClasses\ViewModels\Contact.cs" />
     <Compile Include="Integration\MappedClasses\ViewModels\PersonModels.cs" />
+    <Compile Include="Integration\SimpleMappingTest.cs" />
     <Compile Include="Mappers\AssociationMapperTest.cs" />
     <Compile Include="Mappers\ConfigurationMapperTest.cs" />
     <Compile Include="Configuration\ConfigurationTest.cs" />
