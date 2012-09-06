@@ -16,12 +16,19 @@ Out-of-box, the following strategies are available, but you can also create your
 Usage
 -----
 
-## Simple usage
+### Simple usage
 
-Mapping can ba as simple as this:
+Mapping can be as simple as this:
 
     var source = CreateSource();
     var result = source.MapTo<PersonEditModel>();
 
 This extension method does all the work under the hood, creating a mapper, a repository, etc.
 
+### Mapping collections
+
+Mapping enumerables can be done this way:
+    var source = CreateMany();
+    var result = source.MapAll<Person, PersonEditModel>();
+
+Once again, using the extension method leaves Moo in charge of creating all required inner objects.

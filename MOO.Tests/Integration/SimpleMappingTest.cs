@@ -58,8 +58,23 @@ namespace Moo.Tests.Integration
 
             var result = source.MapTo<PersonEditModel>();
 
+            CheckMapping(source, result);
+        }
+
+        [Test]
+        public void ExtensionMapMultiple_SimpleCase_MapsCorrectly()
+        {
+            var source = CreateMany();
+
+            var result = source.MapAll<Person, PersonEditModel>();
+
             result.ShouldNotBe(null);
-            result.Id.ShouldBe(source.Id);
+        }
+
+        private void CheckMapping(Person p, PersonEditModel pe)
+        {
+            pe.ShouldNotBe(null);
+            pe.Id.ShouldBe(p.Id);
         }
 
         private Person CreateSource()
@@ -70,6 +85,11 @@ namespace Moo.Tests.Integration
                 LastName = "Doe",
                 FirstName = "John"
             };
+        }
+
+        private IEnumerable<Person> CreateMany()
+        {
+            return Enumerable.Range(0, 5).Select(i => CreateSource());
         }
     }
 }
