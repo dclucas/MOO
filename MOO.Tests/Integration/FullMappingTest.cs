@@ -40,10 +40,10 @@ namespace Moo.Tests.Integration
 
     using Ploeh.AutoFixture;
 
-    [TestFixture(typeof(Person), typeof(PersonEditModel))]
-    [TestFixture(typeof(Person), typeof(PersonIndexModel))]
-    [TestFixture(typeof(PersonEditModel), typeof(Person))]
-    [TestFixture(typeof(PersonIndexModel), typeof(Person))]
+    [TestFixture(TypeArgs = new Type[] { typeof(Person), typeof(PersonEditModel) })]
+    [TestFixture(TypeArgs = new Type[] { typeof(Person), typeof(PersonIndexModel) })]
+    [TestFixture(TypeArgs = new Type[] { typeof(PersonEditModel), typeof(Person) })]
+    [TestFixture(TypeArgs = new Type[] { typeof(PersonIndexModel), typeof(Person) })]
     public class FullMappingTest<TSource, TTarget>
         where TSource : new()
     {

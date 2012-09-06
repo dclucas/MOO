@@ -38,7 +38,7 @@ namespace Moo.Tests
     /// This is a test class for MappingRepositoryTest and is intended
     /// targetProperty contain all MappingRepositoryTest Unit Tests
     /// </summary>
-    [TestFixture(typeof(TestClassA), typeof(TestClassF))]
+    [TestFixture(TypeArgs = new Type[] { typeof(TestClassA), typeof(TestClassF) })]
     public class MappingRepositoryTest<TSource, TTarget>
     {
         #region Methods (5)

@@ -42,7 +42,7 @@ namespace Moo.Mappers
         /// <summary>
         /// Contains an ordered list of all inner mappers.
         /// </summary>
-        private IMapper<TSource, TTarget>[] innerMappers;
+        private IMapper<TSource, TTarget>[] _innerMappers;
 
         #endregion Fields
 
@@ -85,7 +85,7 @@ namespace Moo.Mappers
             Justification = "Easier said than done. The alternative here would be to forego type safety.")]
         public IEnumerable<IMapper<TSource, TTarget>> InnerMappers
         {
-            get { return this.innerMappers; }
+            get { return this._innerMappers; }
         }
 
         #endregion Properties
@@ -96,7 +96,7 @@ namespace Moo.Mappers
         {
             Guard.CheckEnumerableNotNullOrEmpty(innerMappers, "innerMappers");
             Guard.TrueForAll(innerMappers, "innerMappers", m => m != null, "Mappers list cannot contain null elements.");
-            this.innerMappers = innerMappers;
+            this._innerMappers = innerMappers;
             this.GenerateMappings();
         }
 
@@ -138,7 +138,7 @@ namespace Moo.Mappers
         protected override void GenerateMappings(TypeMappingInfo<TSource, TTarget> typeMapping)
         {
             Guard.CheckArgumentNotNull(typeMapping, "typeMapping");
-            var q = from mapper in this.innerMappers.OfType<BaseMapper<TSource, TTarget>>()
+            var q = from mapper in InnerMappers.OfType<BaseMapper<TSource, TTarget>>()
                     from mapping in mapper.TypeMapping.GetMappings()
                     select mapping;
 
