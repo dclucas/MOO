@@ -27,28 +27,26 @@
 namespace Moo
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Linq.Expressions;
-    using System.Text;
-
-    using Moo.Core;
 
     /// <summary>
-    /// Extends the IExtensibleMapper interface with fluent methods.
+    /// Base interface for fluently setting mapping targets
     /// </summary>
-    public static class IExtensibleMapperExtender
+    /// <typeparam name="TSource">Type of the mapping source.</typeparam>
+    /// <typeparam name="TTarget">Type of the mapping target.</typeparam>
+    public interface ITargetSpec<TSource, TTarget>
     {
         /// <summary>
-        /// Adds a fluent AddMapping method to IExtensibleMapperExtender
+        /// Instructs Moo to map a source expression to the property expression below.
         /// </summary>
-        /// <typeparam name="TSource">Type of the source object.</typeparam>
-        /// <typeparam name="TTarget">Type of the target object.</typeparam>
-        /// <param name="mapper">Mapper to extend.</param>
-        /// <returns>A ISourceSpec object, for fluent mapping.</returns>
-        public static ISourceSpec<TSource, TTarget> AddMapping<TSource, TTarget>(this IExtensibleMapper<TSource, TTarget> mapper)
-        {
-            return new SourceSpec<TSource, TTarget>(mapper);
-        }
+        /// <param name="argument">An expression fetching the property to map to.</param>
+        /// <remarks>
+        /// The argument parameter must be a property access expression, such as <c>(t) => t.Name</c>,
+        /// or else an ArgumentException will be thrown.
+        /// </remarks>
+        /// <exception cref="ArgumentException">The provided lambda is not of a property access.</exception>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "To", Justification = "It's highly improbable that this specific interface will have to be implemented elsewhere.")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures", Justification = "Easier said than done")]
+        void To(Expression<Func<TTarget, object>> argument);
     }
 }

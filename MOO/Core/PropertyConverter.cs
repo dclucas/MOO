@@ -39,7 +39,7 @@ namespace Moo.Core
         /// <summary>
         /// Backing field for the static default converter instance.
         /// </summary>
-        private static readonly PropertyConverter defaultInstance = new PropertyConverter();
+        private static readonly PropertyConverter DefaultInstance = new PropertyConverter();
 
         #endregion Fields
 
@@ -50,7 +50,7 @@ namespace Moo.Core
         /// </summary>
         internal static PropertyConverter Default
         {
-            get { return defaultInstance; }
+            get { return DefaultInstance; }
         }
 
         #endregion Properties

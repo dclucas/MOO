@@ -44,6 +44,27 @@ namespace Moo.Core
     internal class MapperMappingInfo<TSource, TTarget> : MemberMappingInfo<TSource, TTarget>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="MapperMappingInfo{TSource,TTarget}"/> class.
+        /// </summary>
+        /// <param name="mapper">
+        /// The internal mapper.
+        /// </param>
+        /// <param name="sourceProperty">
+        /// The source property.
+        /// </param>
+        /// <param name="targetProperty">
+        /// The target property.
+        /// </param>
+        public MapperMappingInfo(IMapper mapper, PropertyInfo sourceProperty, PropertyInfo targetProperty)
+        {
+            this.Mapper = mapper;
+            this.SourceProperty = sourceProperty;
+            this.TargetProperty = targetProperty;
+            this.SourceMemberName = sourceProperty.Name;
+            this.TargetMemberName = targetProperty.Name;
+        }
+
+        /// <summary>
         /// Gets or sets the internal Mapper.
         /// </summary>
         private IMapper Mapper { get; set; }
@@ -59,36 +80,15 @@ namespace Moo.Core
         private PropertyInfo TargetProperty { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MapperMappingInfo{TSource,TTarget}"/> class.
-        /// </summary>
-        /// <param name="mapper">
-        /// The internal mapper.
-        /// </param>
-        /// <param name="sourceProperty">
-        /// The source property.
-        /// </param>
-        /// <param name="targetProperty">
-        /// The target property.
-        /// </param>
-        public MapperMappingInfo(IMapper mapper, PropertyInfo sourceProperty, PropertyInfo targetProperty)
-        {
-            Mapper = mapper;
-            SourceProperty = sourceProperty;
-            TargetProperty = targetProperty;
-            SourceMemberName = sourceProperty.Name;
-            TargetMemberName = targetProperty.Name;
-        }
-
-        /// <summary>
         /// Maps a given class member from the source to the target object.
         /// </summary>
         /// <param name="source">Mapping sourceMemberName object</param>
         /// <param name="target">Mapping targetMemberName object</param>
         public override void Map(TSource source, TTarget target)
         {
-            var src = SourceProperty.GetValue(source, null);
-            var val = Mapper.Map(src);
-            TargetProperty.SetValue(target, val, null);
+            var src = this.SourceProperty.GetValue(source, null);
+            var val = this.Mapper.Map(src);
+            this.TargetProperty.SetValue(target, val, null);
         }
     }
 }

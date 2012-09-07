@@ -47,7 +47,7 @@ namespace Moo.Configuration
         /// <param name="element">The type mapping element.</param>
         public void Add(TypeMappingElement element)
         {
-            BaseAdd(element);
+            this.BaseAdd(element);
         }
 
         // Protected Methods (2) 

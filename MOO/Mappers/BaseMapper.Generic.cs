@@ -133,7 +133,7 @@ namespace Moo.Mappers
         public virtual TTarget Map(TSource source)
         {
             var target = Activator.CreateInstance<TTarget>();
-            Map(source, target);
+            this.Map(source, target);
             return target;
         }
 
@@ -209,7 +209,7 @@ namespace Moo.Mappers
         {
             Guard.CheckArgumentNotNull(createTarget, "createTarget");
             TTarget target = createTarget();
-            Map(source, target);
+            this.Map(source, target);
             return target;
         }
 

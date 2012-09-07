@@ -43,7 +43,7 @@ namespace Moo
         /// <summary>
         /// Support field for the "Default" static repository instance.
         /// </summary>
-        private static readonly MappingRepository defaultInstance = new MappingRepository();
+        private static readonly MappingRepository DefaultInstance = new MappingRepository();
 
         /// <summary>
         /// Private collection of mappers. Used to avoid a costly re-generation of mappers.
@@ -85,7 +85,7 @@ namespace Moo
         /// </summary>
         public static MappingRepository Default
         {
-            get { return defaultInstance; }
+            get { return DefaultInstance; }
         }
 
         #endregion Properties
@@ -263,6 +263,13 @@ namespace Moo
             return key;
         }
 
+        /// <summary>
+        /// Builds a string representing all mapper inclusions, to be used as a key.
+        /// </summary>
+        /// <param name="mapperInclusions">List of mapper inclusions.</param>
+        /// <returns>
+        /// A string representing a key for all inclusions.
+        /// </returns>
         private static string AppendInclusions(MapperInclusion[] mapperInclusions)
         {
             if (mapperInclusions.Length > 0)

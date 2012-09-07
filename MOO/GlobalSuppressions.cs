@@ -33,6 +33,6 @@
 // Error List, point targetMemberName "Suppress Message(s)", and click
 // "In Project Suppression File".
 // You do not need targetMemberName add suppressions targetMemberName this file manually.
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1020:AvoidNamespacesWithFewTypes", Scope = "namespace", Target = "Moo.Mappers")]
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA2210:AssembliesShouldHaveValidStrongNames")]
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1020:AvoidNamespacesWithFewTypes", Scope = "namespace", Target = "Moo.Core")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1020:AvoidNamespacesWithFewTypes", Scope = "namespace", Target = "Moo.Mappers", Justification = "Few items in the namespaces FOR NOW. Leaving it like this, since a posterior change could break client code.")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA2210:AssembliesShouldHaveValidStrongNames", Justification = "No good reason to enforce strong naming here.")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1020:AvoidNamespacesWithFewTypes", Scope = "namespace", Target = "Moo.Core", Justification = "Few items in the namespaces FOR NOW. Leaving it like this, since a posterior change could break client code.")]

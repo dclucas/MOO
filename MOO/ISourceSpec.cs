@@ -27,28 +27,23 @@
 namespace Moo
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Linq.Expressions;
-    using System.Text;
-
-    using Moo.Core;
 
     /// <summary>
-    /// Extends the IExtensibleMapper interface with fluent methods.
+    /// Base interface for fluent mapping of source objects.
     /// </summary>
-    public static class IExtensibleMapperExtender
+    /// <typeparam name="TSource">Type of the source object.</typeparam>
+    /// <typeparam name="TTarget">Type of the target object.</typeparam>
+    public interface ISourceSpec<TSource, TTarget>
     {
         /// <summary>
-        /// Adds a fluent AddMapping method to IExtensibleMapperExtender
+        /// Adds a mapping source
         /// </summary>
-        /// <typeparam name="TSource">Type of the source object.</typeparam>
-        /// <typeparam name="TTarget">Type of the target object.</typeparam>
-        /// <param name="mapper">Mapper to extend.</param>
-        /// <returns>A ISourceSpec object, for fluent mapping.</returns>
-        public static ISourceSpec<TSource, TTarget> AddMapping<TSource, TTarget>(this IExtensibleMapper<TSource, TTarget> mapper)
-        {
-            return new SourceSpec<TSource, TTarget>(mapper);
-        }
+        /// <param name="argument">Expression to fetch data from the source object.</param>
+        /// <returns>
+        /// A ITargetSpec, allowing to define the mapping target.
+        /// </returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures", Justification = "Easier said than done")]        
+        ITargetSpec<TSource, TTarget> From(Expression<Func<TSource, object>> argument);
     }
 }

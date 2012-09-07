@@ -37,15 +37,6 @@ namespace Moo.Mappers
     /// <typeparam name="TTarget">The type of the target.</typeparam>
     public class CompositeMapper<TSource, TTarget> : BaseMapper<TSource, TTarget>, IExtensibleMapper<TSource, TTarget>
     {
-        #region Fields (1)
-
-        /// <summary>
-        /// Contains an ordered list of all inner mappers.
-        /// </summary>
-        private IMapper<TSource, TTarget>[] _innerMappers;
-
-        #endregion Fields
-
         #region Constructors (1)
 
         /// <summary>
@@ -83,20 +74,23 @@ namespace Moo.Mappers
             "Microsoft.Design",
             "CA1006:DoNotNestGenericTypesInMemberSignatures",
             Justification = "Easier said than done. The alternative here would be to forego type safety.")]
-        public IEnumerable<IMapper<TSource, TTarget>> InnerMappers
-        {
-            get { return this._innerMappers; }
-        }
+        public IEnumerable<IMapper<TSource, TTarget>> InnerMappers { get; private set; }
 
         #endregion Properties
 
         #region Methods (2)
 
+        /// <summary>
+        /// Performs basic validation and fires off mapping generation.
+        /// </summary>
+        /// <param name="innerMappers">
+        /// List of internal mappers to use.
+        /// </param>
         private void Initialize(IMapper<TSource, TTarget>[] innerMappers)
         {
             Guard.CheckEnumerableNotNullOrEmpty(innerMappers, "innerMappers");
             Guard.TrueForAll(innerMappers, "innerMappers", m => m != null, "Mappers list cannot contain null elements.");
-            this._innerMappers = innerMappers;
+            this.InnerMappers = innerMappers;
             this.GenerateMappings();
         }
 
@@ -121,7 +115,7 @@ namespace Moo.Mappers
                 targetMemberName,
                 mappingAction);
 
-            AddMappingInfo(info);
+            this.AddMappingInfo(info);
         }
 
         // Protected Methods (1) 
@@ -138,7 +132,7 @@ namespace Moo.Mappers
         protected override void GenerateMappings(TypeMappingInfo<TSource, TTarget> typeMapping)
         {
             Guard.CheckArgumentNotNull(typeMapping, "typeMapping");
-            var q = from mapper in InnerMappers.OfType<BaseMapper<TSource, TTarget>>()
+            var q = from mapper in this.InnerMappers.OfType<BaseMapper<TSource, TTarget>>()
                     from mapping in mapper.TypeMapping.GetMappings()
                     select mapping;
 

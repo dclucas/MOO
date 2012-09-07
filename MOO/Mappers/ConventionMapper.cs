@@ -93,7 +93,7 @@ namespace Moo.Mappers
                     string finalName;
                     if (checker.CanConvert(fromProp, toProp, out finalName))
                     {
-                        var mappingInfo = CreateInfo(fromProp, toProp);
+                        var mappingInfo = this.CreateInfo(fromProp, toProp);
 
                         typeMapping.Add(mappingInfo);
                     }

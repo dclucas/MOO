@@ -91,7 +91,7 @@ namespace Moo.Mappers
             }
         }
 
-        // Private Methods (2)
+        // Private Methods (2)
 
         /// <summary>
         /// Gets the property mapping for two property types.

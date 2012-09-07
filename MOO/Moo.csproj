@@ -86,9 +86,13 @@
     <Compile Include="Configuration\MemberMappingElement.cs" />
     <Compile Include="Configuration\TypeMappingCollection.cs" />
     <Compile Include="Core\DelegateMappingInfo.cs" />
+    <Compile Include="ISourceSpec.cs" />
+    <Compile Include="ITargetSpec.cs" />
     <Compile Include="Core\MapperConstructionInfo.cs" />
     <Compile Include="Core\MapperMappingInfo.cs" />
     <Compile Include="Core\ReflectionPropertyMappingInfo.cs" />
+    <Compile Include="Core\SourceSpec.cs" />
+    <Compile Include="Core\TargetSpec.cs" />
     <Compile Include="Core\TypeMappingInfo.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="IEnumerableMappingExtender.cs" />

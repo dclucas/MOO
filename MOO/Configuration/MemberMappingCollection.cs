@@ -65,7 +65,7 @@ namespace Moo.Configuration
         /// <param name="element">The element.</param>
         public void Add(MemberMappingElement element)
         {
-            BaseAdd(element);
+            this.BaseAdd(element);
         }
 
         // Protected Methods (2) 
