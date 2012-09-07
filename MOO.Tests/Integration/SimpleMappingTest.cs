@@ -84,6 +84,43 @@ namespace Moo.Tests.Integration
             CheckMapping(source, result);
             result.Name.ShouldBe(source.FirstName + source.LastName);
         }
+       
+        [Test]
+        public void FluentMapping_AddedViaMapper_MapsCorrectly()
+        {
+            var mappingRepo = new MappingRepository();
+            var source = CreateSource();
+            var mapper = mappingRepo.ResolveMapper<Person, PersonEditModel>();
+            mapper.AddMapping()
+                .From(p => p.FirstName + p.LastName)
+                .To(pi => pi.Name);
+            
+            var result = mapper.Map(source);
+
+            result.ShouldNotBe(null);
+            CheckMapping(source, result);
+            result.Name.ShouldBe(source.FirstName + source.LastName);
+        }
+
+        [Test]
+        public void FluentMapping_AddedViaRepo_MapsCorrectly()
+        {
+            var source = CreateSource();
+
+            MappingRepository.Default
+                .AddMapping<Person, PersonEditModel>()
+                .From(p => p.FirstName + p.LastName)
+                .To(pe => pe.Name);
+
+            var result = source.MapTo<PersonEditModel>();
+
+            // cleaning up so there are no side effects on other tests
+            // TODO: this should be made thread-safe for parallel mapping execution.
+            MappingRepository.Default.Clear();
+            result.ShouldNotBe(null);
+            CheckMapping(source, result);
+            result.Name.ShouldBe(source.FirstName + source.LastName);
+        }
 
         private void CheckMapping(Person p, PersonEditModel pe)
         {

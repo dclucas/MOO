@@ -104,7 +104,7 @@
     <Compile Include="DelegateMappingInfoTest.cs" />
     <Compile Include="Core\GuardTest.cs" />
     <Compile Include="IEnumerableMappingExtenderTest.cs" />
-    <Compile Include="IExtensibleMapperExtenderTest.cs" />
+    <Compile Include="Integration\IExtensibleMapperExtenderTest.cs" />
     <Compile Include="Integration\FullMappingTest.cs" />
     <Compile Include="Integration\MappedClasses\DomainModels\Account.cs" />
     <Compile Include="Integration\MappedClasses\DomainModels\Contact.cs" />

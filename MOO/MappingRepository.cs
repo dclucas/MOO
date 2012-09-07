@@ -43,7 +43,7 @@ namespace Moo
         /// <summary>
         /// Support field for the "Default" static repository instance.
         /// </summary>
-        private static readonly MappingRepository DefaultInstance = new MappingRepository();
+        private static readonly IMappingRepository DefaultInstance = new MappingRepository();
 
         /// <summary>
         /// Private collection of mappers. Used to avoid a costly re-generation of mappers.
@@ -83,7 +83,7 @@ namespace Moo
         /// <summary>
         /// Gets the default instance for the mapping repository.
         /// </summary>
-        public static MappingRepository Default
+        public static IMappingRepository Default
         {
             get { return DefaultInstance; }
         }
@@ -338,6 +338,22 @@ namespace Moo
             var mapper = ResolveMapper<TSource, TTarget>();
             mapper.AddMappingAction(sourceMemberName, targetMemberName, mappingAction);
         }
+
+        /// <summary>
+        /// Allows adding mapping actions through the fluent API.
+        /// </summary>
+        /// <typeparam name="TSource">Type of the source object.</typeparam>
+        /// <typeparam name="TTarget">Type of the target object.</typeparam>
+        /// <returns>
+        /// A SourceSpec object, for property mapping.
+        /// </returns>
+        public ISourceSpec<TSource, TTarget> AddMapping<TSource, TTarget>()
+        {
+            var mapper = this.ResolveMapper<TSource, TTarget>();
+            return new SourceSpec<TSource, TTarget>(mapper);
+        }
+
         #endregion Methods
+
     }
 }

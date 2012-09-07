@@ -103,5 +103,15 @@ namespace Moo
         /// The delegate that will perform the conversion.
         /// </param>
         void AddMappingAction<TSource, TTarget>(string sourceMemberName, string targetMemberName, MappingAction<TSource, TTarget> mappingAction);
+
+        /// <summary>
+        /// Allows adding mapping actions through the fluent API.
+        /// </summary>
+        /// <typeparam name="TSource">Type of the source object.</typeparam>
+        /// <typeparam name="TTarget">Type of the target object.</typeparam>
+        /// <returns>
+        /// A SourceSpec object, for property mapping.
+        /// </returns>
+        ISourceSpec<TSource, TTarget> AddMapping<TSource, TTarget>();
     }
 }

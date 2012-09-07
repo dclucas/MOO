@@ -34,15 +34,16 @@ Mapping enumerables can be done this way:
 
 Once again, using the extension method leaves Moo in charge of creating all required inner objects.
 
-### Adding mapping actions
+### Fluent API
 
     var source = CreateSource();
+    
     MappingRepository.Default
-        .AddMappingAction<Person, PersonEditModel>(
-        "FirstName + LastName", "Name", (s, t) => t.Name = s.FirstName + s.LastName);
+       .AddMapping<Person, PersonEditModel>()
+       .From(p => p.FirstName + p.LastName)
+       .To(pe => pe.Name);
+
     var result = source.MapTo<PersonEditModel>();
 
-A fluent API to simplify these calls is still a WIP, but the method below will be kept (and used under the hood).
-
-Warning: this method leaves side effects -- after a mapping action is added, all subsequent calls to map that source/target pair using the Default repository will have this action.
+A fluent API is provided for explicit code mappings. Advantages over "pure" by-hand mapping is a) a consistent approach to mapping and handling errors and b) the ability to still combine explicit mappings with other strategies.
 

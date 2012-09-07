@@ -1,10 +1,11 @@
-﻿namespace Moo.Tests
+﻿namespace Moo.Tests.Integration
 {
-    using NUnit.Framework;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
+
+    using NUnit.Framework;
     using Moo;
     using Moo.Tests.Integration.MappedClasses.ViewModels;
     using Moo.Tests.Integration.MappedClasses.DomainModels;
