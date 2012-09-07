@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Moo</RootNamespace>
     <AssemblyName>Moo</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
@@ -41,6 +41,7 @@
     </SccProvider>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">$(MSBuildProjectDirectory)\..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -92,6 +93,7 @@
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="IEnumerableMappingExtender.cs" />
     <Compile Include="IExtensibleMapper.cs" />
+    <Compile Include="IExtensibleMapperExtender.cs" />
     <Compile Include="IMapper.cs" />
     <Compile Include="IMappingRepository.cs" />
     <Compile Include="Mappers\AssociationMapper.cs" />

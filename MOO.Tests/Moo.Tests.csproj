@@ -62,6 +62,12 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Castle.Core">
+      <HintPath>..\packages\Castle.Core.3.1.0\lib\net40-client\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="FakeItEasy">
+      <HintPath>..\packages\FakeItEasy.1.7.4626.65\lib\NET40\FakeItEasy.dll</HintPath>
+    </Reference>
     <Reference Include="Moq">
       <HintPath>..\packages\Moq.4.0.10827\lib\NET40\Moq.dll</HintPath>
     </Reference>
@@ -73,6 +79,9 @@
     </Reference>
     <Reference Include="Ploeh.SemanticComparison">
       <HintPath>..\packages\AutoFixture.2.12.0\lib\Ploeh.SemanticComparison.dll</HintPath>
+    </Reference>
+    <Reference Include="Seterlund.CodeGuard">
+      <HintPath>..\packages\Seterlund.CodeGuard.2.1\lib\net40\Seterlund.CodeGuard.dll</HintPath>
     </Reference>
     <Reference Include="Shouldly">
       <HintPath>..\packages\Shouldly.1.1.1.1\lib\35\Shouldly.dll</HintPath>
@@ -95,6 +104,7 @@
     <Compile Include="DelegateMappingInfoTest.cs" />
     <Compile Include="Core\GuardTest.cs" />
     <Compile Include="IEnumerableMappingExtenderTest.cs" />
+    <Compile Include="IExtensibleMapperExtenderTest.cs" />
     <Compile Include="Integration\FullMappingTest.cs" />
     <Compile Include="Integration\MappedClasses\DomainModels\Account.cs" />
     <Compile Include="Integration\MappedClasses\DomainModels\Contact.cs" />

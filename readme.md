@@ -43,3 +43,6 @@ Once again, using the extension method leaves Moo in charge of creating all requ
     var result = source.MapTo<PersonEditModel>();
 
 A fluent API to simplify these calls is still a WIP, but the method below will be kept (and used under the hood).
+
+Warning: this method leaves side effects -- after a mapping action is added, all subsequent calls to map that source/target pair using the Default repository will have this action.
+
