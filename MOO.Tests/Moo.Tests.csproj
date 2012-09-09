@@ -101,6 +101,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\MapperSequenceSpecTest.cs" />
     <Compile Include="Core\SourceSpecTest.cs" />
     <Compile Include="Core\TargetSpecTest.cs" />
     <Compile Include="DelegateMappingInfoTest.cs" />

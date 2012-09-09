@@ -76,9 +76,14 @@ namespace Moo.Core
         {
             Guard.CheckArgumentNotNull(argument, "argument");
             Guard.CheckArgumentNotNull(argument.Body, "argument.Body");
-            if (argument.Body.NodeType != ExpressionType.MemberAccess)
+            Expression body = argument.Body;
+            if (body.NodeType != ExpressionType.MemberAccess)
             {
-                throw new ArgumentException("'To' should be called with a property getter delegate");
+                throw new ArgumentException(
+                    String.Format(
+                        "'To' should be called with a property getter delegate, but instead got a {0} expression type, with a {1} expression body",
+                        argument.NodeType,
+                        argument.Body.NodeType));
             }
 
             Mapper.AddMappingAction(

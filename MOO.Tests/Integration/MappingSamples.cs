@@ -36,6 +36,7 @@ namespace Moo.Tests.Integration
     using Ploeh.AutoFixture;
     using Shouldly;
     using Moo.Tests.Integration.MappedClasses.DataContracts;
+    using Moo.Mappers;
 
     [TestFixture]
     public class MappingSamples
@@ -136,10 +137,8 @@ namespace Moo.Tests.Integration
                 .UseMapperFor<Account, AccountDataContract>()
                 .From(p => p.FirstName + p.LastName)
                 .To(pd => pd.Name);
-            var mapper = MappingRepository.Default.ResolveMapper<Person, PersonDetailsDataContract>();
-            var result = new PersonDetailsDataContract() { Account = new AccountDataContract() };
-            mapper.Map(source, result);
-            //var result = source.MapTo<PersonDetailsDataContract>();
+
+            var result = source.MapTo<PersonDetailsDataContract>();
 
             // cleaning up so there are no side effects on other tests
             // TODO: this should be made thread-safe for parallel mapping execution.
@@ -150,6 +149,26 @@ namespace Moo.Tests.Integration
             result.Account.Login.ShouldBe(source.Account.Login);
         }
 
+        [Test]
+        public void MapperSequence_OverridenDefault_CreatesCorrectly()
+        {
+            ////var source = this.CreateSource();
+
+            ////var repo = new MappingRepository(o =>
+            ////    o.MapperOrder
+            ////        .Use<ConventionMapper<object, object>>()
+            ////        .Then<ManualMapper<object, object>>()
+            ////        .Finally<AttributeMapper<object, object>>());
+            
+            ////repo.AddMapping<Person, PersonEditModel>()
+            ////    .From(s => 123)
+            ////    .To(t => t.Id);
+
+            ////var mapper = repo.ResolveMapper<Person, PersonEditModel>();
+
+            ////var result = mapper.Map(source);
+            ////result.ShouldNotBe(null);
+        }
 
         public void WorkInProgress()
         {

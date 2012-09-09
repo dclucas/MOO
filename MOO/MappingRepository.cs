@@ -76,6 +76,13 @@ namespace Moo
         {
         }
 
+        public MappingRepository(Func<IRepositorySpec, IRepositorySpec> optionsFunc)
+        {
+            IRepositorySpec repoSpec = new RepositorySpec();
+            repoSpec = optionsFunc(repoSpec);
+            this.options = repoSpec.GetOptions();
+        }
+
         #endregion Constructors
 
         #region Properties (1)
