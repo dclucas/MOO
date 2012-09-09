@@ -70,8 +70,8 @@ namespace Moo.Tests.Configuration
                 writer.Flush();
             }
 
-            const string expected = @"<MemberMappings><add TargetMemberName=""A"" SourceMemberName=""B"" /></MemberMappings>";
-            StringAssert.Contains(expected, sb.ToString());
+            const string Expected = @"<MemberMappings><add TargetMemberName=""A"" SourceMemberName=""B"" /></MemberMappings>";
+            StringAssert.Contains(Expected, sb.ToString());
         }
 
         #endregion Methods

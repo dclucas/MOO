@@ -47,6 +47,6 @@ namespace Moo
         /// <exception cref="ArgumentException">The provided lambda is not of a property access.</exception>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "To", Justification = "It's highly improbable that this specific interface will have to be implemented elsewhere.")]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures", Justification = "Easier said than done")]
-        void To(Expression<Func<TTarget, object>> argument);
+        ISourceSpec<TSource, TTarget> To(Expression<Func<TTarget, object>> argument);
     }
 }

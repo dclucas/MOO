@@ -45,6 +45,7 @@ namespace Moo.Core
         /// <param name="mapper">Mapper to extend</param>
         public SourceSpec(IExtensibleMapper<TSource, TTarget> mapper)
         {
+            Guard.CheckArgumentNotNull(mapper, "mapper");
             this.Mapper = mapper;
         }
 
@@ -63,6 +64,26 @@ namespace Moo.Core
         public ITargetSpec<TSource, TTarget> From(Expression<Func<TSource, object>> argument)
         {
             return new TargetSpec<TSource, TTarget>(Mapper, argument);
+        }
+
+        /// <summary>
+        /// Instructs Moo to use an internal mapper for properties of <paramref name="TInnerTarget"/> type.
+        /// </summary>
+        /// <typeparam name="TInnerSource">
+        /// Type of the source property to map.
+        /// </typeparam>
+        /// <typeparam name="TInnerTarget">
+        /// Type of the target property to map.
+        /// </typeparam>
+        /// <returns>
+        /// A ISourceSpec, allowing to define further mappings.
+        /// </returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter", Justification = "Easier said than done")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures", Justification = "Easier said than done")]
+        public ISourceSpec<TSource, TTarget> UseMapperFor<TInnerSource, TInnerTarget>()
+        {
+            Mapper.AddInnerMapper<TInnerSource, TInnerTarget>();
+            return this;
         }
     }
 }

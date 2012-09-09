@@ -23,32 +23,30 @@
 // Email: diogo.lucas@gmail.com
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
-
-namespace Moo
+namespace Moo.Tests.Utils
 {
+    using FakeItEasy;
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Linq.Expressions;
     using System.Text;
-
-    using Moo.Core;
+    using System.Threading.Tasks;
 
     /// <summary>
-    /// Extends the IExtensibleMapper interface with fluent methods.
+    /// Internal factory class, for target instance construction.
     /// </summary>
-    public static class IExtensibleMapperExtender
+    internal static class TestFactory
     {
-        /// <summary>
-        /// Adds a fluent AddMapping method to IExtensibleMapperExtender
-        /// </summary>
-        /// <typeparam name="TSource">Type of the source object.</typeparam>
-        /// <typeparam name="TTarget">Type of the target object.</typeparam>
-        /// <param name="mapper">Mapper to extend.</param>
-        /// <returns>A ISourceSpec object, for fluent mapping.</returns>
-        public static ISourceSpec<TSource, TTarget> AddMapping<TSource, TTarget>(this IExtensibleMapper<TSource, TTarget> mapper)
+        public static T CreateTarget<T>()
         {
-            return new SourceSpec<TSource, TTarget>(mapper);
+            var ctorInfo = typeof(T).GetConstructors().OrderByDescending(c => c.GetParameters().Count()).First();
+            var fakeFactory = typeof(FakeItEasy.A).GetMethod("Fake", System.Type.EmptyTypes);
+
+            var ctorParams = from p in ctorInfo.GetParameters()
+                             select fakeFactory.MakeGenericMethod(p.ParameterType).Invoke(null, null);
+            var result = ctorInfo.Invoke(ctorParams.ToArray());
+
+            return (T)result;
         }
     }
 }

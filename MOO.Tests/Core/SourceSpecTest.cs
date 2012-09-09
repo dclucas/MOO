@@ -23,39 +23,38 @@
 // Email: diogo.lucas@gmail.com
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
-namespace Moo.Tests.Integration.MappedClasses.ViewModels
+namespace Moo.Tests.Core
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+
+    using FakeItEasy;
+    using Moo.Core;
     using Moo.Tests.Integration.MappedClasses.DomainModels;
+    using Moo.Tests.Integration.MappedClasses.ViewModels;
+    using Moo.Tests.Utils;
+    using NUnit.Framework;
+    using Shouldly;
 
-    public class PersonIndexModel
+    [TestFixture(TypeArgs = new Type[] { typeof(Person), typeof(PersonIndexModel) })]
+    public class SourceSpecTest<TSource, TTarget>
     {
-        public int Id { get; set; }
+        [Test]
+        public void From_DefaultCase_ReturnsCorrectly()
+        {
+            var target = TestFactory.CreateTarget<SourceSpec<TSource, TTarget>>();
 
-        [Mapping(MappingDirections.To, typeof(Person), "FirstName")]
-        public string Name { get; set; }
+            var from = target.From(s => 1);
 
-        public string AccountLogin { get; set; }
+            from.ShouldNotBe(null);
+        }
 
-        public string Email { get; set; }
-
-        public string ManagerName { get; set; }
-
-        [Mapping(MappingDirections.To, typeof(Person), "LastName")]
-        public string MessyProp { get; set; }
-    }
-
-    public class PersonEditModel
-    {
-        public int Id { get; set; }
-
-        public string Name { get; set; }
-
-        public string AccountLogin { get; set; }
-
-        public string AccountPassword { get; set; }
-
-        public int ManagerId { get; set; }
-
-        public string Email { get; set; }
+        [Test]
+        public void From_NullMapper_Throws()
+        {
+            Should.Throw<ArgumentNullException>(() => new SourceSpec<TSource, TTarget>(null));
+        }
     }
 }

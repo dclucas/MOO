@@ -30,5 +30,7 @@ namespace Moo.Tests.Integration.MappedClasses.DomainModels
         public string Login { get; set; }
 
         public string Password { get; set; }
+
+        public string DisplayName { get; set; }
     }
 }

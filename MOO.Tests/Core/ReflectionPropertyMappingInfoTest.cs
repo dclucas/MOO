@@ -86,7 +86,7 @@ namespace Moo.Tests.Core
 
             public override void Convert(object source, PropertyInfo fromProperty, object target, PropertyInfo toProperty, bool strict)
             {
-                ConvertAction(source, fromProperty, target, toProperty, strict);
+                this.ConvertAction(source, fromProperty, target, toProperty, strict);
             }
 
             #endregion Methods

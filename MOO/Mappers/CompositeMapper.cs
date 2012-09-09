@@ -142,6 +142,15 @@ namespace Moo.Mappers
             }
         }
 
+        /// <summary>
+        /// Adds new mapping actions to the mapper, with <c>From</c> and <c>To</c> statements.
+        /// </summary>
+        /// <returns>A ISourceSpec object, for fluent mapping.</returns>
+        public ISourceSpec<TSource, TTarget> AddMapping()
+        {
+            return new SourceSpec<TSource, TTarget>(this);
+        }
+
         #endregion Methods
     }
 }

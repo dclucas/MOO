@@ -80,19 +80,19 @@ namespace Moo.Tests.Core
         [Test]
         public void PropertiesMatchFlattenNegativeTest()
         {
-            TestMatch("InnerClass", "InnerClassCode", false);
+            this.TestMatch("InnerClass", "InnerClassCode", false);
         }
 
         [Test]
         public void PropertiesMatchFlattenTest()
         {
-            TestMatch("InnerClass", "InnerClassName", true);
+            this.TestMatch("InnerClass", "InnerClassName", true);
         }
 
         [Test]
         public void PropertiesMatchSimpleNegativeTest()
         {
-            TestMatch("Code", "Code", false);
+            this.TestMatch("Code", "Code", false);
         }
 
         /// <summary>
@@ -101,7 +101,7 @@ namespace Moo.Tests.Core
         [Test]
         public void PropertiesMatchSimpleTest()
         {
-            TestMatch("Name", "Name", true);
+            this.TestMatch("Name", "Name", true);
         }
 
         [Test]

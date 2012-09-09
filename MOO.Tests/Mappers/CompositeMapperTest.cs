@@ -130,16 +130,21 @@ namespace Moo.Tests.Mappers
         {
             public void AddMapping(MemberMappingInfo<TSource, TTarget> mapping)
             {
-                AddMappingInfo(mapping);
-            }
-
-            protected override void GenerateMappings(TypeMappingInfo<TSource, TTarget> typeMapping)
-            {
+                this.AddMappingInfo(mapping);
             }
 
             public virtual void AddMappingAction(string fromProperty, string toProperty, MappingAction<TSource, TTarget> mappingAction)
             {
                 throw new NotImplementedException();
+            }
+
+            public ISourceSpec<TSource, TTarget> AddMapping()
+            {
+                throw new NotImplementedException();
+            }
+
+            protected override void GenerateMappings(TypeMappingInfo<TSource, TTarget> typeMapping)
+            {
             }
         }
 

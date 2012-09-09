@@ -47,9 +47,9 @@ namespace Moo.Tests.Core
         public void CanConvertNegativeTest()
         {
             ValueConverter target = new ValueConverter();
-            DoCanConverTest(typeof(TestClassA), typeof(TestClassE), false);
-            DoCanConverTest(typeof(TestClassB), typeof(TestClassD), false);
-            DoCanConverTest(typeof(string), typeof(TestClassC), false);
+            this.DoCanConverTest(typeof(TestClassA), typeof(TestClassE), false);
+            this.DoCanConverTest(typeof(TestClassB), typeof(TestClassD), false);
+            this.DoCanConverTest(typeof(string), typeof(TestClassC), false);
         }
 
         /// <summary>
@@ -58,11 +58,11 @@ namespace Moo.Tests.Core
         [Test]
         public void CanConvertTest()
         {
-            DoCanConverTest(typeof(string), typeof(string), true);
-            DoCanConverTest(typeof(int), typeof(long), true);
-            DoCanConverTest(typeof(int), typeof(string), true);
-            DoCanConverTest(typeof(int), typeof(double), true);
-            DoCanConverTest(typeof(TestClassE), typeof(TestClassA), true);
+            this.DoCanConverTest(typeof(string), typeof(string), true);
+            this.DoCanConverTest(typeof(int), typeof(long), true);
+            this.DoCanConverTest(typeof(int), typeof(string), true);
+            this.DoCanConverTest(typeof(int), typeof(double), true);
+            this.DoCanConverTest(typeof(TestClassE), typeof(TestClassA), true);
         }
 
         [ExpectedException(typeof(InvalidOperationException))]
@@ -79,18 +79,18 @@ namespace Moo.Tests.Core
         [Test]
         public void ConvertTest()
         {
-            DoConvertTest(2, 2);
-            DoConvertTest("2", "2");
-            DoConvertTest(2, "2");
-            DoConvertTest("2", 2);
-            DoConvertTest(5, 5.0);
-            DoConvertTest(3, 3f);
-            DoConvertTest(7, 7d);
-            DoConvertTest(10, (long)10);
-            DoConvertTest((long)10, 10);
-            DoConvertTest(11.0, 11);
-            DoConvertTest(3.14, 3);
-            DoConvertTest((TestClassA)null, null, typeof(TestClassB));
+            this.DoConvertTest(2, 2);
+            this.DoConvertTest("2", "2");
+            this.DoConvertTest(2, "2");
+            this.DoConvertTest("2", 2);
+            this.DoConvertTest(5, 5.0);
+            this.DoConvertTest(3, 3f);
+            this.DoConvertTest(7, 7d);
+            this.DoConvertTest(10, (long)10);
+            this.DoConvertTest((long)10, 10);
+            this.DoConvertTest(11.0, 11);
+            this.DoConvertTest(3.14, 3);
+            this.DoConvertTest((TestClassA)null, null, typeof(TestClassB));
         }
 
         // Private Methods (3) 
@@ -110,7 +110,7 @@ namespace Moo.Tests.Core
 
         private void DoConvertTest(object value, object expected)
         {
-            DoConvertTest(value, expected, expected.GetType());
+            this.DoConvertTest(value, expected, expected.GetType());
         }
 
         private void DoConvertTest(object value, object expected, Type expectedType)

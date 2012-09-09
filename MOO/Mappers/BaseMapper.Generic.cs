@@ -106,8 +106,6 @@ namespace Moo.Mappers
 
         #region Methods (14)
 
-        // Public Methods (8) 
-
         /// <summary>
         /// Maps from the source to a new target object.
         /// </summary>
@@ -243,10 +241,26 @@ namespace Moo.Mappers
             return sourceList.Select(s => this.Map(s, createTarget));
         }
 
-        // Protected Methods (3) 
+        public virtual void AddInnerMapper<TInnerSource, TInnerTarget>()
+        {
+            if (ParentRepo == null)
+            {
+                throw new InvalidOperationException("Mapper must be contained in a repo in order to allow inner mappers.");
+            }
+            
+            var innerMapper = ParentRepo.ResolveMapper<TInnerSource, TInnerTarget>();
+            var propExplorer = GetPropertyExplorer();
+            foreach (var kvp in propExplorer.GetMatches<TSource, TTarget>(
+                (s, t) => 
+                    s.PropertyType.Equals(typeof(TInnerSource)) &&
+                    t.PropertyType.Equals(typeof(TInnerTarget))))
+            {
+                AddMappingInfo(new MapperMappingInfo<TSource, TTarget>(innerMapper, kvp.Key, kvp.Value));
+            }
+        }
 
         /// <summary>
-        /// Adds the specified mapping info targetProperty the internal mappings table.
+        /// Adds the specified mapping info to the internal mappings table.
         /// </summary>
         /// <param name="mappingInfo">The mapping info targetProperty be added.</param>
         protected void AddMappingInfo(MemberMappingInfo<TSource, TTarget> mappingInfo)
@@ -268,7 +282,10 @@ namespace Moo.Mappers
         /// <param name="typeMapping">The type mapping where discovered mappings will be added.</param>
         protected abstract void GenerateMappings(TypeMappingInfo<TSource, TTarget> typeMapping);
 
-        // Private Methods (2) 
+        protected virtual PropertyExplorer GetPropertyExplorer()
+        {
+            return new PropertyExplorer();
+        }
 
         /// <summary>
         /// Called when a property is mapped.
@@ -322,8 +339,6 @@ namespace Moo.Mappers
             return true;
         }
 
-        // Internal Methods (1) 
-
         /// <summary>
         /// Gets the default property converter.
         /// </summary>
@@ -334,9 +349,9 @@ namespace Moo.Mappers
             "Microsoft.Design",
             "CA1024:UsePropertiesWhereAppropriate",
             Justification = "This is a virtual getter, for chrissake's")]
-        internal virtual PropertyConverter GetPropertyConverter()
+        protected internal virtual PropertyConverter GetPropertyConverter()
         {
-            return PropertyConverter.Default;
+            return new PropertyConverter();
         }
 
         #endregion Methods

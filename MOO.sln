@@ -14,6 +14,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{2F57BC
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution items", "Solution items", "{E49E6E2E-84EA-4595-9E34-8DED232D5B15}"
+	ProjectSection(SolutionItems) = preProject
+		BuildTestRun.testrunconfig = BuildTestRun.testrunconfig
+		LocalTestRun.testrunconfig = LocalTestRun.testrunconfig
+		readme.md = readme.md
+		Settings.StyleCop = Settings.StyleCop
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

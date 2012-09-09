@@ -47,7 +47,8 @@ namespace Moo.Core
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures", Justification = "Easier said than done")]
         public TargetSpec(IExtensibleMapper<TSource, TTarget> mapper, Expression<Func<TSource, object>> sourceArgument)
         {
-            // TODO: Complete member initialization
+            Guard.CheckArgumentNotNull(mapper, "mapper");
+            Guard.CheckArgumentNotNull(sourceArgument, "sourceArgument");
             this.Mapper = mapper;
             this.SourceArgument = sourceArgument;
         }
@@ -71,7 +72,7 @@ namespace Moo.Core
         /// The argument parameter must be a property access expression, such as <c>(t) => t.Name</c>,
         /// or else an ArgumentException will be thrown.
         /// </remarks>
-        public void To(Expression<Func<TTarget, object>> argument)
+        public ISourceSpec<TSource, TTarget> To(Expression<Func<TTarget, object>> argument)
         {
             Guard.CheckArgumentNotNull(argument, "argument");
             Guard.CheckArgumentNotNull(argument.Body, "argument.Body");
@@ -84,6 +85,8 @@ namespace Moo.Core
                 GetMemberName(SourceArgument.Body),
                 GetMemberName(argument.Body),
                 GetAction(SourceArgument, argument));
+
+            return new SourceSpec<TSource, TTarget>(Mapper);
         }
 
         /// <summary>

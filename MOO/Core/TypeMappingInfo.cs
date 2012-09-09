@@ -66,9 +66,7 @@ namespace Moo.Core
 
         #endregion Properties
 
-        #region Methods (2)
-
-        // Public Methods (2) 
+        #region Methods
 
         /// <summary>
         /// Adds the specified member mapping info.
@@ -103,6 +101,15 @@ namespace Moo.Core
         public IEnumerable<MemberMappingInfo<TSource, TTarget>> GetMappings()
         {
             return this.memberMappings.Values;
+        }
+
+        public void AddRange(IEnumerable<MemberMappingInfo<TSource, TTarget>> mappingInfoList)
+        {
+            Guard.CheckArgumentNotNull(mappingInfoList, "mappingInfoList");
+            foreach (var m in mappingInfoList)
+            {
+                Add(m);
+            }
         }
 
         #endregion Methods

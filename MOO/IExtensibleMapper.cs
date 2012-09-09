@@ -67,5 +67,13 @@ namespace Moo
         /// The delegate that will perform the conversion.
         /// </param>
         void AddMappingAction(string sourceMemberName, string targetMemberName, MappingAction<TSource, TTarget> mappingAction);
+
+        /// <summary>
+        /// Adds new mapping actions to the mapper, with <c>From</c> and <c>To</c> statements.
+        /// </summary>
+        /// <returns>A ISourceSpec object, for fluent mapping.</returns>
+        ISourceSpec<TSource, TTarget> AddMapping();
+
+        void AddInnerMapper<TInnerSource, TInnerTarget>();
     }
 }

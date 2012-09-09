@@ -157,7 +157,10 @@ namespace Moo
                         innerMappers.Add(m);
                     }
 
-                    res = new CompositeMapper<TSource, TTarget>(innerMappers.ToArray());
+                    res = new CompositeMapper<TSource, TTarget>(
+                        new MapperConstructionInfo(this, null),
+                        innerMappers.ToArray());
+
                     AddMapper(res);
                 }
             }
@@ -354,6 +357,5 @@ namespace Moo
         }
 
         #endregion Methods
-
     }
 }

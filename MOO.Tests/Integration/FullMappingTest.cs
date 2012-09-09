@@ -47,6 +47,17 @@ namespace Moo.Tests.Integration
     public class FullMappingTest<TSource, TTarget>
         where TSource : new()
     {
+        [TestCase(new object[] { null })]
+        public void FullMap_MapsCorrectly(Type[] innerMappers)
+        {
+            var target = this.CreateMapper(innerMappers);
+            var sourceObj = this.CreateSourceObject();
+
+            var targetObj = target.Map(sourceObj);
+
+            this.CheckMappings(sourceObj, targetObj, innerMappers);
+        }
+
         protected void CheckMappings(TSource sourceObj, TTarget targetObj, Type[] innerMappers)
         {
             var doc = XDocument.Load("MappingExpectations.xml");
@@ -75,8 +86,8 @@ namespace Moo.Tests.Integration
                 try
                 {
                     Debug.WriteLine("Comparing properties {0}.{1} and {2}.{3}.", srcType, p.Value, trgType, p.Key);
-                    var srcVal = GetValue(p.Value, sourceObj);
-                    var trgVal = GetValue(p.Key, targetObj);
+                    var srcVal = this.GetValue(p.Value, sourceObj);
+                    var trgVal = this.GetValue(p.Key, targetObj);
                     Debug.WriteLine("Values are {0} and {1}", srcVal, trgVal);
                     Assert.AreEqual(srcVal, trgVal);
                 }
@@ -85,6 +96,37 @@ namespace Moo.Tests.Integration
                     throw new Exception(string.Format("Error when formatting from {0} to {1}", p.Value, p.Key), e);
                 }
             }
+        }
+
+        protected virtual IMapper<TSource, TTarget> CreateMapper(Type[] innerMappers)
+        {
+            IMappingRepository repo = null;
+            if (innerMappers != null)
+            {
+                var options = new MappingOptions(innerMappers);
+                repo = new MappingRepository(options);
+            }
+            else
+            {
+                repo = new MappingRepository();
+            }
+
+            var mapper = repo.ResolveMapper<TSource, TTarget>();
+            this.AddMappingActions(mapper);
+            return mapper;
+        }
+
+        protected virtual TSource CreateSourceObject()
+        {
+            var fixture = new Fixture();
+            fixture.Register(() => (IEnumerable<Contact>)fixture.CreateMany<Contact>());
+            fixture.Register(() => (IEnumerable<Person>)fixture.CreateMany<Person>());
+            var result = fixture
+                .Build<Manager>()
+                .Without(m => m.Managees)
+                .Without(m => m.Manager)
+                .CreateAnonymous<TSource>();
+            return result;
         }
 
         private object GetValue(string propName, object obj)
@@ -119,55 +161,15 @@ namespace Moo.Tests.Integration
 
             foreach (var p in props)
             {
-                mapper.AddMappingAction(p.srcProp, p.trgProp, (source, target) =>
+                mapper.AddMappingAction(
+                    p.srcProp,
+                    p.trgProp,
+                    (source, target) =>
                     {
                         var srcVal = typeof(TSource).GetProperty(p.srcProp).GetValue(source, null);
                         typeof(TTarget).GetProperty(p.trgProp).SetValue(target, srcVal, null);
                     });
             }
-        }
-
-        protected virtual IMapper<TSource, TTarget> CreateMapper(Type[] innerMappers)
-        {
-            IMappingRepository repo = null;
-            if (innerMappers != null)
-            {
-                var options = new MappingOptions(innerMappers);
-                repo = new MappingRepository(options);
-            }
-            else
-            {
-                repo = new MappingRepository();
-            }
-
-            var mapper = repo.ResolveMapper<TSource, TTarget>();
-            AddMappingActions(mapper);
-            return mapper;
-        }
-
-        protected virtual TSource CreateSourceObject()
-        {
-            var fixture = new Fixture();
-            fixture.Register(() => (IEnumerable<Contact>)fixture.CreateMany<Contact>());
-            fixture.Register(() => (IEnumerable<Person>)fixture.CreateMany<Person>());
-            var result = fixture
-                .Build<Manager>()
-                .Without(m => m.Managees)
-                .Without(m => m.Manager)
-                .CreateAnonymous<TSource>();
-            return result;
-        }
-
-        [TestCase(new object[] { null })]
-        ////[TestCase(new object[] { new Type[] { typeof(ConventionMapper<,>) } })]
-        public void FullMap_MapsCorrectly(Type[] innerMappers)
-        {
-            var target = CreateMapper(innerMappers);
-            var sourceObj = CreateSourceObject();
-
-            var targetObj = target.Map(sourceObj);
-
-            CheckMappings(sourceObj, targetObj, innerMappers);
         }
     }
 }

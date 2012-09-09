@@ -46,19 +46,19 @@ namespace Moo.Tests.Mappers
         public void Map_NonGeneric_MappingWorks()
         {
             var target = new ConventionMapper<TestClassA, TestClassB>();
-            var source = GenerateSource();
+            var source = this.GenerateSource();
             var result = new TestClassB();
             target.Map((object)source, (object)result);
-            CheckMapping(source, result);
+            this.CheckMapping(source, result);
         }
 
         [Test]
         public void Map_NOTarget_MappingWorks()
         {
             var target = new ConventionMapper<TestClassA, TestClassB>();
-            var source = GenerateSource();
+            var source = this.GenerateSource();
             var result = (TestClassB)target.Map((object)source);
-            CheckMapping(source, result);
+            this.CheckMapping(source, result);
         }
 
         [Test]
@@ -82,20 +82,20 @@ namespace Moo.Tests.Mappers
         public void Map_WithFactory_MappingWorks()
         {
             var target = new ConventionMapper<TestClassA, TestClassB>();
-            var source = GenerateSource();
+            var source = this.GenerateSource();
             var result = new TestClassB();
             target.Map((object)source, () => result);
-            CheckMapping(source, result);
+            this.CheckMapping(source, result);
         }
 
         [Test]
         public void MapMultipleFunctionTest()
         {
             var target = new ConventionMapper<TestClassA, TestClassB>();
-            var source = GenerateList(50).ToList();
+            var source = this.GenerateList(50).ToList();
             var defaultDate = new DateTime(1789, 7, 14);
             var result = target.MapMultiple(source, () => new TestClassB() { Code = defaultDate }).ToList();
-            CheckLists(source, result);
+            this.CheckLists(source, result);
             Assert.IsTrue(result.All(r => r.Code == defaultDate));
         }
 
@@ -103,9 +103,9 @@ namespace Moo.Tests.Mappers
         public void MapMultipleTest()
         {
             var target = new ConventionMapper<TestClassA, TestClassB>();
-            var source = GenerateList(50).ToList();
+            var source = this.GenerateList(50).ToList();
             var result = target.MapMultiple(source).ToList();
-            CheckLists(source, result);
+            this.CheckLists(source, result);
         }
 
         [Test]
@@ -139,7 +139,7 @@ namespace Moo.Tests.Mappers
         {
             for (int i = 0; i < sourceList.Count; ++i)
             {
-                CheckMapping(sourceList[i], resultList[i]);
+                this.CheckMapping(sourceList[i], resultList[i]);
             }
         }
 
@@ -154,7 +154,7 @@ namespace Moo.Tests.Mappers
         {
             while (count-- > 0)
             {
-                yield return GenerateSource();
+                yield return this.GenerateSource();
             }
         }
 

@@ -51,7 +51,7 @@ namespace Moo.Mappers
         {
         }
         
-        #region Methods (2)
+        #region Methods (3)
 
         // Public Methods (1) 
 
@@ -82,6 +82,15 @@ namespace Moo.Mappers
         /// </remarks>
         protected override void GenerateMappings(TypeMappingInfo<TSource, TTarget> typeMapping)
         {
+        }
+
+        /// <summary>
+        /// Adds new mapping actions to the mapper, with <c>From</c> and <c>To</c> statements.
+        /// </summary>
+        /// <returns>A ISourceSpec object, for fluent mapping.</returns>
+        public ISourceSpec<TSource, TTarget> AddMapping()
+        {
+            return new SourceSpec<TSource, TTarget>(this);
         }
 
         #endregion Methods

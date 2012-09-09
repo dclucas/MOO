@@ -26,7 +26,9 @@
 
 namespace Moo.Mappers
 {
+    using System.Linq;
     using System.Reflection;
+
     using Moo.Core;
 
     /// <summary>
@@ -79,26 +81,16 @@ namespace Moo.Mappers
         protected override void GenerateMappings(TypeMappingInfo<TSource, TTarget> typeMapping)
         {
             Guard.CheckArgumentNotNull(typeMapping, "typeMapping");
+            var propExplorer = GetPropertyExplorer();
             var checker = GetPropertyConverter();
-            foreach (var fromProp in typeof(TSource).GetProperties(
-                            BindingFlags.Instance
-                            | BindingFlags.Public
-                            | BindingFlags.GetProperty))
-            {
-                foreach (var toProp in typeof(TTarget).GetProperties(
-                            BindingFlags.Instance
-                            | BindingFlags.Public
-                            | BindingFlags.SetProperty))
-                {
-                    string finalName;
-                    if (checker.CanConvert(fromProp, toProp, out finalName))
-                    {
-                        var mappingInfo = this.CreateInfo(fromProp, toProp);
+            string finalName = null;
+            var q = from sourceProp in propExplorer.GetSourceProps<TSource>()
+                    from targetProp in propExplorer.GetTargetProps<TTarget>()
+                    // TODO: remove this call with an "out" parameter -- it's not used here.
+                    where checker.CanConvert(sourceProp, targetProp, out finalName)
+                    select this.CreateInfo(sourceProp, targetProp);
 
-                        typeMapping.Add(mappingInfo);
-                    }
-                }
-            }
+            typeMapping.AddRange(q);
         }
 
         /// <summary>
