@@ -28,8 +28,10 @@ namespace Moo.Tests.Mappers
     using System;
     using System.Linq;
     using System.Reflection;
+
     using NUnit.Framework;
     using Moo.Mappers;
+    using Shouldly;
 
     /// <summary>
     /// This is a test class for ManualMapperTest and is intended

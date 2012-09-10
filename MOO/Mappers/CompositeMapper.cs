@@ -78,6 +78,8 @@ namespace Moo.Mappers
             Justification = "Easier said than done. The alternative here would be to forego type safety.")]
         public IEnumerable<IMapper<TSource, TTarget>> InnerMappers { get; private set; }
 
+        public IExtensibleMapper<TSource, TTarget> ExtensibleMapper { get; private set; }
+
         #endregion Properties
 
         #region Methods
@@ -93,6 +95,7 @@ namespace Moo.Mappers
             Guard.CheckEnumerableNotNullOrEmpty(innerMappers, "innerMappers");
             Guard.TrueForAll(innerMappers, "innerMappers", m => m != null, "Mappers list cannot contain null elements.");
             this.InnerMappers = innerMappers.Reverse();
+            this.ExtensibleMapper = innerMappers.OfType<IExtensibleMapper<TSource, TTarget>>().FirstOrDefault();
         }
 
         /// <summary>
@@ -109,12 +112,15 @@ namespace Moo.Mappers
             string targetMemberName,
             MappingAction<TSource, TTarget> mappingAction)
         {
+            /*
             var info = new DelegateMappingInfo<TSource, TTarget>(
                 sourceMemberName,
                 targetMemberName,
                 mappingAction);
 
             this.AddMappingInfo(info);
+             */
+            ExtensibleMapper.AddMappingAction(sourceMemberName, targetMemberName, mappingAction);
         }
 
         /// <summary>
@@ -128,11 +134,22 @@ namespace Moo.Mappers
 
         protected internal override IEnumerable<MemberMappingInfo<TSource, TTarget>> GetMappings()
         {
-            return from mapper in this.InnerMappers.OfType<BaseMapper<TSource, TTarget>>()
-                   let mappings = mapper.GetMappings()
-                   where mappings != null
-                   from mapping in mappings
-                   select mapping;            
+            foreach (var mapper in this.InnerMappers.OfType<BaseMapper<TSource, TTarget>>())
+            {
+                var mappings = mapper.GetMappings();
+                if (mappings != null)
+                {
+                    foreach (var mapping in mappings)
+                    {
+                        yield return mapping;
+                    }
+                }
+            }
+        }
+
+        public override void AddInnerMapper<TInnerSource, TInnerTarget>()
+        {
+            ExtensibleMapper.AddInnerMapper<TInnerSource, TInnerTarget>();
         }
 
         #endregion Methods

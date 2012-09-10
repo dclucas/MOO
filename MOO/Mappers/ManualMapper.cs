@@ -84,7 +84,7 @@ namespace Moo.Mappers
 
         protected internal override IEnumerable<MemberMappingInfo<TSource, TTarget>> GetMappings()
         {
-            return null;
+            return TypeMapping.GetMappings();
         }
 
         #endregion Methods

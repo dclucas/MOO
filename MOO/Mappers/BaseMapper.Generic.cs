@@ -185,6 +185,7 @@ namespace Moo.Mappers
                     }
                 }
             }
+
             var mappings = GetMappings();
             if (mappings != null)
             {
@@ -247,12 +248,7 @@ namespace Moo.Mappers
 
         public virtual void AddInnerMapper<TInnerSource, TInnerTarget>()
         {
-            if (ParentRepository == null)
-            {
-                throw new InvalidOperationException("Mapper must be contained in a repo in order to allow inner mappers.");
-            }
-            
-            var innerMapper = ParentRepository.ResolveMapper<TInnerSource, TInnerTarget>();
+            var innerMapper = GetInnerMapper<TInnerSource, TInnerTarget>();
             var propExplorer = GetPropertyExplorer();
             foreach (var kvp in propExplorer.GetMatches<TSource, TTarget>(
                 (s, t) => 
@@ -263,6 +259,16 @@ namespace Moo.Mappers
             }
         }
 
+        protected IMapper<TInnerSource, TInnerTarget> GetInnerMapper<TInnerSource, TInnerTarget>()
+        {
+            if (ParentRepository == null)
+            {
+                throw new InvalidOperationException("Mapper must be contained in a repo in order to allow inner mappers.");
+            }
+
+            return ParentRepository.ResolveMapper<TInnerSource, TInnerTarget>();
+        }
+
         protected internal abstract IEnumerable<MemberMappingInfo<TSource, TTarget>> GetMappings();
 
         /// <summary>
@@ -271,6 +277,14 @@ namespace Moo.Mappers
         /// <param name="mappingInfo">The mapping info targetProperty be added.</param>
         protected void AddMappingInfo(MemberMappingInfo<TSource, TTarget> mappingInfo)
         {
+            if (this.CurrentStatus == MapperStatus.Active)
+            {
+                throw new InvalidOperationException("Cannot add mappings to an already active mapper");
+            }
+            else if (this.CurrentStatus == MapperStatus.New)
+            {
+                this.CurrentStatus = MapperStatus.Initialized;
+            }
             this.TypeMapping.Add(mappingInfo);
         }
 
@@ -299,7 +313,7 @@ namespace Moo.Mappers
         public enum MapperStatus
         {
             New,
-            MappingsFound,
+            Initialized,
             Active
         }
     }

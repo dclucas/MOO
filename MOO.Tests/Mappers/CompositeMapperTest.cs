@@ -28,10 +28,13 @@ namespace Moo.Tests.Mappers
     using System;
     using System.Collections.Generic;
     using System.Linq;
+
+    using FakeItEasy;
     using NUnit.Framework;
     using Moo.Core;
     using Moo.Mappers;
-    using Moq;
+    using Ploeh.AutoFixture;
+    using Shouldly;
 
     /// <summary>
     /// This is a test class for CompositeMapperTest and is intended
@@ -45,62 +48,79 @@ namespace Moo.Tests.Mappers
         // Public Methods (5) 
 
         [Test]
-        [Ignore("TODO: remove the ignore or the whole test.")]
-        public void MapAddMappingTest()
+        public void Map_MockedInternalMappers_Redirects()
         {
-            MockRepository mockRep = new MockRepository(MockBehavior.Strict);
-            var mappers = new List<BaseMapper<TestClassB, TestClassD>>();
-            var from = new TestClassB();
-            var to = new TestClassD();
-
-            for (int i = 0; i < 3; ++i)
+            var mapperMocks = A.CollectionOfFake<BaseMapper<TestClassB, TestClassD>>(5).ToArray();
+            var results = new List<IEnumerable<MemberMappingInfo<TestClassB, TestClassD>>>();
+            for (int i = 0; i < mapperMocks.Length; ++i)
             {
-                var mapper = new BaseMapperMock<TestClassB, TestClassD>();
-                mappers.Add(mapper);
-                for (int j = 0; j < 2; ++j)
+                var res = new MemberMappingInfo<TestClassB, TestClassD>[]
                 {
-                    var mock = mockRep.Create<MemberMappingInfo<TestClassB, TestClassD>>(
-                        j.ToString() + "_" + i.ToString(), i.ToString() + "_" + j.ToString());
-                    mock.Setup(m => m.Map(from, to));
+                    A.Fake<MemberMappingInfo<TestClassB, TestClassD>>(
+                        o => o.WithArgumentsForConstructor(
+                            new object[] 
+                            {
+                                Guid.NewGuid().ToString(), 
+                                Guid.NewGuid().ToString()
+                            }))
+                };
 
-                    mapper.AddMapping(mock.Object);
-                }
+                results.Add(res);
+                A.CallTo(() => mapperMocks[i].GetMappings())
+                    .Returns(res);
             }
+            var target = new CompositeMapper<TestClassB, TestClassD>(mapperMocks);
+            var source = new TestClassB();
+            var result = new TestClassD();
 
-            var target = new CompositeMapper<TestClassB, TestClassD>(mappers.ToArray());
-            bool executedManual = false;
-            target.AddMappingAction("manualFrom", "manualTo", (f, t) => executedManual = true);
-            target.Map(from, to);
-            mockRep.VerifyAll();
-            Assert.IsTrue(executedManual, "Composite mapper failed targetMemberName execute manually added mapping.");
+            target.Map(source, result);
+
+            foreach (var m in results.SelectMany(e => e))
+            {
+                A.CallTo(() => m.Map(source, result)).MustHaveHappened();
+            }
         }
 
         [Test]
-        [Ignore("TODO: remove the ignore or the whole test.")]
-        public void MapTest()
+        public void AddMapping_MockedInternalMappers_Redirects()
         {
-            MockRepository mockRep = new MockRepository(MockBehavior.Strict);
-            var mappers = new List<BaseMapper<TestClassB, TestClassD>>();
-            var from = new TestClassB();
-            var to = new TestClassD();
-
-            for (int i = 0; i < 3; ++i)
+            var mapperMocks = A.CollectionOfFake<BaseMapper<TestClassB, TestClassD>>(5).ToArray();
+            var extMock = A.Fake<BaseMapper<TestClassB, TestClassD>>(
+                o => o.Implements(typeof(IExtensibleMapper<TestClassB, TestClassD>)));
+            var results = new List<IEnumerable<MemberMappingInfo<TestClassB, TestClassD>>>();
+            var rnd = NUnit.Framework.Randomizer.GetRandomizer(typeof(CompositeMapper<,>).GetMethod("AddMapping"));
+            var extPos = rnd.Next(mapperMocks.Length);
+            for (int i = 0; i < mapperMocks.Length; ++i)
             {
-                var mapper = new BaseMapperMock<TestClassB, TestClassD>();
-                mappers.Add(mapper);
-                for (int j = 0; j < 2; ++j)
+                var res = new MemberMappingInfo<TestClassB, TestClassD>[]
                 {
-                    var mock = mockRep.Create<MemberMappingInfo<TestClassB, TestClassD>>(
-                        j.ToString() + "_" + i.ToString(), i.ToString() + "_" + j.ToString());
-                    mock.Setup(m => m.Map(from, to));
+                    A.Fake<MemberMappingInfo<TestClassB, TestClassD>>(
+                        o => o.WithArgumentsForConstructor(
+                            new object[] 
+                            {
+                                Guid.NewGuid().ToString(), 
+                                Guid.NewGuid().ToString()
+                            }))
+                };
 
-                    mapper.AddMapping(mock.Object);
+                if (i == extPos)
+                {
+                    mapperMocks[i] = extMock;
                 }
+                results.Add(res);
+                A.CallTo(() => mapperMocks[i].GetMappings())
+                    .Returns(res);
             }
+            var target = new CompositeMapper<TestClassB, TestClassD>(mapperMocks);
+            var source = new TestClassB();
+            var result = new TestClassD();
+            MappingAction<TestClassB, TestClassD> action = (s, t) => t.SomeOtherName = s.Name;
+            target.AddMappingAction("foo", "bar", action);
 
-            var target = new CompositeMapper<TestClassB, TestClassD>(mappers.ToArray());
-            target.Map(from, to);
-            mockRep.VerifyAll();
+            target.ExtensibleMapper.ShouldBeSameAs(extMock);
+            A.CallTo(() =>
+                ((IExtensibleMapper<TestClassB, TestClassD>)extMock).AddMappingAction("foo", "bar", action))
+                .MustHaveHappened();
         }
 
         [Test]
@@ -125,32 +145,5 @@ namespace Moo.Tests.Mappers
         }
 
         #endregion Methods
-
-        #region InnerClasses
-
-        public class BaseMapperMock<TSource, TTarget> : BaseMapper<TSource, TTarget>, IExtensibleMapper<TSource, TTarget>
-        {
-            public void AddMapping(MemberMappingInfo<TSource, TTarget> mapping)
-            {
-                this.AddMappingInfo(mapping);
-            }
-
-            public virtual void AddMappingAction(string fromProperty, string toProperty, MappingAction<TSource, TTarget> mappingAction)
-            {
-                throw new NotImplementedException();
-            }
-
-            public ISourceSpec<TSource, TTarget> AddMapping()
-            {
-                throw new NotImplementedException();
-            }
-
-            protected internal override IEnumerable<MemberMappingInfo<TSource, TTarget>> GetMappings()
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        #endregion InnerClasses
     }
 }

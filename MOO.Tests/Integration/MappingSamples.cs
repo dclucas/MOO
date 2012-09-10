@@ -39,6 +39,7 @@ namespace Moo.Tests.Integration
     using Moo.Mappers;
 
     [TestFixture]
+    [Category("Integrated")]
     public class MappingSamples
     {
         [Test]
@@ -83,6 +84,7 @@ namespace Moo.Tests.Integration
             var result = source.MapTo<PersonEditModel>();
 
             result.ShouldNotBe(null);
+            MappingRepository.Default.Clear();
             this.CheckMapping(source, result);
             result.Name.ShouldBe(source.FirstName + source.LastName);
         }
@@ -99,6 +101,7 @@ namespace Moo.Tests.Integration
             
             var result = mapper.Map(source);
 
+            MappingRepository.Default.Clear();
             result.ShouldNotBe(null);
             this.CheckMapping(source, result);
             result.Name.ShouldBe(source.FirstName + source.LastName);
@@ -130,15 +133,18 @@ namespace Moo.Tests.Integration
         [Test]
         public void FluentMapping_WithInnerMappers_MapsCorrectly()
         {
+            MappingRepository.Default.Clear();
             var source = this.CreateSource();
-
             MappingRepository.Default
                 .AddMapping<Person, PersonDetailsDataContract>()
                 .UseMapperFor<Account, AccountDataContract>()
                 .From(p => p.FirstName + p.LastName)
                 .To(pd => pd.Name);
 
+            var m = MappingRepository.Default.ResolveMapper<Person, PersonDetailsDataContract>();
+
             var result = source.MapTo<PersonDetailsDataContract>();
+
 
             // cleaning up so there are no side effects on other tests
             // TODO: this should be made thread-safe for parallel mapping execution.
