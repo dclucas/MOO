@@ -152,22 +152,24 @@ namespace Moo.Tests.Integration
         [Test]
         public void MapperSequence_OverridenDefault_CreatesCorrectly()
         {
-            ////var source = this.CreateSource();
+            var source = this.CreateSource();
 
-            ////var repo = new MappingRepository(o =>
-            ////    o.MapperOrder
-            ////        .Use<ConventionMapper<object, object>>()
-            ////        .Then<ManualMapper<object, object>>()
-            ////        .Finally<AttributeMapper<object, object>>());
-            
-            ////repo.AddMapping<Person, PersonEditModel>()
-            ////    .From(s => 123)
-            ////    .To(t => t.Id);
+            var repo = new MappingRepository(o =>
+                o.MapperOrder
+                    .Use<ConventionMapper<object, object>>()
+                    .Then<ManualMapper<object, object>>()
+                    .Finally<AttributeMapper<object, object>>());
 
-            ////var mapper = repo.ResolveMapper<Person, PersonEditModel>();
+            repo.AddMapping<Person, PersonEditModel>()
+                .From(s => 666)
+                .To(t => t.Id);
 
-            ////var result = mapper.Map(source);
-            ////result.ShouldNotBe(null);
+            var mapper = repo.ResolveMapper<Person, PersonEditModel>();
+
+            var result = mapper.Map(source);
+
+            result.ShouldNotBe(null);
+            result.Id.ShouldBe(source.Id);
         }
 
         public void WorkInProgress()

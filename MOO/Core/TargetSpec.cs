@@ -37,7 +37,7 @@ namespace Moo.Core
     /// </summary>
     /// <typeparam name="TSource">Type of the mapping source.</typeparam>
     /// <typeparam name="TTarget">Type of the mapping target.</typeparam>
-    public class TargetSpec<TSource, TTarget> : ITargetSpec<TSource, TTarget>
+    public class TargetSpec<TSource, TTarget, TInnerSource> : ITargetSpec<TSource, TTarget, TInnerSource>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="TargetSpec{TSource,TTarget}"/> class.
@@ -45,7 +45,7 @@ namespace Moo.Core
         /// <param name="mapper">Mapper to extend.</param>
         /// <param name="sourceArgument">Expression to pull source data.</param>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures", Justification = "Easier said than done")]
-        public TargetSpec(IExtensibleMapper<TSource, TTarget> mapper, Expression<Func<TSource, object>> sourceArgument)
+        public TargetSpec(IExtensibleMapper<TSource, TTarget> mapper, Expression<Func<TSource, TInnerSource>> sourceArgument)
         {
             Guard.CheckArgumentNotNull(mapper, "mapper");
             Guard.CheckArgumentNotNull(sourceArgument, "sourceArgument");
@@ -62,7 +62,7 @@ namespace Moo.Core
         /// Gets the expression that pulls source data.
         /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures", Justification = "Easier said than done")]
-        protected Expression<Func<TSource, object>> SourceArgument { get; private set; }
+        protected Expression<Func<TSource, TInnerSource>> SourceArgument { get; private set; }
 
         /// <summary>
         /// Instructs Moo to map a source expression to the property expression below.
@@ -72,7 +72,7 @@ namespace Moo.Core
         /// The argument parameter must be a property access expression, such as <c>(t) => t.Name</c>,
         /// or else an ArgumentException will be thrown.
         /// </remarks>
-        public ISourceSpec<TSource, TTarget> To(Expression<Func<TTarget, object>> argument)
+        public ISourceSpec<TSource, TTarget> To<TInnerTarget>(Expression<Func<TTarget, TInnerTarget>> argument)
         {
             Guard.CheckArgumentNotNull(argument, "argument");
             Guard.CheckArgumentNotNull(argument.Body, "argument.Body");
@@ -101,9 +101,9 @@ namespace Moo.Core
         /// <param name="sourceExpr">Expression to pull source data.</param>
         /// <param name="targetExpr">Expression to determine target property.</param>
         /// <returns>A mapping action, mapping from the source to the target expression.</returns>
-        private static MappingAction<TSource, TTarget> GetAction(
-            Expression<Func<TSource, object>> sourceExpr,
-            Expression<Func<TTarget, object>> targetExpr)
+        private static MappingAction<TSource, TTarget> GetAction<TInnerTarget>(
+            Expression<Func<TSource, TInnerSource>> sourceExpr,
+            Expression<Func<TTarget, TInnerTarget>> targetExpr)
         {
             // Decomposition of (a, b) => b.FooBar = func(a) :
             // 1. (a, 

@@ -34,11 +34,12 @@ namespace Moo
     /// </summary>
     /// <typeparam name="TSource">Type of the mapping source.</typeparam>
     /// <typeparam name="TTarget">Type of the mapping target.</typeparam>
-    public interface ITargetSpec<TSource, TTarget>
+    public interface ITargetSpec<TSource, TTarget, TInnerSource>
     {
         /// <summary>
         /// Instructs Moo to map a source expression to the property expression below.
         /// </summary>
+        /// <typeparam name="TInnerTarget">Type of the target's inner property.</typeparam>
         /// <param name="argument">An expression fetching the property to map to.</param>
         /// <remarks>
         /// The argument parameter must be a property access expression, such as <c>(t) => t.Name</c>,
@@ -47,6 +48,6 @@ namespace Moo
         /// <exception cref="ArgumentException">The provided lambda is not of a property access.</exception>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "To", Justification = "It's highly improbable that this specific interface will have to be implemented elsewhere.")]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures", Justification = "Easier said than done")]
-        ISourceSpec<TSource, TTarget> To(Expression<Func<TTarget, object>> argument);
+        ISourceSpec<TSource, TTarget> To<TInnerTarget>(Expression<Func<TTarget, TInnerTarget>> argument);
     }
 }

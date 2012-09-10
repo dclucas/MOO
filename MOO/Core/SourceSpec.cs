@@ -61,9 +61,9 @@ namespace Moo.Core
         /// <returns>
         /// A ITargetSpec, allowing to define the mapping target.
         /// </returns>
-        public ITargetSpec<TSource, TTarget> From(Expression<Func<TSource, object>> argument)
+        public ITargetSpec<TSource, TTarget, TInnerSource> From<TInnerSource>(Expression<Func<TSource, TInnerSource>> argument)
         {
-            return new TargetSpec<TSource, TTarget>(Mapper, argument);
+            return new TargetSpec<TSource, TTarget, TInnerSource>(Mapper, argument);
         }
 
         /// <summary>

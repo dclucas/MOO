@@ -51,16 +51,16 @@ namespace Moo.Tests.Core
             var mapper = A.Fake<IExtensibleMapper<TSource, TTarget>>();
             Expression<Func<TSource, object>> fromExpr = (s) => 1;
 
-            Should.Throw<ArgumentNullException>(() => new TargetSpec<TSource, TTarget>(mapper, null));
-            Should.Throw<ArgumentNullException>(() => new TargetSpec<TSource, TTarget>(null, fromExpr));
+            Should.Throw<ArgumentNullException>(() => new TargetSpec<TSource, TTarget, object>(mapper, null));
+            Should.Throw<ArgumentNullException>(() => new TargetSpec<TSource, TTarget, object>(null, fromExpr));
         }
 
         [Test]
         public void To_NotAProperty_Throws()
         {
             var mapper = A.Fake<IExtensibleMapper<TSource, TTarget>>();
-            Expression<Func<TSource, object>> fromExpr = (s) => 1;
-            var target = new TargetSpec<TSource, TTarget>(mapper, fromExpr);
+            Expression<Func<TSource, int>> fromExpr = (s) => 1;
+            var target = new TargetSpec<TSource, TTarget, int>(mapper, fromExpr);
 
             Should.Throw<ArgumentException>(() => target.To(t => 1));
         }
@@ -70,8 +70,8 @@ namespace Moo.Tests.Core
         {
             var mapper = A.Fake<IExtensibleMapper<TSource, TTarget>>();
             var resultString = "foo";
-            Expression<Func<TSource, object>> fromExpr = (s) => resultString;
-            var target = new TargetSpec<TSource, TTarget>(mapper, fromExpr);
+            Expression<Func<TSource, string>> fromExpr = (s) => resultString;
+            var target = new TargetSpec<TSource, TTarget, string>(mapper, fromExpr);
             var prop = typeof(TTarget).GetProperties(
                 BindingFlags.GetProperty 
                 | BindingFlags.SetProperty 

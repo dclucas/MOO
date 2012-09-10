@@ -43,8 +43,8 @@ namespace Moo
         /// <returns>
         /// A ITargetSpec, allowing to define the mapping target.
         /// </returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures", Justification = "Easier said than done")]        
-        ITargetSpec<TSource, TTarget> From(Expression<Func<TSource, object>> argument);
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures", Justification = "Easier said than done")]
+        ITargetSpec<TSource, TTarget, TInnerSource> From<TInnerSource>(Expression<Func<TSource, TInnerSource>> argument);
 
         /// <summary>
         /// Instructs Moo to use an internal mapper for properties of <paramref name="TInnerTarget"/> type.
