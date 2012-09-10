@@ -41,6 +41,7 @@ namespace Moo.Tests.Integration
     [TestFixture(TypeArgs = new Type[] { typeof(Person), typeof(PersonEditModel) })]
     [TestFixture(TypeArgs = new Type[] { typeof(PersonEditModel), typeof(Person) })]
     [TestFixture(TypeArgs = new Type[] { typeof(PersonIndexModel), typeof(Person) })]
+    [Category("Integrated")]
     public class FullMappingTest<TSource, TTarget>
         where TSource : new()
     {

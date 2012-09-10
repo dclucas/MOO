@@ -33,7 +33,7 @@ namespace Moo.Tests
     using Moo.Mappers;
 
     using NUnit.Framework;
-    using Moq;
+    using FakeItEasy;
 
     /// <summary>
     /// This is a test class for MappingRepositoryTest and is intended
@@ -98,16 +98,16 @@ namespace Moo.Tests
         public void AddMappingGeneric_DefaultCase_RedirectsToMapper()
         {
             var target = new MappingRepository();
-            var mapperMock = new Mock<IExtensibleMapper<TSource, TTarget>>();
-            target.AddMapper<TSource, TTarget>(mapperMock.Object);
+            var mapperMock = A.Fake<IExtensibleMapper<TSource, TTarget>>();
+            target.AddMapper<TSource, TTarget>(mapperMock);
             var sourceMemberName = "source";
             var targetMemberName = "target";
             var mappingAction = new MappingAction<TSource, TTarget>((s, t) => { });
-            mapperMock.Setup(m => m.AddMappingAction(sourceMemberName, targetMemberName, mappingAction));
 
             target.AddMappingAction(sourceMemberName, targetMemberName, mappingAction);
 
-            mapperMock.VerifyAll();
+            A.CallTo(() => mapperMock.AddMappingAction(sourceMemberName, targetMemberName, mappingAction))
+                .MustHaveHappened();
         }
 
         #endregion Methods

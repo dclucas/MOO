@@ -29,9 +29,10 @@ namespace Moo.Tests
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
+    
     using NUnit.Framework;
     using Moo;
-    using Moq;
+    using FakeItEasy;
 
     [TestFixture]
     public class ObjectMappingExtenderTest
@@ -93,7 +94,7 @@ namespace Moo.Tests
         public void MapTo_NullSource_Throws_3()
         {
             TestClassA source = null;
-            source.MapTo<TestClassB>(new Mock<IMapper>().Object);
+            source.MapTo<TestClassB>(A.Fake<IMapper>());
         }
 
         [Test]
@@ -101,7 +102,7 @@ namespace Moo.Tests
         public void MapTo_NullSource_Throws_4()
         {
             TestClassA source = null;
-            source.MapTo<TestClassB>(new Mock<IMappingRepository>().Object);
+            source.MapTo<TestClassB>(A.Fake<IMappingRepository>());
         }
 
         [Test]
@@ -109,7 +110,7 @@ namespace Moo.Tests
         public void MapTo_NullSource_Throws_5()
         {
             TestClassA source = null;
-            source.MapTo<TestClassB>(new TestClassB(), new Mock<IMapper>().Object);
+            source.MapTo<TestClassB>(new TestClassB(), A.Fake<IMapper>());
         }
 
         [Test]
@@ -125,7 +126,7 @@ namespace Moo.Tests
         public void MapTo_NullTarget_Throws_2()
         {
             var source = new TestClassB();
-            source.MapTo<TestClassC>((TestClassC)null, new Mock<IMapper>().Object);
+            source.MapTo<TestClassC>((TestClassC)null, A.Fake<IMapper>());
         }
 
         [Test]
@@ -133,21 +134,20 @@ namespace Moo.Tests
         public void MapTo_NullTarget_Throws_3()
         {
             var source = new TestClassB();
-            source.MapTo<TestClassC>((TestClassC)null, new Mock<IMappingRepository>().Object);
+            source.MapTo<TestClassC>((TestClassC)null, A.Fake<IMappingRepository>());
         }
 
         [Test]
         public void MapTo_ValidInput_UsesDefaultRepo()
         {
             var source = new TestClassC();
-            var mapperMock = new Mock<IExtensibleMapper<TestClassC, TestClassB>>(MockBehavior.Strict);
+            var mapperMock = A.Fake<IExtensibleMapper<TestClassC, TestClassB>>();
             var expected = new TestClassB();
-            mapperMock.Setup(m => m.Map((object)source)).Returns(expected);
+            A.CallTo(() => mapperMock.Map((object)source)).Returns(expected);
             MappingRepository.Default.Clear();
-            MappingRepository.Default.AddMapper<TestClassC, TestClassB>(mapperMock.Object);
+            MappingRepository.Default.AddMapper<TestClassC, TestClassB>(mapperMock);
             var actual = source.MapTo<TestClassB>();
             Assert.AreEqual(expected, actual);
-            mapperMock.VerifyAll();
             MappingRepository.Default.Clear();
         }
 
@@ -155,12 +155,11 @@ namespace Moo.Tests
         public void MapTo_ValidInput_UsesProvidedMapper()
         {
             var source = new TestClassC();
-            var mapperMock = new Mock<IExtensibleMapper<TestClassC, TestClassB>>(MockBehavior.Strict);
+            var mapperMock = A.Fake<IExtensibleMapper<TestClassC, TestClassB>>();
             var expected = new TestClassB();
-            mapperMock.Setup(m => m.Map((object)source)).Returns(expected);
-            var actual = source.MapTo<TestClassB>(mapperMock.Object);
+            A.CallTo(() => mapperMock.Map((object)source)).Returns(expected);
+            var actual = source.MapTo<TestClassB>(mapperMock);
             Assert.AreEqual(expected, actual);
-            mapperMock.VerifyAll();
             MappingRepository.Default.Clear();
         }
 
@@ -168,15 +167,13 @@ namespace Moo.Tests
         public void MapTo_ValidInput_UsesProvidedRepo()
         {
             var source = new TestClassC();
-            var mapperMock = new Mock<IExtensibleMapper<TestClassC, TestClassB>>(MockBehavior.Strict);
+            var mapperMock = A.Fake<IExtensibleMapper<TestClassC, TestClassB>>();
             var expected = new TestClassB();
-            mapperMock.Setup(m => m.Map((object)source)).Returns(expected);
-            var repoMock = new Mock<IMappingRepository>(MockBehavior.Strict);
-            repoMock.Setup(m => m.ResolveMapper(typeof(TestClassC), typeof(TestClassB))).Returns(mapperMock.Object);
-            var actual = source.MapTo<TestClassB>(repoMock.Object);
+            A.CallTo(() => mapperMock.Map((object)source)).Returns(expected);
+            var repoMock = A.Fake<IMappingRepository>();
+            A.CallTo(() => repoMock.ResolveMapper(typeof(TestClassC), typeof(TestClassB))).Returns(mapperMock);
+            var actual = source.MapTo<TestClassB>(repoMock);
             Assert.AreEqual(expected, actual);
-            mapperMock.VerifyAll();
-            repoMock.VerifyAll();
             MappingRepository.Default.Clear();
         }
 
@@ -184,14 +181,13 @@ namespace Moo.Tests
         public void MapTo_ValidInputAndTarget_UsesDefaultRepo()
         {
             var source = new TestClassC();
-            var mapperMock = new Mock<IExtensibleMapper<TestClassC, TestClassB>>(MockBehavior.Strict);
+            var mapperMock = A.Fake<IExtensibleMapper<TestClassC, TestClassB>>();
             var expected = new TestClassB();
-            mapperMock.Setup(m => m.Map((object)source, (object)expected)).Returns(expected);
+            A.CallTo(() => mapperMock.Map((object)source, (object)expected)).Returns(expected);
             MappingRepository.Default.Clear();
-            MappingRepository.Default.AddMapper<TestClassC, TestClassB>(mapperMock.Object);
+            MappingRepository.Default.AddMapper<TestClassC, TestClassB>(mapperMock);
             var actual = source.MapTo<TestClassB>(expected);
             Assert.AreEqual(expected, actual);
-            mapperMock.VerifyAll();
             MappingRepository.Default.Clear();
         }
 
@@ -199,12 +195,11 @@ namespace Moo.Tests
         public void MapTo_ValidInputAndTarget_UsesProvidedMapper()
         {
             var source = new TestClassC();
-            var mapperMock = new Mock<IExtensibleMapper<TestClassC, TestClassB>>(MockBehavior.Strict);
+            var mapperMock = A.Fake<IExtensibleMapper<TestClassC, TestClassB>>();
             var expected = new TestClassB();
-            mapperMock.Setup(m => m.Map((object)source, (object)expected)).Returns(expected);
-            var actual = source.MapTo<TestClassB>(expected, mapperMock.Object);
+            A.CallTo(() => mapperMock.Map((object)source, (object)expected)).Returns(expected);
+            var actual = source.MapTo<TestClassB>(expected, mapperMock);
             Assert.AreEqual(expected, actual);
-            mapperMock.VerifyAll();
             MappingRepository.Default.Clear();
         }
 
@@ -212,15 +207,13 @@ namespace Moo.Tests
         public void MapTo_ValidInputAndTarget_UsesProvidedRepo()
         {
             var source = new TestClassC();
-            var mapperMock = new Mock<IExtensibleMapper<TestClassC, TestClassB>>(MockBehavior.Strict);
+            var mapperMock = A.Fake<IExtensibleMapper<TestClassC, TestClassB>>();
             var expected = new TestClassB();
-            mapperMock.Setup(m => m.Map((object)source, (object)expected)).Returns(expected);
-            var repoMock = new Mock<IMappingRepository>(MockBehavior.Strict);
-            repoMock.Setup(m => m.ResolveMapper(typeof(TestClassC), typeof(TestClassB))).Returns(mapperMock.Object);
-            var actual = source.MapTo<TestClassB>(expected, repoMock.Object);
+            A.CallTo(() => mapperMock.Map((object)source, (object)expected)).Returns(expected);
+            var repoMock = A.Fake<IMappingRepository>();
+            A.CallTo(() => repoMock.ResolveMapper(typeof(TestClassC), typeof(TestClassB))).Returns(mapperMock);
+            var actual = source.MapTo<TestClassB>(expected, repoMock);
             Assert.AreEqual(expected, actual);
-            mapperMock.VerifyAll();
-            repoMock.VerifyAll();
             MappingRepository.Default.Clear();
         }
 
