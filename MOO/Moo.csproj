@@ -114,8 +114,6 @@
     <Compile Include="Core\MemberMappingInfo.cs" />
     <Compile Include="MappingAttribute.cs" />
     <Compile Include="Configuration\MappingConfigurationSection.cs" />
-    <Compile Include="MappingCancellationEventArgs.cs" />
-    <Compile Include="MappingEventArgs.cs" />
     <Compile Include="MappingException.cs" />
     <Compile Include="MapperInclusion.cs" />
     <Compile Include="MapperInclusion.Generic.cs" />

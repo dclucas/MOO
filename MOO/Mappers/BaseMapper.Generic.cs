@@ -69,23 +69,7 @@ namespace Moo.Mappers
         
         #endregion Constructors
 
-        #region Delegates and Events (2)
-
-        // Events (2) 
-
-        /// <summary>
-        /// Occurs after one property is mapped targetMemberName another.
-        /// </summary>
-        public event EventHandler<MappingEventArgs<TSource, TTarget>> PropertyMapped;
-
-        /// <summary>
-        /// Occurs before one property is mapped targetMemberName another.
-        /// </summary>
-        public event EventHandler<MappingCancellationEventArgs<TSource, TTarget>> PropertyMapping;
-
-        #endregion Delegates and Events
-
-        #region Properties (1)
+        #region Properties
 
         /// <summary>
         /// Gets the type mapping information.
@@ -184,11 +168,7 @@ namespace Moo.Mappers
             {
                 try
                 {
-                    if (this.OnPropertyMapping(source, target, mapping.SourceMemberName, mapping.TargetMemberName))
-                    {
-                        mapping.Map(source, target);
-                        this.OnPropertyMapped(source, target, mapping.SourceMemberName, mapping.TargetMemberName);
-                    }
+                    mapping.Map(source, target);
                 }
                 catch (Exception exc)
                 {
@@ -303,58 +283,6 @@ namespace Moo.Mappers
         protected virtual PropertyExplorer GetPropertyExplorer()
         {
             return new PropertyExplorer();
-        }
-
-        /// <summary>
-        /// Called when a property is mapped.
-        /// </summary>
-        /// <param name="source">The source.</param>
-        /// <param name="target">The target.</param>
-        /// <param name="fromProperty">From property.</param>
-        /// <param name="toProperty">To property.</param>
-        private void OnPropertyMapped(TSource source, TTarget target, string fromProperty, string toProperty)
-        {
-            var handler = this.PropertyMapped;
-            if (handler != null)
-            {
-                var args = new MappingEventArgs<TSource, TTarget>
-                    {
-                        Source = source, 
-                        Target = target, 
-                        SourceMember = fromProperty, 
-                        TargetMember = toProperty 
-                    };
-
-                handler(this, args);
-            }
-        }
-
-        /// <summary>
-        /// Called when property is about to be mapped.
-        /// </summary>
-        /// <param name="source">The source.</param>
-        /// <param name="target">The target.</param>
-        /// <param name="fromProperty">From property.</param>
-        /// <param name="toProperty">To property.</param>
-        /// <returns><c>true</c> if cancellation has been proposed; <c>false</c> otherwise.</returns>
-        private bool OnPropertyMapping(TSource source, TTarget target, string fromProperty, string toProperty)
-        {
-            var handler = this.PropertyMapping;
-            if (handler != null)
-            {
-                var eventArgs = new MappingCancellationEventArgs<TSource, TTarget>
-                    {
-                        Source = source, 
-                        Target = target, 
-                        SourceMember = fromProperty, 
-                        TargetMember = toProperty
-                    };
-
-                handler(this, eventArgs);
-                return !eventArgs.Cancel;
-            }
-
-            return true;
         }
 
         /// <summary>

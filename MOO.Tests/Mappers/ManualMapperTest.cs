@@ -67,49 +67,6 @@ namespace Moo.Tests.Mappers
             Assert.AreEqual(source.SampleDate.ToShortDateString(), targetObj.SampleDateInStrFormat);
         }
 
-        [Test]
-        public void TestPropertyMappingEvents()
-        {
-            // This test actually targets the base class, BaseMapper.
-            var target = new ManualMapper<FromTestClass, ToTestClass>();
-            FromTestClass from = new FromTestClass() { Id = 213, Description = "test" };
-            ToTestClass to = new ToTestClass();
-            target.AddMappingAction("Id", "Code", (f, t) => t.Code = f.Id);
-            target.AddMappingAction("Description", "Name", (f, t) => t.Name = f.Description);
-
-            bool raisedId = false;
-            bool raisedDescription = false;
-            target.PropertyMapping += new EventHandler<MappingCancellationEventArgs<FromTestClass, ToTestClass>>(
-                (s, e) =>
-                {
-                    if (e.SourceMember == "Id")
-                    {
-                        raisedId = true;
-                    }
-
-                    if (e.SourceMember == "Description")
-                    {
-                        raisedDescription = true;
-                        e.Cancel = true;
-                    }
-                });
-
-            target.PropertyMapped += new EventHandler<MappingEventArgs<FromTestClass, ToTestClass>>(
-                (s, e) =>
-                {
-                    // just one single assert here, as the cancellation for "Description" should
-                    // cause this event targetMemberName be raised only for "Id".
-                    Assert.AreEqual("Id", e.SourceMember);
-                });
-            target.Map(from, to);
-
-            Assert.IsTrue(raisedId);
-            Assert.IsTrue(raisedDescription);
-
-            // checking whether the cancellation really interrupted the mapping of "Description" targetMemberName "Name".
-            Assert.IsNull(to.Name);
-        }
-
         #endregion Methods
 
         #region Nested Classes (2)
