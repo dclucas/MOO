@@ -23,7 +23,6 @@
 // Email: diogo.lucas@gmail.com
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
-
 namespace Moo.Tests.Integration
 {
     using System;
@@ -35,12 +34,10 @@ namespace Moo.Tests.Integration
     using Moo.Mappers;
     using Moo.Tests.Integration.MappedClasses.DomainModels;
     using Moo.Tests.Integration.MappedClasses.ViewModels;
-
     using NUnit.Framework;
-
     using Ploeh.AutoFixture;
 
-    //[TestFixture(TypeArgs = new Type[] { typeof(Person), typeof(PersonIndexModel) })]
+    [TestFixture(TypeArgs = new Type[] { typeof(Person), typeof(PersonIndexModel) })]
     [TestFixture(TypeArgs = new Type[] { typeof(Person), typeof(PersonEditModel) })]
     [TestFixture(TypeArgs = new Type[] { typeof(PersonEditModel), typeof(Person) })]
     [TestFixture(TypeArgs = new Type[] { typeof(PersonIndexModel), typeof(Person) })]

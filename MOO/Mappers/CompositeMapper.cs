@@ -62,6 +62,7 @@ namespace Moo.Mappers
             : base(constructionInfo)
         {
             this.Initialize(innerMappers);
+            TypeMapping = new TypeMappingInfo<TSource, TTarget>(MappingOverwriteBehavior.SkipOverwrite);
         }
 
         #endregion Constructors
@@ -91,7 +92,7 @@ namespace Moo.Mappers
         {
             Guard.CheckEnumerableNotNullOrEmpty(innerMappers, "innerMappers");
             Guard.TrueForAll(innerMappers, "innerMappers", m => m != null, "Mappers list cannot contain null elements.");
-            this.InnerMappers = innerMappers;
+            this.InnerMappers = innerMappers.Reverse();
             //this.GenerateMappings();
         }
 

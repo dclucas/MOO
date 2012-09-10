@@ -94,6 +94,7 @@ namespace Moo.Tests
             Assert.IsTrue(((CompositeMapper<TTarget, TSource>)mapper).InnerMappers.Any());
         }
 
+        [Ignore("TODO: remove ignore attribute or remove test")]
         [Test]
         public void ResolveMapper_WithConstructorInfo_PassesArgument()
         {
