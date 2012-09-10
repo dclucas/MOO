@@ -139,9 +139,9 @@ namespace Moo
             "Microsoft.Design",
             "CA1004:GenericMethodsShouldProvideTypeParameter",
             Justification = "No can do - the generic parameter is only used on the method return.")]
-        public IExtensibleMapper<TSource, TTarget> ResolveMapper<TSource, TTarget>(params MapperInclusion[] mapperInclusions)
+        public IExtensibleMapper<TSource, TTarget> ResolveMapper<TSource, TTarget>()
         {
-            var res = TryGetMapper<TSource, TTarget>(mapperInclusions);
+            var res = TryGetMapper<TSource, TTarget>();
             if (res == null)
             {
                 lock (this.options)
@@ -159,13 +159,13 @@ namespace Moo
                             targetType = targetType.MakeGenericType(new Type[] { typeof(TSource), typeof(TTarget) });
                         }
 
-                        var m = this.CreateMapper<TSource, TTarget>(targetType, mapperInclusions);
+                        var m = this.CreateMapper<TSource, TTarget>(targetType);
 
                         innerMappers.Add(m);
                     }
 
                     res = new CompositeMapper<TSource, TTarget>(
-                        new MapperConstructionInfo(this, null),
+                        new MapperConstructionInfo(this),
                         innerMappers.ToArray());
 
                     AddMapper(res);
@@ -199,12 +199,12 @@ namespace Moo
             MessageId = "0",
             Justification = "The call to Guard does this check.")]
         protected virtual IMapper<TSource, TTarget> CreateMapper<TSource, TTarget>(
-            Type targetType, IEnumerable<MapperInclusion> includedMappers)
+            Type targetType)
         {
             Guard.CheckArgumentNotNull(targetType, "targetType");
             if (targetType.GetConstructor(new Type[] { typeof(MapperConstructionInfo) }) != null)
             {
-                var info = new MapperConstructionInfo(this, includedMappers);
+                var info = new MapperConstructionInfo(this);
                 return (IMapper<TSource, TTarget>)Activator
                     .CreateInstance(targetType, new object[] { info });
             }
@@ -227,16 +227,16 @@ namespace Moo
             "Microsoft.Design",
             "CA1004:GenericMethodsShouldProvideTypeParameter",
             Justification = "No can do - the generic parameter is only used on the method return.")]
-        public IMapper ResolveMapper(Type sourceType, Type targetType, params MapperInclusion[] mapperInclusions)
+        public IMapper ResolveMapper(Type sourceType, Type targetType)
         {
-            var res = TryGetMapper(sourceType, targetType, mapperInclusions);
+            var res = TryGetMapper(sourceType, targetType);
             if (res == null)
             {
                 // HACK: turn this generic conversion into calls to non-generic methods. This will require
                 // the refactoring of a number of additional classes.
-                var methodInfo = this.GetType().GetMethod("ResolveMapper", new Type[] { typeof(MapperInclusion[]) });
+                var methodInfo = this.GetType().GetMethod("ResolveMapper", Type.EmptyTypes);
                 var genMethodInfo = methodInfo.MakeGenericMethod(sourceType, targetType);
-                res = (IMapper)genMethodInfo.Invoke(this, new object[] { mapperInclusions });
+                res = (IMapper)genMethodInfo.Invoke(this, null);
             }
 
             return res;
@@ -251,9 +251,9 @@ namespace Moo
         /// <typeparam name="TTarget">The type of the target.</typeparam>
         /// <param name="mapperInclusions">A list of additional, internal mappers to include.</param>
         /// <returns>A string containing the dictionary key</returns>
-        private static string GetKey<TSource, TTarget>(params MapperInclusion[] mapperInclusions)
+        private static string GetKey<TSource, TTarget>()
         {
-            return GetKey(typeof(TSource), typeof(TTarget), mapperInclusions);
+            return GetKey(typeof(TSource), typeof(TTarget));
         }
 
         /// <summary>
@@ -263,37 +263,14 @@ namespace Moo
         /// <param name="targetType">Type of the target.</param>
         /// <param name="mapperInclusions">A list of additional, internal mappers to include.</param>
         /// <returns>The dictionary key for the combination.</returns>
-        private static string GetKey(Type sourceType, Type targetType, params MapperInclusion[] mapperInclusions)
+        private static string GetKey(Type sourceType, Type targetType)
         {
             Guard.CheckArgumentNotNull(sourceType, "sourceType");
             Guard.CheckArgumentNotNull(targetType, "targetType");
 
             // TODO: why not override GetHashCode in TypeMappingInfo and just use a HashSet here?
-            var key = sourceType.AssemblyQualifiedName + ">" + targetType.AssemblyQualifiedName + AppendInclusions(mapperInclusions);
+            var key = sourceType.AssemblyQualifiedName + ">" + targetType.AssemblyQualifiedName;
             return key;
-        }
-
-        /// <summary>
-        /// Builds a string representing all mapper inclusions, to be used as a key.
-        /// </summary>
-        /// <param name="mapperInclusions">List of mapper inclusions.</param>
-        /// <returns>
-        /// A string representing a key for all inclusions.
-        /// </returns>
-        private static string AppendInclusions(MapperInclusion[] mapperInclusions)
-        {
-            if (mapperInclusions.Length > 0)
-            {
-                var sb = new StringBuilder();
-                foreach (var m in mapperInclusions)
-                {
-                    sb.AppendFormat("+{0}>{1}", m.SourceType.Name, m.TargetType.Name);
-                }
-
-                return sb.ToString();
-            }
-
-            return string.Empty;
         }
 
         /// <summary>
@@ -303,9 +280,9 @@ namespace Moo
         /// <typeparam name="TTarget">The type of the target.</typeparam>
         /// <param name="mapperInclusions">A list of additional, internal mappers to include.</param>
         /// <returns>A mapper instance, if one is found</returns>
-        private IExtensibleMapper<TSource, TTarget> TryGetMapper<TSource, TTarget>(params MapperInclusion[] mapperInclusions)
+        private IExtensibleMapper<TSource, TTarget> TryGetMapper<TSource, TTarget>()
         {
-            return (IExtensibleMapper<TSource, TTarget>)TryGetMapper(typeof(TSource), typeof(TTarget), mapperInclusions);
+            return (IExtensibleMapper<TSource, TTarget>)TryGetMapper(typeof(TSource), typeof(TTarget));
         }
 
         /// <summary>
@@ -317,9 +294,9 @@ namespace Moo
         /// <returns>
         /// A mapper instance, if one is found.
         /// </returns>
-        public IMapper TryGetMapper(Type sourceType, Type targetType, params MapperInclusion[] mapperInclusions)
+        public IMapper TryGetMapper(Type sourceType, Type targetType)
         {
-            var key = GetKey(sourceType, targetType, mapperInclusions);
+            var key = GetKey(sourceType, targetType);
             object mapper;
             if (this.mappers.TryGetValue(key, out mapper))
             {

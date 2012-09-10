@@ -94,34 +94,6 @@ namespace Moo.Tests
             Assert.IsTrue(((CompositeMapper<TTarget, TSource>)mapper).InnerMappers.Any());
         }
 
-        [Ignore("TODO: remove ignore attribute or remove test")]
-        [Test]
-        public void ResolveMapper_WithConstructorInfo_PassesArgument()
-        {
-            var mappers = new Type[] { typeof(Mapper1<TSource, TTarget>), typeof(Mapper2<TSource, TTarget>) };
-            var options = new MappingOptions(mappers);
-            var target = new MappingRepository(options);
-            var inclusions = new MapperInclusion[]
-                {
-                    new MapperInclusion<TestClassE, TestClassF>()
-                };
-
-            var result = (CompositeMapper<TSource, TTarget>)target.ResolveMapper<TSource, TTarget>(inclusions);
-
-            Assert.IsNotNull(result);
-            var innerMappers = result.InnerMappers.ToArray();
-            CollectionAssert.IsNotEmpty(innerMappers);
-            Assert.AreEqual(mappers.Length, innerMappers.Length);
-            for (var i = 0; i < mappers.Length; ++i)
-            {
-                Assert.AreEqual(mappers[i], innerMappers[i].GetType());
-            }
-
-            var mapper2 = (Mapper2<TSource, TTarget>)innerMappers[1];
-            CollectionAssert.AreEqual(inclusions, mapper2.ConstructionInfo.IncludedMappers);
-            Assert.AreEqual(target, mapper2.ConstructionInfo.ParentRepo);
-        }
-
         [Test]
         public void AddMappingGeneric_DefaultCase_RedirectsToMapper()
         {

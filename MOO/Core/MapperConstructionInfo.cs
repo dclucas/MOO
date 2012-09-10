@@ -42,23 +42,14 @@ namespace Moo.Core
         /// <param name="parentRepo">
         /// The parent repo.
         /// </param>
-        /// <param name="includedMappers">
-        /// The included mappers.
-        /// </param>
-        public MapperConstructionInfo(IMappingRepository parentRepo, IEnumerable<MapperInclusion> includedMappers)
+        public MapperConstructionInfo(IMappingRepository parentRepo)
         {
             this.ParentRepo = parentRepo;
-            this.IncludedMappers = includedMappers;
         }
 
         /// <summary>
         /// Gets the parent mapping repository.
         /// </summary>
         public IMappingRepository ParentRepo { get; private set; }
-
-        /// <summary>
-        /// Gets the included mappers.
-        /// </summary>
-        public IEnumerable<MapperInclusion> IncludedMappers { get; private set; }
     }
 }

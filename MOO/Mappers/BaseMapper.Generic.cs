@@ -64,7 +64,6 @@ namespace Moo.Mappers
         {
             Guard.CheckArgumentNotNull(constructionInfo, "constructionInfo");
             this.ParentRepository = constructionInfo.ParentRepo;
-            this.MapperInclusions = constructionInfo.IncludedMappers;
         }
         
         #endregion Constructors
@@ -75,11 +74,6 @@ namespace Moo.Mappers
         /// Gets the type mapping information.
         /// </summary>
         public TypeMappingInfo<TSource, TTarget> TypeMapping { get; protected set; }
-
-        /// <summary>
-        /// Gets or sets mapper inclusions.
-        /// </summary>
-        internal IEnumerable<MapperInclusion> MapperInclusions { get; set; }
 
         /// <summary>
         /// Gets the parent mapping repository.

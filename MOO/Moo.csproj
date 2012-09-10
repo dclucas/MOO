@@ -115,8 +115,6 @@
     <Compile Include="MappingAttribute.cs" />
     <Compile Include="Configuration\MappingConfigurationSection.cs" />
     <Compile Include="MappingException.cs" />
-    <Compile Include="MapperInclusion.cs" />
-    <Compile Include="MapperInclusion.Generic.cs" />
     <Compile Include="MappingOptions.cs" />
     <Compile Include="MappingRepository.cs" />
     <Compile Include="ObjectMappingExtender.cs" />
