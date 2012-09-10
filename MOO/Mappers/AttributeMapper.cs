@@ -80,15 +80,7 @@ namespace Moo.Mappers
             var fromType = typeof(TSource);
             var toType = typeof(TTarget);
 
-            foreach (var m in GetMappings(fromType, toType, MappingDirections.From))
-            {
-                typeMapping.Add(m);
-            }
-
-            foreach (var m in GetMappings(toType, fromType, MappingDirections.To))
-            {
-                typeMapping.Add(m);
-            }
+            typeMapping.AddRange(GetMappings());
         }
 
         // Private Methods (2)
@@ -124,8 +116,6 @@ namespace Moo.Mappers
             return mappingInfo;
         }
 
-        // Private Methods (1) 
-
         /// <summary>
         /// Adds the mappings based on the existing mapping attributes.
         /// </summary>
@@ -144,7 +134,13 @@ namespace Moo.Mappers
                    where m.OtherType.IsAssignableFrom(targetType)
                    select GetMapping(prop, targetType.GetProperty(m.OtherMemberName), direction);
         }
+    
+        protected override IEnumerable<MemberMappingInfo<TSource, TTarget>> GetMappings()
+        {
+            return GetMappings(typeof(TSource), typeof(TTarget), MappingDirections.From)
+                .Union(GetMappings(typeof(TTarget), typeof(TSource), MappingDirections.To));
+        }
 
-        #endregion Methods 
+        #endregion Methods
     }
 }

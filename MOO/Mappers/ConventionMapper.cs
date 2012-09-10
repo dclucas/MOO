@@ -30,6 +30,7 @@ namespace Moo.Mappers
     using System.Reflection;
 
     using Moo.Core;
+    using System.Collections.Generic;
 
     /// <summary>
     /// Uses naming and type conversion convention to create mappings between
@@ -81,16 +82,8 @@ namespace Moo.Mappers
         protected override void GenerateMappings(TypeMappingInfo<TSource, TTarget> typeMapping)
         {
             Guard.CheckArgumentNotNull(typeMapping, "typeMapping");
-            var propExplorer = GetPropertyExplorer();
-            var checker = GetPropertyConverter();
-            string finalName = null;
-            var q = from sourceProp in propExplorer.GetSourceProps<TSource>()
-                    from targetProp in propExplorer.GetTargetProps<TTarget>()
-                    // TODO: remove this call with an "out" parameter -- it's not used here.
-                    where checker.CanConvert(sourceProp, targetProp, out finalName)
-                    select this.CreateInfo(sourceProp, targetProp);
 
-            typeMapping.AddRange(q);
+            typeMapping.AddRange(GetMappings());
         }
 
         /// <summary>
@@ -109,6 +102,18 @@ namespace Moo.Mappers
         {
             var mappingInfo = new ReflectionPropertyMappingInfo<TSource, TTarget>(sourceProperty, targetProperty, false);
             return mappingInfo;
+        }
+
+        protected override IEnumerable<MemberMappingInfo<TSource, TTarget>> GetMappings()
+        {
+            var propExplorer = GetPropertyExplorer();
+            var checker = GetPropertyConverter();
+            string finalName = null;
+            return from sourceProp in propExplorer.GetSourceProps<TSource>()
+                    from targetProp in propExplorer.GetTargetProps<TTarget>()
+                    // TODO: remove this call with an "out" parameter -- it's not used here.
+                    where checker.CanConvert(sourceProp, targetProp, out finalName)
+                    select this.CreateInfo(sourceProp, targetProp);
         }
 
         #endregion Methods

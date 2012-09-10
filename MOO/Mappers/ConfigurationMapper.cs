@@ -30,6 +30,7 @@ namespace Moo.Mappers
     using System.Linq;
     using Moo.Configuration;
     using Moo.Core;
+    using System.Collections.Generic;
 
     /// <summary>
     /// Uses configuration to determine mappings between two classes
@@ -62,8 +63,6 @@ namespace Moo.Mappers
 
         #region Methods (3)
 
-        // Protected Methods (1) 
-
         /// <summary>
         /// Generates the member mappings and adds them to the provided <see cref="TypeMappingInfo{TSource, TTarget}"/> object.
         /// </summary>
@@ -76,22 +75,12 @@ namespace Moo.Mappers
         protected override void GenerateMappings(TypeMappingInfo<TSource, TTarget> typeMapping)
         {
             Guard.CheckArgumentNotNull(typeMapping, "typeMapping");
-            TypeMappingElement element = GetTypeMapping();
-            if (element != null)
+            var mappings = GetMappings();
+            if (mappings != null)
             {
-                foreach (var propMapping in element.MemberMappings.Cast<MemberMappingElement>())
-                {
-                    var mappingInfo = new ReflectionPropertyMappingInfo<TSource, TTarget>(
-                        typeof(TSource).GetProperty(propMapping.SourceMemberName),
-                        typeof(TTarget).GetProperty(propMapping.TargetMemberName),
-                        true);
-
-                    typeMapping.Add(mappingInfo);
-                }
+                typeMapping.AddRange(GetMappings());
             }
         }
-
-        // Internal Methods (2) 
 
         /// <summary>
         /// Gets the type mapping configuration element.
@@ -123,6 +112,23 @@ namespace Moo.Mappers
                     section.TypeMappings.Cast<TypeMappingElement>().FirstOrDefault(
                         t => typeof(TTarget).AssemblyQualifiedName.Contains(t.TargetType)
                              && typeof(TSource).AssemblyQualifiedName.Contains(t.SourceType));
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        protected override IEnumerable<MemberMappingInfo<TSource, TTarget>> GetMappings()
+        {
+            TypeMappingElement element = GetTypeMapping();
+            if (element != null)
+            {
+                return from propMapping in element.MemberMappings.Cast<MemberMappingElement>()
+                       select new ReflectionPropertyMappingInfo<TSource, TTarget>(
+                        typeof(TSource).GetProperty(propMapping.SourceMemberName),
+                        typeof(TTarget).GetProperty(propMapping.TargetMemberName),
+                        true);
             }
             else
             {

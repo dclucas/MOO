@@ -43,18 +43,19 @@ namespace Moo.Mappers
         {
             Guard.CheckArgumentNotNull(typeMapping, "typeMapping");
 
-            var matches = from sourceProperty in typeof(TSource).GetProperties()
-                          from targetProperty in typeof(TTarget).GetProperties()
-                          from m in MapperInclusions
-                          where m.SourceType == sourceProperty.PropertyType
-                          where m.TargetType == targetProperty.PropertyType
-                          let mapper = ParentRepo.ResolveMapper(m.SourceType, m.TargetType)
-                          select new MapperMappingInfo<TSource, TTarget>(mapper, sourceProperty, targetProperty);
-            
-            foreach (var m in matches)
-            {
-                typeMapping.Add(m);
-            }
+            typeMapping.AddRange(GetMappings());
+        }
+
+        protected override IEnumerable<MemberMappingInfo<TSource, TTarget>> GetMappings()
+        {
+            return from sourceProperty in typeof(TSource).GetProperties()
+                   from targetProperty in typeof(TTarget).GetProperties()
+                   from m in MapperInclusions
+                   where m.SourceType == sourceProperty.PropertyType
+                   where m.TargetType == targetProperty.PropertyType
+                   let mapper = ParentRepository.ResolveMapper(m.SourceType, m.TargetType)
+                   select new MapperMappingInfo<TSource, TTarget>(mapper, sourceProperty, targetProperty);
+
         }
     }
 }

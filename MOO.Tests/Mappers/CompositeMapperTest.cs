@@ -146,6 +146,11 @@ namespace Moo.Tests.Mappers
             protected override void GenerateMappings(TypeMappingInfo<TSource, TTarget> typeMapping)
             {
             }
+
+            protected override IEnumerable<MemberMappingInfo<TSource, TTarget>> GetMappings()
+            {
+                throw new NotImplementedException();
+            }
         }
 
         #endregion InnerClasses

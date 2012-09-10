@@ -63,7 +63,7 @@ namespace Moo.Mappers
             : this()
         {
             Guard.CheckArgumentNotNull(constructionInfo, "constructionInfo");
-            this.ParentRepo = constructionInfo.ParentRepo;
+            this.ParentRepository = constructionInfo.ParentRepo;
             this.MapperInclusions = constructionInfo.IncludedMappers;
         }
         
@@ -90,7 +90,7 @@ namespace Moo.Mappers
         /// <summary>
         /// Gets the type mapping information.
         /// </summary>
-        internal TypeMappingInfo<TSource, TTarget> TypeMapping { get; private set; }
+        public TypeMappingInfo<TSource, TTarget> TypeMapping { get; protected set; }
 
         /// <summary>
         /// Gets or sets mapper inclusions.
@@ -100,7 +100,11 @@ namespace Moo.Mappers
         /// <summary>
         /// Gets the parent mapping repository.
         /// </summary>
-        protected IMappingRepository ParentRepo { get; private set; }
+        protected IMappingRepository ParentRepository { get; private set; }
+
+        protected internal MapperStatus CurrentStatus { get; private set; }
+
+        private object syncRoot = new Object();
 
         #endregion Properties
 
@@ -171,6 +175,11 @@ namespace Moo.Mappers
         /// <returns>The target object, with its properties filled.</returns>
         public virtual TTarget Map(TSource source, TTarget target)
         {
+            if (this.CurrentStatus == MapperStatus.New)
+            {
+                InitializeMapping();
+            }
+
             foreach (var mapping in this.TypeMapping.GetMappings())
             {
                 try
@@ -188,6 +197,23 @@ namespace Moo.Mappers
             }
 
             return target;
+        }
+
+        private void InitializeMapping()
+        {
+            if (TypeMapping == null)
+            {
+                lock (syncRoot)
+                {
+                    if (TypeMapping == null)
+                    {
+                        TypeMapping = new TypeMappingInfo<TSource, TTarget>();
+                        TypeMapping.AddRange(GetMappings());
+                    }
+                }
+            }
+
+            this.CurrentStatus = MapperStatus.Active;
         }
 
         /// <summary>
@@ -243,12 +269,12 @@ namespace Moo.Mappers
 
         public virtual void AddInnerMapper<TInnerSource, TInnerTarget>()
         {
-            if (ParentRepo == null)
+            if (ParentRepository == null)
             {
                 throw new InvalidOperationException("Mapper must be contained in a repo in order to allow inner mappers.");
             }
             
-            var innerMapper = ParentRepo.ResolveMapper<TInnerSource, TInnerTarget>();
+            var innerMapper = ParentRepository.ResolveMapper<TInnerSource, TInnerTarget>();
             var propExplorer = GetPropertyExplorer();
             foreach (var kvp in propExplorer.GetMatches<TSource, TTarget>(
                 (s, t) => 
@@ -258,6 +284,8 @@ namespace Moo.Mappers
                 AddMappingInfo(new MapperMappingInfo<TSource, TTarget>(innerMapper, kvp.Key, kvp.Value));
             }
         }
+
+        protected abstract IEnumerable<MemberMappingInfo<TSource, TTarget>> GetMappings();
 
         /// <summary>
         /// Adds the specified mapping info to the internal mappings table.
@@ -355,5 +383,12 @@ namespace Moo.Mappers
         }
 
         #endregion Methods
+
+        public enum MapperStatus
+        {
+            New,
+            MappingsFound,
+            Active
+        }
     }
 }

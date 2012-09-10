@@ -27,6 +27,7 @@
 namespace Moo.Mappers
 {
     using Moo.Core;
+    using System.Collections.Generic;
 
     /// <summary>
     /// Manual mappers allow the addition of custom mapping rules, through code.
@@ -91,6 +92,11 @@ namespace Moo.Mappers
         public ISourceSpec<TSource, TTarget> AddMapping()
         {
             return new SourceSpec<TSource, TTarget>(this);
+        }
+
+        protected override IEnumerable<MemberMappingInfo<TSource, TTarget>> GetMappings()
+        {
+            return null;
         }
 
         #endregion Methods

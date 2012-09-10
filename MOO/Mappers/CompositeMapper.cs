@@ -132,14 +132,8 @@ namespace Moo.Mappers
         protected override void GenerateMappings(TypeMappingInfo<TSource, TTarget> typeMapping)
         {
             Guard.CheckArgumentNotNull(typeMapping, "typeMapping");
-            var q = from mapper in this.InnerMappers.OfType<BaseMapper<TSource, TTarget>>()
-                    from mapping in mapper.TypeMapping.GetMappings()
-                    select mapping;
 
-            foreach (var m in q)
-            {
-                typeMapping.Add(m);
-            }
+            typeMapping.AddRange(GetMappings());
         }
 
         /// <summary>
@@ -151,6 +145,12 @@ namespace Moo.Mappers
             return new SourceSpec<TSource, TTarget>(this);
         }
 
+        protected override IEnumerable<MemberMappingInfo<TSource, TTarget>> GetMappings()
+        {
+            return from mapper in this.InnerMappers.OfType<BaseMapper<TSource, TTarget>>()
+                   from mapping in mapper.TypeMapping.GetMappings()
+                   select mapping;            
+        }
         #endregion Methods
     }
 }
