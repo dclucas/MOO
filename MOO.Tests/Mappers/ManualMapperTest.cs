@@ -40,19 +40,6 @@ namespace Moo.Tests.Mappers
     {
         #region Methods (4)
 
-        // Public Methods (4) 
-
-        [Test]
-        public void GenerateMappingsTest()
-        {
-            var target = new ManualMapper<FromTestClass, ToTestClass>();
-            MethodInfo methodInfo = target.GetType().GetMethod(
-                "GenerateMappings",
-                BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly);
-            methodInfo.Invoke(target, new object[] { target.TypeMapping });
-            Assert.IsFalse(target.TypeMapping.GetMappings().Any());
-        }
-
         [ExpectedException(typeof(MappingException))]
         [Test]
         public void ManualMapperMapErrorTest()

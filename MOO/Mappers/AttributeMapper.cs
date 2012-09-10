@@ -46,7 +46,6 @@ namespace Moo.Mappers
         /// </summary>
         public AttributeMapper()
         {
-            //this.GenerateMappings();
         }
 
         /// <summary>
@@ -56,32 +55,11 @@ namespace Moo.Mappers
         public AttributeMapper(MapperConstructionInfo constructionInfo)
             : base(constructionInfo)
         {
-            //this.GenerateMappings();
         }
 
         #endregion Constructors 
 
-        #region Methods (3) 
-
-        // Protected Methods (1) 
-
-        /// <summary>
-        /// Generates the member mappings and adds them to the provided <see cref="TypeMappingInfo{TSource, TTarget}"/> object.
-        /// </summary>
-        /// <param name="typeMapping">The type mapping where discovered mappings will be added.</param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Microsoft.Design", 
-            "CA1062:Validate arguments of public methods", 
-            MessageId = "0",
-            Justification = "The call to Guard does that.")]
-        protected override void GenerateMappings(TypeMappingInfo<TSource, TTarget> typeMapping)
-        {
-            Guard.CheckArgumentNotNull(typeMapping, "typeMapping");
-            var fromType = typeof(TSource);
-            var toType = typeof(TTarget);
-
-            typeMapping.AddRange(GetMappings());
-        }
+        #region Methods
 
         // Private Methods (2)
 

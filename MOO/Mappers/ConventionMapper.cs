@@ -51,7 +51,6 @@ namespace Moo.Mappers
             Justification = "For the time being, this is the desired behavior.")]
         public ConventionMapper()
         {
-            //this.GenerateMappings();
         }
 
         /// <summary>
@@ -61,30 +60,11 @@ namespace Moo.Mappers
         public ConventionMapper(MapperConstructionInfo constructionInfo)
             : base(constructionInfo)
         {
-            //this.GenerateMappings();
         }
 
         #endregion Constructors
 
-        #region Methods (1)
-
-        // Protected Methods (1) 
-
-        /// <summary>
-        /// Generates the member mappings and adds them to the provided <see cref="TypeMappingInfo{TSource, TTarget}"/> object.
-        /// </summary>
-        /// <param name="typeMapping">The type mapping where discovered mappings will be added.</param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Microsoft.Design",
-            "CA1062:Validate arguments of public methods",
-            MessageId = "0",
-            Justification = "The Guard call does that.")]
-        protected override void GenerateMappings(TypeMappingInfo<TSource, TTarget> typeMapping)
-        {
-            Guard.CheckArgumentNotNull(typeMapping, "typeMapping");
-
-            typeMapping.AddRange(GetMappings());
-        }
+        #region Methods
 
         /// <summary>
         /// Creates a member mapping info object to map the selected properties

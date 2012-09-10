@@ -145,10 +145,6 @@ namespace Moo.Tests.Mappers
                 throw new NotImplementedException();
             }
 
-            protected override void GenerateMappings(TypeMappingInfo<TSource, TTarget> typeMapping)
-            {
-            }
-
             protected internal override IEnumerable<MemberMappingInfo<TSource, TTarget>> GetMappings()
             {
                 throw new NotImplementedException();

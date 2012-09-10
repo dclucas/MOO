@@ -50,7 +50,6 @@ namespace Moo
             {
                 typeof(ConventionMapper<,>),
                 typeof(AttributeMapper<,>),
-                typeof(AssociationMapper<,>),
                 typeof(ConfigurationMapper<,>),
                 typeof(ManualMapper<,>)
             };

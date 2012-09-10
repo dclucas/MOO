@@ -80,7 +80,7 @@ namespace Moo.Mappers
 
         #endregion Properties
 
-        #region Methods (2)
+        #region Methods
 
         /// <summary>
         /// Performs basic validation and fires off mapping generation.
@@ -93,10 +93,7 @@ namespace Moo.Mappers
             Guard.CheckEnumerableNotNullOrEmpty(innerMappers, "innerMappers");
             Guard.TrueForAll(innerMappers, "innerMappers", m => m != null, "Mappers list cannot contain null elements.");
             this.InnerMappers = innerMappers.Reverse();
-            //this.GenerateMappings();
         }
-
-        // Public Methods (1) 
 
         /// <summary>
         /// Adds a member mapping action to the mapper.
@@ -118,24 +115,6 @@ namespace Moo.Mappers
                 mappingAction);
 
             this.AddMappingInfo(info);
-        }
-
-        // Protected Methods (1) 
-
-        /// <summary>
-        /// Generates the member mappings and adds them to the provided <see cref="TypeMappingInfo{TSource, TTarget}"/> object.
-        /// </summary>
-        /// <param name="typeMapping">The type mapping where discovered mappings will be added.</param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Microsoft.Design",
-            "CA1062:Validate arguments of public methods",
-            MessageId = "0",
-            Justification = "The Guard call does just that.")]
-        protected override void GenerateMappings(TypeMappingInfo<TSource, TTarget> typeMapping)
-        {
-            Guard.CheckArgumentNotNull(typeMapping, "typeMapping");
-
-            typeMapping.AddRange(GetMappings());
         }
 
         /// <summary>

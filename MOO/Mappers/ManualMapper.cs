@@ -73,20 +73,6 @@ namespace Moo.Mappers
             this.AddMappingInfo(info);
         }
 
-        // Protected Methods (1) 
-
-        /// <summary>
-        /// Generates the member mappings and adds them to the provided <see cref="TypeMappingInfo{TSource, TTarget}"/> object.
-        /// </summary>
-        /// <param name="typeMapping">The type mapping where discovered mappings will be added.</param>
-        /// <remarks>
-        /// As this mapper should generate absolutely no mappings (all of its mappings are to
-        /// be added manually), this method is intentionally left blank.
-        /// </remarks>
-        protected override void GenerateMappings(TypeMappingInfo<TSource, TTarget> typeMapping)
-        {
-        }
-
         /// <summary>
         /// Adds new mapping actions to the mapper, with <c>From</c> and <c>To</c> statements.
         /// </summary>

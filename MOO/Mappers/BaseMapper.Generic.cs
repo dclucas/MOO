@@ -300,20 +300,6 @@ namespace Moo.Mappers
             this.TypeMapping.Add(mappingInfo);
         }
 
-        ///// <summary>
-        ///// Generates the member mappings and adds them targetProperty the internal type mapping object.
-        ///// </summary>
-        //protected void GenerateMappings()
-        //{
-        //    this.GenerateMappings(this.TypeMapping);
-        //}
-
-        /// <summary>
-        /// Generates the member mappings and adds them to the provided <see cref="TypeMapping"/> object.
-        /// </summary>
-        /// <param name="typeMapping">The type mapping where discovered mappings will be added.</param>
-        protected abstract void GenerateMappings(TypeMappingInfo<TSource, TTarget> typeMapping);
-
         protected virtual PropertyExplorer GetPropertyExplorer()
         {
             return new PropertyExplorer();
