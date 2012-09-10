@@ -46,7 +46,7 @@ namespace Moo.Mappers
         /// </summary>
         public ConfigurationMapper()
         {
-            this.GenerateMappings();
+            //this.GenerateMappings();
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace Moo.Mappers
         public ConfigurationMapper(MapperConstructionInfo constructionInfo)
             : base(constructionInfo)
         {
-            this.GenerateMappings();
+            //this.GenerateMappings();
         }
 
         #endregion Constructors
@@ -119,7 +119,7 @@ namespace Moo.Mappers
             }
         }
 
-        protected override IEnumerable<MemberMappingInfo<TSource, TTarget>> GetMappings()
+        protected internal override IEnumerable<MemberMappingInfo<TSource, TTarget>> GetMappings()
         {
             TypeMappingElement element = GetTypeMapping();
             if (element != null)

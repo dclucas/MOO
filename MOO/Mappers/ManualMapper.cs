@@ -41,6 +41,7 @@ namespace Moo.Mappers
         /// </summary>
         public ManualMapper()
         {
+            TypeMapping = new TypeMappingInfo<TSource, TTarget>();
         }
 
         /// <summary>
@@ -50,6 +51,7 @@ namespace Moo.Mappers
         public ManualMapper(MapperConstructionInfo constructionInfo)
             : base(constructionInfo)
         {
+            TypeMapping = new TypeMappingInfo<TSource, TTarget>();
         }
         
         #region Methods (3)
@@ -94,7 +96,7 @@ namespace Moo.Mappers
             return new SourceSpec<TSource, TTarget>(this);
         }
 
-        protected override IEnumerable<MemberMappingInfo<TSource, TTarget>> GetMappings()
+        protected internal override IEnumerable<MemberMappingInfo<TSource, TTarget>> GetMappings()
         {
             return null;
         }

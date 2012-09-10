@@ -31,7 +31,7 @@ namespace Moo.Tests.Integration.MappedClasses.ViewModels
     {
         public int Id { get; set; }
 
-        [Mapping(MappingDirections.To, typeof(Person), "FirstName")]
+        [Mapping(MappingDirections.Target, typeof(Person), "FirstName")]
         public string Name { get; set; }
 
         public string AccountLogin { get; set; }
@@ -40,7 +40,7 @@ namespace Moo.Tests.Integration.MappedClasses.ViewModels
 
         public string ManagerName { get; set; }
 
-        [Mapping(MappingDirections.To, typeof(Person), "LastName")]
+        [Mapping(MappingDirections.Target, typeof(Person), "LastName")]
         public string MessyProp { get; set; }
     }
 

@@ -27,6 +27,9 @@ namespace Moo.Tests.Mappers
 {
     using NUnit.Framework;
     using Moo.Mappers;
+    using Moo.Tests.Integration.MappedClasses.DomainModels;
+    using Moo.Tests.Integration.MappedClasses.ViewModels;
+    using Shouldly;
 
     /// <summary>
     /// This is a test class for AttributeMapperTest and is intended
@@ -37,10 +40,8 @@ namespace Moo.Tests.Mappers
     {
         #region Methods (2)
 
-        // Public Methods (2) 
-
         [Test]
-        public void MapTestFrom()
+        public void Map_MappedSource_SkipsMapping()
         {
             string expectedName = "Test Name";
             int expectedCode = 412;
@@ -62,7 +63,7 @@ namespace Moo.Tests.Mappers
         }
 
         [Test]
-        public void MapTestTo()
+        public void Map_MapperTarget_MapsCorrectly()
         {
             string expectedName = "Test Name";
             int expectedCode = 412;
@@ -78,6 +79,18 @@ namespace Moo.Tests.Mappers
 
             Assert.AreEqual(expectedName, a.Name);
             Assert.AreEqual(expectedCode, a.Code);
+        }
+
+        [Test]
+        public void Map_MapperTarget_MapsCorrectly2()
+        {
+            var source = new Person() { FirstName = "John", LastName = "Doe" };
+
+            var target = new AttributeMapper<Person, PersonIndexModel>();
+            
+            var result = target.Map(source);
+            result.MessyProp.ShouldBe(source.LastName);
+            result.Name.ShouldBe(source.FirstName);
         }
 
         #endregion Methods

@@ -74,7 +74,7 @@ namespace Moo.Tests
     {
         #region Properties (2)
 
-        [Mapping(MappingDirections.To, typeof(TestClassA), "Code")]
+        [Mapping(MappingDirections.Target, typeof(TestClassA), "Code")]
         public int AnotherCode { get; set; }
 
         [Mapping(MappingDirections.Both, typeof(TestClassA), "Name")]

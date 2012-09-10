@@ -42,12 +42,12 @@ namespace Moo
         /// <summary>
         /// The attributed member will be the mapping target.
         /// </summary>
-        To = 2,
+        Target = 2,
 
         /// <summary>
         /// The attributed member can be used as either a mapping source or a target.
         /// </summary>
-        Both = From | To
+        Both = From | Target
     }
 
     /// <summary>

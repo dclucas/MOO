@@ -208,9 +208,13 @@ namespace Moo.Mappers
                     if (TypeMapping == null)
                     {
                         TypeMapping = new TypeMappingInfo<TSource, TTarget>();
-                        TypeMapping.AddRange(GetMappings());
                     }
                 }
+            }
+            var mappings = GetMappings();
+            if (mappings != null)
+            {
+                TypeMapping.AddRange(GetMappings());
             }
 
             this.CurrentStatus = MapperStatus.Active;
@@ -285,7 +289,7 @@ namespace Moo.Mappers
             }
         }
 
-        protected abstract IEnumerable<MemberMappingInfo<TSource, TTarget>> GetMappings();
+        protected internal abstract IEnumerable<MemberMappingInfo<TSource, TTarget>> GetMappings();
 
         /// <summary>
         /// Adds the specified mapping info to the internal mappings table.
@@ -296,13 +300,13 @@ namespace Moo.Mappers
             this.TypeMapping.Add(mappingInfo);
         }
 
-        /// <summary>
-        /// Generates the member mappings and adds them targetProperty the internal type mapping object.
-        /// </summary>
-        protected void GenerateMappings()
-        {
-            this.GenerateMappings(this.TypeMapping);
-        }
+        ///// <summary>
+        ///// Generates the member mappings and adds them targetProperty the internal type mapping object.
+        ///// </summary>
+        //protected void GenerateMappings()
+        //{
+        //    this.GenerateMappings(this.TypeMapping);
+        //}
 
         /// <summary>
         /// Generates the member mappings and adds them to the provided <see cref="TypeMapping"/> object.

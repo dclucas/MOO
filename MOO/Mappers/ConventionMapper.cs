@@ -51,7 +51,7 @@ namespace Moo.Mappers
             Justification = "For the time being, this is the desired behavior.")]
         public ConventionMapper()
         {
-            this.GenerateMappings();
+            //this.GenerateMappings();
         }
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace Moo.Mappers
         public ConventionMapper(MapperConstructionInfo constructionInfo)
             : base(constructionInfo)
         {
-            this.GenerateMappings();
+            //this.GenerateMappings();
         }
 
         #endregion Constructors
@@ -104,7 +104,7 @@ namespace Moo.Mappers
             return mappingInfo;
         }
 
-        protected override IEnumerable<MemberMappingInfo<TSource, TTarget>> GetMappings()
+        protected internal override IEnumerable<MemberMappingInfo<TSource, TTarget>> GetMappings()
         {
             var propExplorer = GetPropertyExplorer();
             var checker = GetPropertyConverter();

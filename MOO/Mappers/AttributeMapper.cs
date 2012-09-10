@@ -46,7 +46,7 @@ namespace Moo.Mappers
         /// </summary>
         public AttributeMapper()
         {
-            this.GenerateMappings();
+            //this.GenerateMappings();
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace Moo.Mappers
         public AttributeMapper(MapperConstructionInfo constructionInfo)
             : base(constructionInfo)
         {
-            this.GenerateMappings();
+            //this.GenerateMappings();
         }
 
         #endregion Constructors 
@@ -134,11 +134,11 @@ namespace Moo.Mappers
                    where m.OtherType.IsAssignableFrom(targetType)
                    select GetMapping(prop, targetType.GetProperty(m.OtherMemberName), direction);
         }
-    
-        protected override IEnumerable<MemberMappingInfo<TSource, TTarget>> GetMappings()
+
+        protected internal override IEnumerable<MemberMappingInfo<TSource, TTarget>> GetMappings()
         {
             return GetMappings(typeof(TSource), typeof(TTarget), MappingDirections.From)
-                .Union(GetMappings(typeof(TTarget), typeof(TSource), MappingDirections.To));
+                .Concat(GetMappings(typeof(TTarget), typeof(TSource), MappingDirections.Target));
         }
 
         #endregion Methods

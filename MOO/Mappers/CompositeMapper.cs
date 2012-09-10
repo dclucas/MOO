@@ -46,6 +46,7 @@ namespace Moo.Mappers
         public CompositeMapper(params IMapper<TSource, TTarget>[] innerMappers)
         {
             this.Initialize(innerMappers);
+            TypeMapping = new TypeMappingInfo<TSource, TTarget>(MappingOverwriteBehavior.SkipOverwrite);
         }
 
         /// <summary>
@@ -91,7 +92,7 @@ namespace Moo.Mappers
             Guard.CheckEnumerableNotNullOrEmpty(innerMappers, "innerMappers");
             Guard.TrueForAll(innerMappers, "innerMappers", m => m != null, "Mappers list cannot contain null elements.");
             this.InnerMappers = innerMappers;
-            this.GenerateMappings();
+            //this.GenerateMappings();
         }
 
         // Public Methods (1) 
@@ -145,12 +146,15 @@ namespace Moo.Mappers
             return new SourceSpec<TSource, TTarget>(this);
         }
 
-        protected override IEnumerable<MemberMappingInfo<TSource, TTarget>> GetMappings()
+        protected internal override IEnumerable<MemberMappingInfo<TSource, TTarget>> GetMappings()
         {
             return from mapper in this.InnerMappers.OfType<BaseMapper<TSource, TTarget>>()
-                   from mapping in mapper.TypeMapping.GetMappings()
+                   let mappings = mapper.GetMappings()
+                   where mappings != null
+                   from mapping in mappings
                    select mapping;            
         }
+
         #endregion Methods
     }
 }

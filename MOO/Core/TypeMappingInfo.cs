@@ -36,7 +36,7 @@ namespace Moo.Core
     /// <typeparam name="TTarget">The type of the target.</typeparam>
     public class TypeMappingInfo<TSource, TTarget>
     {
-        #region Fields (1)
+        #region Fields
 
         /// <summary>
         /// Backing field for the internal member mapping collection.
@@ -46,7 +46,7 @@ namespace Moo.Core
 
         #endregion Fields
 
-        #region Properties (2)
+        #region Properties
 
         /// <summary>
         /// Gets or sets the type of the source.
@@ -64,7 +64,22 @@ namespace Moo.Core
         /// </sourceValue>
         public Type TargetType { get; set; }
 
+        public MappingOverwriteBehavior OverwriteBehavior { get; private set; }
+
         #endregion Properties
+
+        #region Constructors
+
+        public TypeMappingInfo()
+        {
+        }
+
+        public TypeMappingInfo(MappingOverwriteBehavior overwriteBehavior)
+        {
+            this.OverwriteBehavior = overwriteBehavior;
+        }
+
+        #endregion
 
         #region Methods
 
@@ -80,7 +95,30 @@ namespace Moo.Core
         public void Add(MemberMappingInfo<TSource, TTarget> mappingInfo)
         {
             Guard.CheckArgumentNotNull(mappingInfo, "mappingInfo");
-            this.memberMappings[mappingInfo.TargetMemberName] = mappingInfo;
+            switch (this.OverwriteBehavior)
+            {
+                case MappingOverwriteBehavior.AllowOverwrite:
+                    this.memberMappings[mappingInfo.TargetMemberName] = mappingInfo;
+                    break;
+
+                case MappingOverwriteBehavior.SkipOverwrite:
+                    if (!this.memberMappings.ContainsKey(mappingInfo.TargetMemberName))
+                    {
+                        this.memberMappings[mappingInfo.TargetMemberName] = mappingInfo;
+                    }
+                    break;
+
+                case MappingOverwriteBehavior.ThrowOnOverwrite:
+                    if (!this.memberMappings.ContainsKey(mappingInfo.TargetMemberName))
+                    {
+                        throw new MappingException(
+                            String.Format("Target {0}.{1} was defined multiple times.",
+                            typeof(TTarget).FullName,
+                            mappingInfo.TargetMemberName));
+                    }
+                    break;
+            }
+            
         }
 
         /// <summary>
@@ -113,5 +151,12 @@ namespace Moo.Core
         }
 
         #endregion Methods
+    }
+
+    public enum MappingOverwriteBehavior
+    {
+        AllowOverwrite,
+        SkipOverwrite,
+        ThrowOnOverwrite
     }
 }

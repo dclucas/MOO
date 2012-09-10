@@ -40,8 +40,8 @@ namespace Moo.Tests.Integration
 
     using Ploeh.AutoFixture;
 
+    //[TestFixture(TypeArgs = new Type[] { typeof(Person), typeof(PersonIndexModel) })]
     [TestFixture(TypeArgs = new Type[] { typeof(Person), typeof(PersonEditModel) })]
-    [TestFixture(TypeArgs = new Type[] { typeof(Person), typeof(PersonIndexModel) })]
     [TestFixture(TypeArgs = new Type[] { typeof(PersonEditModel), typeof(Person) })]
     [TestFixture(TypeArgs = new Type[] { typeof(PersonIndexModel), typeof(Person) })]
     public class FullMappingTest<TSource, TTarget>
@@ -85,15 +85,22 @@ namespace Moo.Tests.Integration
             {
                 try
                 {
-                    Debug.WriteLine("Comparing properties {0}.{1} and {2}.{3}.", srcType, p.Value, trgType, p.Key);
+                    Trace.TraceInformation("Comparing properties {0}.{1} and {2}.{3}.", srcType, p.Value, trgType, p.Key);
                     var srcVal = this.GetValue(p.Value, sourceObj);
                     var trgVal = this.GetValue(p.Key, targetObj);
-                    Debug.WriteLine("Values are {0} and {1}", srcVal, trgVal);
+                    Trace.TraceInformation("Values are {0} and {1}", srcVal, trgVal);
                     Assert.AreEqual(srcVal, trgVal);
                 }
                 catch (Exception e)
                 {
-                    throw new Exception(string.Format("Error when formatting from {0} to {1}", p.Value, p.Key), e);
+                    throw new Exception(
+                        string.Format(
+                        "Error when formatting from {0}.{1} to {2}.{3}", 
+                        typeof(TSource).FullName,
+                        p.Value,
+                        typeof(TTarget).FullName,
+                        p.Key), 
+                        e);
                 }
             }
         }

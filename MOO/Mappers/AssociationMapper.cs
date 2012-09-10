@@ -27,7 +27,7 @@ namespace Moo.Mappers
         public AssociationMapper(MapperConstructionInfo constructionInfo)
             : base(constructionInfo)
         {
-            this.GenerateMappings();
+            //this.GenerateMappings();
         }
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace Moo.Mappers
             typeMapping.AddRange(GetMappings());
         }
 
-        protected override IEnumerable<MemberMappingInfo<TSource, TTarget>> GetMappings()
+        protected internal override IEnumerable<MemberMappingInfo<TSource, TTarget>> GetMappings()
         {
             return from sourceProperty in typeof(TSource).GetProperties()
                    from targetProperty in typeof(TTarget).GetProperties()
