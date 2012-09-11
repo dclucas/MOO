@@ -36,6 +36,8 @@ Once again, using the extension method leaves Moo in charge of creating all requ
 
 ### Fluent API
 
+The code below shows how a mapper can be extended with additional mapping actions:
+
     var source = CreateSource();
     
     MappingRepository.Default
@@ -47,3 +49,58 @@ Once again, using the extension method leaves Moo in charge of creating all requ
 
 A fluent API is provided for explicit code mappings. Advantages over "pure" by-hand mapping is a) a consistent approach to mapping and handling errors and b) the ability to still combine explicit mappings with other strategies.
 
+Instructions like the ones above are carried by the ManualMapper class, which in term can be configured to have bigger or smaller precedence in comparison to other mappers.
+
+### Using auxiliary mappers
+
+You can use additional mappers for internal properties. The code below is instructing Moo to map property Person.Account to PersonDetailsDataContract.PersonAccount through a mapper. 
+
+    var source = this.CreateSource();
+    MappingRepository.Default
+        .AddMapping<Person, PersonDetailsDataContract>()
+        .UseMapperFrom(p => p.Account)
+        .To(pd => pd.Account)
+        .From(p => p.FirstName + p.LastName)
+        .To(pd => pd.Name);
+
+    var result = source.MapTo<PersonDetailsDataContract>();
+
+	
+### Defining mapper precedence
+
+In the example below, the added rule (of associating 111 to PersonEditModel.Id) will just run in case there is no convention rule stating otherwise.
+
+    var source = this.CreateSource();
+
+    var repo = new MappingRepository(o =>
+        o.MapperOrder
+            .Use<ConventionMapper<object, object>>()
+            .Then<ManualMapper<object, object>>()
+            .Finally<AttributeMapper<object, object>>());
+
+    repo.AddMapping<Person, PersonEditModel>()
+        .From(s => 111)
+        .To(t => t.Id);
+
+    var mapper = repo.ResolveMapper<Person, PersonEditModel>();
+
+    var result = mapper.Map(source);
+
+### Error handling
+
+When mapping, Moo will wrap all internal exceptions into a MappingException, with details on what mapping it was working on:
+
+    var source = this.CreateSource();
+    
+    try
+	{
+	    var result = source.MapTo<PersonEditModel>();
+	}
+    catch (MappingException ohno)
+	{
+		// Do your exception handling here -- mapping exception will
+		// contain source and target information (their types, 
+		// properties being mapped, etc) 
+	}
+
+	

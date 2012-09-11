@@ -37,9 +37,9 @@ namespace Moo.Core
     /// </summary>
     public static class Guard
     {
-        #region Methods (4)
+        #region Methods
 
-        // Public Methods (4) 
+         
 
         /// <summary>
         /// Checkes whether the provided argument is not null.

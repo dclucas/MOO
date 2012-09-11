@@ -37,9 +37,9 @@ namespace Moo.Tests.Core
     [TestFixture]
     public class PropertyConverterTest
     {
-        #region Methods (8)
+        #region Methods
 
-        // Public Methods (7) 
+         
 
         [Test]
         public void ConvertTestComplex()
@@ -122,7 +122,7 @@ namespace Moo.Tests.Core
                 false);
         }
 
-        // Private Methods (1) 
+         
 
         private void TestMatch(string fromProp, string toProp, bool expected)
         {

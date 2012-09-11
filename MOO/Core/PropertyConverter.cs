@@ -34,7 +34,7 @@ namespace Moo.Core
     /// </summary>
     public class PropertyConverter
     {
-        #region Fields (1)
+        #region Fields
 
         /// <summary>
         /// Backing field for the static default converter instance.
@@ -43,7 +43,7 @@ namespace Moo.Core
 
         #endregion Fields
 
-        #region Properties (1)
+        #region Properties
 
         /// <summary>
         /// Gets the default <see cref="PropertyConverter"/> instance.
@@ -55,9 +55,9 @@ namespace Moo.Core
 
         #endregion Properties
 
-        #region Methods (5)
+        #region Methods
 
-        // Public Methods (3) 
+         
 
         /// <summary>
         /// Determines whether this converter can make a strict
@@ -184,7 +184,7 @@ namespace Moo.Core
             }
         }
 
-        // Protected Methods (2) 
+         
 
         /// <summary>
         /// Determines whether this class can/should make a (strict)

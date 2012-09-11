@@ -37,9 +37,9 @@ namespace Moo.Tests.Core
     [TestFixture]
     public class ReflectionPropertyMappingInfoTest
     {
-        #region Methods (1)
+        #region Methods
 
-        // Public Methods (1) 
+         
 
         [Test]
         public void MapTest()
@@ -70,19 +70,19 @@ namespace Moo.Tests.Core
 
         #endregion Methods
 
-        #region Nested Classes (1)
+        #region Nested Classes
 
         private class ConverterMock : PropertyConverter
         {
-            #region Properties (1)
+            #region Properties
 
             public Action<object, PropertyInfo, object, PropertyInfo, bool> ConvertAction { get; set; }
 
             #endregion Properties
 
-            #region Methods (1)
+            #region Methods
 
-            // Public Methods (1) 
+             
 
             public override void Convert(object source, PropertyInfo fromProperty, object target, PropertyInfo toProperty, bool strict)
             {

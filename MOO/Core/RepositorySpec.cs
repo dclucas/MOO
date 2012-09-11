@@ -17,7 +17,7 @@ namespace Moo.Core
         public MappingOptions GetOptions()
         {
             var order = (MapperStartSpec)MapperOrder;
-            return new MappingOptions(order.MapperSequence);
+            return new MappingOptions(order.MapperSequence.Reverse());
         }
     }
 }

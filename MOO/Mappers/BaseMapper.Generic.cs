@@ -31,6 +31,7 @@ namespace Moo.Mappers
     using System.Linq;
 
     using Moo.Core;
+    using System.Reflection;
 
     /// <summary>
     /// Base generic mapper class.
@@ -43,7 +44,7 @@ namespace Moo.Mappers
     /// </remarks>
     public abstract class BaseMapper<TSource, TTarget> : BaseMapper, IMapper<TSource, TTarget>
     {
-        #region Constructors (1)
+        #region Constructors
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BaseMapper&lt;TSource, TTarget&gt;"/> class.
@@ -86,7 +87,7 @@ namespace Moo.Mappers
 
         #endregion Properties
 
-        #region Methods (14)
+        #region Methods
 
         /// <summary>
         /// Maps from the source to a new target object.
@@ -153,9 +154,24 @@ namespace Moo.Mappers
         /// <returns>The target object, with its properties filled.</returns>
         public virtual TTarget Map(TSource source, TTarget target)
         {
-            if (this.CurrentStatus == MapperStatus.New)
+            try
             {
-                InitializeMapping();
+                if (this.CurrentStatus == MapperStatus.New)
+                {
+                    InitializeMapping();
+                }
+            }
+            catch (Exception exc)
+            {
+                throw new MappingException(
+                    String.Format("Error getting mappings from type {0} to {1}. Please check inner exception for details.",
+                        typeof(TSource),
+                        typeof(TTarget)),
+                        typeof(TSource),
+                        typeof(TTarget),
+                        null,
+                        null,
+                        exc);
             }
 
             foreach (var mapping in this.TypeMapping.GetMappings())
@@ -246,17 +262,10 @@ namespace Moo.Mappers
             return sourceList.Select(s => this.Map(s, createTarget));
         }
 
-        public virtual void AddInnerMapper<TInnerSource, TInnerTarget>()
+        public virtual void AddInnerMapper<TInnerSource, TInnerTarget>(PropertyInfo sourceMemberName, PropertyInfo targetMemberName)
         {
             var innerMapper = GetInnerMapper<TInnerSource, TInnerTarget>();
-            var propExplorer = GetPropertyExplorer();
-            foreach (var kvp in propExplorer.GetMatches<TSource, TTarget>(
-                (s, t) => 
-                    s.PropertyType.Equals(typeof(TInnerSource)) &&
-                    t.PropertyType.Equals(typeof(TInnerTarget))))
-            {
-                AddMappingInfo(new MapperMappingInfo<TSource, TTarget>(innerMapper, kvp.Key, kvp.Value));
-            }
+            AddMappingInfo(new MapperMappingInfo<TSource, TTarget>(innerMapper, sourceMemberName, targetMemberName));
         }
 
         protected IMapper<TInnerSource, TInnerTarget> GetInnerMapper<TInnerSource, TInnerTarget>()

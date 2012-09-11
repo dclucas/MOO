@@ -36,9 +36,9 @@ namespace Moo
     /// </summary>
     public static class IEnumerableMappingExtender
     {
-        #region Methods (3)
+        #region Methods
 
-        // Public Methods (3) 
+         
 
         /// <summary>
         /// Maps all source elements to an enumerable of target elements.

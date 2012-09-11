@@ -40,7 +40,7 @@ namespace Moo.Tests.Mappers
     [TestFixture]
     public class ManualMapperTest
     {
-        #region Methods (4)
+        #region Methods
 
         [ExpectedException(typeof(MappingException))]
         [Test]
@@ -71,11 +71,11 @@ namespace Moo.Tests.Mappers
 
         #endregion Methods
 
-        #region Nested Classes (2)
+        #region Nested Classes
 
         public class FromTestClass
         {
-            #region Properties (3)
+            #region Properties
 
             public string Description { get; set; }
 
@@ -88,7 +88,7 @@ namespace Moo.Tests.Mappers
 
         public class ToTestClass
         {
-            #region Properties (3)
+            #region Properties
 
             public int Code { get; set; }
 

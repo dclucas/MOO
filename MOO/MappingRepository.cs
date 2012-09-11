@@ -38,7 +38,7 @@ namespace Moo
     /// </summary>
     public class MappingRepository : IMappingRepository
     {
-        #region Fields (3)
+        #region Fields
 
         /// <summary>
         /// Support field for the "Default" static repository instance.
@@ -57,7 +57,7 @@ namespace Moo
 
         #endregion Fields
 
-        #region Constructors (2)
+        #region Constructors
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MappingRepository"/> class.
@@ -85,7 +85,7 @@ namespace Moo
 
         #endregion Constructors
 
-        #region Properties (1)
+        #region Properties
 
         /// <summary>
         /// Gets the default instance for the mapping repository.
@@ -97,9 +97,9 @@ namespace Moo
 
         #endregion Properties
 
-        #region Methods (8)
+        #region Methods
 
-        // Public Methods (4) 
+         
 
         /// <summary>
         /// Adds the specified mapper to the repository.
@@ -242,7 +242,7 @@ namespace Moo
             return res;
         }
 
-        // Private Methods (4) 
+         
 
         /// <summary>
         /// Gets the dictionary key for a given source/target mapping combinations.

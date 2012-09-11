@@ -37,9 +37,9 @@ namespace Moo.Configuration
         Justification = "The base class does not implement it. And there's no need for the generic interface implementation (YAGNI).")]
     public class TypeMappingCollection : ConfigurationElementCollection
     {
-        #region Methods (3)
+        #region Methods
 
-        // Public Methods (1) 
+         
 
         /// <summary>
         /// Adds the specified element.
@@ -50,7 +50,7 @@ namespace Moo.Configuration
             this.BaseAdd(element);
         }
 
-        // Protected Methods (2) 
+         
 
         /// <summary>
         /// Creates a new <see cref="T:System.Configuration.ConfigurationElement"/>.

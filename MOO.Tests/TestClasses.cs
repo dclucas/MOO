@@ -29,7 +29,7 @@ namespace Moo.Tests
 
     public class TestClassA
     {
-        #region Properties (3)
+        #region Properties
 
         public int Code { get; set; }
 
@@ -42,7 +42,7 @@ namespace Moo.Tests
 
     public class TestClassB
     {
-        #region Properties (5)
+        #region Properties
 
         public DateTime Code { get; set; }
 
@@ -59,7 +59,7 @@ namespace Moo.Tests
 
     public class TestClassC
     {
-        #region Properties (3)
+        #region Properties
 
         public DateTime Code { get; set; }
 
@@ -72,7 +72,7 @@ namespace Moo.Tests
 
     public class TestClassD
     {
-        #region Properties (2)
+        #region Properties
 
         [Mapping(MappingDirections.Target, typeof(TestClassA), "Code")]
         public int AnotherCode { get; set; }

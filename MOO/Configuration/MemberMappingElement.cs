@@ -33,7 +33,7 @@ namespace Moo.Configuration
     /// </summary>
     public class MemberMappingElement : ConfigurationElement
     {
-        #region Properties (2)
+        #region Properties
 
         /// <summary>
         /// Gets or sets the name of the source member.

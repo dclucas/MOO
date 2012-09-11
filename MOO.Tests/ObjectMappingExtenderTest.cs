@@ -37,9 +37,9 @@ namespace Moo.Tests
     [TestFixture]
     public class ObjectMappingExtenderTest
     {
-        #region Methods (18)
+        #region Methods
 
-        // Public Methods (18) 
+         
 
         [Test]
         [ExpectedException(typeof(ArgumentNullException))]

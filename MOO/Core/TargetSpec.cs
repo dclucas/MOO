@@ -40,17 +40,31 @@ namespace Moo.Core
     public class TargetSpec<TSource, TTarget, TInnerSource> : ITargetSpec<TSource, TTarget, TInnerSource>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="TargetSpec{TSource,TTarget}"/> class.
+        /// Initializes a new instance of the <see cref="TargetSpec{TSource,TTarget, TInnerSource}"/> class.
         /// </summary>
         /// <param name="mapper">Mapper to extend.</param>
         /// <param name="sourceArgument">Expression to pull source data.</param>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures", Justification = "Easier said than done")]
         public TargetSpec(IExtensibleMapper<TSource, TTarget> mapper, Expression<Func<TSource, TInnerSource>> sourceArgument)
+            : this(mapper, sourceArgument, false)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TargetSpec{TSource,TTarget, TInnerSource}"/> class.
+        /// </summary>
+        /// <param name="mapper">Mapper to extend.</param>
+        /// <param name="sourceArgument">Expression to pull source data.</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures", Justification = "Easier said than done")]
+        internal TargetSpec(IExtensibleMapper<TSource, TTarget> mapper, 
+            Expression<Func<TSource, TInnerSource>> sourceArgument, 
+            bool useMapper)
         {
             Guard.CheckArgumentNotNull(mapper, "mapper");
             Guard.CheckArgumentNotNull(sourceArgument, "sourceArgument");
             this.Mapper = mapper;
             this.SourceArgument = sourceArgument;
+            this.UseMapper = useMapper;
         }
 
         /// <summary>
@@ -76,22 +90,26 @@ namespace Moo.Core
         {
             Guard.CheckArgumentNotNull(argument, "argument");
             Guard.CheckArgumentNotNull(argument.Body, "argument.Body");
-            Expression body = argument.Body;
-            if (body.NodeType != ExpressionType.MemberAccess)
+            ExpressionHandler.ValidatePropertyExpression(argument);
+
+            if (UseMapper)
             {
-                throw new ArgumentException(
-                    String.Format(
-                        "'To' should be called with a property getter delegate, but instead got a {0} expression type, with a {1} expression body",
-                        argument.NodeType,
-                        argument.Body.NodeType));
+                ExpressionHandler.ValidatePropertyExpression(SourceArgument);
+                Mapper.AddInnerMapper<TInnerSource, TInnerTarget>(
+                    ExpressionHandler.GetProperty(SourceArgument),
+                    ExpressionHandler.GetProperty(argument));
+
+                return new SourceSpec<TSource, TTarget>(Mapper);
             }
+            else
+            {
+                Mapper.AddMappingAction(
+                    ExpressionHandler.GetMemberName(SourceArgument.Body),
+                    ExpressionHandler.GetMemberName(argument.Body),
+                    ExpressionHandler.GetAction<TSource, TTarget>(SourceArgument, argument));
 
-            Mapper.AddMappingAction(
-                GetMemberName(SourceArgument.Body),
-                GetMemberName(argument.Body),
-                GetAction(SourceArgument, argument));
-
-            return new SourceSpec<TSource, TTarget>(Mapper);
+                return new SourceSpec<TSource, TTarget>(Mapper);
+            }
         }
 
         /// <summary>
@@ -153,5 +171,25 @@ namespace Moo.Core
 
             return argument.ToString();
         }
+
+        private IExpressionHandler expressionHandler;
+
+        internal IExpressionHandler ExpressionHandler 
+        {
+            get
+            {
+                if (expressionHandler == null)
+                {
+                    expressionHandler = new ExpressionHandler();
+                }
+                return expressionHandler;
+            }
+            private set 
+            { 
+                expressionHandler = value; 
+            }
+        }
+
+        public bool UseMapper { get; set; }
     }
 }

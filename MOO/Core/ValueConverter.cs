@@ -34,9 +34,9 @@ namespace Moo.Core
     /// </summary>
     public class ValueConverter
     {
-        #region Methods (2)
+        #region Methods
 
-        // Public Methods (2) 
+         
 
         /// <summary>
         /// Checks whether this class can make the convertion between the two provided types.

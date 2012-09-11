@@ -36,9 +36,9 @@ namespace Moo
     /// </summary>
     public static class ObjectMappingExtender
     {
-        #region Methods (6)
+        #region Methods
 
-        // Public Methods (6) 
+         
 
         /// <summary>
         /// Maps the values on object the to a target type.

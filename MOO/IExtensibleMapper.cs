@@ -24,6 +24,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System.Reflection;
 namespace Moo
 {
     /// <summary>
@@ -74,6 +75,6 @@ namespace Moo
         /// <returns>A ISourceSpec object, for fluent mapping.</returns>
         ISourceSpec<TSource, TTarget> AddMapping();
 
-        void AddInnerMapper<TInnerSource, TInnerTarget>();
+        void AddInnerMapper<TInnerSource, TInnerTarget>(PropertyInfo sourceMemberName, PropertyInfo targetMemberName);
     }
 }

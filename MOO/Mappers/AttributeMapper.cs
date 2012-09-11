@@ -39,7 +39,7 @@ namespace Moo.Mappers
     /// <typeparam name="TTarget">The type of the target.</typeparam>
     public class AttributeMapper<TSource, TTarget> : BaseMapper<TSource, TTarget>
     {
-        #region Constructors (1) 
+        #region Constructors 
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AttributeMapper&lt;TSource, TTarget&gt;"/> class.
@@ -61,7 +61,7 @@ namespace Moo.Mappers
 
         #region Methods
 
-        // Private Methods (2)
+        
 
         /// <summary>
         /// Gets the property mapping for two property types.

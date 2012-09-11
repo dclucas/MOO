@@ -35,7 +35,7 @@ namespace Moo.Core
     /// <typeparam name="TTarget">The type of the target.</typeparam>
     public class ReflectionPropertyMappingInfo<TSource, TTarget> : MemberMappingInfo<TSource, TTarget>
     {
-        #region Constructors (2)
+        #region Constructors
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ReflectionPropertyMappingInfo&lt;TSource, TTarget&gt;"/> class.
@@ -77,7 +77,7 @@ namespace Moo.Core
 
         #endregion Constructors
 
-        #region Properties (4)
+        #region Properties
 
         /// <summary>
         /// Gets the converter.
@@ -109,9 +109,9 @@ namespace Moo.Core
 
         #endregion Properties
 
-        #region Methods (1)
+        #region Methods
 
-        // Public Methods (1) 
+         
 
         /// <summary>
         /// Maps from the specified source to the specified target.

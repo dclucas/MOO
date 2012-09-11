@@ -33,7 +33,7 @@ namespace Moo.Core
     /// <typeparam name="TTarget">The type of the target.</typeparam>
     internal class DelegateMappingInfo<TSource, TTarget> : MemberMappingInfo<TSource, TTarget>
     {
-        #region Constructors (1)
+        #region Constructors
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DelegateMappingInfo&lt;TSource, TTarget&gt;"/> class.
@@ -53,7 +53,7 @@ namespace Moo.Core
 
         #endregion Constructors
 
-        #region Properties (1)
+        #region Properties
 
         /// <summary>
         /// Gets the mapping action.
@@ -62,9 +62,9 @@ namespace Moo.Core
 
         #endregion Properties
 
-        #region Methods (1)
+        #region Methods
 
-        // Public Methods (1) 
+         
 
         /// <summary>
         /// Maps from the specified source to the specified target.

@@ -36,9 +36,9 @@ namespace Moo.Tests
     [TestFixture]
     public class DelegateMappingInfoTest
     {
-        #region Methods (1)
+        #region Methods
 
-        // Public Methods (1) 
+         
 
         [Test]
         public void MapTest()

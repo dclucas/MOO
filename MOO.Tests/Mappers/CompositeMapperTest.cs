@@ -43,9 +43,9 @@ namespace Moo.Tests.Mappers
     [TestFixture]
     public class CompositeMapperTest
     {
-        #region Methods (5)
+        #region Methods
 
-        // Public Methods (5) 
+         
 
         [Test]
         public void Map_MockedInternalMappers_Redirects()

@@ -37,9 +37,7 @@ namespace Moo.Tests
     [TestFixture]
     public class IEnumerableMappingExtenderTest
     {
-        #region Methods (4)
-
-        // Public Methods (4) 
+        #region Methods
 
         [Test]
         [ExpectedException(typeof(ArgumentNullException))]

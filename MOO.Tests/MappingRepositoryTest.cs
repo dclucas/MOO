@@ -42,9 +42,9 @@ namespace Moo.Tests
     [TestFixture(TypeArgs = new Type[] { typeof(TestClassA), typeof(TestClassF) })]
     public class MappingRepositoryTest<TSource, TTarget>
     {
-        #region Methods (5)
+        #region Methods
 
-        // Public Methods (5) 
+         
 
         [Test]
         public void AddMapperTest()

@@ -39,9 +39,9 @@ namespace Moo.Tests.Core
     [TestFixture]
     public class GuardTest
     {
-        #region Methods (5)
+        #region Methods
 
-        // Public Methods (5) 
+         
 
         /// <summary>
         /// A test for CheckArgumentNotNull

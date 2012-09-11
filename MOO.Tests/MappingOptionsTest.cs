@@ -39,9 +39,9 @@ namespace Moo.Tests
     [TestFixture]
     public class MappingOptionsTest
     {
-        #region Methods (1)
+        #region Methods
 
-        // Public Methods (1) 
+         
 
         /// <summary>
         /// A test for MappingOptions Constructor

@@ -86,6 +86,8 @@
     <Compile Include="Configuration\MemberMappingElement.cs" />
     <Compile Include="Configuration\TypeMappingCollection.cs" />
     <Compile Include="Core\DelegateMappingInfo.cs" />
+    <Compile Include="Core\ExpressionHandler.cs" />
+    <Compile Include="Core\IExpressionHandler.cs" />
     <Compile Include="Core\MapperSequenceSpec.cs" />
     <Compile Include="Core\MapperStartSpec.cs" />
     <Compile Include="Core\PropertyExplorer.cs" />

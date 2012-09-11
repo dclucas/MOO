@@ -60,6 +60,6 @@ namespace Moo
         /// </returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter", Justification = "Easier said than done")]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures", Justification = "Easier said than done")]
-        ISourceSpec<TSource, TTarget> UseMapperFor<TInnerSource, TInnerTarget>();
+        ITargetSpec<TSource, TTarget, TInnerSource> UseMapperFrom<TInnerSource>(Expression<Func<TSource, TInnerSource>> argument);
     }
 }

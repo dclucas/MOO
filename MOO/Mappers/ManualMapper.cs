@@ -54,9 +54,9 @@ namespace Moo.Mappers
             TypeMapping = new TypeMappingInfo<TSource, TTarget>();
         }
         
-        #region Methods (3)
+        #region Methods
 
-        // Public Methods (1) 
+         
 
         /// <summary>
         /// Adds the mapping action.

@@ -23,7 +23,6 @@
 // Email: diogo.lucas@gmail.com
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
-
 namespace Moo.Configuration
 {
     using System.Configuration;
@@ -33,7 +32,7 @@ namespace Moo.Configuration
     /// </summary>
     public class MappingConfigurationSection : ConfigurationSection
     {
-        #region Constructors (1)
+        #region Constructors
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MappingConfigurationSection"/> class.
@@ -45,7 +44,7 @@ namespace Moo.Configuration
 
         #endregion Constructors
 
-        #region Properties (1)
+        #region Properties
 
         /// <summary>
         /// Gets the type mapping configuration entries within the section.

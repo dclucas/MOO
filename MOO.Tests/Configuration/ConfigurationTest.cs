@@ -37,9 +37,9 @@ namespace Moo.Tests.Configuration
     [TestFixture]
     public class ConfigurationTest
     {
-        #region Methods (1)
+        #region Methods
 
-        // Public Methods (1) 
+         
 
         [Test]
         public void MappingConfigurationTest()

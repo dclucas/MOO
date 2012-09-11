@@ -38,9 +38,9 @@ namespace Moo.Tests.Core
     [TestFixture]
     public class TypeMappingInfoTest
     {
-        #region Methods (3)
+        #region Methods
 
-        // Public Methods (3) 
+         
 
         [Test]
         public void AddOverwriteTest()

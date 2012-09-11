@@ -43,7 +43,7 @@ namespace Moo.Tests.Integration
     public class MappingSamples
     {
         [Test]
-        public void Map_SimpleCase_MapsCorrectly()
+        public void Sample_SimpleCase_MapsCorrectly()
         {
             var source = this.CreateSource();
             var mapper = MappingRepository.Default.ResolveMapper<Person, PersonEditModel>();
@@ -55,7 +55,7 @@ namespace Moo.Tests.Integration
         }
 
         [Test]
-        public void ExtensionMap_SimpleCase_MapsCorrectly()
+        public void Sample_ExtensionMap_MapsCorrectly()
         {
             var source = this.CreateSource();
 
@@ -65,7 +65,7 @@ namespace Moo.Tests.Integration
         }
 
         [Test]
-        public void ExtensionMapMultiple_SimpleCase_MapsCorrectly()
+        public void Sample_ExtensionMapMultiple_MapsCorrectly()
         {
             var source = this.CreateMany();
 
@@ -75,7 +75,7 @@ namespace Moo.Tests.Integration
         }
 
         [Test]
-        public void ExtensionMap_CustomMappingActions_MapsCorrectly()
+        public void Sample_CustomMappingActions_MapsCorrectly()
         {
             var source = this.CreateSource();
             MappingRepository.Default
@@ -90,7 +90,7 @@ namespace Moo.Tests.Integration
         }
        
         [Test]
-        public void FluentMapping_AddedViaMapper_MapsCorrectly()
+        public void Sample_FluentMappingViaMapper_MapsCorrectly()
         {
             var mappingRepo = new MappingRepository();
             var source = this.CreateSource();
@@ -108,7 +108,7 @@ namespace Moo.Tests.Integration
         }
 
         [Test]
-        public void FluentMapping_AddedViaRepo_MapsCorrectly()
+        public void Sample_FluentMappingViaRepo_MapsCorrectly()
         {
             var source = this.CreateSource();
             
@@ -131,20 +131,17 @@ namespace Moo.Tests.Integration
         }
 
         [Test]
-        public void FluentMapping_WithInnerMappers_MapsCorrectly()
+        public void Sample_FluentMappingWithInnerMappers_MapsCorrectly()
         {
-            MappingRepository.Default.Clear();
             var source = this.CreateSource();
             MappingRepository.Default
                 .AddMapping<Person, PersonDetailsDataContract>()
-                .UseMapperFor<Account, AccountDataContract>()
+                .UseMapperFrom(p => p.Account)
+                .To(pd => pd.Account)
                 .From(p => p.FirstName + p.LastName)
                 .To(pd => pd.Name);
 
-            var m = MappingRepository.Default.ResolveMapper<Person, PersonDetailsDataContract>();
-
             var result = source.MapTo<PersonDetailsDataContract>();
-
 
             // cleaning up so there are no side effects on other tests
             // TODO: this should be made thread-safe for parallel mapping execution.
@@ -156,7 +153,7 @@ namespace Moo.Tests.Integration
         }
 
         [Test]
-        public void MapperSequence_OverridenDefault_CreatesCorrectly()
+        public void Sample_MapperSequenceOverride_CreatesCorrectly()
         {
             var source = this.CreateSource();
 
@@ -167,7 +164,7 @@ namespace Moo.Tests.Integration
                     .Finally<AttributeMapper<object, object>>());
 
             repo.AddMapping<Person, PersonEditModel>()
-                .From(s => 666)
+                .From(s => 111)
                 .To(t => t.Id);
 
             var mapper = repo.ResolveMapper<Person, PersonEditModel>();
@@ -175,7 +172,73 @@ namespace Moo.Tests.Integration
             var result = mapper.Map(source);
 
             result.ShouldNotBe(null);
-            //result.Id.ShouldBe(source.Id);
+            result.Id.ShouldBe(source.Id);
+        }
+
+        ////[Test]
+        ////public void Sample_MapperSequenceOverride_CreatesCorrectly()
+        ////{
+        ////    var source = this.CreateSource();
+
+        ////    var repo = new MappingRepository(o =>
+        ////        o
+        ////            .MapperOrder
+        ////                .Use<ConventionMapper<object, object>>()
+        ////                .Then<ManualMapper<object, object>>()
+        ////                .Finally<AttributeMapper<object, object>>()
+        ////            .TargetFactory
+        ////                .AsDefaultFactory()
+        ////                .Use<T>(() => Activator.CreateInstance(typeof(T))
+        ////                .ForType<SomeOtherType>()
+        ////                .Use(() => Activator.CreateInstance(typeof(T))
+        ////                .ForType<YetAnotherType>()
+        ////                .Use(() => Activator.CreateInstance(typeof(T))
+        ////            );
+
+        ////    repo.AddMapping<Person, PersonEditModel>()
+        ////        .From(s => 111)
+        ////        .To(t => t.Id);
+
+        ////    var mapper = repo.ResolveMapper<Person, PersonEditModel>();
+
+        ////    var result = mapper.Map(source);
+
+        ////    result.ShouldNotBe(null);
+        ////    result.Id.ShouldBe(source.Id);
+        ////}
+
+        ////public void Sample_UseFactoryMethod_UsesMethod()
+        ////{
+        ////    var source = this.CreateSource();
+            
+        ////   // passing a CreateTarget function as argument -- this could also be a lambda
+        ////    var result = source.MapTo<PersonDetailsDataContract>(source, CreateDataContract);
+            
+        ////   // check results here
+        ////}
+
+        ////private static PersonDetailsDataContract CreateDataContract()
+        ////{
+        ////    return new PersonDetailsDataContract() 
+        ////    {
+                
+        ////    };
+        ////}
+
+        public void Sample_ErrorHandling_NoTest()
+        {
+            var source = this.CreateSource();
+
+            try
+            {
+                var result = source.MapTo<PersonEditModel>();
+            }
+            catch (MappingException ohno)
+            {
+                // Do your exception handling here -- mapping exception will
+                // contain source and target information (their types, 
+                // properties being mapped, etc) 
+            }
         }
 
         public void WorkInProgress()

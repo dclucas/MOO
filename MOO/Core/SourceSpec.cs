@@ -67,7 +67,7 @@ namespace Moo.Core
         }
 
         /// <summary>
-        /// Instructs Moo to use an internal mapper for properties of <paramref name="TInnerTarget"/> type.
+        /// Instructs Moo to use an internal mapper for properties of <typeparamref name="TInnerTarget"/> type.
         /// </summary>
         /// <typeparam name="TInnerSource">
         /// Type of the source property to map.
@@ -80,10 +80,9 @@ namespace Moo.Core
         /// </returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter", Justification = "Easier said than done")]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures", Justification = "Easier said than done")]
-        public ISourceSpec<TSource, TTarget> UseMapperFor<TInnerSource, TInnerTarget>()
+        public ITargetSpec<TSource, TTarget, TInnerSource> UseMapperFrom<TInnerSource>(Expression<Func<TSource, TInnerSource>> argument)
         {
-            Mapper.AddInnerMapper<TInnerSource, TInnerTarget>();
-            return this;
+            return new TargetSpec<TSource, TTarget, TInnerSource>(Mapper, argument, true);
         }
     }
 }

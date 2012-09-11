@@ -56,7 +56,7 @@ namespace Moo
     [global::System.AttributeUsage(AttributeTargets.Property, Inherited = true, AllowMultiple = true)]
     public sealed class MappingAttribute : Attribute
     {
-        #region Constructors (1)
+        #region Constructors
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MappingAttribute"/> class.
@@ -73,7 +73,7 @@ namespace Moo
 
         #endregion Constructors
 
-        #region Properties (3)
+        #region Properties
 
         /// <summary>
         /// Gets the mapping direction.

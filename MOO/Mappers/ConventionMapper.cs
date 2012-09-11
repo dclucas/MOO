@@ -40,7 +40,7 @@ namespace Moo.Mappers
     /// <typeparam name="TTarget">The type of the target.</typeparam>
     public class ConventionMapper<TSource, TTarget> : BaseMapper<TSource, TTarget>
     {
-        #region Constructors (1)
+        #region Constructors
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ConventionMapper&lt;TSource, TTarget&gt;"/> class.

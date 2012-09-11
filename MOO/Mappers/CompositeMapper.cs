@@ -29,6 +29,7 @@ namespace Moo.Mappers
     using System.Collections.Generic;
     using System.Linq;
     using Moo.Core;
+    using System.Reflection;
 
     /// <summary>
     /// Allows the combination of multiple mapper classes into one.
@@ -37,7 +38,7 @@ namespace Moo.Mappers
     /// <typeparam name="TTarget">The type of the target.</typeparam>
     public class CompositeMapper<TSource, TTarget> : BaseMapper<TSource, TTarget>, IExtensibleMapper<TSource, TTarget>
     {
-        #region Constructors (1)
+        #region Constructors
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CompositeMapper&lt;TSource, TTarget&gt;"/> class.
@@ -67,7 +68,7 @@ namespace Moo.Mappers
 
         #endregion Constructors
 
-        #region Properties (1)
+        #region Properties
 
         /// <summary>
         /// Gets the inner mappers.
@@ -147,9 +148,9 @@ namespace Moo.Mappers
             }
         }
 
-        public override void AddInnerMapper<TInnerSource, TInnerTarget>()
+        public override void AddInnerMapper<TInnerSource, TInnerTarget>(PropertyInfo sourceMemberName, PropertyInfo targetMemberName)
         {
-            ExtensibleMapper.AddInnerMapper<TInnerSource, TInnerTarget>();
+            ExtensibleMapper.AddInnerMapper<TInnerSource, TInnerTarget>(sourceMemberName, targetMemberName);
         }
 
         #endregion Methods

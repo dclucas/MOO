@@ -40,7 +40,7 @@ namespace Moo.Tests.Mappers
     {
         #region Methods (11)
 
-        // Public Methods (7) 
+         
 
         [Test]
         public void Map_NonGeneric_MappingWorks()
@@ -133,7 +133,7 @@ namespace Moo.Tests.Mappers
             Assert.AreEqual(expectedInnerFraction, from.InnerClass.Fraction);
         }
 
-        // Private Methods (4) 
+         
 
         private void CheckLists(IList<TestClassA> sourceList, IList<TestClassB> resultList)
         {

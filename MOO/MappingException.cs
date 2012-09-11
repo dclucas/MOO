@@ -37,7 +37,7 @@ namespace Moo
     [DebuggerNonUserCode]
     public class MappingException : Exception
     {
-        #region Constructors (6)
+        #region Constructors
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MappingException"/> class.
@@ -56,13 +56,40 @@ namespace Moo
             : this(
                 string.Format(
                     CultureInfo.InvariantCulture,
-                    "Error mapping source {0}.{1} to {2}.{3}",
+                    "Error mapping from {0}.{1} to {2}.{3}",
                     sourceType,
                     sourceMember,
                     targetType,
                     targetMember),
+                sourceType,
+                targetType,
+                sourceMember,
+                targetMember,
                 innerException)
         {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MappingException"/> class.
+        /// </summary>
+        /// <param name="sourceType">Type of the source.</param>
+        /// <param name="targetType">Type of the target.</param>
+        /// <param name="sourceMember">The source member.</param>
+        /// <param name="targetMember">The target member.</param>
+        /// <param name="innerException">The inner exception.</param>
+        public MappingException(
+            string message,
+            Type sourceType,
+            Type targetType,
+            string sourceMember,
+            string targetMember,
+            Exception innerException)
+            : this(message, innerException)
+        {
+            this.SourceType = sourceType;
+            this.TargetType = targetType;
+            this.SourceMember = sourceMember;
+            this.TargetMember = targetMember;
         }
 
         /// <summary>
@@ -131,5 +158,17 @@ namespace Moo
         }
 
         #endregion Constructors
+
+        #region Properties
+
+        public Type SourceType { get; private set; }
+
+        public Type TargetType { get; private set; }
+
+        public string SourceMember  { get; private set; }
+
+        public string TargetMember { get; private set; }
+
+        #endregion Properties
     }
 }

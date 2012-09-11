@@ -33,7 +33,7 @@ namespace Moo.Configuration
     /// </summary>
     public class TypeMappingElement : ConfigurationElement
     {
-        #region Properties (3)
+        #region Properties
 
         /// <summary>
         /// Gets the member mappings.

@@ -38,7 +38,7 @@ namespace Moo.Tests.Mappers
     [TestFixture]
     public class AttributeMapperTest
     {
-        #region Methods (2)
+        #region Methods
 
         [Test]
         public void Map_MappedSource_SkipsMapping()

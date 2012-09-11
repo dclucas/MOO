@@ -38,9 +38,9 @@ namespace Moo.Tests.Mappers
     [TestFixture]
     public class ConfigurationMapperTest
     {
-        #region Methods (4)
+        #region Methods
 
-        // Public Methods (4) 
+         
 
         [Test]
         public void GetTypeMappingNoSectionTest()

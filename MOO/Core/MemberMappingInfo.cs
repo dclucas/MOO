@@ -37,7 +37,7 @@ namespace Moo.Core
     /// </remarks>
     public abstract class MemberMappingInfo<TSource, TTarget>
     {
-        #region Constructors (2)
+        #region Constructors
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MemberMappingInfo&lt;TSource, TTarget&gt;"/> class.
@@ -61,7 +61,7 @@ namespace Moo.Core
 
         #endregion Constructors
 
-        #region Properties (2)
+        #region Properties
 
         /// <summary>
         /// Gets or sets the name of the source member.
@@ -81,9 +81,9 @@ namespace Moo.Core
 
         #endregion Properties
 
-        #region Methods (1)
+        #region Methods
 
-        // Public Methods (1) 
+         
 
         /// <summary>
         /// Maps a given class member from the source to the target object.

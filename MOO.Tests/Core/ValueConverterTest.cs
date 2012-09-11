@@ -36,9 +36,9 @@ namespace Moo.Tests.Core
     [TestFixture]
     public class ValueConverterTest
     {
-        #region Methods (7)
+        #region Methods
 
-        // Public Methods (4) 
+         
 
         /// <summary>
         /// A test for CanConvert
@@ -93,7 +93,7 @@ namespace Moo.Tests.Core
             this.DoConvertTest((TestClassA)null, null, typeof(TestClassB));
         }
 
-        // Private Methods (3) 
+         
 
         private void DoCanConverTest(Type fromType, Type toType, bool expected)
         {
