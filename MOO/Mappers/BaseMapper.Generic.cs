@@ -85,7 +85,7 @@ namespace Moo.Mappers
         /// <value>The current mapper status.</value>
         protected internal MapperStatus CurrentStatus { get; private set; }
 
-        private object syncRoot = new Object();
+        private object syncRoot = new object();
         private IPropertyExplorer propertyExplorer;
 
         #endregion Properties
@@ -161,13 +161,13 @@ namespace Moo.Mappers
             {
                 if (this.CurrentStatus == MapperStatus.New)
                 {
-                    InitializeMapping();
+                    this.InitializeMapping();
                 }
             }
             catch (Exception exc)
             {
                 throw new MappingException(
-                    String.Format(
+                    string.Format(
                             System.Globalization.CultureInfo.InvariantCulture,
                             "Error getting mappings from type {0} to {1}. Please check inner exception for details.",
                             typeof(TSource),
@@ -196,21 +196,21 @@ namespace Moo.Mappers
 
         private void InitializeMapping()
         {
-            if (TypeMapping == null)
+            if (this.TypeMapping == null)
             {
-                lock (syncRoot)
+                lock (this.syncRoot)
                 {
-                    if (TypeMapping == null)
+                    if (this.TypeMapping == null)
                     {
-                        TypeMapping = new TypeMappingInfo<TSource, TTarget>();
+                        this.TypeMapping = new TypeMappingInfo<TSource, TTarget>();
                     }
                 }
             }
 
-            var mappings = GetMappings();
+            var mappings = this.GetMappings();
             if (mappings != null)
             {
-                TypeMapping.AddRange(GetMappings());
+                this.TypeMapping.AddRange(GetMappings());
             }
 
             this.CurrentStatus = MapperStatus.Active;
@@ -275,8 +275,8 @@ namespace Moo.Mappers
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter", Justification = "No can do.")]
         public virtual void AddInnerMapper<TInnerSource, TInnerTarget>(PropertyInfo sourceMemberName, PropertyInfo targetMemberName)
         {
-            var innerMapper = GetInnerMapper<TInnerSource, TInnerTarget>();
-            AddMappingInfo(new MapperMappingInfo<TSource, TTarget>(innerMapper, sourceMemberName, targetMemberName));
+            var innerMapper = this.GetInnerMapper<TInnerSource, TInnerTarget>();
+            this.AddMappingInfo(new MapperMappingInfo<TSource, TTarget>(innerMapper, sourceMemberName, targetMemberName));
         }
 
         /// <summary>Gets an inner mapper from the repository.</summary>
@@ -291,13 +291,13 @@ namespace Moo.Mappers
         /// </returns>
         protected IMapper<TInnerSource, TInnerTarget> GetInnerMapper<TInnerSource, TInnerTarget>()
         {
-            if (ParentRepository == null)
+            if (this.ParentRepository == null)
             {
                 // TODO: review approach here -- this branch could lead to mapper "cloning"
                 throw new InvalidOperationException("Mapper must be contained in a repo in order to allow inner mappers.");
             }
 
-            return ParentRepository.ResolveMapper<TInnerSource, TInnerTarget>();
+            return this.ParentRepository.ResolveMapper<TInnerSource, TInnerTarget>();
         }
 
         /// <summary>Returns all internal mappings from the mapper.</summary>
@@ -331,15 +331,15 @@ namespace Moo.Mappers
         {
             get 
             {
-                if (propertyExplorer == null)
-                    propertyExplorer = new PropertyExplorer();
+                if (this.propertyExplorer == null)
+                    this.propertyExplorer = new PropertyExplorer();
 
-                return propertyExplorer; 
+                return this.propertyExplorer; 
             }
 
             private set
             {
-                propertyExplorer = value;
+                this.propertyExplorer = value;
             }
         }
 

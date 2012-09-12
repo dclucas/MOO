@@ -92,9 +92,9 @@ namespace Moo.Mappers
         {
             var checker = GetPropertyConverter();
             string finalName = null;
+            // TODO: remove the call with an "out" parameter -- it's not used here.
             return from sourceProp in PropertyExplorer.GetSourceProps<TSource>()
                    from targetProp in PropertyExplorer.GetTargetProps<TTarget>()
-                   // TODO: remove this call with an "out" parameter -- it's not used here.
                    where checker.CanConvert(sourceProp, targetProp, out finalName)
                    select this.CreateInfo(sourceProp, targetProp);
         }

@@ -51,7 +51,7 @@ namespace Moo.Tests.Core
             source.InnerClass.Name = expected;
             PropertyInfo fromProperty = typeof(TestClassA).GetProperty("InnerClass");
             TestClassB targetObject = new TestClassB();
-            targetObject.InnerClassName = "wrongString";
+            targetObject.InnerClassName = "wrongstring";
             PropertyInfo toProperty = typeof(TestClassB).GetProperty("InnerClassName");
             target.Convert(source, fromProperty, targetObject, toProperty);
             Assert.AreEqual(expected, targetObject.InnerClassName);
@@ -70,7 +70,7 @@ namespace Moo.Tests.Core
             source.Name = expected;
             PropertyInfo fromProperty = typeof(TestClassA).GetProperty("Name");
             TestClassB targetObject = new TestClassB();
-            targetObject.Name = "wrongString";
+            targetObject.Name = "wrongstring";
             PropertyInfo toProperty = typeof(TestClassB).GetProperty("Name");
             target.Convert(source, fromProperty, targetObject, toProperty);
             Assert.AreEqual(expected, targetObject.Name);

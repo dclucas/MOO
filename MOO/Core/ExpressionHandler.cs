@@ -14,7 +14,7 @@
             if (argument.Body.NodeType != ExpressionType.MemberAccess)
             {
                 throw new ArgumentException(
-                    String.Format(
+                    string.Format(
                         System.Globalization.CultureInfo.InvariantCulture,
                         "'To' should be called with a property getter delegate, but instead got a {0} expression type, with a {1} expression body",
                         argument.NodeType,
@@ -33,8 +33,9 @@
             return expression.ToString();
         }
 
-        public MappingAction<TSource, TTarget> GetAction<TSource, TTarget>
-            (LambdaExpression sourceArgument, LambdaExpression targetArgument)
+        public MappingAction<TSource, TTarget> GetAction<TSource, TTarget>(
+            LambdaExpression sourceArgument, 
+            LambdaExpression targetArgument)
         {
             // Decomposition of (a, b) => b.FooBar = func(a) :
             // 1. (a, 
@@ -67,7 +68,7 @@
         public PropertyInfo GetProperty(LambdaExpression expression)
         {
             Guard.CheckArgumentNotNull(expression, "expression");
-            var memberExpression = (expression.Body) as MemberExpression;
+            var memberExpression = expression.Body as MemberExpression;
             // TODO: either check if it's a property and throw accordingly
             // or also deal with fields.
             return (PropertyInfo)memberExpression.Member;

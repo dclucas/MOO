@@ -127,7 +127,7 @@ namespace Moo.Mappers
 
             this.AddMappingInfo(info);
              */
-            ExtensibleMapper.AddMappingAction(sourceMemberName, targetMemberName, mappingAction);
+            this.ExtensibleMapper.AddMappingAction(sourceMemberName, targetMemberName, mappingAction);
         }
 
         /// <summary>
@@ -165,7 +165,7 @@ namespace Moo.Mappers
         /// <param name="targetMemberName">Name of the target member.</param>
         public override void AddInnerMapper<TInnerSource, TInnerTarget>(PropertyInfo sourceMemberName, PropertyInfo targetMemberName)
         {
-            ExtensibleMapper.AddInnerMapper<TInnerSource, TInnerTarget>(sourceMemberName, targetMemberName);
+            this.ExtensibleMapper.AddInnerMapper<TInnerSource, TInnerTarget>(sourceMemberName, targetMemberName);
         }
 
         #endregion Methods

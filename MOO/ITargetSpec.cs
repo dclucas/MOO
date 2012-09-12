@@ -34,7 +34,7 @@ namespace Moo
     /// </summary>
     /// <typeparam name="TSource">Type of the mapping source.</typeparam>
     /// <typeparam name="TTarget">Type of the mapping target.</typeparam>
-    /// <typeparam name="TInnerSource">Type of the source proerty.</typeparam>
+    /// <typeparam name="TInnerSource"></typeparam>
     [System.Diagnostics.CodeAnalysis.SuppressMessage(
         "Microsoft.Design", 
         "CA1005:AvoidExcessiveParametersOnGenericTypes",

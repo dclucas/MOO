@@ -117,7 +117,7 @@ namespace Moo.Core
                     if (!this.memberMappings.ContainsKey(mappingInfo.TargetMemberName))
                     {
                         throw new MappingException(
-                            String.Format(
+                            string.Format(
                                 System.Globalization.CultureInfo.InvariantCulture,
                                 "Target {0}.{1} was defined multiple times.",
                                 typeof(TTarget).FullName,

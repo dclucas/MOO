@@ -69,15 +69,15 @@ namespace Moo.Tests.Core
         public void To_DefaultCase_DoesNotThrow()
         {
             var mapper = A.Fake<IExtensibleMapper<TSource, TTarget>>();
-            var resultString = "foo";
-            Expression<Func<TSource, string>> fromExpr = (s) => resultString;
+            var resultstring = "foo";
+            Expression<Func<TSource, string>> fromExpr = (s) => resultstring;
             var target = new TargetSpec<TSource, TTarget, string>(mapper, fromExpr);
             var prop = typeof(TTarget).GetProperties(
                 BindingFlags.GetProperty 
                 | BindingFlags.SetProperty 
                 | BindingFlags.Instance 
                 | BindingFlags.Public)
-                .Where(p => p.PropertyType == typeof(String))
+                .Where(p => p.PropertyType == typeof(string))
                 .First();
             var propParam = Expression.Parameter(typeof(TTarget));
             var propExpr = Expression.Property(propParam, prop);
@@ -99,7 +99,7 @@ namespace Moo.Tests.Core
             var sourceObj = new TSource();
             var targetObj = new TTarget();
             resultingAction(sourceObj, targetObj);
-            prop.GetValue(targetObj, null).ShouldBe(resultString);
+            prop.GetValue(targetObj, null).ShouldBe(resultstring);
         }
     }
 }

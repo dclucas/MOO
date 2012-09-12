@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Moo.Core
+﻿namespace Moo.Core
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+
     internal class MapperSequenceSpec : IMapperSequenceSpec
     {
         private IList<Type> CurrentSequence { get; set; }

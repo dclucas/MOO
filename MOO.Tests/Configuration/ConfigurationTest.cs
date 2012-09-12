@@ -59,7 +59,7 @@ namespace Moo.Tests.Configuration
             var methodInfo = target.GetType().GetMethod(
                 "SerializeElement",
                 BindingFlags.Instance | BindingFlags.NonPublic);
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
 
             using (var writer = XmlWriter.Create(sb))
             {

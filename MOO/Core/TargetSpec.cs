@@ -65,7 +65,8 @@ namespace Moo.Core
         /// Determines whether this mapping should be carried by an internal mapper.
         /// </param>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures", Justification = "Easier said than done")]
-        internal TargetSpec(IExtensibleMapper<TSource, TTarget> mapper, 
+        internal TargetSpec(
+            IExtensibleMapper<TSource, TTarget> mapper, 
             Expression<Func<TSource, TInnerSource>> sourceArgument, 
             bool useInnerMapper)
         {

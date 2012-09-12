@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Moo.Tests.Integration.MappedClasses.DataContracts
+﻿namespace Moo.Tests.Integration.MappedClasses.DataContracts
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+
     public class ContactDataContract
     {
     }

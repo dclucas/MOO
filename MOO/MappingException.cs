@@ -174,7 +174,7 @@ namespace Moo
 
         /// <summary>Gets source member.</summary>
         /// <value>The source member.</value>
-        public string SourceMember  { get; private set; }
+        public string SourceMember { get; private set; }
 
         /// <summary>Gets target member.</summary>
         /// <value>The target member.</value>
