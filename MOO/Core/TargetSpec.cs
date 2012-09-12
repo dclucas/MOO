@@ -37,6 +37,11 @@ namespace Moo.Core
     /// </summary>
     /// <typeparam name="TSource">Type of the mapping source.</typeparam>
     /// <typeparam name="TTarget">Type of the mapping target.</typeparam>
+    /// <typeparam name="TInnerSource">Type of the source property/expression.</typeparam>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage(
+        "Microsoft.Design",
+        "CA1005:AvoidExcessiveParametersOnGenericTypes",
+        Justification = "I wish I could. No big deal, though, as type inference makes the specifications not necessary in client code.")]
     public class TargetSpec<TSource, TTarget, TInnerSource> : ITargetSpec<TSource, TTarget, TInnerSource>
     {
         /// <summary>
@@ -51,20 +56,24 @@ namespace Moo.Core
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TargetSpec{TSource,TTarget, TInnerSource}"/> class.
+        /// Initializes a new instance of the <see cref="TargetSpec{TSource,TTarget, TInnerSource}"/>
+        /// class.
         /// </summary>
         /// <param name="mapper">Mapper to extend.</param>
         /// <param name="sourceArgument">Expression to pull source data.</param>
+        /// <param name="useInnerMapper">
+        /// Determines whether this mapping should be carried by an internal mapper.
+        /// </param>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures", Justification = "Easier said than done")]
         internal TargetSpec(IExtensibleMapper<TSource, TTarget> mapper, 
             Expression<Func<TSource, TInnerSource>> sourceArgument, 
-            bool useMapper)
+            bool useInnerMapper)
         {
             Guard.CheckArgumentNotNull(mapper, "mapper");
             Guard.CheckArgumentNotNull(sourceArgument, "sourceArgument");
             this.Mapper = mapper;
             this.SourceArgument = sourceArgument;
-            this.UseMapper = useMapper;
+            this.UseInnerMapper = useInnerMapper;
         }
 
         /// <summary>
@@ -92,7 +101,7 @@ namespace Moo.Core
             Guard.CheckArgumentNotNull(argument.Body, "argument.Body");
             ExpressionHandler.ValidatePropertyExpression(argument);
 
-            if (UseMapper)
+            if (UseInnerMapper)
             {
                 ExpressionHandler.ValidatePropertyExpression(SourceArgument);
                 Mapper.AddInnerMapper<TInnerSource, TInnerTarget>(
@@ -190,6 +199,8 @@ namespace Moo.Core
             }
         }
 
-        public bool UseMapper { get; set; }
+        /// <summary>Gets or sets a value indicating whether this mapping should be carried by an inner mapper.</summary>
+        /// <value>true if use the mapping should be carried by an inner mapper, false otherwise.</value>
+        public bool UseInnerMapper { get; set; }
     }
 }

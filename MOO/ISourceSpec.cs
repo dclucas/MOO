@@ -47,13 +47,10 @@ namespace Moo
         ITargetSpec<TSource, TTarget, TInnerSource> From<TInnerSource>(Expression<Func<TSource, TInnerSource>> argument);
 
         /// <summary>
-        /// Instructs Moo to use an internal mapper for properties of <paramref name="TInnerTarget"/> type.
+        /// Instructs Moo to use an internal mapper for properties of <typeparamref name="TInnerSource"/> type.
         /// </summary>
         /// <typeparam name="TInnerSource">
         /// Type of the source property to map.
-        /// </typeparam>
-        /// <typeparam name="TInnerTarget">
-        /// Type of the target property to map.
         /// </typeparam>
         /// <returns>
         /// A ISourceSpec, allowing to define further mappings.

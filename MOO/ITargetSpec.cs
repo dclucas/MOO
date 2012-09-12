@@ -34,6 +34,11 @@ namespace Moo
     /// </summary>
     /// <typeparam name="TSource">Type of the mapping source.</typeparam>
     /// <typeparam name="TTarget">Type of the mapping target.</typeparam>
+    /// <typeparam name="TInnerSource">Type of the source proerty.</typeparam>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage(
+        "Microsoft.Design", 
+        "CA1005:AvoidExcessiveParametersOnGenericTypes",
+        Justification = "I wish I could. No big deal, though, as type inference makes the specifications not necessary in client code.")]
     public interface ITargetSpec<TSource, TTarget, TInnerSource>
     {
         /// <summary>

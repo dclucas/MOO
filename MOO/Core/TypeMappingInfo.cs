@@ -64,16 +64,21 @@ namespace Moo.Core
         /// </sourceValue>
         public Type TargetType { get; set; }
 
+        /// <summary>Gets the overwrite behavior.</summary>
+        /// <value>The overwrite behavior.</value>
         public MappingOverwriteBehavior OverwriteBehavior { get; private set; }
 
         #endregion Properties
 
         #region Constructors
 
+        /// <summary>Initializes a new instance of the TypeMappingInfo class.</summary>
         public TypeMappingInfo()
         {
         }
 
+        /// <summary>Initializes a new instance of the TypeMappingInfo class.</summary>
+        /// <param name="overwriteBehavior">The overwrite behavior.</param>
         public TypeMappingInfo(MappingOverwriteBehavior overwriteBehavior)
         {
             this.OverwriteBehavior = overwriteBehavior;
@@ -112,9 +117,16 @@ namespace Moo.Core
                     if (!this.memberMappings.ContainsKey(mappingInfo.TargetMemberName))
                     {
                         throw new MappingException(
-                            String.Format("Target {0}.{1} was defined multiple times.",
-                            typeof(TTarget).FullName,
-                            mappingInfo.TargetMemberName));
+                            String.Format(
+                                System.Globalization.CultureInfo.InvariantCulture,
+                                "Target {0}.{1} was defined multiple times.",
+                                typeof(TTarget).FullName,
+                                mappingInfo.TargetMemberName),
+                            typeof(TSource),
+                            typeof(TTarget),
+                            mappingInfo.SourceMemberName,
+                            mappingInfo.TargetMemberName,
+                            null);
                     }
                     break;
             }
@@ -141,6 +153,16 @@ namespace Moo.Core
             return this.memberMappings.Values;
         }
 
+        /// <summary>
+        /// Adds a list of mappings
+        /// </summary>
+        /// <param name="mappingInfoList">
+        /// List to be added.
+        /// </param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Microsoft.Design", 
+            "CA1006:DoNotNestGenericTypesInMemberSignatures",
+            Justification = "It's either that or using an array.")]
         public void AddRange(IEnumerable<MemberMappingInfo<TSource, TTarget>> mappingInfoList)
         {
             Guard.CheckArgumentNotNull(mappingInfoList, "mappingInfoList");
@@ -153,10 +175,22 @@ namespace Moo.Core
         #endregion Methods
     }
 
+    /// <summary>
+    /// Determines behavior to use for mapping overwrites
+    /// </summary>
     public enum MappingOverwriteBehavior
     {
+        /// <summary>
+        /// Allows mapping overwrite
+        /// </summary>
         AllowOverwrite,
+        /// <summary>
+        /// Silently skips write operation if a mapping for a give source already exists
+        /// </summary>
         SkipOverwrite,
+        /// <summary>
+        /// Throws a <see cref="InvalidOperationException"/> if an overwrite attempt happens
+        /// </summary>
         ThrowOnOverwrite
     }
 }

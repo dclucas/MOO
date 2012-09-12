@@ -38,8 +38,6 @@ namespace Moo
     {
         #region Methods
 
-         
-
         /// <summary>
         /// Maps all source elements to an enumerable of target elements.
         /// </summary>

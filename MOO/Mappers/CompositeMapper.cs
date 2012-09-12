@@ -79,6 +79,12 @@ namespace Moo.Mappers
             Justification = "Easier said than done. The alternative here would be to forego type safety.")]
         public IEnumerable<IMapper<TSource, TTarget>> InnerMappers { get; private set; }
 
+        /// <summary>Gets the extensible mapper.</summary>
+        /// <value>The extensible mapper.</value>
+        /// <remarks>
+        /// This property is filled upon construction with the first mapper in the inner mappers 
+        /// list that implements the <see cref="IExtensibleMapper{TSource, TTarget}"/> interface.
+        /// </remarks>
         public IExtensibleMapper<TSource, TTarget> ExtensibleMapper { get; private set; }
 
         #endregion Properties
@@ -133,6 +139,10 @@ namespace Moo.Mappers
             return new SourceSpec<TSource, TTarget>(this);
         }
 
+        /// <summary>Returns all internal mappings from the mapper.</summary>
+        /// <returns>
+        /// An enumerator that allows foreach to be used to get mappings in this collection.
+        /// </returns>
         protected internal override IEnumerable<MemberMappingInfo<TSource, TTarget>> GetMappings()
         {
             foreach (var mapper in this.InnerMappers.OfType<BaseMapper<TSource, TTarget>>())
@@ -148,6 +158,11 @@ namespace Moo.Mappers
             }
         }
 
+        /// <summary>Adds an inner mapper, to map from the source to the target members.</summary>
+        /// <typeparam name="TInnerSource">Type of the inner source.</typeparam>
+        /// <typeparam name="TInnerTarget">Type of the inner target.</typeparam>
+        /// <param name="sourceMemberName">Name of the source member.</param>
+        /// <param name="targetMemberName">Name of the target member.</param>
         public override void AddInnerMapper<TInnerSource, TInnerTarget>(PropertyInfo sourceMemberName, PropertyInfo targetMemberName)
         {
             ExtensibleMapper.AddInnerMapper<TInnerSource, TInnerTarget>(sourceMemberName, targetMemberName);

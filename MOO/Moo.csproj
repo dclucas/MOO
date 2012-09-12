@@ -53,7 +53,7 @@
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Debug\Moo.XML</DocumentationFile>
     <RunCodeAnalysis>true</RunCodeAnalysis>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>..\Moo.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -88,6 +88,7 @@
     <Compile Include="Core\DelegateMappingInfo.cs" />
     <Compile Include="Core\ExpressionHandler.cs" />
     <Compile Include="Core\IExpressionHandler.cs" />
+    <Compile Include="Core\IPropertyExplorer.cs" />
     <Compile Include="Core\MapperSequenceSpec.cs" />
     <Compile Include="Core\MapperStartSpec.cs" />
     <Compile Include="Core\PropertyExplorer.cs" />
@@ -101,7 +102,6 @@
     <Compile Include="Core\SourceSpec.cs" />
     <Compile Include="Core\TargetSpec.cs" />
     <Compile Include="Core\TypeMappingInfo.cs" />
-    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="IEnumerableMappingExtender.cs" />
     <Compile Include="IExtensibleMapper.cs" />
     <Compile Include="IMapper.cs" />

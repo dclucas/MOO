@@ -84,16 +84,19 @@ namespace Moo.Mappers
             return mappingInfo;
         }
 
+        /// <summary>Enumerates get mappings in this collection.</summary>
+        /// <returns>
+        /// An enumerator that allows foreach to be used to process get mappings in this collection.
+        /// </returns>
         protected internal override IEnumerable<MemberMappingInfo<TSource, TTarget>> GetMappings()
         {
-            var propExplorer = GetPropertyExplorer();
             var checker = GetPropertyConverter();
             string finalName = null;
-            return from sourceProp in propExplorer.GetSourceProps<TSource>()
-                    from targetProp in propExplorer.GetTargetProps<TTarget>()
-                    // TODO: remove this call with an "out" parameter -- it's not used here.
-                    where checker.CanConvert(sourceProp, targetProp, out finalName)
-                    select this.CreateInfo(sourceProp, targetProp);
+            return from sourceProp in PropertyExplorer.GetSourceProps<TSource>()
+                   from targetProp in PropertyExplorer.GetTargetProps<TTarget>()
+                   // TODO: remove this call with an "out" parameter -- it's not used here.
+                   where checker.CanConvert(sourceProp, targetProp, out finalName)
+                   select this.CreateInfo(sourceProp, targetProp);
         }
 
         #endregion Methods

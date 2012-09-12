@@ -68,7 +68,6 @@ namespace Moo
         /// </summary>
         /// <param name="sourceType">Type of the source.</param>
         /// <param name="targetType">Type of the target.</param>
-        /// <param name="mapperInclusions">A list of additional, internal mappers to include.</param>
         /// <returns>
         /// An instance of a <see>IExtensibleMapper</see> object.
         /// </returns>
@@ -80,7 +79,6 @@ namespace Moo
         /// </summary>
         /// <param name="sourceType">Type of the source.</param>
         /// <param name="targetType">Type of the target.</param>
-        /// <param name="mapperInclusions">A list of additional, internal mappers to include.</param>
         /// <returns>
         /// An instance of a <see>IMapper</see> object if any exists in the
         /// repository, <c>null</c> otherwise.

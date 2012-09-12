@@ -37,6 +37,7 @@ namespace Moo.Tests.Integration
     using Shouldly;
     using Moo.Tests.Integration.MappedClasses.DataContracts;
     using Moo.Mappers;
+    using System.Diagnostics;
 
     [TestFixture]
     [Category("Integrated")]
@@ -237,7 +238,12 @@ namespace Moo.Tests.Integration
             {
                 // Do your exception handling here -- mapping exception will
                 // contain source and target information (their types, 
-                // properties being mapped, etc) 
+                // properties being mapped, etc)
+                Trace.TraceError(
+                    "Got an error when mapping. Source: {0}. Target: {1}. Error: {1}",
+                    ohno.SourceType,
+                    ohno.TargetType,
+                    ohno.Message);
             }
         }
 

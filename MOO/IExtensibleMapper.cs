@@ -23,7 +23,6 @@
 // Email: diogo.lucas@gmail.com
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
-
 using System.Reflection;
 namespace Moo
 {
@@ -75,6 +74,11 @@ namespace Moo
         /// <returns>A ISourceSpec object, for fluent mapping.</returns>
         ISourceSpec<TSource, TTarget> AddMapping();
 
+        /// <summary>Adds an inner mapper.</summary>
+        /// <typeparam name="TInnerSource">Type of the source property.</typeparam>
+        /// <typeparam name="TInnerTarget">Type of the target property.</typeparam>
+        /// <param name="sourceMemberName">Source member name.</param>
+        /// <param name="targetMemberName">Target member name.</param>
         void AddInnerMapper<TInnerSource, TInnerTarget>(PropertyInfo sourceMemberName, PropertyInfo targetMemberName);
     }
 }

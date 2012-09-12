@@ -76,8 +76,15 @@ namespace Moo
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MappingRepository"/> class.
+        /// </summary>
+        /// <param name="optionsFunc">
+        /// A lambda for options setup.
+        /// </param>
         public MappingRepository(Func<IRepositorySpec, IRepositorySpec> optionsFunc)
         {
+            Guard.CheckArgumentNotNull(optionsFunc, "optionsFunc");
             IRepositorySpec repoSpec = new RepositorySpec();
             repoSpec = optionsFunc(repoSpec);
             this.options = repoSpec.GetOptions();
@@ -131,7 +138,6 @@ namespace Moo
         /// <typeparam name="TTarget">
         /// The destination type.
         /// </typeparam>
-        /// <param name="mapperInclusions">A list of additional, internal mappers to include.</param>
         /// <returns>
         /// An instance of a <see>IExtensibleMapper</see> object.
         /// </returns>
@@ -175,24 +181,11 @@ namespace Moo
             return res;
         }
 
-        /// <summary>
-        /// Creates an instance of the specified mapper class
-        /// </summary>
-        /// <param name="targetType">
-        /// The target mapper type.
-        /// </param>
-        /// <param name="includedMappers">
-        /// The included mappers.
-        /// </param>
-        /// <typeparam name="TSource">
-        /// Type of the mapping source.
-        /// </typeparam>
-        /// <typeparam name="TTarget">
-        /// Type of the mapping target.
-        /// </typeparam>
-        /// <returns>
-        /// A new mapper object, of the specified type.
-        /// </returns>
+        /// <summary>Creates an instance of the specified mapper class.</summary>
+        /// <typeparam name="TSource">Type of the mapping source.</typeparam>
+        /// <typeparam name="TTarget">Type of the mapping target.</typeparam>
+        /// <param name="targetType">The target mapper type.</param>
+        /// <returns>A new mapper object, of the specified type.</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage(
             "Microsoft.Design",
             "CA1062:Validate arguments of public methods",
@@ -213,16 +206,12 @@ namespace Moo
         }
 
         /// <summary>
-        /// Returns a mapper object for the two provided types, by
-        /// either creating a new instance or by getting an existing
-        /// one sourceMemberName the cache.
+        /// Returns a mapper object for the two provided types, by either creating a new instance or by
+        /// getting an existing one sourceMemberName the cache.
         /// </summary>
         /// <param name="sourceType">Type of the source.</param>
         /// <param name="targetType">Type of the target.</param>
-        /// <param name="mapperInclusions">A list of additional, internal mappers to include.</param>
-        /// <returns>
-        /// An instance of a <see>IExtensibleMapper</see> object.
-        /// </returns>
+        /// <returns>An instance of a <see>IExtensibleMapper</see> object.</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage(
             "Microsoft.Design",
             "CA1004:GenericMethodsShouldProvideTypeParameter",
@@ -240,16 +229,13 @@ namespace Moo
             }
 
             return res;
-        }
-
-         
+        } 
 
         /// <summary>
         /// Gets the dictionary key for a given source/target mapping combinations.
         /// </summary>
         /// <typeparam name="TSource">The type of the source.</typeparam>
         /// <typeparam name="TTarget">The type of the target.</typeparam>
-        /// <param name="mapperInclusions">A list of additional, internal mappers to include.</param>
         /// <returns>A string containing the dictionary key</returns>
         private static string GetKey<TSource, TTarget>()
         {
@@ -261,7 +247,6 @@ namespace Moo
         /// </summary>
         /// <param name="sourceType">Type of the source.</param>
         /// <param name="targetType">Type of the target.</param>
-        /// <param name="mapperInclusions">A list of additional, internal mappers to include.</param>
         /// <returns>The dictionary key for the combination.</returns>
         private static string GetKey(Type sourceType, Type targetType)
         {
@@ -278,7 +263,6 @@ namespace Moo
         /// </summary>
         /// <typeparam name="TSource">The type of the source.</typeparam>
         /// <typeparam name="TTarget">The type of the target.</typeparam>
-        /// <param name="mapperInclusions">A list of additional, internal mappers to include.</param>
         /// <returns>A mapper instance, if one is found</returns>
         private IExtensibleMapper<TSource, TTarget> TryGetMapper<TSource, TTarget>()
         {
@@ -290,7 +274,6 @@ namespace Moo
         /// </summary>
         /// <param name="sourceType">Type of the source.</param>
         /// <param name="targetType">Type of the target.</param>
-        /// <param name="mapperInclusions">A list of additional, internal mappers to include.</param>
         /// <returns>
         /// A mapper instance, if one is found.
         /// </returns>

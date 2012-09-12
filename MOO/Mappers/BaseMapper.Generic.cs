@@ -81,9 +81,12 @@ namespace Moo.Mappers
         /// </summary>
         protected IMappingRepository ParentRepository { get; private set; }
 
+        /// <summary>Gets the current mapper status.</summary>
+        /// <value>The current mapper status.</value>
         protected internal MapperStatus CurrentStatus { get; private set; }
 
         private object syncRoot = new Object();
+        private IPropertyExplorer propertyExplorer;
 
         #endregion Properties
 
@@ -164,9 +167,11 @@ namespace Moo.Mappers
             catch (Exception exc)
             {
                 throw new MappingException(
-                    String.Format("Error getting mappings from type {0} to {1}. Please check inner exception for details.",
-                        typeof(TSource),
-                        typeof(TTarget)),
+                    String.Format(
+                            System.Globalization.CultureInfo.InvariantCulture,
+                            "Error getting mappings from type {0} to {1}. Please check inner exception for details.",
+                            typeof(TSource),
+                            typeof(TTarget)),
                         typeof(TSource),
                         typeof(TTarget),
                         null,
@@ -262,22 +267,44 @@ namespace Moo.Mappers
             return sourceList.Select(s => this.Map(s, createTarget));
         }
 
+        /// <summary>Adds an inner mapper, to map from the source to the target members.</summary>
+        /// <typeparam name="TInnerSource">Type of the inner source.</typeparam>
+        /// <typeparam name="TInnerTarget">Type of the inner target.</typeparam>
+        /// <param name="sourceMemberName">Name of the source member.</param>
+        /// <param name="targetMemberName">Name of the target member.</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter", Justification = "No can do.")]
         public virtual void AddInnerMapper<TInnerSource, TInnerTarget>(PropertyInfo sourceMemberName, PropertyInfo targetMemberName)
         {
             var innerMapper = GetInnerMapper<TInnerSource, TInnerTarget>();
             AddMappingInfo(new MapperMappingInfo<TSource, TTarget>(innerMapper, sourceMemberName, targetMemberName));
         }
 
+        /// <summary>Gets an inner mapper from the repository.</summary>
+        /// <exception cref="InvalidOperationException">
+        /// Thrown when the mapper does not have a parent repository.
+        /// </exception>
+        /// <typeparam name="TInnerSource">Type of the source property.</typeparam>
+        /// <typeparam name="TInnerTarget">Type of the target property.</typeparam>
+        /// <returns>
+        /// A mapper capable of translating <typeparamref name="TInnerSource"/> objects into
+        /// <typeparamref name="TInnerTarget"/> ones.
+        /// </returns>
         protected IMapper<TInnerSource, TInnerTarget> GetInnerMapper<TInnerSource, TInnerTarget>()
         {
             if (ParentRepository == null)
             {
+                // TODO: review approach here -- this branch could lead to mapper "cloning"
                 throw new InvalidOperationException("Mapper must be contained in a repo in order to allow inner mappers.");
             }
 
             return ParentRepository.ResolveMapper<TInnerSource, TInnerTarget>();
         }
 
+        /// <summary>Returns all internal mappings from the mapper.</summary>
+        /// <returns>
+        /// An enumerator that allows foreach to be used to get mappings in this collection.
+        /// </returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "Using a method communicates the possibly non-atomic nature of this operation.")]
         protected internal abstract IEnumerable<MemberMappingInfo<TSource, TTarget>> GetMappings();
 
         /// <summary>
@@ -297,9 +324,23 @@ namespace Moo.Mappers
             this.TypeMapping.Add(mappingInfo);
         }
 
-        protected virtual PropertyExplorer GetPropertyExplorer()
+        /// <summary>Gets a property explorer instance.</summary>
+        /// <value>The property explorer.</value>
+        /// <remarks>This property is lazy loaded.</remarks>
+        protected virtual internal IPropertyExplorer PropertyExplorer
         {
-            return new PropertyExplorer();
+            get 
+            {
+                if (propertyExplorer == null)
+                    propertyExplorer = new PropertyExplorer();
+
+                return propertyExplorer; 
+            }
+
+            private set
+            {
+                propertyExplorer = value;
+            }
         }
 
         /// <summary>
@@ -318,12 +359,5 @@ namespace Moo.Mappers
         }
 
         #endregion Methods
-
-        public enum MapperStatus
-        {
-            New,
-            Initialized,
-            Active
-        }
     }
 }

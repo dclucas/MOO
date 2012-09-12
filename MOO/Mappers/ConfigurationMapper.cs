@@ -98,6 +98,10 @@ namespace Moo.Mappers
             }
         }
 
+        /// <summary>Returns all internal mappings from the mapper.</summary>
+        /// <returns>
+        /// An enumerator that allows foreach to be used to get mappings in this collection.
+        /// </returns>
         protected internal override IEnumerable<MemberMappingInfo<TSource, TTarget>> GetMappings()
         {
             TypeMappingElement element = GetTypeMapping();

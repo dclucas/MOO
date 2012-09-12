@@ -35,7 +35,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Moo")]
 [assembly: AssemblyDescription("An object-to-object multi-mapping library")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Diogo Lucas")]
 [assembly: AssemblyProduct("Moo")]
 [assembly: AssemblyCopyright("Copyright ©  2009")]
 [assembly: AssemblyTrademark("")]

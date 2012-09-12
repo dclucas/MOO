@@ -38,5 +38,16 @@ namespace Moo.Mappers
         /// <param name="target">The target object.</param>
         /// <returns>The target object, with its properties mapped.</returns>
         public abstract object Map(object source, object target);
+
+        /// <summary>Values that represent the internal mapper status.</summary>
+        protected internal enum MapperStatus
+        {
+            /// <summary>Mapper has just been created.</summary>
+            New,
+            /// <summary>Mapping initialization started.</summary>
+            Initialized,
+            /// <summary>Mapper is active.</summary>
+            Active
+        }
     }
 }

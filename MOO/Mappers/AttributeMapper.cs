@@ -113,6 +113,10 @@ namespace Moo.Mappers
                    select GetMapping(prop, targetType.GetProperty(m.OtherMemberName), direction);
         }
 
+        /// <summary>Enumerates get mappings in this collection.</summary>
+        /// <returns>
+        /// An enumerator that allows foreach to be used to process get mappings in this collection.
+        /// </returns>
         protected internal override IEnumerable<MemberMappingInfo<TSource, TTarget>> GetMappings()
         {
             return GetMappings(typeof(TSource), typeof(TTarget), MappingDirections.From)

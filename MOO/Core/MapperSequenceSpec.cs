@@ -27,19 +27,7 @@ namespace Moo.Core
 
         private void AddMapper(Type mapperType)
         {
-            var finalType = GetFinalType(mapperType);
             CurrentSequence.Add(mapperType);
-        }
-
-        internal Type GetFinalType(Type mapperType)
-        {
-            var finalType = mapperType;
-            if (finalType.IsGenericType && !finalType.IsGenericTypeDefinition)
-            {
-                finalType = finalType.GetGenericTypeDefinition();
-            }
-
-            return finalType;
         }
 
         public IRepositorySpec Finally<TMapper>() where TMapper : IMapper

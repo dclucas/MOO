@@ -15,6 +15,7 @@
             {
                 throw new ArgumentException(
                     String.Format(
+                        System.Globalization.CultureInfo.InvariantCulture,
                         "'To' should be called with a property getter delegate, but instead got a {0} expression type, with a {1} expression body",
                         argument.NodeType,
                         argument.Body.NodeType));
