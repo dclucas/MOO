@@ -39,8 +39,6 @@ namespace Moo.Tests
     {
         #region Methods
 
-         
-
         [Test]
         [ExpectedException(typeof(ArgumentNullException))]
         public void MapTo_NullMapper_Throws_1()

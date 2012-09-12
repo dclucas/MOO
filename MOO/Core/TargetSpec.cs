@@ -44,6 +44,9 @@ namespace Moo.Core
         Justification = "I wish I could. No big deal, though, as type inference makes the specifications not necessary in client code.")]
     public class TargetSpec<TSource, TTarget, TInnerSource> : ITargetSpec<TSource, TTarget, TInnerSource>
     {
+        /// <summary>The expression handler to use.</summary>
+        private IExpressionHandler expressionHandler;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="TargetSpec{TSource,TTarget, TInnerSource}"/> class.
         /// </summary>
@@ -88,14 +91,14 @@ namespace Moo.Core
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures", Justification = "Easier said than done")]
         protected Expression<Func<TSource, TInnerSource>> SourceArgument { get; private set; }
 
-        /// <summary>
-        /// Instructs Moo to map a source expression to the property expression below.
-        /// </summary>
-        /// <param name="argument">An expression fetching the property to map to.</param>
+        /// <summary>Instructs Moo to map a source expression to the property expression below.</summary>
         /// <remarks>
-        /// The argument parameter must be a property access expression, such as <c>(t) => t.Name</c>,
+        /// The argument parameter must be a property access expression, such as <c>(t) =&gt; t.Name</c>,
         /// or else an ArgumentException will be thrown.
         /// </remarks>
+        /// <typeparam name="TInnerTarget">Type of the inner target property.</typeparam>
+        /// <param name="argument">An expression fetching the property to map to.</param>
+        /// <returns>A spec object allowing further fluent setup.</returns>
         public ISourceSpec<TSource, TTarget> To<TInnerTarget>(Expression<Func<TTarget, TInnerTarget>> argument)
         {
             Guard.CheckArgumentNotNull(argument, "argument");
@@ -123,9 +126,10 @@ namespace Moo.Core
         }
 
         /// <summary>
-        /// Combines the two mapping expressions (one to get the target, the other
-        /// to produce data from the source) into a mapping action.
+        /// Combines the two mapping expressions (one to get the target, the other to produce data from
+        /// the source) into a mapping action.
         /// </summary>
+        /// <typeparam name="TInnerTarget">Type of the inner target property.</typeparam>
         /// <param name="sourceExpr">Expression to pull source data.</param>
         /// <param name="targetExpr">Expression to determine target property.</param>
         /// <returns>A mapping action, mapping from the source to the target expression.</returns>
@@ -182,8 +186,8 @@ namespace Moo.Core
             return argument.ToString();
         }
 
-        private IExpressionHandler expressionHandler;
-
+        /// <summary>Gets the expression handler to use.</summary>
+        /// <value>The expression handler to use.</value>
         internal IExpressionHandler ExpressionHandler 
         {
             get
@@ -192,8 +196,10 @@ namespace Moo.Core
                 {
                     expressionHandler = new ExpressionHandler();
                 }
+
                 return expressionHandler;
             }
+
             private set 
             { 
                 expressionHandler = value; 

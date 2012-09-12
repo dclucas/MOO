@@ -25,12 +25,13 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace Moo.Tests.Utils
 {
-    using FakeItEasy;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
+
+    using FakeItEasy;
 
     /// <summary>
     /// Internal factory class, for target instance construction.

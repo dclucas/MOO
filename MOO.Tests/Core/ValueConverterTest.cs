@@ -38,8 +38,6 @@ namespace Moo.Tests.Core
     {
         #region Methods
 
-         
-
         /// <summary>
         /// A test for CanConvert
         /// </summary>
@@ -92,8 +90,6 @@ namespace Moo.Tests.Core
             this.DoConvertTest(3.14, 3);
             this.DoConvertTest((TestClassA)null, null, typeof(TestClassB));
         }
-
-         
 
         private void DoCanConverTest(Type fromType, Type toType, bool expected)
         {

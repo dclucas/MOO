@@ -106,8 +106,6 @@ namespace Moo
 
         #region Methods
 
-         
-
         /// <summary>
         /// Adds the specified mapper to the repository.
         /// </summary>

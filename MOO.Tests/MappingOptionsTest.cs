@@ -41,8 +41,6 @@ namespace Moo.Tests
     {
         #region Methods
 
-         
-
         /// <summary>
         /// A test for MappingOptions Constructor
         /// </summary>

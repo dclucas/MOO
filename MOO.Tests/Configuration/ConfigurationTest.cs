@@ -39,8 +39,6 @@ namespace Moo.Tests.Configuration
     {
         #region Methods
 
-         
-
         [Test]
         public void MappingConfigurationTest()
         {

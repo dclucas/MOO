@@ -40,8 +40,6 @@ namespace Moo.Tests.Mappers
     {
         #region Methods
 
-         
-
         [Test]
         public void GetTypeMappingNoSectionTest()
         {

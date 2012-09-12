@@ -54,27 +54,22 @@ namespace Moo.Core
         /// </summary>
         protected IExtensibleMapper<TSource, TTarget> Mapper { get; private set; }
 
-        /// <summary>
-        /// Adds a mapping source
-        /// </summary>
+        /// <summary>Adds a mapping source.</summary>
+        /// <typeparam name="TInnerSource">Type of the inner source property.</typeparam>
         /// <param name="argument">Expression to fetch data from the source object.</param>
-        /// <returns>
-        /// A ITargetSpec, allowing to define the mapping target.
-        /// </returns>
+        /// <returns>A ITargetSpec, allowing to define the mapping target.</returns>
         public ITargetSpec<TSource, TTarget, TInnerSource> From<TInnerSource>(Expression<Func<TSource, TInnerSource>> argument)
         {
             return new TargetSpec<TSource, TTarget, TInnerSource>(Mapper, argument);
         }
 
         /// <summary>
-        /// Instructs Moo to use an internal mapper for properties of <typeparamref name="TInnerSource"/> type.
+        /// Instructs Moo to use an internal mapper for properties of <typeparamref name="TInnerSource"/>
+        /// type.
         /// </summary>
-        /// <typeparam name="TInnerSource">
-        /// Type of the source property to map.
-        /// </typeparam>
-        /// <returns>
-        /// A ISourceSpec, allowing to define further mappings.
-        /// </returns>
+        /// <typeparam name="TInnerSource">Type of the source property to map.</typeparam>
+        /// <param name="argument">Expression to fetch data from the source object.</param>
+        /// <returns>A ISourceSpec, allowing to define further mappings.</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter", Justification = "Easier said than done")]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures", Justification = "Easier said than done")]
         public ITargetSpec<TSource, TTarget, TInnerSource> UseMapperFrom<TInnerSource>(Expression<Func<TSource, TInnerSource>> argument)

@@ -38,8 +38,6 @@ namespace Moo.Tests
     {
         #region Methods
 
-         
-
         [Test]
         public void MapTest()
         {

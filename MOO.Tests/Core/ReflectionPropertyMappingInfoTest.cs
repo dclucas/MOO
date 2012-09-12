@@ -39,8 +39,6 @@ namespace Moo.Tests.Core
     {
         #region Methods
 
-         
-
         [Test]
         public void MapTest()
         {
@@ -81,8 +79,6 @@ namespace Moo.Tests.Core
             #endregion Properties
 
             #region Methods
-
-             
 
             public override void Convert(object source, PropertyInfo fromProperty, object target, PropertyInfo toProperty, bool strict)
             {

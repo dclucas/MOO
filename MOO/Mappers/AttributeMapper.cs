@@ -61,8 +61,6 @@ namespace Moo.Mappers
 
         #region Methods
 
-        
-
         /// <summary>
         /// Gets the property mapping for two property types.
         /// </summary>

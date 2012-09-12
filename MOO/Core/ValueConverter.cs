@@ -36,8 +36,6 @@ namespace Moo.Core
     {
         #region Methods
 
-         
-
         /// <summary>
         /// Checks whether this class can make the convertion between the two provided types.
         /// </summary>

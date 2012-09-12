@@ -40,8 +40,6 @@ namespace Moo.Tests.Mappers
     {
         #region Methods (11)
 
-         
-
         [Test]
         public void Map_NonGeneric_MappingWorks()
         {
@@ -132,8 +130,6 @@ namespace Moo.Tests.Mappers
             Assert.AreEqual(expectedInnerName, from.InnerClass.Name);
             Assert.AreEqual(expectedInnerFraction, from.InnerClass.Fraction);
         }
-
-         
 
         private void CheckLists(IList<TestClassA> sourceList, IList<TestClassB> resultList)
         {

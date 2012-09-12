@@ -111,8 +111,6 @@ namespace Moo.Core
 
         #region Methods
 
-         
-
         /// <summary>
         /// Maps from the specified source to the specified target.
         /// </summary>

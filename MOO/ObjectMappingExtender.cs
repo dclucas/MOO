@@ -38,8 +38,6 @@ namespace Moo
     {
         #region Methods
 
-         
-
         /// <summary>
         /// Maps the values on object the to a target type.
         /// </summary>

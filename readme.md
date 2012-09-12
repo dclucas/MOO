@@ -65,7 +65,6 @@ You can use additional mappers for internal properties. The code below is instru
 
     var result = source.MapTo<PersonDetailsDataContract>();
 
-	
 ### Defining mapper precedence
 
 In the example below, the added rule (of associating 111 to PersonEditModel.Id) will just run in case there is no convention rule stating otherwise.

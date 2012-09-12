@@ -26,11 +26,12 @@
 
 namespace Moo.Mappers
 {
+    using System.Collections.Generic;
     using System.Configuration;
     using System.Linq;
+
     using Moo.Configuration;
     using Moo.Core;
-    using System.Collections.Generic;
 
     /// <summary>
     /// Uses configuration to determine mappings between two classes

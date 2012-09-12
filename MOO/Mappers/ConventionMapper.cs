@@ -26,11 +26,11 @@
 
 namespace Moo.Mappers
 {
+    using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
 
     using Moo.Core;
-    using System.Collections.Generic;
 
     /// <summary>
     /// Uses naming and type conversion convention to create mappings between
@@ -92,6 +92,7 @@ namespace Moo.Mappers
         {
             var checker = GetPropertyConverter();
             string finalName = null;
+
             // TODO: remove the call with an "out" parameter -- it's not used here.
             return from sourceProp in PropertyExplorer.GetSourceProps<TSource>()
                    from targetProp in PropertyExplorer.GetTargetProps<TTarget>()

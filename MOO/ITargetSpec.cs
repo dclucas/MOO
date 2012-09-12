@@ -34,23 +34,24 @@ namespace Moo
     /// </summary>
     /// <typeparam name="TSource">Type of the mapping source.</typeparam>
     /// <typeparam name="TTarget">Type of the mapping target.</typeparam>
-    /// <typeparam name="TInnerSource"></typeparam>
+    /// <typeparam name="TInnerSource">Type of the source property.</typeparam>
     [System.Diagnostics.CodeAnalysis.SuppressMessage(
         "Microsoft.Design", 
         "CA1005:AvoidExcessiveParametersOnGenericTypes",
         Justification = "I wish I could. No big deal, though, as type inference makes the specifications not necessary in client code.")]
     public interface ITargetSpec<TSource, TTarget, TInnerSource>
     {
-        /// <summary>
-        /// Instructs Moo to map a source expression to the property expression below.
-        /// </summary>
-        /// <typeparam name="TInnerTarget">Type of the target's inner property.</typeparam>
-        /// <param name="argument">An expression fetching the property to map to.</param>
+        /// <summary>Instructs Moo to map a source expression to the property expression below.</summary>
         /// <remarks>
-        /// The argument parameter must be a property access expression, such as <c>(t) => t.Name</c>,
+        /// The argument parameter must be a property access expression, such as <c>(t) =&gt; t.Name</c>,
         /// or else an ArgumentException will be thrown.
         /// </remarks>
-        /// <exception cref="ArgumentException">The provided lambda is not of a property access.</exception>
+        /// <exception cref="ArgumentException">
+        /// The provided lambda is not of a property access.
+        /// </exception>
+        /// <typeparam name="TInnerTarget">Type of the target's inner property.</typeparam>
+        /// <param name="argument">An expression fetching the property to map to.</param>
+        /// <returns>A spec object, allowing fluent setup to continue.</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "To", Justification = "It's highly improbable that this specific interface will have to be implemented elsewhere.")]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures", Justification = "Easier said than done")]
         ISourceSpec<TSource, TTarget> To<TInnerTarget>(Expression<Func<TTarget, TInnerTarget>> argument);

@@ -39,8 +39,6 @@ namespace Moo.Tests.Core
     {
         #region Methods
 
-         
-
         [Test]
         public void ConvertTestComplex()
         {
@@ -121,8 +119,6 @@ namespace Moo.Tests.Core
                 resultProperty,
                 false);
         }
-
-         
 
         private void TestMatch(string fromProp, string toProp, bool expected)
         {

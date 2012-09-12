@@ -28,8 +28,8 @@ namespace Moo.Mappers
 {
     using System.Collections.Generic;
     using System.Linq;
-    using Moo.Core;
     using System.Reflection;
+    using Moo.Core;
 
     /// <summary>
     /// Allows the combination of multiple mapper classes into one.
@@ -47,7 +47,7 @@ namespace Moo.Mappers
         public CompositeMapper(params IMapper<TSource, TTarget>[] innerMappers)
         {
             this.Initialize(innerMappers);
-            TypeMapping = new TypeMappingInfo<TSource, TTarget>(MappingOverwriteBehavior.SkipOverwrite);
+            this.TypeMapping = new TypeMappingInfo<TSource, TTarget>(MappingOverwriteBehavior.SkipOverwrite);
         }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace Moo.Mappers
             : base(constructionInfo)
         {
             this.Initialize(innerMappers);
-            TypeMapping = new TypeMappingInfo<TSource, TTarget>(MappingOverwriteBehavior.SkipOverwrite);
+            this.TypeMapping = new TypeMappingInfo<TSource, TTarget>(MappingOverwriteBehavior.SkipOverwrite);
         }
 
         #endregion Constructors

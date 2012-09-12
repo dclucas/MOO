@@ -30,14 +30,15 @@ namespace Moo.Tests.Integration
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
+    using System.Diagnostics;
+
+    using Moo.Mappers;
     using Moo.Tests.Integration.MappedClasses.DomainModels;
     using Moo.Tests.Integration.MappedClasses.ViewModels;
+    using Moo.Tests.Integration.MappedClasses.DataContracts;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
     using Shouldly;
-    using Moo.Tests.Integration.MappedClasses.DataContracts;
-    using Moo.Mappers;
-    using System.Diagnostics;
 
     [TestFixture]
     [Category("Integrated")]

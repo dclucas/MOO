@@ -40,8 +40,6 @@ namespace Moo.Tests.Core
     {
         #region Methods
 
-         
-
         [Test]
         public void AddOverwriteTest()
         {

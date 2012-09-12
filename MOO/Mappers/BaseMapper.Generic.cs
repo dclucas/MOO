@@ -29,9 +29,8 @@ namespace Moo.Mappers
     using System;
     using System.Collections.Generic;
     using System.Linq;
-
-    using Moo.Core;
     using System.Reflection;
+    using Moo.Core;
 
     /// <summary>
     /// Base generic mapper class.
@@ -44,6 +43,12 @@ namespace Moo.Mappers
     /// </remarks>
     public abstract class BaseMapper<TSource, TTarget> : BaseMapper, IMapper<TSource, TTarget>
     {
+        /// <summary>Used for thread synchronization only.</summary>
+        private object syncRoot = new object();
+
+        /// <summary>The property explorer to use.</summary>
+        private IPropertyExplorer propertyExplorer;
+
         #region Constructors
 
         /// <summary>
@@ -71,9 +76,8 @@ namespace Moo.Mappers
 
         #region Properties
 
-        /// <summary>
-        /// Gets the type mapping information.
-        /// </summary>
+        /// <summary>Gets or sets the type mapping information.</summary>
+        /// <value>The type mapping.</value>
         public TypeMappingInfo<TSource, TTarget> TypeMapping { get; protected set; }
 
         /// <summary>
@@ -84,9 +88,6 @@ namespace Moo.Mappers
         /// <summary>Gets the current mapper status.</summary>
         /// <value>The current mapper status.</value>
         protected internal MapperStatus CurrentStatus { get; private set; }
-
-        private object syncRoot = new object();
-        private IPropertyExplorer propertyExplorer;
 
         #endregion Properties
 
@@ -194,6 +195,7 @@ namespace Moo.Mappers
             return target;
         }
 
+        /// <summary>Initializes the internal mapping.</summary>
         private void InitializeMapping()
         {
             if (this.TypeMapping == null)
@@ -210,7 +212,7 @@ namespace Moo.Mappers
             var mappings = this.GetMappings();
             if (mappings != null)
             {
-                this.TypeMapping.AddRange(GetMappings());
+                this.TypeMapping.AddRange(this.GetMappings());
             }
 
             this.CurrentStatus = MapperStatus.Active;
@@ -304,7 +306,10 @@ namespace Moo.Mappers
         /// <returns>
         /// An enumerator that allows foreach to be used to get mappings in this collection.
         /// </returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "Using a method communicates the possibly non-atomic nature of this operation.")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Microsoft.Design", 
+            "CA1006:DoNotNestGenericTypesInMemberSignatures",
+            Justification = "Using a method communicates the possibly non-atomic nature of this operation.")]
         protected internal abstract IEnumerable<MemberMappingInfo<TSource, TTarget>> GetMappings();
 
         /// <summary>
@@ -321,18 +326,21 @@ namespace Moo.Mappers
             {
                 this.CurrentStatus = MapperStatus.Initialized;
             }
+
             this.TypeMapping.Add(mappingInfo);
         }
 
         /// <summary>Gets a property explorer instance.</summary>
         /// <value>The property explorer.</value>
         /// <remarks>This property is lazy loaded.</remarks>
-        protected virtual internal IPropertyExplorer PropertyExplorer
+        protected internal virtual IPropertyExplorer PropertyExplorer
         {
             get 
             {
                 if (this.propertyExplorer == null)
+                {
                     this.propertyExplorer = new PropertyExplorer();
+                }
 
                 return this.propertyExplorer; 
             }

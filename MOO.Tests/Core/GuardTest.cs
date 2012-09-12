@@ -41,8 +41,6 @@ namespace Moo.Tests.Core
     {
         #region Methods
 
-         
-
         /// <summary>
         /// A test for CheckArgumentNotNull
         /// </summary>

@@ -26,8 +26,8 @@
 
 namespace Moo.Mappers
 {
-    using Moo.Core;
     using System.Collections.Generic;
+    using Moo.Core;
 
     /// <summary>
     /// Manual mappers allow the addition of custom mapping rules, through code.
@@ -41,7 +41,7 @@ namespace Moo.Mappers
         /// </summary>
         public ManualMapper()
         {
-            TypeMapping = new TypeMappingInfo<TSource, TTarget>();
+            this.TypeMapping = new TypeMappingInfo<TSource, TTarget>();
         }
 
         /// <summary>
@@ -51,12 +51,10 @@ namespace Moo.Mappers
         public ManualMapper(MapperConstructionInfo constructionInfo)
             : base(constructionInfo)
         {
-            TypeMapping = new TypeMappingInfo<TSource, TTarget>();
+            this.TypeMapping = new TypeMappingInfo<TSource, TTarget>();
         }
         
         #region Methods
-
-         
 
         /// <summary>
         /// Adds the mapping action.

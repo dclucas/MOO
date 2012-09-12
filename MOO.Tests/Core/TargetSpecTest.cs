@@ -29,6 +29,8 @@ namespace Moo.Tests.Core
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
+    using System.Linq.Expressions;
+    using System.Reflection;
 
     using FakeItEasy;
     using Moo.Core;
@@ -37,8 +39,6 @@ namespace Moo.Tests.Core
     using Moo.Tests.Utils;
     using NUnit.Framework;
     using Shouldly;
-    using System.Linq.Expressions;
-    using System.Reflection;
 
     [TestFixture(TypeArgs = new Type[] { typeof(Person), typeof(PersonIndexModel) })]
     public class TargetSpecTest<TSource, TTarget> 

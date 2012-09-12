@@ -57,8 +57,6 @@ namespace Moo.Configuration
 
         #region Methods
 
-         
-
         /// <summary>
         /// Adds the specified element.
         /// </summary>
@@ -67,8 +65,6 @@ namespace Moo.Configuration
         {
             this.BaseAdd(element);
         }
-
-         
 
         /// <summary>
         /// Creates a new <see cref="T:System.Configuration.ConfigurationElement"/>.

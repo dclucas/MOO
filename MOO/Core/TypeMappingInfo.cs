@@ -30,6 +30,27 @@ namespace Moo.Core
     using System.Collections.Generic;
 
     /// <summary>
+    /// Determines behavior to use for mapping overwrites
+    /// </summary>
+    public enum MappingOverwriteBehavior
+    {
+        /// <summary>
+        /// Allows mapping overwrite
+        /// </summary>
+        AllowOverwrite,
+
+        /// <summary>
+        /// Silently skips write operation if a mapping for a give source already exists
+        /// </summary>
+        SkipOverwrite,
+
+        /// <summary>
+        /// Throws a <see cref="InvalidOperationException"/> if an overwrite attempt happens
+        /// </summary>
+        ThrowOnOverwrite
+    }
+
+    /// <summary>
     /// Contains information targetProperty map between two classes.
     /// </summary>
     /// <typeparam name="TSource">The type of the source.</typeparam>
@@ -45,6 +66,22 @@ namespace Moo.Core
             new Dictionary<string, MemberMappingInfo<TSource, TTarget>>();
 
         #endregion Fields
+
+        #region Constructors
+
+        /// <summary>Initializes a new instance of the TypeMappingInfo class.</summary>
+        public TypeMappingInfo()
+        {
+        }
+
+        /// <summary>Initializes a new instance of the TypeMappingInfo class.</summary>
+        /// <param name="overwriteBehavior">The overwrite behavior.</param>
+        public TypeMappingInfo(MappingOverwriteBehavior overwriteBehavior)
+        {
+            this.OverwriteBehavior = overwriteBehavior;
+        }
+
+        #endregion
 
         #region Properties
 
@@ -69,22 +106,6 @@ namespace Moo.Core
         public MappingOverwriteBehavior OverwriteBehavior { get; private set; }
 
         #endregion Properties
-
-        #region Constructors
-
-        /// <summary>Initializes a new instance of the TypeMappingInfo class.</summary>
-        public TypeMappingInfo()
-        {
-        }
-
-        /// <summary>Initializes a new instance of the TypeMappingInfo class.</summary>
-        /// <param name="overwriteBehavior">The overwrite behavior.</param>
-        public TypeMappingInfo(MappingOverwriteBehavior overwriteBehavior)
-        {
-            this.OverwriteBehavior = overwriteBehavior;
-        }
-
-        #endregion
 
         #region Methods
 
@@ -111,6 +132,7 @@ namespace Moo.Core
                     {
                         this.memberMappings[mappingInfo.TargetMemberName] = mappingInfo;
                     }
+
                     break;
 
                 case MappingOverwriteBehavior.ThrowOnOverwrite:
@@ -128,9 +150,9 @@ namespace Moo.Core
                             mappingInfo.TargetMemberName,
                             null);
                     }
+
                     break;
-            }
-            
+            }    
         }
 
         /// <summary>
@@ -173,24 +195,5 @@ namespace Moo.Core
         }
 
         #endregion Methods
-    }
-
-    /// <summary>
-    /// Determines behavior to use for mapping overwrites
-    /// </summary>
-    public enum MappingOverwriteBehavior
-    {
-        /// <summary>
-        /// Allows mapping overwrite
-        /// </summary>
-        AllowOverwrite,
-        /// <summary>
-        /// Silently skips write operation if a mapping for a give source already exists
-        /// </summary>
-        SkipOverwrite,
-        /// <summary>
-        /// Throws a <see cref="InvalidOperationException"/> if an overwrite attempt happens
-        /// </summary>
-        ThrowOnOverwrite
     }
 }

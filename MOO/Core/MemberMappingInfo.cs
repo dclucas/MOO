@@ -82,8 +82,6 @@ namespace Moo.Core
 
         #region Methods
 
-         
-
         /// <summary>
         /// Maps a given class member from the source to the target object.
         /// </summary>

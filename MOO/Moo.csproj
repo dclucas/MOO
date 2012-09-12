@@ -144,6 +144,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Moo.licenseheader" />
+    <None Include="Settings.StyleCop" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />

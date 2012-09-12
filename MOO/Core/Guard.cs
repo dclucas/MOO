@@ -39,8 +39,6 @@ namespace Moo.Core
     {
         #region Methods
 
-         
-
         /// <summary>
         /// Checkes whether the provided argument is not null.
         /// </summary>

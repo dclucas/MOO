@@ -57,8 +57,6 @@ namespace Moo.Core
 
         #region Methods
 
-         
-
         /// <summary>
         /// Determines whether this converter can make a strict
         /// conversion between the two properties.
@@ -183,8 +181,6 @@ namespace Moo.Core
                 targetProperty.SetValue(target, null, null);
             }
         }
-
-         
 
         /// <summary>
         /// Determines whether this class can/should make a (strict)

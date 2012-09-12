@@ -33,24 +33,24 @@ namespace Moo
     /// <summary>Interface for repository behavior specification.</summary>
     public interface IRepositorySpec
     {
-        /// <summary>Gets the resulting mapping options.</summary>
-        /// <returns>The resulting mapping options.</returns>
-        MappingOptions GetOptions();
-
         /// <summary>Gets the mapper order.</summary>
         /// <value>The mapper order.</value>
         IMapperStartSpec MapperOrder { get; }
+        
+        /// <summary>Gets the resulting mapping options.</summary>
+        /// <returns>The resulting mapping options.</returns>
+        MappingOptions GetOptions();
     }
 
     /// <summary>Interface for mapper sequence start specification.</summary>
     public interface IMapperStartSpec
     {
-        /// <summary>Gets the use.</summary>
+        /// <summary>Specifies a mapper to use in the sequence.</summary>
         /// <typeparam name="TMapper">Type of the mapper.</typeparam>
         /// <returns>An object allowing to specify the target (To) of the mapping.</returns>
         IMapperSequenceSpec Use<TMapper>() where TMapper : IMapper;
 
-        /// <summary>Gets the use just.</summary>
+        /// <summary>Specifies that a single mapper should be used in a sequence.</summary>
         /// <typeparam name="TMapper">Type of the mapper.</typeparam>
         /// <returns>The parent repo spec. Useful for chaining other "fluent" setup.</returns>
         IRepositorySpec UseJust<TMapper>() where TMapper : IMapper;

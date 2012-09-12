@@ -26,11 +26,12 @@
 
 namespace Moo
 {
-    using Moo.Core;
     using System;
     using System.Diagnostics;
     using System.Globalization;
     using System.Runtime.Serialization;
+
+    using Moo.Core;
 
     /// <summary>
     /// Represents a Moo mapping exception.

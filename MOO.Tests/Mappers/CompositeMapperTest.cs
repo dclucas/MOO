@@ -45,8 +45,6 @@ namespace Moo.Tests.Mappers
     {
         #region Methods
 
-         
-
         [Test]
         public void Map_MockedInternalMappers_Redirects()
         {
@@ -69,6 +67,7 @@ namespace Moo.Tests.Mappers
                 A.CallTo(() => mapperMocks[i].GetMappings())
                     .Returns(res);
             }
+
             var target = new CompositeMapper<TestClassB, TestClassD>(mapperMocks);
             var source = new TestClassB();
             var result = new TestClassD();
@@ -107,10 +106,12 @@ namespace Moo.Tests.Mappers
                 {
                     mapperMocks[i] = extMock;
                 }
+
                 results.Add(res);
                 A.CallTo(() => mapperMocks[i].GetMappings())
                     .Returns(res);
             }
+
             var target = new CompositeMapper<TestClassB, TestClassD>(mapperMocks);
             var source = new TestClassB();
             var result = new TestClassD();
