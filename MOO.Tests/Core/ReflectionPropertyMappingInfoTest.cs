@@ -49,7 +49,6 @@ namespace Moo.Tests.Core
             ConverterMock mock = new ConverterMock();
             bool executed = false;
 
-            // TODO: refactor this to use FakeItEasy
             mock.ConvertAction = (f, fp, t, tp, s) =>
                 {
                     Assert.AreEqual(c, f);

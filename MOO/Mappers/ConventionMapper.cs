@@ -92,11 +92,8 @@ namespace Moo.Mappers
         {
             var checker = GetPropertyConverter();
 
-            // TODO: remove the call with an "out" parameter -- it's not used here.
-            return from sourceProp in PropertyExplorer.GetSourceProps<TSource>()
-                   from targetProp in PropertyExplorer.GetTargetProps<TTarget>()
-                   where checker.CanConvert(sourceProp, targetProp)
-                   select this.CreateInfo(sourceProp, targetProp);
+            return from p in PropertyExplorer.GetMatches<TSource, TTarget>((s, t) => checker.CanConvert(s, t))
+                   select this.CreateInfo(p.Key, p.Value);
         }
 
         #endregion Methods

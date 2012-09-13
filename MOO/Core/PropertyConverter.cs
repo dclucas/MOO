@@ -32,7 +32,7 @@ namespace Moo.Core
     /// <summary>
     /// Provides functionalities for property conversion.
     /// </summary>
-    public class PropertyConverter
+    public class PropertyConverter : IPropertyConverter
     {
         #region Fields
 
@@ -67,11 +67,6 @@ namespace Moo.Core
         ///   <c>true</c> if a strict conversion is possible (types are
         /// convertible and naming matches), <c>false</c> otherwise.
         /// </returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Microsoft.Design", 
-            "CA1021:AvoidOutParameters", 
-            MessageId = "2#",
-            Justification = "No easy way out of this, for the time being.")]
         [System.Diagnostics.CodeAnalysis.SuppressMessage(
             "Microsoft.Design",
             "CA1062:Validate arguments of public methods",

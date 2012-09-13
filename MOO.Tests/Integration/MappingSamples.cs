@@ -124,7 +124,6 @@ namespace Moo.Tests.Integration
             var result = source.MapTo<PersonEditModel>();
 
             // cleaning up so there are no side effects on other tests
-            // TODO: this should be made thread-safe for parallel mapping execution.
             MappingRepository.Default.Clear();
             result.ShouldNotBe(null);
             this.CheckMapping(source, result);
@@ -266,41 +265,6 @@ namespace Moo.Tests.Integration
                     ohno.TargetType,
                     ohno.Message);
             }
-        }
-
-        public void WorkInProgress()
-        {
-            /*
-            var source = this.CreateSource();
-
-            MappingRepository.Default
-                .AddMapping<Person, PersonEditModel>()
-                // use of mappers for internal properties -- default overload takes no arguments, need to think if additional ones would be required
-                .UseMapperFor<Account, AccountEditModel>()
-                .From(p => p.FirstName + p.LastName)
-                .To(pe => pe.Name)
-                // allow chaining of multiple From/To calls
-                .From(p => MessyProp)
-                .To(pe => pe.SomeOtherProp);
-
-            var repo = new MappingRepository(
-                          MappingOptions 
-                             .UseFirst<ConfigurationMapper<,>>
-                             .Then<ManualMapper<,>>
-                             .Then<AttributeMapper<,>>
-                             .Then<ConventionMapper<,>>
-                              // TODO: find a syntax to go back to mapping options
-            // RENAME MANUALMAPPER TO CODEMAPPER?!?
-            
-            var result = source.MapTo<PersonEditModel>();
-
-            // cleaning up so there are no side effects on other tests
-            // TODO: this should be made thread-safe for parallel mapping execution.
-            MappingRepository.Default.Clear();
-            result.ShouldNotBe(null);
-            this.CheckMapping(source, result);
-            result.Name.ShouldBe(source.FirstName + source.LastName);
-            */
         }
 
         private void CheckMapping(Person p, PersonEditModel pe)
