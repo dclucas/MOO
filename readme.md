@@ -89,17 +89,31 @@ In the example below, the added rule (of associating 111 to PersonEditModel.Id) 
 
 When mapping, Moo will wrap all internal exceptions into a MappingException, with details on what mapping it was working on:
 
-    var source = this.CreateSource();
-    
-    try
-	{
-	    var result = source.MapTo<PersonEditModel>();
-	}
-    catch (MappingException ohno)
-	{
-		// Do your exception handling here -- mapping exception will
-		// contain source and target information (their types, 
-		// properties being mapped, etc) 
-	}
+        public void Sample_ErrorHandling_NoTest()
+        {
+            var source = this.CreateSource();
 
-	
+            try
+            {
+                var result = source.MapTo<PersonEditModel>();
+            }
+            catch (MappingException ohno)
+            {
+                // Do your exception handling here -- mapping exception will 
+				// contain source and target information (their types, 
+				// properties being mapped, etc). The Trace code below is just
+				// a (bad) example.
+                Trace.TraceError(
+                    "Got an error when mapping. Source: {0}. Target: {1}. Error: {1}",
+                    ohno.SourceType,
+                    ohno.TargetType,
+                    ohno.Message);
+            }
+        }
+
+Planned/Work in progress
+
+### Testing: handling of ienumerable properties (inner mapper, direct copy, etc)
+
+### Planned: Set factory methods in Repo (as in repo.CreateObjects.With(t => Activator.CreateInstance(t)).Create<MyClass>.With(() => new MyClass)) 
+

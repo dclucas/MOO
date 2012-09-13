@@ -178,6 +178,26 @@ namespace Moo.Tests.Integration
         }
 
         ////[Test]
+        ////public void Sample_FluentMappingWithInnerMappers_MapsEnumerables()
+        ////{
+        ////    var source = this.CreateSource();
+        ////    MappingRepository.Default
+        ////        .AddMapping<Person, PersonDetailsDataContract>()
+        ////        .UseMapperFrom(p => p.Contacts)
+        ////        .To(pd => pd.PersonContacts)
+        ////        .From(p => p.FirstName + p.LastName)
+        ////        .To(pd => pd.Name);
+
+        ////    var result = source.MapTo<PersonDetailsDataContract>();
+
+        ////    MappingRepository.Default.Clear();
+        ////    result.ShouldNotBe(null);
+        ////    result.Name.ShouldBe(source.FirstName + source.LastName);
+        ////    result.Account.ShouldNotBe(null);
+        ////    result.Account.Login.ShouldBe(source.Account.Login);
+        ////}
+
+        ////[Test]
         ////public void Sample_MapperSequenceOverride_CreatesCorrectly()
         ////{
         ////    var source = this.CreateSource();

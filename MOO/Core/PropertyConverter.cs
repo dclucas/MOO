@@ -63,7 +63,6 @@ namespace Moo.Core
         /// </summary>
         /// <param name="sourceProperty">The source property.</param>
         /// <param name="targetProperty">The target property.</param>
-        /// <param name="finalName">The final name.</param>
         /// <returns>
         ///   <c>true</c> if a strict conversion is possible (types are
         /// convertible and naming matches), <c>false</c> otherwise.
@@ -78,28 +77,12 @@ namespace Moo.Core
             "CA1062:Validate arguments of public methods",
             MessageId = "0",
             Justification = "The call to Guard does this check.")]
-        public bool CanConvert(PropertyInfo sourceProperty, PropertyInfo targetProperty, out string finalName)
+        public bool CanConvert(PropertyInfo sourceProperty, PropertyInfo targetProperty)
         {
             Guard.CheckArgumentNotNull(sourceProperty, "sourceProperty");
             Guard.CheckArgumentNotNull(targetProperty, "targetProperty");
             PropertyInfo innerProp;
             var isConvertible = this.CanConvert(sourceProperty, targetProperty, out innerProp);
-            if (isConvertible)
-            {
-                if (innerProp != null)
-                {
-                    finalName = sourceProperty.Name + "." + innerProp.Name;
-                }
-                else
-                {
-                    finalName = sourceProperty.Name;
-                }
-            }
-            else
-            {
-                finalName = null;
-            }
-
             return isConvertible;
         }
 

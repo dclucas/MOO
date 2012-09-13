@@ -5,8 +5,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Moo", "MOO\Moo.csproj", "{7
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Moo.Tests", "MOO.Tests\Moo.Tests.csproj", "{AC8B20F5-A816-49A7-A158-33D4DAD5EBCD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Moo.Demo", "Moo.Demo\Moo.Demo.csproj", "{B29D19C0-CC40-40D4-AF2C-C9886ECCD335}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{2F57BC3E-620E-4E8F-8416-B44F34B8C311}"
 	ProjectSection(SolutionItems) = preProject
 		.nuget\NuGet.Config = .nuget\NuGet.Config
@@ -53,16 +51,6 @@ Global
 		{AC8B20F5-A816-49A7-A158-33D4DAD5EBCD}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{AC8B20F5-A816-49A7-A158-33D4DAD5EBCD}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{AC8B20F5-A816-49A7-A158-33D4DAD5EBCD}.Release|x86.ActiveCfg = Release|Any CPU
-		{B29D19C0-CC40-40D4-AF2C-C9886ECCD335}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{B29D19C0-CC40-40D4-AF2C-C9886ECCD335}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
-		{B29D19C0-CC40-40D4-AF2C-C9886ECCD335}.Debug|Mixed Platforms.Build.0 = Debug|x86
-		{B29D19C0-CC40-40D4-AF2C-C9886ECCD335}.Debug|x86.ActiveCfg = Debug|x86
-		{B29D19C0-CC40-40D4-AF2C-C9886ECCD335}.Debug|x86.Build.0 = Debug|x86
-		{B29D19C0-CC40-40D4-AF2C-C9886ECCD335}.Release|Any CPU.ActiveCfg = Release|x86
-		{B29D19C0-CC40-40D4-AF2C-C9886ECCD335}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{B29D19C0-CC40-40D4-AF2C-C9886ECCD335}.Release|Mixed Platforms.Build.0 = Release|x86
-		{B29D19C0-CC40-40D4-AF2C-C9886ECCD335}.Release|x86.ActiveCfg = Release|x86
-		{B29D19C0-CC40-40D4-AF2C-C9886ECCD335}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

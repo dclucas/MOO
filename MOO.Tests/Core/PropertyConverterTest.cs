@@ -126,8 +126,7 @@ namespace Moo.Tests.Core
             PropertyInfo from = typeof(TestClassA).GetProperty(fromProp);
             PropertyInfo to = typeof(TestClassB).GetProperty(toProp);
             bool actual;
-            string finalName;
-            actual = target.CanConvert(from, to, out finalName);
+            actual = target.CanConvert(from, to);
             Assert.AreEqual(expected, actual);
         }
 

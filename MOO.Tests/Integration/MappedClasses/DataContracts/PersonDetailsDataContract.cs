@@ -9,7 +9,7 @@
     {
         public string Name { get; set; }
 
-        public IEnumerable<ContactDataContract> Contacts { get; set; }
+        public IEnumerable<ContactDataContract> PersonContacts { get; set; }
 
         public AccountDataContract Account { get; set; }
     }
