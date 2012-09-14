@@ -26,8 +26,11 @@
 namespace Moo.Tests.Core
 {
     using System;
-    using NUnit.Framework;
+    using System.Collections.Generic;
+
     using Moo.Core;
+    using NUnit.Framework;
+    using Shouldly;
 
     /// <summary>
     /// This is a test class for ValueConverterTest and is intended
@@ -38,82 +41,53 @@ namespace Moo.Tests.Core
     {
         #region Methods
 
-        /// <summary>
-        /// A test for CanConvert
-        /// </summary>
-        [Test]
-        public void CanConvertNegativeTest()
-        {
-            ValueConverter target = new ValueConverter();
-            this.DoCanConverTest(typeof(TestClassA), typeof(TestClassE), false);
-            this.DoCanConverTest(typeof(TestClassB), typeof(TestClassD), false);
-            this.DoCanConverTest(typeof(string), typeof(TestClassC), false);
-        }
-
-        /// <summary>
-        /// A test for CanConvert
-        /// </summary>
-        [Test]
-        public void CanConvertTest()
-        {
-            this.DoCanConverTest(typeof(string), typeof(string), true);
-            this.DoCanConverTest(typeof(int), typeof(long), true);
-            this.DoCanConverTest(typeof(int), typeof(string), true);
-            this.DoCanConverTest(typeof(int), typeof(double), true);
-            this.DoCanConverTest(typeof(TestClassE), typeof(TestClassA), true);
-        }
-
-        [ExpectedException(typeof(InvalidOperationException))]
         [Test]
         public void ConvertFailureTest()
         {
             ValueConverter target = new ValueConverter();
-            var res = target.Convert(null, typeof(int));
+            Should.Throw<InvalidOperationException>(() => target.Convert(null, typeof(int)));
         }
 
-        /// <summary>
-        /// A test for Convert
-        /// </summary>
-        [Test]
-        public void ConvertTest()
-        {
-            this.DoConvertTest(2, 2);
-            this.DoConvertTest("2", "2");
-            this.DoConvertTest(2, "2");
-            this.DoConvertTest("2", 2);
-            this.DoConvertTest(5, 5.0);
-            this.DoConvertTest(3, 3f);
-            this.DoConvertTest(7, 7d);
-            this.DoConvertTest(10, (long)10);
-            this.DoConvertTest((long)10, 10);
-            this.DoConvertTest(11.0, 11);
-            this.DoConvertTest(3.14, 3);
-            this.DoConvertTest((TestClassA)null, null, typeof(TestClassB));
-        }
-
-        private void DoCanConverTest(Type fromType, Type toType, bool expected)
+        [TestCase(typeof(IEnumerable<int>), typeof(IEnumerable<int>), true)]
+        [TestCase(typeof(string[]), typeof(string[]), true)]
+        [TestCase(typeof(string), typeof(string), true)]
+        [TestCase(typeof(int), typeof(long), true)]
+        [TestCase(typeof(int), typeof(string), true)]
+        [TestCase(typeof(int), typeof(double), true)]
+        [TestCase(typeof(TestClassE), typeof(TestClassA), true)]
+        [TestCase(typeof(TestClassA), typeof(TestClassE), false)]
+        [TestCase(typeof(TestClassB), typeof(TestClassD), false)]
+        [TestCase(typeof(string), typeof(TestClassC), false)]
+        public void DoCanConverTest(Type fromType, Type toType, bool expected)
         {
             ValueConverter target = new ValueConverter();
 
-            Assert.AreEqual(
-                expected,
-                target.CanConvert(fromType, toType),
-                "CanConvert should have returned {0} for types {1} and {2}",
-                expected,
-                fromType,
-                toType);
+            var result = target.CanConvert(fromType, toType);
+            result.ShouldBe(expected);
         }
 
-        private void DoConvertTest(object value, object expected)
+        [TestCase(2, 2)]
+        [TestCase("2", "2")]
+        [TestCase(2, "2")]
+        [TestCase("2", 2)]
+        [TestCase(5, 5.0)]
+        [TestCase(3, 3f)]
+        [TestCase(7, 7d)]
+        [TestCase(10, (long)10)]
+        [TestCase((long)10, 10)]
+        [TestCase(11.0, 11)]
+        [TestCase(3.14, 3)]
+        public void DoConvertTest(object value, object expected)
         {
             this.DoConvertTest(value, expected, expected.GetType());
         }
 
-        private void DoConvertTest(object value, object expected, Type expectedType)
+        [TestCase((TestClassA)null, null, typeof(TestClassB))]
+        public void DoConvertTest(object value, object expected, Type expectedType)
         {
             ValueConverter target = new ValueConverter();
             var actual = target.Convert(value, expectedType);
-            Assert.AreEqual(expected, actual);
+            actual.ShouldBe(expected);
         }
 
         #endregion Methods

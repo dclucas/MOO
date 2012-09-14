@@ -13,6 +13,18 @@ Out-of-box, the following strategies are available, but you can also create your
 3. Configuration: add a mapping section to your .config file and this mapper will follow it;
 4. Manual: explicit code calls do the mapping;
 
+Download
+--------
+
+The recommended approach is to download the binaries through Nuget (version 0.8.0) is available now:
+
+To install Moo through Nuget, run the following command in the Package Manager Console
+
+	PM> Install-Package Moo
+
+You can also use the nightly builds output, available at TeamCity:
+http://teamcity.codebetter.com/viewLog.html?buildId=lastSuccessful&buildTypeId=bt641&tab=artifacts
+
 Usage
 -----
 
@@ -111,9 +123,9 @@ When mapping, Moo will wrap all internal exceptions into a MappingException, wit
             }
         }
 
-Planned/Work in progress
+### Planned/Work in progress
 
-### Testing: handling of ienumerable properties (inner mapper, direct copy, etc)
+#### Testing: handling of ienumerable properties (inner mapper, direct copy, etc) -- works, but needs examples.
 
-### Planned: Set factory methods in Repo (as in repo.CreateObjects.With(t => Activator.CreateInstance(t)).Create<MyClass>.With(() => new MyClass)) 
+#### Planned: Set factory methods in Repo (as in repo.CreateObjects.With(t => Activator.CreateInstance(t)).Create<MyClass>.With(() => new MyClass)) 
 
