@@ -132,8 +132,8 @@ In case you need an inner mapper for a given IEnumerable property, the syntax be
 
     var result = source.MapTo<PersonDetailsDataContract>();
 
-Planned/Work in progress
+Future features
 ------------------------
 
-### Planned: Set factory methods in Repo (as in repo.CreateObjects.With(t => Activator.CreateInstance(t)).Create<MyClass>.With(() => new MyClass)) 
+* Planned: Set factory methods in Repo (as in repo.CreateObjects.With(t => Activator.CreateInstance(t)).Create<MyClass>.With(() => new MyClass)) 
 
