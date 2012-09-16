@@ -125,7 +125,7 @@ namespace Moo.Tests.Mappers
             Assert.AreEqual(expectedInnerName, to.InnerClassName);
             Assert.AreEqual(expectedInnerFraction, to.InnerClassFraction);
 
-            // making sure the mapping didn't mess with the "sourceMemberName" object.
+            // making sure the mapping didn't mess with the "sourceMember" object.
             Assert.AreEqual(expectedName, from.Name);
             Assert.AreEqual(expectedInnerName, from.InnerClass.Name);
             Assert.AreEqual(expectedInnerFraction, from.InnerClass.Fraction);

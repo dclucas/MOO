@@ -32,13 +32,11 @@ namespace Moo.Tests.Core
 
     using FakeItEasy;
     using Moo.Core;
-    using Moo.Tests.Integration.MappedClasses.DomainModels;
-    using Moo.Tests.Integration.MappedClasses.ViewModels;
     using Moo.Tests.Utils;
     using NUnit.Framework;
     using Shouldly;
 
-    [TestFixture(TypeArgs = new Type[] { typeof(Person), typeof(PersonIndexModel) })]
+    [TestFixture(TypeArgs = new Type[] { typeof(TestClassA), typeof(TestClassB) })]
     public class SourceSpecTest<TSource, TTarget>
     {
         [Test]

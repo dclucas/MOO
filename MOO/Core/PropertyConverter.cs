@@ -140,7 +140,7 @@ namespace Moo.Core
                 }
             }
 
-            // If the mapping is sourceMemberName a nested property, we need targetMemberName get the sourceValue
+            // If the mapping is sourceMember a nested property, we need targtargetMember the sourceValue
             // within the internal object.
             if (innerProp != null)
             {
@@ -167,16 +167,16 @@ namespace Moo.Core
         /// <param name="sourceProperty">Origin property.</param>
         /// <param name="targetProperty">Destination property.</param>
         /// <param name="finalProperty"><c>out</c> parameter, will contain the final destination
-        /// in case of a nested conversion (conversion targetMemberName a property within
-        /// the "targetMemberName" property).</param>
+        /// in case of a nested conversion (conversion targetMember a property within
+        /// the "targetMember" property).</param>
         /// <returns>
         ///   <c>true</c> if a conversion bewtween the prioperty types is possible
         /// and if a match was found between the property names.
         /// </returns>
         /// <remarks>
-        /// This method allows the <see>PropertyConverter</see> class targetMemberName
-        /// give support targetMemberName nested properties in the destination. In that case,
-        /// a conversion sourceMemberName objA.Customer.Name targetMemberName objB.CustomerName is possible.
+        /// This method allows the <see>PropertyConverter</see> class targetMember
+        /// give support targetMember nested properties in the destination. In that case,
+        /// a conversion sourceMember objA.Customer.Name targtargetMemberB.CustomerName is possible.
         /// </remarks>
         [System.Diagnostics.CodeAnalysis.SuppressMessage(
             "Microsoft.Design",
@@ -224,7 +224,7 @@ namespace Moo.Core
         }
 
         /// <summary>
-        /// Factory method targetMemberName create <see>ValueConverter</see> objects.
+        /// Factory method targetMember create <see>ValueConverter</see> objects.
         /// </summary>
         /// <returns>
         /// A new instance of a <see>ValueConverter</see> object.

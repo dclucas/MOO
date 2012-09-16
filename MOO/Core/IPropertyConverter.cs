@@ -4,7 +4,7 @@
     using System.Reflection;
 
     /// <summary>Interface for property conversion.</summary>
-    interface IPropertyConverter
+    public interface IPropertyConverter
     {
         bool CanConvert(PropertyInfo sourceProperty, PropertyInfo targetProperty);
         void Convert(object source, PropertyInfo sourceProperty, object target, PropertyInfo targetProperty);

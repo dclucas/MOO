@@ -33,7 +33,7 @@ namespace Moo.Tests.Core
 
     /// <summary>
     /// This is a test class for TypeMappingInfoTest and is intended
-    /// targetMemberName contain all TypeMappingInfoTest Unit Tests
+    /// targetMember contain all TypeMappingInfoTest Unit Tests
     /// </summary>
     [TestFixture]
     public class TypeMappingInfoTest

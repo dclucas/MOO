@@ -23,39 +23,24 @@
 // Email: diogo.lucas@gmail.com
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
-namespace Moo.Tests.Integration.MappedClasses.ViewModels
+namespace Moo.TestScenarios.MappedClasses.DomainModels
 {
-    using Moo.Tests.Integration.MappedClasses.DomainModels;
+    using System.Collections.Generic;
 
-    public class PersonIndexModel
+    public class Person
     {
         public int Id { get; set; }
 
-        [Mapping(MappingDirections.Target, typeof(Person), "FirstName")]
-        public string Name { get; set; }
+        public string FirstName { get; set; }
 
-        public string AccountLogin { get; set; }
+        public string LastName { get; set; }
 
-        public string Email { get; set; }
+        public Account Account { get; set; }
 
-        public string ManagerName { get; set; }
+        public IEnumerable<Contact> Contacts { get; set; }
 
-        [Mapping(MappingDirections.Target, typeof(Person), "LastName")]
+        public Manager Manager { get; set; }
+
         public string MessyProp { get; set; }
-    }
-
-    public class PersonEditModel
-    {
-        public int Id { get; set; }
-
-        public string Name { get; set; }
-
-        public string AccountLogin { get; set; }
-
-        public string AccountPassword { get; set; }
-
-        public int ManagerId { get; set; }
-
-        public string Email { get; set; }
     }
 }

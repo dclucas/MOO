@@ -26,6 +26,9 @@
 
 namespace Moo.Core
 {
+    using System;
+    using System.Collections;
+    using System.Linq;
     using System.Reflection;
 
     /// <summary>
@@ -62,7 +65,15 @@ namespace Moo.Core
             this.TargetProperty = targetProperty;
             this.SourceMemberName = sourceProperty.Name;
             this.TargetMemberName = targetProperty.Name;
+
+            var enumerableType = typeof(IEnumerable);
+            MapMultiple =  (enumerableType.IsAssignableFrom(sourceProperty.PropertyType))
+                && (enumerableType.IsAssignableFrom(targetProperty.PropertyType));
         }
+
+        /// <summary>Gets or sets a value indicating whether the map multiple items instead of just one.</summary>
+        /// <value>true if map multiple, false if not.</value>
+        public bool MapMultiple { get; set; }
 
         /// <summary>
         /// Gets or sets the internal Mapper.
@@ -82,12 +93,28 @@ namespace Moo.Core
         /// <summary>
         /// Maps a given class member from the source to the target object.
         /// </summary>
-        /// <param name="source">Mapping sourceMemberName object</param>
-        /// <param name="target">Mapping targetMemberName object</param>
+        /// <param name="source">Mapping sourceMember object</param>
+        /// <param name="target">Mapping targetMember object</param>
         public override void Map(TSource source, TTarget target)
         {
             var src = this.SourceProperty.GetValue(source, null);
-            var val = this.Mapper.Map(src);
+            object val = null;
+            /*
+            if (MapMultiple)
+            {
+                if (src != null)
+                {
+                    var enumerable = (System.Collections.IEnumerable)src;
+                    var mm = this.Mapper.GetType().GetMethod("MapMultiple", new [] { src.GetType() });
+                    val = mm.Invoke(this.Mapper, new[] { src }); //this.Mapper.MapMultiple(enumerable);
+                }
+                //this.TargetProperty.SetValue(target, val, null);
+            }
+            else
+            {
+                val = this.Mapper.Map(src);
+            }*/
+            val = this.Mapper.Map(src);
             this.TargetProperty.SetValue(target, val, null);
         }
     }

@@ -23,7 +23,7 @@
 // Email: diogo.lucas@gmail.com
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
-namespace Moo.Tests.Integration
+namespace Moo.TestsScenarios
 {
     using System;
     using System.Collections.Generic;
@@ -32,8 +32,8 @@ namespace Moo.Tests.Integration
     using System.Xml.Linq;
 
     using Moo.Mappers;
-    using Moo.Tests.Integration.MappedClasses.DomainModels;
-    using Moo.Tests.Integration.MappedClasses.ViewModels;
+    using Moo.TestScenarios.MappedClasses.DomainModels;
+    using Moo.TestScenarios.MappedClasses.ViewModels;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
 

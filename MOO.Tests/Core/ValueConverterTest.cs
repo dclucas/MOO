@@ -34,7 +34,7 @@ namespace Moo.Tests.Core
 
     /// <summary>
     /// This is a test class for ValueConverterTest and is intended
-    /// targetMemberName contain all ValueConverterTest Unit Tests
+    /// targetMember contain all ValueConverterTest Unit Tests
     /// </summary>
     [TestFixture]
     public class ValueConverterTest
@@ -48,7 +48,10 @@ namespace Moo.Tests.Core
             Should.Throw<InvalidOperationException>(() => target.Convert(null, typeof(int)));
         }
 
+        [TestCase(typeof(IEnumerable<string>), typeof(IEnumerable<object>), true)]
+        [TestCase(typeof(TestClassE[]), typeof(TestClassA[]), true)]
         [TestCase(typeof(IEnumerable<int>), typeof(IEnumerable<int>), true)]
+        [TestCase(typeof(int[]), typeof(IEnumerable<int>), true)]
         [TestCase(typeof(string[]), typeof(string[]), true)]
         [TestCase(typeof(string), typeof(string), true)]
         [TestCase(typeof(int), typeof(long), true)]

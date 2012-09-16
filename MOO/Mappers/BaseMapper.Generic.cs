@@ -31,6 +31,7 @@ namespace Moo.Mappers
     using System.Linq;
     using System.Reflection;
     using Moo.Core;
+    using System.Collections;
 
     /// <summary>
     /// Base generic mapper class.
@@ -71,7 +72,7 @@ namespace Moo.Mappers
             Guard.CheckArgumentNotNull(constructionInfo, "constructionInfo");
             this.ParentRepository = constructionInfo.ParentRepo;
         }
-        
+
         #endregion Constructors
 
         #region Properties
@@ -256,6 +257,14 @@ namespace Moo.Mappers
             return sourceList.Select(s => this.Map(s));
         }
 
+        public System.Collections.IEnumerable MapMultiple(System.Collections.IEnumerable sourceList)
+        {
+            foreach (var o in sourceList)
+            {
+                yield return this.Map(o);
+            }
+        }
+
         /// <summary>
         /// Maps multiple source objects into multiple target objects.
         /// </summary>
@@ -272,13 +281,13 @@ namespace Moo.Mappers
         /// <summary>Adds an inner mapper, to map from the source to the target members.</summary>
         /// <typeparam name="TInnerSource">Type of the inner source.</typeparam>
         /// <typeparam name="TInnerTarget">Type of the inner target.</typeparam>
-        /// <param name="sourceMemberName">Name of the source member.</param>
-        /// <param name="targetMemberName">Name of the target member.</param>
+        /// <param name="sourceMember">Name of the source member.</param>
+        /// <param name="targetMember">Name of the target member.</param>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter", Justification = "No can do.")]
-        public virtual void AddInnerMapper<TInnerSource, TInnerTarget>(PropertyInfo sourceMemberName, PropertyInfo targetMemberName)
+        public virtual void AddInnerMapper<TInnerSource, TInnerTarget>(PropertyInfo sourceMember, PropertyInfo targetMember)
         {
             var innerMapper = this.GetInnerMapper<TInnerSource, TInnerTarget>();
-            this.AddMappingInfo(new MapperMappingInfo<TSource, TTarget>(innerMapper, sourceMemberName, targetMemberName));
+            this.AddMappingInfo(new MapperMappingInfo<TSource, TTarget>(innerMapper, sourceMember, targetMember));
         }
 
         /// <summary>Gets an inner mapper from the repository.</summary>
@@ -291,12 +300,35 @@ namespace Moo.Mappers
         /// A mapper capable of translating <typeparamref name="TInnerSource"/> objects into
         /// <typeparamref name="TInnerTarget"/> ones.
         /// </returns>
-        protected IMapper<TInnerSource, TInnerTarget> GetInnerMapper<TInnerSource, TInnerTarget>()
+        protected IMapper GetInnerMapper<TInnerSource, TInnerTarget>()
         {
             if (this.ParentRepository == null)
             {
                 // TODO: review approach here -- this branch could lead to mapper "cloning"
                 throw new InvalidOperationException("Mapper must be contained in a repo in order to allow inner mappers.");
+            }
+
+            var enumerableType = typeof(IEnumerable);
+            var innerSourceType = typeof(TInnerSource);
+            var innerTargetType = typeof(TInnerTarget);
+
+            if (enumerableType.IsAssignableFrom(typeof(TInnerSource))
+                && enumerableType.IsAssignableFrom(typeof(TInnerTarget)))
+            {
+                var genericEnumerableType = typeof(IEnumerable<>);
+                var ts = innerSourceType.GetGenericTypeDefinition();
+                var tt = innerTargetType.GetGenericTypeDefinition();
+
+                if ((tt != null)
+                    && (ts != null)
+                    && genericEnumerableType.IsAssignableFrom(tt)
+                    && genericEnumerableType.IsAssignableFrom(ts))
+                {
+                    var innerSource = innerSourceType.GetGenericArguments()[0];
+                    var innerTarget = innerTargetType.GetGenericArguments()[0];
+                    var realMapper = this.ParentRepository.ResolveMapper(innerSource, innerTarget);
+                    return new MultyMappingAdapter(realMapper, innerSourceType);
+                }
             }
 
             return this.ParentRepository.ResolveMapper<TInnerSource, TInnerTarget>();
@@ -307,7 +339,7 @@ namespace Moo.Mappers
         /// An enumerator that allows foreach to be used to get mappings in this collection.
         /// </returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Microsoft.Design", 
+            "Microsoft.Design",
             "CA1006:DoNotNestGenericTypesInMemberSignatures",
             Justification = "Using a method communicates the possibly non-atomic nature of this operation.")]
         protected internal abstract IEnumerable<MemberMappingInfo<TSource, TTarget>> GetMappings();
@@ -335,14 +367,14 @@ namespace Moo.Mappers
         /// <remarks>This property is lazy loaded.</remarks>
         protected internal virtual IPropertyExplorer PropertyExplorer
         {
-            get 
+            get
             {
                 if (this.propertyExplorer == null)
                 {
                     this.propertyExplorer = new PropertyExplorer();
                 }
 
-                return this.propertyExplorer; 
+                return this.propertyExplorer;
             }
 
             private set
@@ -367,5 +399,40 @@ namespace Moo.Mappers
         }
 
         #endregion Methods
+
+        #region Internal classes
+
+        private class MultyMappingAdapter : IMapper
+        {
+            public MultyMappingAdapter(IMapper realMapper, Type sourceType)
+            {
+                var methodInfo = realMapper.GetType().GetMethod("MapMultiple", new[] { sourceType });
+                this.MapMethod = (s) => methodInfo.Invoke(realMapper, new[] { s });
+            }
+
+            private Func<object, object> MapMethod { get; set; }
+
+            public object Map(object source, object target)
+            {
+                throw new NotImplementedException();
+            }
+
+            public object Map(object source)
+            {
+                return MapMethod(source);
+            }
+
+            public object Map(object source, Func<object> createTarget)
+            {
+                throw new NotImplementedException();
+            }
+
+            public IEnumerable MapMultiple(IEnumerable sourceList)
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        #endregion
     }
 }

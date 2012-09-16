@@ -34,7 +34,7 @@ namespace Moo.Tests.Core
 
     /// <summary>
     /// This is a test class for GuardTest and is intended
-    /// targetMemberName contain all GuardTest Unit Tests
+    /// targetMember contain all GuardTest Unit Tests
     /// </summary>
     [TestFixture]
     public class GuardTest

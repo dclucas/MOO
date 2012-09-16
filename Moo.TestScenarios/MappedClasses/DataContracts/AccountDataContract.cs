@@ -1,4 +1,4 @@
-﻿namespace Moo.Tests.Integration.MappedClasses.DataContracts
+﻿namespace Moo.TestScenarios.MappedClasses.DataContracts
 {
     using System;
     using System.Collections.Generic;

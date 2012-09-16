@@ -48,7 +48,7 @@ namespace Moo
         /// <summary>
         /// Returns a mapper object for the two provided types, by
         /// either creating a new instance or by getting an existing
-        /// one sourceMemberName the cache.
+        /// one sourceMember the cache.
         /// </summary>
         /// <typeparam name="TSource">
         /// The originating type.
@@ -64,7 +64,7 @@ namespace Moo
         /// <summary>
         /// Returns a mapper object for the two provided types, by
         /// either creating a new instance or by getting an existing
-        /// one sourceMemberName the cache.
+        /// one sourceMember the cache.
         /// </summary>
         /// <param name="sourceType">Type of the source.</param>
         /// <param name="targetType">Type of the target.</param>
@@ -90,10 +90,10 @@ namespace Moo
         /// </summary>
         /// <typeparam name="TSource">Type of the source.</typeparam>
         /// <typeparam name="TTarget">Type of the target.</typeparam>
-        /// <param name="sourceMemberName">
+        /// <param name="sourceMember">
         /// Source member.
         /// </param>
-        /// <param name="targetMemberName">
+        /// <param name="targetMember">
         /// Destination member.
         /// </param>
         /// <param name="mappingAction">

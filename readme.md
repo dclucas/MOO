@@ -32,7 +32,6 @@ Usage
 
 Mapping can be as simple as this:
 
-    var source = CreateSource();
     var result = source.MapTo<PersonEditModel>();
 
 This extension method does all the work under the hood, creating a mapper, a repository, etc.
@@ -41,7 +40,6 @@ This extension method does all the work under the hood, creating a mapper, a rep
 
 Mapping enumerables can be done this way:
 
-    var source = CreateMany();
     var result = source.MapAll<Person, PersonEditModel>();
 
 Once again, using the extension method leaves Moo in charge of creating all required inner objects.
@@ -50,8 +48,6 @@ Once again, using the extension method leaves Moo in charge of creating all requ
 
 The code below shows how a mapper can be extended with additional mapping actions:
 
-    var source = CreateSource();
-    
     MappingRepository.Default
        .AddMapping<Person, PersonEditModel>()
        .From(p => p.FirstName + p.LastName)
@@ -67,7 +63,6 @@ Instructions like the ones above are carried by the ManualMapper class, which in
 
 You can use additional mappers for internal properties. The code below is instructing Moo to map property Person.Account to PersonDetailsDataContract.PersonAccount through a mapper. 
 
-    var source = this.CreateSource();
     MappingRepository.Default
         .AddMapping<Person, PersonDetailsDataContract>()
         .UseMapperFrom(p => p.Account)
@@ -80,8 +75,6 @@ You can use additional mappers for internal properties. The code below is instru
 ### Defining mapper precedence
 
 In the example below, the added rule (of associating 111 to PersonEditModel.Id) will just run in case there is no convention rule stating otherwise.
-
-    var source = this.CreateSource();
 
     var repo = new MappingRepository(o =>
         o.MapperOrder
@@ -101,31 +94,45 @@ In the example below, the added rule (of associating 111 to PersonEditModel.Id) 
 
 When mapping, Moo will wrap all internal exceptions into a MappingException, with details on what mapping it was working on:
 
-        public void Sample_ErrorHandling_NoTest()
-        {
-            var source = this.CreateSource();
+    try
+    {
+        var result = source.MapTo<PersonEditModel>();
+    }
+    catch (MappingException ohno)
+    {
+        // Do your exception handling here -- mapping exception will 
+		// contain source and target information (their types, 
+		// properties being mapped, etc). The Trace code below is just
+		// a (bad) example.
+        Trace.TraceError(
+            "Got an error when mapping. Source: {0}. Target: {1}. Error: {1}",
+            ohno.SourceType,
+            ohno.TargetType,
+            ohno.Message);
+    }
 
-            try
-            {
-                var result = source.MapTo<PersonEditModel>();
-            }
-            catch (MappingException ohno)
-            {
-                // Do your exception handling here -- mapping exception will 
-				// contain source and target information (their types, 
-				// properties being mapped, etc). The Trace code below is just
-				// a (bad) example.
-                Trace.TraceError(
-                    "Got an error when mapping. Source: {0}. Target: {1}. Error: {1}",
-                    ohno.SourceType,
-                    ohno.TargetType,
-                    ohno.Message);
-            }
-        }
+### Handling IEnumerable properties
+
+Mappers will be happy to map between properties when they are easily convertible, such as:
+
+* T[] to T[]: as in int[] to int[], string[] to string[], etc
+* IEnumerable<T> to IEnumerable<T>;
+* DerivedType[] to BaseType[];
+* T[] to IEnumerable<T>;
+* All combinations above;
+
+The convention mapper will not automatically convert from int[] to object[]. Internally, the framework does not consider the latter to be assignable from the former.
+
+In case you need an inner mapper for a given IEnumerable property, the syntax below will create and handle one for you:
+
+    MappingRepository.Default
+        .AddMapping<Person, PersonDetailsDataContract>()
+        .UseMapperFrom(p => p.Contacts)
+        .To(pe => pe.PersonContacts);
+
+    var result = source.MapTo<PersonDetailsDataContract>();
 
 ### Planned/Work in progress
-
-#### Testing: handling of ienumerable properties (inner mapper, direct copy, etc) -- works, but needs examples.
 
 #### Planned: Set factory methods in Repo (as in repo.CreateObjects.With(t => Activator.CreateInstance(t)).Create<MyClass>.With(() => new MyClass)) 
 

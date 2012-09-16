@@ -24,7 +24,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Moo.Tests.Integration
+namespace Moo.TestScenarios
 {
     using System;
     using System.Collections.Generic;
@@ -33,9 +33,9 @@ namespace Moo.Tests.Integration
     using System.Diagnostics;
 
     using Moo.Mappers;
-    using Moo.Tests.Integration.MappedClasses.DomainModels;
-    using Moo.Tests.Integration.MappedClasses.ViewModels;
-    using Moo.Tests.Integration.MappedClasses.DataContracts;
+    using Moo.TestScenarios.MappedClasses.DomainModels;
+    using Moo.TestScenarios.MappedClasses.ViewModels;
+    using Moo.TestScenarios.MappedClasses.DataContracts;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
     using Shouldly;
@@ -69,9 +69,9 @@ namespace Moo.Tests.Integration
         [Test]
         public void Sample_ExtensionMapMultiple_MapsCorrectly()
         {
-            var source = this.CreateMany();
+            var sourceEnumerable = this.CreateMany();
 
-            var result = source.MapAll<Person, PersonEditModel>();
+            var result = sourceEnumerable.MapAll<Person, PersonEditModel>();
 
             result.ShouldNotBe(null);
         }
@@ -176,76 +176,6 @@ namespace Moo.Tests.Integration
             result.Id.ShouldBe(source.Id);
         }
 
-        ////[Test]
-        ////public void Sample_FluentMappingWithInnerMappers_MapsEnumerables()
-        ////{
-        ////    var source = this.CreateSource();
-        ////    MappingRepository.Default
-        ////        .AddMapping<Person, PersonDetailsDataContract>()
-        ////        .UseMapperFrom(p => p.Contacts)
-        ////        .To(pd => pd.PersonContacts)
-        ////        .From(p => p.FirstName + p.LastName)
-        ////        .To(pd => pd.Name);
-
-        ////    var result = source.MapTo<PersonDetailsDataContract>();
-
-        ////    MappingRepository.Default.Clear();
-        ////    result.ShouldNotBe(null);
-        ////    result.Name.ShouldBe(source.FirstName + source.LastName);
-        ////    result.Account.ShouldNotBe(null);
-        ////    result.Account.Login.ShouldBe(source.Account.Login);
-        ////}
-
-        ////[Test]
-        ////public void Sample_MapperSequenceOverride_CreatesCorrectly()
-        ////{
-        ////    var source = this.CreateSource();
-
-        ////    var repo = new MappingRepository(o =>
-        ////        o
-        ////            .MapperOrder
-        ////                .Use<ConventionMapper<object, object>>()
-        ////                .Then<ManualMapper<object, object>>()
-        ////                .Finally<AttributeMapper<object, object>>()
-        ////            .TargetFactory
-        ////                .AsDefaultFactory()
-        ////                .Use<T>(() => Activator.CreateInstance(typeof(T))
-        ////                .ForType<SomeOtherType>()
-        ////                .Use(() => Activator.CreateInstance(typeof(T))
-        ////                .ForType<YetAnotherType>()
-        ////                .Use(() => Activator.CreateInstance(typeof(T))
-        ////            );
-
-        ////    repo.AddMapping<Person, PersonEditModel>()
-        ////        .From(s => 111)
-        ////        .To(t => t.Id);
-
-        ////    var mapper = repo.ResolveMapper<Person, PersonEditModel>();
-
-        ////    var result = mapper.Map(source);
-
-        ////    result.ShouldNotBe(null);
-        ////    result.Id.ShouldBe(source.Id);
-        ////}
-
-        ////public void Sample_UseFactoryMethod_UsesMethod()
-        ////{
-        ////    var source = this.CreateSource();
-            
-        ////   // passing a CreateTarget function as argument -- this could also be a lambda
-        ////    var result = source.MapTo<PersonDetailsDataContract>(source, CreateDataContract);
-            
-        ////   // check results here
-        ////}
-
-        ////private static PersonDetailsDataContract CreateDataContract()
-        ////{
-        ////    return new PersonDetailsDataContract() 
-        ////    {
-                
-        ////    };
-        ////}
-
         public void Sample_ErrorHandling_NoTest()
         {
             var source = this.CreateSource();
@@ -257,7 +187,7 @@ namespace Moo.Tests.Integration
             catch (MappingException ohno)
             {
                 // Do your exception handling here -- mapping exception will
-                // contain source and target information (their types, 
+                // contain sourceEnumerable and target information (their types, 
                 // properties being mapped, etc)
                 Trace.TraceError(
                     "Got an error when mapping. Source: {0}. Target: {1}. Error: {1}",
@@ -265,6 +195,26 @@ namespace Moo.Tests.Integration
                     ohno.TargetType,
                     ohno.Message);
             }
+        }
+
+        [Test]
+        public void Sample_InnerMapperForEnumerable_UsesInnerMapper()
+        {
+            var source = CreateSource();
+
+            MappingRepository.Default
+                .AddMapping<Person, PersonDetailsDataContract>()
+                .UseMapperFrom(p => p.Contacts)
+                .To(pe => pe.PersonContacts);
+
+            var result = source.MapTo<PersonDetailsDataContract>();
+
+            result.PersonContacts.ShouldNotBe(null);
+            var sourceContacts = source.Contacts.ToArray();
+            var targetContacts = result.PersonContacts.ToArray();
+            targetContacts[0].Email.ShouldBe(sourceContacts[0].Email);
+            targetContacts[0].Telephone.ShouldBe(sourceContacts[0].Telephone);
+            targetContacts[0].StreetAddress.ShouldBe(sourceContacts[0].StreetAddress);
         }
 
         private void CheckMapping(Person p, PersonEditModel pe)

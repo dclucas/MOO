@@ -27,13 +27,11 @@ namespace Moo.Tests.Mappers
 {
     using NUnit.Framework;
     using Moo.Mappers;
-    using Moo.Tests.Integration.MappedClasses.DomainModels;
-    using Moo.Tests.Integration.MappedClasses.ViewModels;
     using Shouldly;
 
     /// <summary>
     /// This is a test class for AttributeMapperTest and is intended
-    /// targetMemberName contain all AttributeMapperTest Unit Tests
+    /// targetMember contain all AttributeMapperTest Unit Tests
     /// </summary>
     [TestFixture]
     public class AttributeMapperTest
@@ -79,18 +77,6 @@ namespace Moo.Tests.Mappers
 
             Assert.AreEqual(expectedName, a.Name);
             Assert.AreEqual(expectedCode, a.Code);
-        }
-
-        [Test]
-        public void Map_MapperTarget_MapsCorrectly2()
-        {
-            var source = new Person() { FirstName = "John", LastName = "Doe" };
-
-            var target = new AttributeMapper<Person, PersonIndexModel>();
-            
-            var result = target.Map(source);
-            result.MessyProp.ShouldBe(source.LastName);
-            result.Name.ShouldBe(source.FirstName);
         }
 
         #endregion Methods

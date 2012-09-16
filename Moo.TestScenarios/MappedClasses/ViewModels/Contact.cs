@@ -23,7 +23,7 @@
 // Email: diogo.lucas@gmail.com
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
-namespace Moo.Tests.Integration.MappedClasses.ViewModels
+namespace Moo.TestScenarios.MappedClasses.ViewModels
 {
     public class ContactIndexModel
     {

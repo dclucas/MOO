@@ -32,7 +32,7 @@ namespace Moo.Tests.Core
 
     /// <summary>
     /// This is a test class for ReflectionPropertyMappingInfoTest and is intended
-    /// targetMemberName contain all ReflectionPropertyMappingInfoTest Unit Tests
+    /// targetMember contain all ReflectionPropertyMappingInfoTest Unit Tests
     /// </summary>
     [TestFixture]
     public class ReflectionPropertyMappingInfoTest

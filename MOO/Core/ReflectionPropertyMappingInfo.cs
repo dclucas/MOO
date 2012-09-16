@@ -97,7 +97,7 @@ namespace Moo.Core
         /// </value>
         /// <remarks>
         /// This property determines whether conversion needs to be strict (the exact same members in the
-        /// sourceMemberName and targetMemberName arguments) fields must be used or lose
+        /// sourceMember and targtargetMemberuments) fields must be used or lose
         /// (which allows property folding/unfolding).
         /// </remarks>
         public bool Strict { get; private set; }

@@ -41,8 +41,8 @@ namespace Moo.Core
         /// <summary>
         /// Initializes a new instance of the <see cref="MemberMappingInfo&lt;TSource, TTarget&gt;"/> class.
         /// </summary>
-        /// <param name="sourceMemberName">Name of the source member.</param>
-        /// <param name="targetMemberName">Name of the target member.</param>
+        /// <param name="sourceMember">Name of the source member.</param>
+        /// <param name="targetMember">Name of the target member.</param>
         protected MemberMappingInfo(string sourceMemberName, string targetMemberName)
         {
             Guard.CheckArgumentNotNull(sourceMemberName, "sourceMemberName");
@@ -85,8 +85,8 @@ namespace Moo.Core
         /// <summary>
         /// Maps a given class member from the source to the target object.
         /// </summary>
-        /// <param name="source">Mapping sourceMemberName object</param>
-        /// <param name="target">Mapping targetMemberName object</param>
+        /// <param name="source">Mapping sourceMember object</param>
+        /// <param name="target">Mapping targetMember object</param>
         public abstract void Map(TSource source, TTarget target);
 
         #endregion Methods

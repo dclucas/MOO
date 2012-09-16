@@ -33,7 +33,7 @@ namespace Moo.Tests.Mappers
 
     /// <summary>
     /// This is a test class for ConfigurationMapperTest and is intended
-    /// targetMemberName contain all ConfigurationMapperTest Unit Tests
+    /// targetMember contain all ConfigurationMapperTest Unit Tests
     /// </summary>
     [TestFixture]
     public class ConfigurationMapperTest

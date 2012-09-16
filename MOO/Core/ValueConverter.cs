@@ -71,12 +71,12 @@ namespace Moo.Core
         }
 
         /// <summary>
-        /// Converts the provided sourceValue targetMemberName the destination type.
+        /// Converts the provided sourceValue targetMember the destination type.
         /// </summary>
         /// <param name="sourceValue">Value to be converted.</param>
         /// <param name="targetType">Destination type.</param>
         /// <returns>
-        /// Returns the provided sourceValue, converted targetMemberName the provided type.
+        /// Returns the provided sourceValue, converted targetMember the provided type.
         /// </returns>
         /// <exception cref="InvalidOperationException">Conversion is not possible.</exception>
         [System.Diagnostics.CodeAnalysis.SuppressMessage(

@@ -40,8 +40,8 @@ namespace Moo
     public interface IExtensibleMapper<TSource, TTarget> : IMapper<TSource, TTarget>
     {
         /// <summary>Adds a mapping rule for the specified members.</summary>
-        /// <param name="sourceMemberName">Source member.</param>
-        /// <param name="targetMemberName">Destination member.</param>
+        /// <param name="sourceMember">Source member.</param>
+        /// <param name="targetMember">Destination member.</param>
         /// <param name="mappingAction">   The delegate that will perform the conversion.</param>
         void AddMappingAction(string sourceMemberName, string targetMemberName, MappingAction<TSource, TTarget> mappingAction);
 
@@ -54,8 +54,8 @@ namespace Moo
         /// <summary>Adds an inner mapper.</summary>
         /// <typeparam name="TInnerSource">Type of the source property.</typeparam>
         /// <typeparam name="TInnerTarget">Type of the target property.</typeparam>
-        /// <param name="sourceMemberName">Source member name.</param>
-        /// <param name="targetMemberName">Target member name.</param>
+        /// <param name="sourceMember">Source member name.</param>
+        /// <param name="targetMember">Target member name.</param>
         void AddInnerMapper<TInnerSource, TInnerTarget>(PropertyInfo sourceMemberName, PropertyInfo targetMemberName);
     }
 }

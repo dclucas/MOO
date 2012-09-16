@@ -26,7 +26,8 @@
 namespace Moo
 {
     using System;
-    using System.Collections.Generic;
+using System.Collections;
+using System.Collections.Generic;
 
     /// <summary>
     /// Base interface for all mappers.
@@ -59,6 +60,15 @@ namespace Moo
         /// A filled target object.
         /// </returns>
         object Map(object source, Func<object> createTarget);
+
+        /// <summary>
+        /// Maps multiple source objects into multiple target objects.
+        /// </summary>
+        /// <param name="sourceList">The source list.</param>
+        /// <returns>
+        /// A list of target objects.
+        /// </returns>
+        IEnumerable MapMultiple(IEnumerable sourceList);
     }
 
     /// <summary>

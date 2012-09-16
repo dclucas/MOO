@@ -31,7 +31,7 @@ namespace Moo.Tests
 
     /// <summary>
     /// This is a test class for DelegateMappingInfoTest and is intended
-    /// targetMemberName contain all DelegateMappingInfoTest Unit Tests
+    /// targetMember contain all DelegateMappingInfoTest Unit Tests
     /// </summary>
     [TestFixture]
     public class DelegateMappingInfoTest

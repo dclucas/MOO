@@ -30,7 +30,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following
-// set of attributes. Change these attribute values targetMemberName modify the information
+// set of attributes. Change these attribute values targetMember modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Moo")]
 [assembly: AssemblyDescription("An object-to-object multi-mapping library")]
@@ -41,12 +41,12 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
-// Setting ComVisible targetMemberName false makes the types in this assembly not visible
-// targetMemberName COM components.  If you need targetMemberName access a type in this assembly sourceMemberName
-// COM, set the ComVisible attribute targetMemberName true on that type.
+// Setting ComVisible targetMember false makes the types in this assembly not visible
+// targetMember COM components.  If you need targetMember access a type in this assembly sourceMember
+// COM, set the ComVisible attribute targetMember true on that type.
 [assembly: ComVisible(false)]
 
-// The following GUID is for the ID of the typelib if this project is exposed targetMemberName COM
+// The following GUID is for the ID of the typelib if this project is exposed targetMember COM
 [assembly: Guid("eb29a1e7-b19a-459b-994b-eedef2e5bb23")]
 
 // Version information for an assembly consists of the following four values:

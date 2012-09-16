@@ -23,7 +23,7 @@
 // Email: diogo.lucas@gmail.com
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
-namespace Moo.Tests.Integration.MappedClasses.DomainModels
+namespace Moo.TestScenarios.MappedClasses.DomainModels
 {
     public class Account
     {

@@ -70,6 +70,12 @@ namespace Moo.Tests
         {
             throw new NotImplementedException();
         }
+
+
+        public System.Collections.IEnumerable MapMultiple(System.Collections.IEnumerable sourceList)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class Mapper2<TSource, TTarget> : Mapper1<TSource, TTarget>

@@ -42,9 +42,9 @@ namespace Moo.Core
         /// <summary>
         /// Checkes whether the provided argument is not null.
         /// </summary>
-        /// <param name="argument">The argument targetMemberName be verified.</param>
+        /// <param name="argument">The argument targetMember be verified.</param>
         /// <param name="argumentName">Name of the argument. Will bs used in case
-        /// an exception needs targetMemberName be thrown.</param>
+        /// an exception needs targetMember be thrown.</param>
         /// <exception cref="ArgumentNullException">Thrown in case argument is null.</exception>
         public static void CheckArgumentNotNull(object argument, string argumentName)
         {
@@ -57,9 +57,9 @@ namespace Moo.Core
         /// <summary>
         /// Checkes whether an enumerable is not null or empty.
         /// </summary>
-        /// <param name="enumerable">The argument targetMemberName be verified.</param>
+        /// <param name="enumerable">The argument targetMember be verified.</param>
         /// <param name="argumentName">Name of the argument. Will bs used in case
-        /// an exception needs targetMemberName be thrown.</param>
+        /// an exception needs targetMember be thrown.</param>
         /// <exception cref="ArgumentException">Thrown in case argument is null.</exception>
         public static void CheckEnumerableNotNullOrEmpty(IEnumerable enumerable, string argumentName)
         {
@@ -79,10 +79,10 @@ namespace Moo.Core
         /// Checkes whether a given condition is true for all objects in the enumerable.
         /// </summary>
         /// <typeparam name="T">The type of each member within the enumerable.</typeparam>
-        /// <param name="list">The argument targetMemberName be verified.</param>
+        /// <param name="list">The argument targetMember be verified.</param>
         /// <param name="argumentName">Name of the argument. Will bs used in case
-        /// an exception needs targetMemberName be thrown.</param>
-        /// <param name="checkFunction">Function targetMemberName be applied targetMemberName all elements. In case one or more elements
+        /// an exception needs targetMember be thrown.</param>
+        /// <param name="checkFunction">Function targetMember be applied targetMember all elements. In case one or more elements
         /// fail, an exception will be thrown.</param>
         /// <exception cref="ArgumentException">Thrown in case argument is null.</exception>
         public static void TrueForAll<T>(
@@ -97,10 +97,10 @@ namespace Moo.Core
         /// Checkes whether a given condition is true for all objects in the enumerable.
         /// </summary>
         /// <typeparam name="T">The type of each member within the enumerable.</typeparam>
-        /// <param name="list">The argument targetMemberName be verified.</param>
+        /// <param name="list">The argument targetMember be verified.</param>
         /// <param name="argumentName">Name of the argument. Will bs used in case
-        /// an exception needs targetMemberName be thrown.</param>
-        /// <param name="checkFunction">Function targetMemberName be applied targetMemberName all elements. In case one or more elements
+        /// an exception needs targetMember be thrown.</param>
+        /// <param name="checkFunction">Function targetMember be applied targetMember all elements. In case one or more elements
         /// fail, an exception will be thrown.</param>
         /// <param name="messageFormat">Format for the exception text.</param>
         /// <exception cref="ArgumentException">Thrown in case argument is null.</exception>
