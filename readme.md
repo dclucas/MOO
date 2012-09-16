@@ -116,7 +116,7 @@ When mapping, Moo will wrap all internal exceptions into a MappingException, wit
 Mappers will be happy to map between properties when they are easily convertible, such as:
 
 * T[] to T[]: as in int[] to int[], string[] to string[], etc
-* IEnumerable<T> to IEnumerable<T>;
+* IEnumerable\<T\> to IEnumerable\<T\>;
 * DerivedType[] to BaseType[];
 * T[] to IEnumerable<T>;
 * All combinations above;
@@ -132,7 +132,8 @@ In case you need an inner mapper for a given IEnumerable property, the syntax be
 
     var result = source.MapTo<PersonDetailsDataContract>();
 
-### Planned/Work in progress
+Planned/Work in progress
+------------------------
 
-#### Planned: Set factory methods in Repo (as in repo.CreateObjects.With(t => Activator.CreateInstance(t)).Create<MyClass>.With(() => new MyClass)) 
+### Planned: Set factory methods in Repo (as in repo.CreateObjects.With(t => Activator.CreateInstance(t)).Create<MyClass>.With(() => new MyClass)) 
 
