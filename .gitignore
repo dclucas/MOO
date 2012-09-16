@@ -35,3 +35,4 @@ Help/
 *.smproj
 [Pp]ackages/
 !nuget.exe
+*.cache
