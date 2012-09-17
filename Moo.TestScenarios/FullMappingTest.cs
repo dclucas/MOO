@@ -23,7 +23,7 @@
 // Email: diogo.lucas@gmail.com
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
-namespace Moo.TestsScenarios
+namespace Moo.TestScenarios
 {
     using System;
     using System.Collections.Generic;
