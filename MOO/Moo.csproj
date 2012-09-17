@@ -144,6 +144,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Moo.cd" />
     <None Include="Moo.licenseheader" />
     <None Include="Settings.StyleCop" />
   </ItemGroup>

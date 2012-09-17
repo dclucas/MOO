@@ -1,0 +1,359 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Moo.Configuration.MappingConfigurationSection" Collapsed="true">
+    <Position X="15.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAA=</HashCode>
+      <FileName>Configuration\MappingConfigurationSection.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Moo.Configuration.MemberMappingCollection" Collapsed="true">
+    <Position X="14" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAICAAAAAAAAIAAAAAAAAAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Configuration\MemberMappingCollection.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Moo.Configuration.MemberMappingElement" Collapsed="true">
+    <Position X="15.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAEAAAAAAAAAAAAABAAAAAAAAAAA=</HashCode>
+      <FileName>Configuration\MemberMappingElement.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Moo.Configuration.TypeMappingCollection" Collapsed="true">
+    <Position X="19.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAICAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Configuration\TypeMappingCollection.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Moo.Configuration.TypeMappingElement" Collapsed="true">
+    <Position X="12.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAiAAAAAA=</HashCode>
+      <FileName>Configuration\TypeMappingElement.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Moo.Core.DelegateMappingInfo&lt;TSource, TTarget&gt;" Collapsed="true">
+    <Position X="3" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Core\DelegateMappingInfo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Moo.Core.ExpressionHandler" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="12.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAIAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Core\ExpressionHandler.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Moo.Core.Guard" Collapsed="true">
+    <Position X="14" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABAAAAAAAAAAAAAAAAEAAAAAAAAAAAACAA=</HashCode>
+      <FileName>Core\Guard.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Moo.Core.MapperConstructionInfo" Collapsed="true">
+    <Position X="17.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Core\MapperConstructionInfo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Moo.Core.MapperMappingInfo&lt;TSource, TTarget&gt;" Collapsed="true">
+    <Position X="5.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABAAAAAACAAAAAAAAAAAIAAAAAAAAABACAA=</HashCode>
+      <FileName>Core\MapperMappingInfo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Moo.Core.MapperSequenceSpec" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="19.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAggAAAAQAAAAAABAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Core\MapperSequenceSpec.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Moo.Core.MapperStartSpec" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="12.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAAAAAAAAAAAAAAAAAgAEAAAAABAAAAAAAAA=</HashCode>
+      <FileName>Core\MapperStartSpec.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Moo.Core.MemberMappingInfo&lt;TSource, TTarget&gt;" Collapsed="true">
+    <Position X="3" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABAAAAAAAEAAAAAAAAAAAAABAAAAAAAAAAA=</HashCode>
+      <FileName>Core\MemberMappingInfo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Moo.Core.PropertyConverter" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="19.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAIAEAAAEAAAAAAAAAAAAACAA=</HashCode>
+      <FileName>Core\PropertyConverter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Moo.Core.PropertyExplorer" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="12.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAQAAAAAAAQAAAAAAAAAAA=</HashCode>
+      <FileName>Core\PropertyExplorer.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Moo.Core.ReflectionPropertyMappingInfo&lt;TSource, TTarget&gt;" Collapsed="true">
+    <Position X="0.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQBAAAAAAAAQAAgAABAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Core\ReflectionPropertyMappingInfo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Moo.Core.RepositorySpec" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="14" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAEAAAAAAgAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Core\RepositorySpec.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Moo.Core.SourceSpec&lt;TSource, TTarget&gt;" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="15.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>Core\SourceSpec.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Moo.Core.TargetSpec&lt;TSource, TTarget, TInnerSource&gt;" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="17.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAABBAAAACAAAAACAAAAIgAAAAAAAAAAAAAE=</HashCode>
+      <FileName>Core\TargetSpec.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Moo.Core.TypeMappingInfo&lt;TSource, TTarget&gt;" Collapsed="true">
+    <Position X="14" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAiAAEBEA=</HashCode>
+      <FileName>Core\TypeMappingInfo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Moo.Core.ValueConverter" Collapsed="true">
+    <Position X="15.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAACAA=</HashCode>
+      <FileName>Core\ValueConverter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Moo.IEnumerableMappingExtender" Collapsed="true">
+    <Position X="15.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>IEnumerableMappingExtender.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Moo.MappingAttribute" Collapsed="true">
+    <Position X="14" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAAAAAACAAACAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MappingAttribute.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Moo.MappingException" Collapsed="true">
+    <Position X="17.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAAAAAAAAAAAAAAAgAAAAAAAAAAAAiQAAAAA=</HashCode>
+      <FileName>MappingException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Moo.MappingOptions" Collapsed="true">
+    <Position X="19.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAACAAAAAgAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MappingOptions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Moo.MappingRepository" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="12.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AFAAAAAIAQAAAIAAAAAAIAUABAIAAAAAAAAAAABAAAA=</HashCode>
+      <FileName>MappingRepository.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Moo.ObjectMappingExtender" Collapsed="true">
+    <Position X="17.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAA=</HashCode>
+      <FileName>ObjectMappingExtender.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Moo.Mappers.AttributeMapper&lt;TSource, TTarget&gt;" Collapsed="true">
+    <Position X="0.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAgAAAAAA=</HashCode>
+      <FileName>Mappers\AttributeMapper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Moo.Mappers.BaseMapper" Collapsed="true">
+    <Position X="5.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Mappers\BaseMapper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Moo.Mappers.BaseMapper&lt;TSource, TTarget&gt;" Collapsed="true">
+    <Position X="5.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAABAAEAAQAgAAAAAAAAADAACQgAEAoABAAAA=</HashCode>
+      <FileName>Mappers\BaseMapper.Generic.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Moo.Mappers.CompositeMapper&lt;TSource, TTarget&gt;" Collapsed="true">
+    <Position X="3" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAgAIAAAAAYAAAAAAAAAAAAAAAAAAgAAAgAAAAAA=</HashCode>
+      <FileName>Mappers\CompositeMapper.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Moo.Mappers.ConfigurationMapper&lt;TSource, TTarget&gt;" Collapsed="true">
+    <Position X="5.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAA=</HashCode>
+      <FileName>Mappers\ConfigurationMapper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Moo.Mappers.ConventionMapper&lt;TSource, TTarget&gt;" Collapsed="true">
+    <Position X="7.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAAAA=</HashCode>
+      <FileName>Mappers\ConventionMapper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Moo.Mappers.ManualMapper&lt;TSource, TTarget&gt;" Collapsed="true">
+    <Position X="9.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAAAAAIAAAAAAAAAAAAAAAAAAAAAAgAAAAAA=</HashCode>
+      <FileName>Mappers\ManualMapper.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="Moo.Core.IExpressionHandler" Collapsed="true">
+    <Position X="12.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAIAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Core\IExpressionHandler.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Moo.Core.IPropertyConverter" Collapsed="true">
+    <Position X="19.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAACAA=</HashCode>
+      <FileName>Core\IPropertyConverter.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Moo.Core.IPropertyExplorer" Collapsed="true">
+    <Position X="12.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAQAAAAAAAQAAAAAAAAAAA=</HashCode>
+      <FileName>Core\IPropertyExplorer.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Moo.IExtensibleMapper&lt;TSource, TTarget&gt;" Collapsed="true">
+    <Position X="0.5" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAAAAAIAAAAAAAAAAAAAAAAAAgAAAAAAAAAA=</HashCode>
+      <FileName>IExtensibleMapper.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Moo.IMapper" Collapsed="true">
+    <Position X="0.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAA=</HashCode>
+      <FileName>IMapper.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Moo.IMapper&lt;TSource, TTarget&gt;" Collapsed="true">
+    <Position X="0.5" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAA=</HashCode>
+      <FileName>IMapper.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Moo.IMappingRepository" Collapsed="true">
+    <Position X="17.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAIAAAAAIAAAAAAAAAABAIAAAAAAAAAAABAAAA=</HashCode>
+      <FileName>IMappingRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Moo.IRepositorySpec" Collapsed="true">
+    <Position X="14" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAEAAAAAAgAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>IRepositorySpec.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Moo.IMapperStartSpec" Collapsed="true">
+    <Position X="15.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAAAAAAAAAAAAAAAAAAAEAAAAABAAAAAAAAA=</HashCode>
+      <FileName>IRepositorySpec.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Moo.IMapperSequenceSpec" Collapsed="true">
+    <Position X="14" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>IRepositorySpec.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Moo.ISourceSpec&lt;TSource, TTarget&gt;" Collapsed="true">
+    <Position X="15.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>ISourceSpec.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Moo.ITargetSpec&lt;TSource, TTarget, TInnerSource&gt;" Collapsed="true">
+    <Position X="17.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ITargetSpec.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="Moo.Core.MappingOverwriteBehavior" Collapsed="true">
+    <Position X="14" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAQAA=</HashCode>
+      <FileName>Core\TypeMappingInfo.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Moo.MappingDirections" Collapsed="true">
+    <Position X="12.25" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAAAAAAAAgAAACAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MappingAttribute.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Delegate Name="Moo.MappingAction&lt;TSource, TTarget&gt;" Collapsed="true">
+    <Position X="12.25" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>IExtensibleMapper.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -28,6 +28,8 @@ namespace Moo.Core
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
+    using System.Linq.Expressions;
 
     /// <summary>
     /// Determines behavior to use for mapping overwrites
@@ -192,6 +194,62 @@ namespace Moo.Core
             {
                 Add(m);
             }
+        }
+
+        /// <summary>
+        /// Compiles multiple internal mapping entries into a single lambda, for faster execution.
+        /// </summary>
+        public void Compile()
+        {
+            var sourceParam = Expression.Parameter(typeof(TSource), "source");
+            var targetParam = Expression.Parameter(typeof(TTarget), "target");
+
+            var q = from m in memberMappings
+                    let rm = m.Value as ReflectionPropertyMappingInfo<TSource, TTarget>
+                    where rm != null
+                    select new
+                    {
+                        CurrentMapping = m,
+                        Expression = GetExpression(m.Key, rm, sourceParam, targetParam)
+                    };
+
+            var innerExpressions = q.Where(i => i.Expression != null).ToArray();
+            if (innerExpressions.Length > 0)
+            {
+                var block = Expression.Block(innerExpressions.Select(i => i.Expression));
+                var lambda = Expression.Lambda<MappingAction<TSource, TTarget>>(block, sourceParam, targetParam);
+                var targetNames = innerExpressions.Select(i => i.CurrentMapping.Key);
+                var newMapping = new DelegateMappingInfo<TSource, TTarget>(
+                    "Multiple sources -- see target.",
+                    String.Join(",", targetNames),
+                    lambda.Compile());
+
+                foreach (var e in innerExpressions)
+                {
+                    this.memberMappings.Remove(e.CurrentMapping.Key);
+                }
+
+                this.Add(newMapping);
+            }
+        }
+
+        private PropertyConverter propConverter = new PropertyConverter();
+
+        private Expression GetExpression(
+            string targetMemberName, 
+            ReflectionPropertyMappingInfo<TSource, TTarget> reflectionInfo,
+            ParameterExpression sourceParam,
+            ParameterExpression targetParam)
+        {
+            var targetGet = Expression.Property(targetParam, reflectionInfo.TargetPropertyInfo);
+            var sourceGet = Expression.Property(sourceParam, reflectionInfo.SourcePropertyInfo);
+            if (! reflectionInfo.TargetPropertyInfo.PropertyType.IsAssignableFrom(
+                reflectionInfo.SourcePropertyInfo.PropertyType))
+            {
+                return null;
+            }
+            var assignment = Expression.Assign(targetGet, sourceGet);
+            return assignment;
         }
 
         #endregion Methods

@@ -216,6 +216,8 @@ namespace Moo.Mappers
                 this.TypeMapping.AddRange(this.GetMappings());
             }
 
+            this.TypeMapping.Compile();
+
             this.CurrentStatus = MapperStatus.Active;
         }
 

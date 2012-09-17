@@ -55,8 +55,8 @@ namespace Moo.Core
             Guard.CheckArgumentNotNull(converter, "converter");
             this.SourceMemberName = sourceProperty.Name;
             this.TargetMemberName = targetProperty.Name;
-            this.FromPropertyInfo = sourceProperty;
-            this.ToPropertyInfo = targetProperty;
+            this.SourcePropertyInfo = sourceProperty;
+            this.TargetPropertyInfo = targetProperty;
             this.Converter = converter;
             this.Strict = strict;
         }
@@ -87,7 +87,7 @@ namespace Moo.Core
         /// <summary>
         /// Gets from property info.
         /// </summary>
-        public PropertyInfo FromPropertyInfo { get; private set; }
+        public PropertyInfo SourcePropertyInfo { get; private set; }
 
         /// <summary>
         /// Gets a value indicating whether this <see cref="ReflectionPropertyMappingInfo&lt;TSource, TTarget&gt;"/> is strict.
@@ -105,7 +105,7 @@ namespace Moo.Core
         /// <summary>
         /// Gets to property info.
         /// </summary>
-        public PropertyInfo ToPropertyInfo { get; private set; }
+        public PropertyInfo TargetPropertyInfo { get; private set; }
 
         #endregion Properties
 
@@ -118,7 +118,7 @@ namespace Moo.Core
         /// <param name="target">The mapping target.</param>
         public override void Map(TSource source, TTarget target)
         {
-            this.Converter.Convert(source, this.FromPropertyInfo, target, this.ToPropertyInfo, this.Strict);
+            this.Converter.Convert(source, this.SourcePropertyInfo, target, this.TargetPropertyInfo, this.Strict);
         }
 
         #endregion Methods
