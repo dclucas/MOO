@@ -45,6 +45,8 @@ namespace Moo.PerfComparison
                 {
                     new Tuple<string, Action>("Manual code", 
                         () => ManualMap(source, target)),
+                    new Tuple<string, Action>("ManualErrorHandlingMap", 
+                        () => ManualErrorHandlingMap(source, target)),
                     new Tuple<string, Action>("Lambda map", 
                         () => LambdaMap(source, target)),
                     new Tuple<string, Action>("Expression map", 
@@ -78,6 +80,34 @@ namespace Moo.PerfComparison
             target.Email = source.Email;
             target.StreetAddress = source.StreetAddress;
             target.Telephone = source.Telephone;
+        }
+
+        private static void ManualErrorHandlingMap(Contact source, ContactDataContract target)
+        {
+            try
+            {
+                target.Email = source.Email;
+            }
+            catch (Exception exc)
+            {
+                throw new MappingException("Mapping error", exc);
+            }
+            try
+            {
+                target.StreetAddress = source.StreetAddress;
+            }
+            catch (Exception exc)
+            {
+                throw new MappingException("Mapping error", exc);
+            }
+            try
+            {
+                target.Telephone = source.Telephone;
+            }
+            catch (Exception exc)
+            {
+                throw new MappingException("Mapping error", exc);
+            }
         }
 
         private static void LambdaMap(Contact source, ContactDataContract target)

@@ -241,6 +241,13 @@ namespace Moo.Core
             ParameterExpression sourceParam,
             ParameterExpression targetParam)
         {
+            var converter = new PropertyConverter();
+            return converter.CreateConvertExpression(
+                reflectionInfo.SourcePropertyInfo,
+                reflectionInfo.TargetPropertyInfo,
+                sourceParam,
+                targetParam);
+            /*
             var targetGet = Expression.Property(targetParam, reflectionInfo.TargetPropertyInfo);
             var sourceGet = Expression.Property(sourceParam, reflectionInfo.SourcePropertyInfo);
             if (! reflectionInfo.TargetPropertyInfo.PropertyType.IsAssignableFrom(
@@ -250,6 +257,7 @@ namespace Moo.Core
             }
             var assignment = Expression.Assign(targetGet, sourceGet);
             return assignment;
+             */
         }
 
         #endregion Methods

@@ -27,7 +27,8 @@
 namespace Moo.Core
 {
     using System;
-    using System.Reflection;
+using System.Linq.Expressions;
+using System.Reflection;
 
     /// <summary>
     /// Provides functionalities for property conversion.
@@ -97,6 +98,72 @@ namespace Moo.Core
             this.Convert(source, sourceProperty, target, targetProperty, false);
         }
 
+        public virtual Expression CreateConvertExpression(
+            PropertyInfo sourceProperty,
+            PropertyInfo targetProperty,
+            ParameterExpression sourceParameter,
+            ParameterExpression targetParameter)
+        {
+            PropertyInfo innerProp;
+            var checkProp = false;
+            string sourceName = sourceProperty.Name;
+            string targetName = targetProperty.Name;
+            var targetGet = Expression.Property(targetParameter, targetProperty);
+            var sourceGet = Expression.Property(sourceParameter, sourceProperty);
+            var originalSourceGet = sourceGet;
+            if (!this.CanConvert(sourceProperty, targetProperty, out innerProp))
+            {
+                //throw new InvalidOperationException();
+                return null;
+            }
+
+            if (innerProp != null)
+            {
+                sourceGet = Expression.Property(sourceGet, innerProp);
+                sourceProperty = innerProp;
+                checkProp = true;
+            }
+
+            Expression valueGet = sourceGet;
+
+            if (! sourceProperty.PropertyType.IsAssignableFrom(sourceProperty.PropertyType))
+            {
+                var converter = Expression.Constant(CreateValueConverter());
+                // TODO: shouldn't I do a GetType or something here?
+                var targetType = Expression.Constant(targetProperty.PropertyType);
+                var convertMethod = typeof(ValueConverter).GetMethod("Convert");
+                var sourceCast = Expression.Convert(sourceGet, typeof(object));
+                var convertCall = Expression.Call(converter, convertMethod, sourceCast, targetType);
+            }
+
+            Expression assignment = Expression.Assign(targetGet, valueGet);
+
+            if (checkProp)
+            {
+                var nullComparison = Expression.NotEqual(originalSourceGet, Expression.Constant(null));
+                assignment = Expression.IfThen(nullComparison, assignment);
+            }
+
+            var excParam = Expression.Parameter(typeof(Exception));
+            var excCtr = typeof(MappingException).GetConstructor(new Type[] 
+                {
+                    typeof(Type),
+                    typeof(Type),
+                    typeof(string),   
+                    typeof(string), 
+                    typeof(Exception)
+                });
+            /*
+            var exc = Expression.New(
+                typeof(MappingException),
+                Expression.Constant(typeof(sour
+             */
+            //var mappingThrow = Expression.Throw(
+            //var catchBlock = Expression.Catch(
+            //var tryCatch = Expression.TryCatch(assignment,
+            return assignment;
+        }
+
         /// <summary>
         /// Performs conversion between the two properties.
         /// </summary>
@@ -140,7 +207,7 @@ namespace Moo.Core
                 }
             }
 
-            // If the mapping is sourceMember a nested property, we need targtargetMember the sourceValue
+            // If the mapping is from a nested property, we need to get the sourceValue
             // within the internal object.
             if (innerProp != null)
             {

@@ -26,9 +26,13 @@
 namespace Moo.Tests.Core
 {
     using System;
+    using System.Linq.Expressions;
     using System.Reflection;
+
     using NUnit.Framework;
     using Moo.Core;
+    using Ploeh.AutoFixture;
+    using Shouldly;
 
     /// <summary>
     /// This is a test class for PropertyMatcherTest and is intended
@@ -118,6 +122,45 @@ namespace Moo.Tests.Core
                 target,
                 resultProperty,
                 false);
+        }
+
+        //[TestCase(typeof(TestClassA), typeof(TestClassB), "Name", "Name", "John Doe")]
+        [TestCase(typeof(TestClassA), typeof(TestClassB), "InnerClass", "InnerClassName", null)]
+        public void CreateConvertExpression_MultipleCases_ConvertsCorrectly(
+            Type sourceType,
+            Type targetType,
+            string sourcePropertyName,
+            string targetPropertyName,
+            object sourcePropertyValue)
+        {
+            var target = new PropertyConverter();
+            var fixture = new Fixture();
+            var createMethod = fixture.GetType().GetMethod("CreateAnonymous");
+            var sourceObject = Activator.CreateInstance(sourceType);
+            var targetObject = Activator.CreateInstance(targetType);
+            //var sourceType = sourceObject.GetType();
+            //var targetType = targetObject.GetType();
+            var sourceParam = Expression.Parameter(sourceType);
+            var targetParam = Expression.Parameter(targetType);
+            var sourceProp = sourceType.GetProperty(sourcePropertyName);
+            var targetProp = targetType.GetProperty(targetPropertyName);
+            if (sourcePropertyValue != null)
+            {
+                sourceProp.SetValue(sourceObject, sourcePropertyValue, null);
+            }
+
+            var expr = target.CreateConvertExpression(
+                sourceProp,
+                targetProp,
+                sourceParam,
+                targetParam);
+
+            var actionType = typeof(MappingAction<,>).MakeGenericType(sourceType, targetType);
+            var lambda = Expression.Lambda(actionType, expr, sourceParam, targetParam);
+            var action = lambda.Compile();
+            action.DynamicInvoke(sourceObject, targetObject);
+            var resultProp = targetProp.GetValue(targetObject, null);
+            resultProp.ShouldBe(sourcePropertyValue);
         }
 
         private void TestMatch(string fromProp, string toProp, bool expected)
