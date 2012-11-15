@@ -67,6 +67,9 @@ namespace Moo.Core
         private Dictionary<string, MemberMappingInfo<TSource, TTarget>> memberMappings =
             new Dictionary<string, MemberMappingInfo<TSource, TTarget>>();
 
+        /// <summary>The property converter.</summary>
+        private PropertyConverter propConverter = new PropertyConverter();
+
         #endregion Fields
 
         #region Constructors
@@ -221,7 +224,7 @@ namespace Moo.Core
                 var targetNames = innerExpressions.Select(i => i.CurrentMapping.Key);
                 var newMapping = new DelegateMappingInfo<TSource, TTarget>(
                     "Multiple sources -- see target.",
-                    String.Join(",", targetNames),
+                    string.Join(",", targetNames),
                     lambda.Compile());
 
                 foreach (var e in innerExpressions)
@@ -233,8 +236,12 @@ namespace Moo.Core
             }
         }
 
-        private PropertyConverter propConverter = new PropertyConverter();
-
+        /// <summary>Converts a reflection member mapping info into a conversion expression.</summary>
+        /// <param name="targetMemberName">Name of the target member.</param>
+        /// <param name="reflectionInfo">  Reflection-based mapping info.</param>
+        /// <param name="sourceParam">     Source parameter.</param>
+        /// <param name="targetParam">     Target parameter.</param>
+        /// <returns>The conversion expression.</returns>
         private Expression GetExpression(
             string targetMemberName, 
             ReflectionPropertyMappingInfo<TSource, TTarget> reflectionInfo,

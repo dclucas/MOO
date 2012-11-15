@@ -292,10 +292,10 @@ namespace Moo
         /// </summary>
         /// <typeparam name="TSource">Type of the source.</typeparam>
         /// <typeparam name="TTarget">Type of the target.</typeparam>
-        /// <param name="sourceMember">
+        /// <param name="sourceMemberName">
         /// Source member.
         /// </param>
-        /// <param name="targetMember">
+        /// <param name="targetMemberName">
         /// Destination member.
         /// </param>
         /// <param name="mappingAction">

@@ -37,7 +37,7 @@ namespace Moo.Core
         #region Methods
 
         /// <summary>
-        /// Checks whether this class can make the convertion between the two provided types.
+        /// Checks whether this class can make the conversion between the two provided types.
         /// </summary>
         /// <param name="sourceType">
         /// The source <see cref="Type"/>.

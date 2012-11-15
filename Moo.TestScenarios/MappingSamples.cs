@@ -32,6 +32,7 @@ namespace Moo.TestScenarios
     using System.Text;
     using System.Diagnostics;
 
+    using Moo.Extenders;
     using Moo.Mappers;
     using Moo.TestScenarios.MappedClasses.DomainModels;
     using Moo.TestScenarios.MappedClasses.ViewModels;

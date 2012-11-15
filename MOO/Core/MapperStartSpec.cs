@@ -40,8 +40,8 @@ namespace Moo.Core
             this.ParentSpec = repositorySpec;
         }
 
-        /// <summary>Gets or sets the parent specifier.</summary>
-        /// <value>The parent specifier.</value>
+        /// <summary>Gets or sets the parent specs.</summary>
+        /// <value>The parent specs.</value>
         private IRepositorySpec ParentSpec { get; set; }
 
         /// <summary>Gets the mapper sequence.</summary>

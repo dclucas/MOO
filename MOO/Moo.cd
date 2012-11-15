@@ -97,7 +97,7 @@
   <Class Name="Moo.Core.PropertyConverter" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="19.25" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAIAAIAEAAAEAAAAAAAAAAAAACAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAACAIAAIAEAAAEAAAAAAAAAAAAACAA=</HashCode>
       <FileName>Core\PropertyConverter.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
@@ -113,7 +113,7 @@
   <Class Name="Moo.Core.ReflectionPropertyMappingInfo&lt;TSource, TTarget&gt;" Collapsed="true">
     <Position X="0.75" Y="5.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAQBAAAAAAAAQAAgAABAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAIAAAQBAAAAAAAAAAAgAAAAAAAAAAAAAAAIAAAAA=</HashCode>
       <FileName>Core\ReflectionPropertyMappingInfo.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -144,7 +144,7 @@
   <Class Name="Moo.Core.TypeMappingInfo&lt;TSource, TTarget&gt;" Collapsed="true">
     <Position X="14" Y="4.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAIAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAiAAEBEA=</HashCode>
+      <HashCode>AAIQAAAAAAAAAAAAAAAAAEAAAACAAAAAAAAAiAAEBEA=</HashCode>
       <FileName>Core\TypeMappingInfo.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -155,11 +155,11 @@
       <FileName>Core\ValueConverter.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Moo.IEnumerableMappingExtender" Collapsed="true">
+  <Class Name="Moo.Extenders.IEnumerableMappingExtender" Collapsed="true">
     <Position X="15.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>IEnumerableMappingExtender.cs</FileName>
+      <FileName>Extenders\IEnumerableMappingExtender.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Moo.MappingAttribute" Collapsed="true">
@@ -191,11 +191,11 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="Moo.ObjectMappingExtender" Collapsed="true">
+  <Class Name="Moo.Extenders.ObjectMappingExtender" Collapsed="true">
     <Position X="17.5" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAA=</HashCode>
-      <FileName>ObjectMappingExtender.cs</FileName>
+      <FileName>Extenders\ObjectMappingExtender.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Moo.Mappers.AttributeMapper&lt;TSource, TTarget&gt;" Collapsed="true">

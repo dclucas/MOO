@@ -33,6 +33,7 @@ namespace Moo.Tests
     using FakeItEasy;
     using NUnit.Framework;
     using Moo;
+    using Moo.Extenders;
 
     [TestFixture]
     public class IEnumerableMappingExtenderTest

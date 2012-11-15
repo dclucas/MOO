@@ -97,7 +97,7 @@ using System.Collections.Generic;
         /// This method relies on the <see cref="System.Activator.CreateInstance&lt;T&gt;"/>
         /// method to create target objects. This means that both there are
         /// more efficient methods for that and that this limits the use of
-        /// this overload to target classes that are passible of contruction
+        /// this overload to target classes that are passible of construction
         /// through this framework method.
         /// </remarks>
         TTarget Map(TSource source);
@@ -122,7 +122,7 @@ using System.Collections.Generic;
         /// <remarks>
         /// This method relies on the <c>TTarget Map(TSource source)</c> item
         /// mapping overload. So the dependency to <see cref="Activator.CreateInstance&lt;T&gt;"/>
-        /// and its limitarions also occurs here
+        /// and its limitations also occurs here.
         /// </remarks>
         IEnumerable<TTarget> MapMultiple(IEnumerable<TSource> sourceList);
 

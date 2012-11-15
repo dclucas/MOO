@@ -27,11 +27,12 @@
 namespace Moo.Mappers
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
+
     using Moo.Core;
-    using System.Collections;
 
     /// <summary>
     /// Base generic mapper class.
@@ -104,18 +105,15 @@ namespace Moo.Mappers
             return this.Map((TSource)source);
         }
 
-        /// <summary>
-        /// Maps the specified source to a target object.
-        /// </summary>
-        /// <param name="source">The source.</param>
-        /// <returns>A filled target object</returns>
+        /// <summary>Maps the specified source to a target object.</summary>
         /// <remarks>
         /// This method relies on the <see cref="System.Activator.CreateInstance&lt;T&gt;"/>
-        /// method to create target objects. This means that both there are
-        /// more efficient methods for that and that this limits the use of
-        /// this overload to target classes that are passible of contruction
-        /// through this framework method.
+        /// method to create target objects. This means that both there are more efficient methods for
+        /// that and that this limits the use of this overload to target classes that are passible of
+        /// construction through this framework method.
         /// </remarks>
+        /// <param name="source">The source.</param>
+        /// <returns>A filled target object.</returns>
         public virtual TTarget Map(TSource source)
         {
             var target = Activator.CreateInstance<TTarget>();
@@ -252,13 +250,16 @@ namespace Moo.Mappers
         /// <remarks>
         /// This method relies on the <c>TTarget Map(TSource source)</c> item
         /// mapping overload. So the dependency to <see cref="System.Activator.CreateInstance&lt;T&gt;"/>
-        /// and its limitarions also occurs here
+        /// and its limitations also occurs here
         /// </remarks>
         public virtual IEnumerable<TTarget> MapMultiple(IEnumerable<TSource> sourceList)
         {
             return sourceList.Select(s => this.Map(s));
         }
 
+        /// <summary>Maps multiple source objects into multiple target objects.</summary>
+        /// <param name="sourceList">The source list.</param>
+        /// <returns>A list of target objects.</returns>
         public System.Collections.IEnumerable MapMultiple(System.Collections.IEnumerable sourceList)
         {
             foreach (var o in sourceList)
@@ -329,7 +330,7 @@ namespace Moo.Mappers
                     var innerSource = innerSourceType.GetGenericArguments()[0];
                     var innerTarget = innerTargetType.GetGenericArguments()[0];
                     var realMapper = this.ParentRepository.ResolveMapper(innerSource, innerTarget);
-                    return new MultyMappingAdapter(realMapper, innerSourceType);
+                    return new MultiMappingAdapter(realMapper, innerSourceType);
                 }
             }
 
@@ -404,31 +405,60 @@ namespace Moo.Mappers
 
         #region Internal classes
 
-        private class MultyMappingAdapter : IMapper
+        /// <summary>Multi mapping adapter.</summary>
+        private class MultiMappingAdapter : IMapper
         {
-            public MultyMappingAdapter(IMapper realMapper, Type sourceType)
+            /// <summary>Initializes a new instance of the MultiMappingAdapter class.</summary>
+            /// <param name="realMapper">The real mapper.</param>
+            /// <param name="sourceType">Type of the source.</param>
+            public MultiMappingAdapter(IMapper realMapper, Type sourceType)
             {
                 var methodInfo = realMapper.GetType().GetMethod("MapMultiple", new[] { sourceType });
                 this.MapMethod = (s) => methodInfo.Invoke(realMapper, new[] { s });
             }
 
+            /// <summary>Gets or sets the mapping method.</summary>
+            /// <value>The mapping method to be used.</value>
             private Func<object, object> MapMethod { get; set; }
 
+            /// <summary>Maps from the specified source to the target object.</summary>
+            /// <exception cref="NotImplementedException">
+            /// Thrown when the requested operation is unimplemented.
+            /// </exception>
+            /// <param name="source">The source object.</param>
+            /// <param name="target">The target object.</param>
+            /// <returns>A filled target object.</returns>
             public object Map(object source, object target)
             {
                 throw new NotImplementedException();
             }
 
+            /// <summary>Maps from the specified source to the target object.</summary>
+            /// <param name="source">The source object.</param>
+            /// <returns>A filled target object.</returns>
             public object Map(object source)
             {
                 return MapMethod(source);
             }
 
+            /// <summary>Maps from the specified source to the target object.</summary>
+            /// <exception cref="NotImplementedException">
+            /// Thrown when the requested operation is unimplemented.
+            /// </exception>
+            /// <param name="source">      The source object.</param>
+            /// <param name="createTarget">A function to create target objects.</param>
+            /// <returns>A filled target object.</returns>
             public object Map(object source, Func<object> createTarget)
             {
                 throw new NotImplementedException();
             }
 
+            /// <summary>Maps multiple source objects into multiple target objects.</summary>
+            /// <exception cref="NotImplementedException">
+            /// Thrown when the requested operation is unimplemented.
+            /// </exception>
+            /// <param name="sourceList">The source list.</param>
+            /// <returns>A list of target objects.</returns>
             public IEnumerable MapMultiple(IEnumerable sourceList)
             {
                 throw new NotImplementedException();

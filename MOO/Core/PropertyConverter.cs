@@ -98,6 +98,12 @@ using System.Reflection;
             this.Convert(source, sourceProperty, target, targetProperty, false);
         }
 
+        /// <summary>Creates convert expression from a property to another.</summary>
+        /// <param name="sourceProperty"> The source property.</param>
+        /// <param name="targetProperty"> The target property.</param>
+        /// <param name="sourceParameter">Source parameter expression.</param>
+        /// <param name="targetParameter">Target parameter expression.</param>
+        /// <returns>The new convert expression.</returns>
         public virtual Expression CreateConvertExpression(
             PropertyInfo sourceProperty,
             PropertyInfo targetProperty,
@@ -113,7 +119,6 @@ using System.Reflection;
             var originalSourceGet = sourceGet;
             if (!this.CanConvert(sourceProperty, targetProperty, out innerProp))
             {
-                //throw new InvalidOperationException();
                 return null;
             }
 
@@ -126,9 +131,10 @@ using System.Reflection;
 
             Expression valueGet = sourceGet;
 
-            if (! sourceProperty.PropertyType.IsAssignableFrom(sourceProperty.PropertyType))
+            if (!sourceProperty.PropertyType.IsAssignableFrom(sourceProperty.PropertyType))
             {
                 var converter = Expression.Constant(CreateValueConverter());
+
                 // TODO: shouldn't I do a GetType or something here?
                 var targetType = Expression.Constant(targetProperty.PropertyType);
                 var convertMethod = typeof(ValueConverter).GetMethod("Convert");
@@ -153,14 +159,8 @@ using System.Reflection;
                     typeof(string), 
                     typeof(Exception)
                 });
-            /*
-            var exc = Expression.New(
-                typeof(MappingException),
-                Expression.Constant(typeof(sour
-             */
-            //var mappingThrow = Expression.Throw(
-            //var catchBlock = Expression.Catch(
-            //var tryCatch = Expression.TryCatch(assignment,
+            
+            // TODO: add try catch blocks here, to provide the correct property names upon errors.
             return assignment;
         }
 
@@ -237,13 +237,13 @@ using System.Reflection;
         /// in case of a nested conversion (conversion targetMember a property within
         /// the "targetMember" property).</param>
         /// <returns>
-        ///   <c>true</c> if a conversion bewtween the prioperty types is possible
+        ///   <c>true</c> if a conversion between the property types is possible
         /// and if a match was found between the property names.
         /// </returns>
         /// <remarks>
-        /// This method allows the <see>PropertyConverter</see> class targetMember
-        /// give support targetMember nested properties in the destination. In that case,
-        /// a conversion sourceMember objA.Customer.Name targtargetMemberB.CustomerName is possible.
+        /// This method allows the <see>PropertyConverter</see> class to
+        /// give support to nested properties in the destination. In that case,
+        /// a conversion from <c>objA.Customer.Name</c> to <c>objB.CustomerName</c> is possible.
         /// </remarks>
         [System.Diagnostics.CodeAnalysis.SuppressMessage(
             "Microsoft.Design",

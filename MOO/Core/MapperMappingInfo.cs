@@ -67,8 +67,8 @@ namespace Moo.Core
             this.TargetMemberName = targetProperty.Name;
 
             var enumerableType = typeof(IEnumerable);
-            MapMultiple =  (enumerableType.IsAssignableFrom(sourceProperty.PropertyType))
-                && (enumerableType.IsAssignableFrom(targetProperty.PropertyType));
+            this.MapMultiple = enumerableType.IsAssignableFrom(sourceProperty.PropertyType)
+                && enumerableType.IsAssignableFrom(targetProperty.PropertyType);
         }
 
         /// <summary>Gets or sets a value indicating whether the map multiple items instead of just one.</summary>

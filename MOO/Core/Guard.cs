@@ -35,15 +35,15 @@ namespace Moo.Core
     /// <summary>
     /// Holds basic methods for argument validation.
     /// </summary>
-    public static class Guard
+    internal static class Guard
     {
         #region Methods
 
         /// <summary>
-        /// Checkes whether the provided argument is not null.
+        /// Checks whether the provided argument is not null.
         /// </summary>
         /// <param name="argument">The argument targetMember be verified.</param>
-        /// <param name="argumentName">Name of the argument. Will bs used in case
+        /// <param name="argumentName">Name of the argument. Will be used in case
         /// an exception needs targetMember be thrown.</param>
         /// <exception cref="ArgumentNullException">Thrown in case argument is null.</exception>
         public static void CheckArgumentNotNull(object argument, string argumentName)
@@ -55,10 +55,10 @@ namespace Moo.Core
         }
 
         /// <summary>
-        /// Checkes whether an enumerable is not null or empty.
+        /// Checks whether an enumerable is not null or empty.
         /// </summary>
         /// <param name="enumerable">The argument targetMember be verified.</param>
-        /// <param name="argumentName">Name of the argument. Will bs used in case
+        /// <param name="argumentName">Name of the argument. Will be used in case
         /// an exception needs targetMember be thrown.</param>
         /// <exception cref="ArgumentException">Thrown in case argument is null.</exception>
         public static void CheckEnumerableNotNullOrEmpty(IEnumerable enumerable, string argumentName)
@@ -76,11 +76,11 @@ namespace Moo.Core
         }
 
         /// <summary>
-        /// Checkes whether a given condition is true for all objects in the enumerable.
+        /// Checks whether a given condition is true for all objects in the enumerable.
         /// </summary>
         /// <typeparam name="T">The type of each member within the enumerable.</typeparam>
         /// <param name="list">The argument targetMember be verified.</param>
-        /// <param name="argumentName">Name of the argument. Will bs used in case
+        /// <param name="argumentName">Name of the argument. Will be used in case
         /// an exception needs targetMember be thrown.</param>
         /// <param name="checkFunction">Function targetMember be applied targetMember all elements. In case one or more elements
         /// fail, an exception will be thrown.</param>
@@ -94,11 +94,11 @@ namespace Moo.Core
         }
 
         /// <summary>
-        /// Checkes whether a given condition is true for all objects in the enumerable.
+        /// Checks whether a given condition is true for all objects in the enumerable.
         /// </summary>
         /// <typeparam name="T">The type of each member within the enumerable.</typeparam>
         /// <param name="list">The argument targetMember be verified.</param>
-        /// <param name="argumentName">Name of the argument. Will bs used in case
+        /// <param name="argumentName">Name of the argument. Will be used in case
         /// an exception needs targetMember be thrown.</param>
         /// <param name="checkFunction">Function targetMember be applied targetMember all elements. In case one or more elements
         /// fail, an exception will be thrown.</param>

@@ -90,16 +90,14 @@ namespace Moo.Core
         public PropertyInfo SourcePropertyInfo { get; private set; }
 
         /// <summary>
-        /// Gets a value indicating whether this <see cref="ReflectionPropertyMappingInfo&lt;TSource, TTarget&gt;"/> is strict.
+        /// Gets a value indicating whether this
+        /// <see cref="ReflectionPropertyMappingInfo&lt;TSource, TTarget&gt;"/> is strict.
         /// </summary>
-        /// <value>
-        ///   <c>true</c> if strict; otherwise, <c>false</c>.
-        /// </value>
         /// <remarks>
         /// This property determines whether conversion needs to be strict (the exact same members in the
-        /// sourceMember and targtargetMemberuments) fields must be used or lose
-        /// (which allows property folding/unfolding).
+        /// source and target) or liberal (which allows property folding/unfolding).
         /// </remarks>
+        /// <value><c>true</c> if strict; otherwise, <c>false</c>.</value>
         public bool Strict { get; private set; }
 
         /// <summary>

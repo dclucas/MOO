@@ -108,8 +108,8 @@ namespace Moo.Mappers
         /// <summary>
         /// Adds a member mapping action to the mapper.
         /// </summary>
-        /// <param name="sourceMember">The name of the source member.</param>
-        /// <param name="targetMember">The name of the target member.</param>
+        /// <param name="sourceMemberName">The name of the source member.</param>
+        /// <param name="targetMemberName">The name of the target member.</param>
         /// <param name="mappingAction">The mapping action.</param>
         /// <remarks>
         /// Use this method to add mapping actions through code.
@@ -161,8 +161,8 @@ namespace Moo.Mappers
         /// <summary>Adds an inner mapper, to map from the source to the target members.</summary>
         /// <typeparam name="TInnerSource">Type of the inner source.</typeparam>
         /// <typeparam name="TInnerTarget">Type of the inner target.</typeparam>
-        /// <param name="sourceMember">Name of the source member.</param>
-        /// <param name="targetMember">Name of the target member.</param>
+        /// <param name="sourceMemberName">Name of the source member.</param>
+        /// <param name="targetMemberName">Name of the target member.</param>
         public override void AddInnerMapper<TInnerSource, TInnerTarget>(PropertyInfo sourceMemberName, PropertyInfo targetMemberName)
         {
             this.ExtensibleMapper.AddInnerMapper<TInnerSource, TInnerTarget>(sourceMemberName, targetMemberName);

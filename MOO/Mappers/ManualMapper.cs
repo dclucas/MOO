@@ -59,8 +59,8 @@ namespace Moo.Mappers
         /// <summary>
         /// Adds the mapping action.
         /// </summary>
-        /// <param name="sourceMember">Name of the source member.</param>
-        /// <param name="targetMember">The target member member.</param>
+        /// <param name="sourceMemberName">Name of the source member.</param>
+        /// <param name="targetMemberName">The target member member.</param>
         /// <param name="mappingAction">The mapping action.</param>
         public void AddMappingAction(
             string sourceMemberName,

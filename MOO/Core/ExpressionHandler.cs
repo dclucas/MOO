@@ -32,7 +32,7 @@ namespace Moo.Core
     using System.Reflection;
     using System.Text;
 
-    /// <summary>Provides linq expression handling capabilities.</summary>
+    /// <summary>Provides LINQ expression handling capabilities.</summary>
     internal class ExpressionHandler : IExpressionHandler
     {
         /// <summary>Checks whether the expression represent a property access.</summary>

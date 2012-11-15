@@ -29,10 +29,11 @@ namespace Moo.Tests
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
-    
+
+    using FakeItEasy;
     using NUnit.Framework;
     using Moo;
-    using FakeItEasy;
+    using Moo.Extenders;
 
     [TestFixture]
     public class ObjectMappingExtenderTest

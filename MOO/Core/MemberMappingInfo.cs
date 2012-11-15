@@ -41,8 +41,8 @@ namespace Moo.Core
         /// <summary>
         /// Initializes a new instance of the <see cref="MemberMappingInfo&lt;TSource, TTarget&gt;"/> class.
         /// </summary>
-        /// <param name="sourceMember">Name of the source member.</param>
-        /// <param name="targetMember">Name of the target member.</param>
+        /// <param name="sourceMemberName">Name of the source member.</param>
+        /// <param name="targetMemberName">Name of the target member.</param>
         protected MemberMappingInfo(string sourceMemberName, string targetMemberName)
         {
             Guard.CheckArgumentNotNull(sourceMemberName, "sourceMemberName");
