@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Moo.TestScenarios.Perf
+﻿namespace Moo.TestScenarios.Perf
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+
     public class PerfRoundResult
     {
         public PerfRoundResult(ulong totalTicks, ulong maxTicks, ulong minTicks, int iterationCount)

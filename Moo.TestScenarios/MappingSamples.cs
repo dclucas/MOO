@@ -201,7 +201,7 @@ namespace Moo.TestScenarios
         [Test]
         public void Sample_InnerMapperForEnumerable_UsesInnerMapper()
         {
-            var source = CreateSource();
+            var source = this.CreateSource();
 
             MappingRepository.Default
                 .AddMapping<Person, PersonDetailsDataContract>()

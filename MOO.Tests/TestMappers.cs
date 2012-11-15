@@ -71,7 +71,6 @@ namespace Moo.Tests
             throw new NotImplementedException();
         }
 
-
         public System.Collections.IEnumerable MapMultiple(System.Collections.IEnumerable sourceList)
         {
             throw new NotImplementedException();

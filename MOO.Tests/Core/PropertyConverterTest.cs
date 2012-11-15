@@ -124,7 +124,6 @@ namespace Moo.Tests.Core
                 false);
         }
 
-        //[TestCase(typeof(TestClassA), typeof(TestClassB), "Name", "Name", "John Doe")]
         [TestCase(typeof(TestClassA), typeof(TestClassB), "InnerClass", "InnerClassName", null)]
         public void CreateConvertExpression_MultipleCases_ConvertsCorrectly(
             Type sourceType,
@@ -138,8 +137,6 @@ namespace Moo.Tests.Core
             var createMethod = fixture.GetType().GetMethod("CreateAnonymous");
             var sourceObject = Activator.CreateInstance(sourceType);
             var targetObject = Activator.CreateInstance(targetType);
-            //var sourceType = sourceObject.GetType();
-            //var targetType = targetObject.GetType();
             var sourceParam = Expression.Parameter(sourceType);
             var targetParam = Expression.Parameter(targetType);
             var sourceProp = sourceType.GetProperty(sourcePropertyName);

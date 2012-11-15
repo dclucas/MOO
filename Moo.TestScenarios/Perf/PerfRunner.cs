@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Moo.TestScenarios.Perf
+﻿namespace Moo.TestScenarios.Perf
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+
     public class PerfRunner
     {
         public PerfRunner(IEnumerable<Tuple<string, Action>> targets)
@@ -20,7 +20,7 @@ namespace Moo.TestScenarios.Perf
 
         public IEnumerable<Tuple<string, PerfIteratorResult>> Run()
         {
-            var q = from t in Targets
+            var q = from t in this.Targets
                     select new Tuple<string, PerfIteratorResult>(
                         t.Item1,
                         PerfIterator.Run(t.Item2));
