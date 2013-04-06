@@ -104,6 +104,7 @@
     <Compile Include="DelegateMappingInfoTest.cs" />
     <Compile Include="Core\GuardTest.cs" />
     <Compile Include="IEnumerableMappingExtenderTest.cs" />
+    <Compile Include="Initialization\MappingInitializerExtenderTest.cs" />
     <Compile Include="Mappers\ConfigurationMapperTest.cs" />
     <Compile Include="Configuration\ConfigurationTest.cs" />
     <Compile Include="Mappers\CompositeMapperTest.cs" />

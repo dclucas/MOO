@@ -97,6 +97,7 @@
     <Compile Include="Core\RepositorySpec.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Initialization\IMappingInitializer.cs" />
+    <Compile Include="Initialization\MappingInitializerExtender.cs" />
     <Compile Include="IRepositorySpec.cs" />
     <Compile Include="ISourceSpec.cs" />
     <Compile Include="ITargetSpec.cs" />

@@ -40,6 +40,7 @@ namespace Moo.TestScenarios
     using NUnit.Framework;
     using Ploeh.AutoFixture;
     using Shouldly;
+using Moo.Initialization;
 
     [TestFixture]
     [Category("Integrated")]
@@ -218,6 +219,16 @@ namespace Moo.TestScenarios
             targetContacts[0].StreetAddress.ShouldBe(sourceContacts[0].StreetAddress);
         }
 
+        [Test]
+        public void Sample_WithInitializers_UsesInitializer()
+        {
+            var source = this.CreateSource();
+            var repo = new MappingRepository();
+            repo.InitializeMappings();
+
+            SampleInitializer.Repos.ShouldContain(repo);
+        }
+
         private void CheckMapping(Person p, PersonEditModel pe)
         {
             pe.ShouldNotBe(null);
@@ -243,5 +254,15 @@ namespace Moo.TestScenarios
         {
             return Enumerable.Range(0, 5).Select(i => this.CreateSource());
         }
+
+        public class SampleInitializer : IMappingInitializer
+        {
+            public static HashSet<IMappingRepository> Repos = new HashSet<IMappingRepository>();
+
+            public void InitializeMappings(IMappingRepository mappingRepo)
+            {
+                Repos.Add(mappingRepo);
+            }
+        } 
     }
 }
