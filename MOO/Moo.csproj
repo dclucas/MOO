@@ -62,8 +62,9 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>..\Moo.ruleset</CodeAnalysisRuleSet>
     <DocumentationFile>bin\Release\Moo.XML</DocumentationFile>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -94,6 +95,8 @@
     <Compile Include="Core\MapperStartSpec.cs" />
     <Compile Include="Core\PropertyExplorer.cs" />
     <Compile Include="Core\RepositorySpec.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Initialization\IMappingInitializer.cs" />
     <Compile Include="IRepositorySpec.cs" />
     <Compile Include="ISourceSpec.cs" />
     <Compile Include="ITargetSpec.cs" />

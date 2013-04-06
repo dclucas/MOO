@@ -28,6 +28,7 @@ namespace Moo.Core
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Linq.Expressions;
 
@@ -66,9 +67,6 @@ namespace Moo.Core
         /// </summary>
         private Dictionary<string, MemberMappingInfo<TSource, TTarget>> memberMappings =
             new Dictionary<string, MemberMappingInfo<TSource, TTarget>>();
-
-        /// <summary>The property converter.</summary>
-        private PropertyConverter propConverter = new PropertyConverter();
 
         #endregion Fields
 
@@ -239,32 +237,24 @@ namespace Moo.Core
         /// <summary>Converts a reflection member mapping info into a conversion expression.</summary>
         /// <param name="targetMemberName">Name of the target member.</param>
         /// <param name="reflectionInfo">  Reflection-based mapping info.</param>
-        /// <param name="sourceParam">     Source parameter.</param>
-        /// <param name="targetParam">     Target parameter.</param>
+        /// <param name="sourceParameter">     Source parameter.</param>
+        /// <param name="targetParameter">     Target parameter.</param>
         /// <returns>The conversion expression.</returns>
-        private Expression GetExpression(
+        [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "targetMemberName", Justification = "This is by design. Parameter may be required on other implementations.")]
+        protected Expression GetExpression(
             string targetMemberName, 
             ReflectionPropertyMappingInfo<TSource, TTarget> reflectionInfo,
-            ParameterExpression sourceParam,
-            ParameterExpression targetParam)
+            ParameterExpression sourceParameter,
+            ParameterExpression targetParameter)
         {
+            Guard.CheckArgumentNotNull(reflectionInfo, "reflectionInfo");
+
             var converter = new PropertyConverter();
             return converter.CreateConvertExpression(
                 reflectionInfo.SourcePropertyInfo,
                 reflectionInfo.TargetPropertyInfo,
-                sourceParam,
-                targetParam);
-            /*
-            var targetGet = Expression.Property(targetParam, reflectionInfo.TargetPropertyInfo);
-            var sourceGet = Expression.Property(sourceParam, reflectionInfo.SourcePropertyInfo);
-            if (! reflectionInfo.TargetPropertyInfo.PropertyType.IsAssignableFrom(
-                reflectionInfo.SourcePropertyInfo.PropertyType))
-            {
-                return null;
-            }
-            var assignment = Expression.Assign(targetGet, sourceGet);
-            return assignment;
-             */
+                sourceParameter,
+                targetParameter);
         }
 
         #endregion Methods

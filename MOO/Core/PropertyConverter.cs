@@ -27,8 +27,9 @@
 namespace Moo.Core
 {
     using System;
-using System.Linq.Expressions;
-using System.Reflection;
+    using System.Diagnostics.CodeAnalysis;
+    using System.Linq.Expressions;
+    using System.Reflection;
 
     /// <summary>
     /// Provides functionalities for property conversion.
@@ -104,12 +105,18 @@ using System.Reflection;
         /// <param name="sourceParameter">Source parameter expression.</param>
         /// <param name="targetParameter">Target parameter expression.</param>
         /// <returns>The new convert expression.</returns>
+        [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "1", Justification = "The call to Guard does that.")]
         public virtual Expression CreateConvertExpression(
             PropertyInfo sourceProperty,
             PropertyInfo targetProperty,
             ParameterExpression sourceParameter,
             ParameterExpression targetParameter)
         {
+            Guard.CheckArgumentNotNull(sourceProperty, "sourceProperty");
+            Guard.CheckArgumentNotNull(targetParameter, "targetParameter");
+            Guard.CheckArgumentNotNull(sourceParameter, "sourceParameter");
+            Guard.CheckArgumentNotNull(targetParameter, "targetParameter");
+
             PropertyInfo innerProp;
             var checkProp = false;
             string sourceName = sourceProperty.Name;

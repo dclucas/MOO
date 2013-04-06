@@ -26,8 +26,8 @@
 namespace Moo
 {
     using System;
-using System.Collections;
-using System.Collections.Generic;
+    using System.Collections;
+    using System.Collections.Generic;
 
     /// <summary>
     /// Base interface for all mappers.
