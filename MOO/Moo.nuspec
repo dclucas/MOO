@@ -2,9 +2,9 @@
 <package >
   <metadata>
     <id>Moo</id>
-    <version>$version$</version>
-    <title>$title$</title>
-    <authors>Moo</authors>
+    <version>0.9</version>
+    <title>Moo</title>
+    <authors>Diogo Lucas</authors>
     <owners>Diogo Lucas</owners>
 	<licenseUrl>http://moo.codeplex.com/license</licenseUrl>
     <projectUrl>https://github.com/dclucas/Moo</projectUrl>
@@ -12,6 +12,6 @@
 	<description>MOO is an object-to-object multimapper. It allows you to combine a number of different mapping strategies (conventions, config and others).</description>
     <releaseNotes></releaseNotes>
     <copyright>Copyright 2009</copyright>
-    <tags>Mapping Mapper</tags>
+    <tags>Mapping Mapper Object-to-object</tags>
   </metadata>
 </package>

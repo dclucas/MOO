@@ -148,6 +148,9 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\readme.md">
+      <Link>readme.md</Link>
+    </None>
     <None Include="Moo.cd" />
     <None Include="Moo.licenseheader" />
     <None Include="Settings.StyleCop" />
