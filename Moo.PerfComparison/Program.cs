@@ -72,7 +72,6 @@ namespace Moo.PerfComparison
                 Console.WriteLine("  Min ticks: {0}", r.Item2.OverallMinTicks);
                 Console.WriteLine();
             }
-            Console.ReadKey();
         }
 
         private static void ManualMap(Contact source, ContactDataContract target)
