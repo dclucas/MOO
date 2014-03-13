@@ -91,12 +91,13 @@ namespace Moo.Core
             {
                 if (targetType.IsValueType)
                 {
-                    throw new InvalidOperationException();
+                    if (Nullable.GetUnderlyingType(targetType) == null)
+                    {
+                        throw new InvalidOperationException();
+                    }
                 }
-                else
-                {
-                    return null;
-                }
+
+                return null;
             }
 
             Type sourceType = sourceValue.GetType();

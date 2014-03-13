@@ -61,6 +61,7 @@ namespace Moo.Tests.Core
         [TestCase(typeof(TestClassA), typeof(TestClassE), false)]
         [TestCase(typeof(TestClassB), typeof(TestClassD), false)]
         [TestCase(typeof(string), typeof(TestClassC), false)]
+        [TestCase(typeof(DateTime?),typeof(DateTime?),true)]
         public void DoCanConverTest(Type fromType, Type toType, bool expected)
         {
             ValueConverter target = new ValueConverter();
@@ -91,6 +92,21 @@ namespace Moo.Tests.Core
             ValueConverter target = new ValueConverter();
             var actual = target.Convert(value, expectedType);
             actual.ShouldBe(expected);
+        }
+
+        [TestCase(typeof(DateTime))]
+        [TestCase(typeof(int))]
+        [TestCase(typeof(double))]
+        [TestCase(typeof(decimal))]
+        [TestCase(typeof(byte))]
+        public void DoConvert_NullableNull_ConvertsToNull(Type innerType)
+        {
+            ValueConverter target = new ValueConverter();
+            var genericNullableType = typeof(Nullable<>);
+            var concreteType = genericNullableType.MakeGenericType(innerType);
+            var value = Activator.CreateInstance(concreteType);
+            var actual = target.Convert(value, concreteType);
+            actual.ShouldBe(null);
         }
 
         #endregion Methods

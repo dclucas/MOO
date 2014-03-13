@@ -26,6 +26,7 @@
 namespace Moo.TestScenarios.MappedClasses.ViewModels
 {
     using Moo.TestScenarios.MappedClasses.DomainModels;
+    using System;
 
     public class PersonIndexModel
     {
@@ -42,6 +43,8 @@ namespace Moo.TestScenarios.MappedClasses.ViewModels
 
         [Mapping(MappingDirections.Target, typeof(Person), "LastName")]
         public string MessyProp { get; set; }
+
+        public DateTime? BirthDate { get; set; }
     }
 
     public class PersonEditModel

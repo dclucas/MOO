@@ -119,8 +119,6 @@ namespace Moo.Core
 
             PropertyInfo innerProp;
             var checkProp = false;
-            string sourceName = sourceProperty.Name;
-            string targetName = targetProperty.Name;
             var targetGet = Expression.Property(targetParameter, targetProperty);
             var sourceGet = Expression.Property(sourceParameter, sourceProperty);
             var originalSourceGet = sourceGet;
@@ -137,18 +135,6 @@ namespace Moo.Core
             }
 
             Expression valueGet = sourceGet;
-
-            if (!sourceProperty.PropertyType.IsAssignableFrom(sourceProperty.PropertyType))
-            {
-                var converter = Expression.Constant(CreateValueConverter());
-
-                // TODO: shouldn't I do a GetType or something here?
-                var targetType = Expression.Constant(targetProperty.PropertyType);
-                var convertMethod = typeof(ValueConverter).GetMethod("Convert");
-                var sourceCast = Expression.Convert(sourceGet, typeof(object));
-                var convertCall = Expression.Call(converter, convertMethod, sourceCast, targetType);
-            }
-
             Expression assignment = Expression.Assign(targetGet, valueGet);
 
             if (checkProp)
@@ -156,16 +142,6 @@ namespace Moo.Core
                 var nullComparison = Expression.NotEqual(originalSourceGet, Expression.Constant(null));
                 assignment = Expression.IfThen(nullComparison, assignment);
             }
-
-            var excParam = Expression.Parameter(typeof(Exception));
-            var excCtr = typeof(MappingException).GetConstructor(new Type[] 
-                {
-                    typeof(Type),
-                    typeof(Type),
-                    typeof(string),   
-                    typeof(string), 
-                    typeof(Exception)
-                });
             
             // TODO: add try catch blocks here, to provide the correct property names upon errors.
             return assignment;

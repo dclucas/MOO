@@ -12,5 +12,7 @@
         public IEnumerable<ContactDataContract> PersonContacts { get; set; }
 
         public AccountDataContract Account { get; set; }
+
+        public DateTime? BirthDate { get; set; }
     }
 }

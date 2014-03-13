@@ -126,6 +126,7 @@ namespace Moo.TestScenarios
             var fixture = new Fixture();
             fixture.Register(() => (IEnumerable<Contact>)fixture.CreateMany<Contact>());
             fixture.Register(() => (IEnumerable<Person>)fixture.CreateMany<Person>());
+            fixture.Register(() => (DateTime?)null);
             var result = fixture
                 .Build<Manager>()
                 .Without(m => m.Managees)
