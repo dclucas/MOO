@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+<package xmlns="http://schemas.microsoft.com/packaging/2011/10/nuspec.xsd">
     <metadata>
         <id>Moo</id>
-        <version>0.9.1</version>
+        <version>1.0-alpha</version>
         <title>Moo</title>
         <authors>Diogo Lucas</authors>
         <owners>Diogo Lucas</owners>
@@ -15,7 +15,7 @@
         <tags>Mapping Mapper Object-to-object</tags>
     </metadata>
     <files>
-        <file src="bin\Release\Moo.dll" target="lib\net40\Moo.dll" />
-        <file src="bin\Release\Moo.xml" target="lib\net40\Moo.xml" />
+        <file src="bin\Release\Moo.dll" target="lib\portable-net4+sl4+wp7+win8\Moo.dll" />
+        <file src="bin\Release\Moo.XML" target="lib\portable-net4+sl4+wp7+win8\Moo.XML" />
     </files>
 </package>
