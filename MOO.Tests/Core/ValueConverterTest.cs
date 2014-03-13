@@ -109,6 +109,15 @@ namespace Moo.Tests.Core
             actual.ShouldBe(null);
         }
 
+        [Test]
+        public void DoConvert_NullableNotNull_ConvertsToNull()
+        {
+            ValueConverter target = new ValueConverter();
+            DateTime? value = DateTime.Now;
+            var actual = target.Convert(value, typeof(DateTime?));
+            actual.ShouldBe(value);
+            actual.ShouldNotBeSameAs(value);
+        }
         #endregion Methods
     }
 }
