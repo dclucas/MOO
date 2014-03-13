@@ -36,3 +36,4 @@ Help/
 [Pp]ackages/
 !nuget.exe
 *.cache
+*.nupkg
