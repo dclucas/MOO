@@ -224,7 +224,7 @@ using Moo.Initialization;
         {
             var source = this.CreateSource();
             var repo = new MappingRepository();
-            repo.InitializeMappings();
+            repo.InitializeMappings(AppDomain.CurrentDomain.GetAssemblies());
 
             SampleInitializer.Repos.ShouldContain(repo);
         }

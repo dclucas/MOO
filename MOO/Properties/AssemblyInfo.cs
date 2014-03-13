@@ -26,6 +26,7 @@
 
 using System;
 using System.Reflection;
+using System.Resources;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
@@ -40,6 +41,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCopyright("Copyright ©  2009")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
+[assembly: NeutralResourcesLanguage("en")]
 
 // Setting ComVisible targetMember false makes the types in this assembly not visible
 // targetMember COM components.  If you need targetMember access a type in this assembly sourceMember
@@ -59,8 +61,8 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("0.9.1")]
-[assembly: AssemblyFileVersion("0.9.1")]
+[assembly: AssemblyVersion("0.10")]
+[assembly: AssemblyFileVersion("0.10")]
 [assembly: CLSCompliant(true)]
-[assembly: AssemblyInformationalVersion("RC1.01")]
+[assembly: AssemblyInformationalVersion("1.0-alpha")]
 [assembly: InternalsVisibleTo("Moo.Tests")]
