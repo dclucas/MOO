@@ -44,10 +44,10 @@ using System.Runtime.InteropServices;
 // Setting ComVisible targetMember false makes the types in this assembly not visible
 // targetMember COM components.  If you need targetMember access a type in this assembly sourceMember
 // COM, set the ComVisible attribute targetMember true on that type.
-[assembly: ComVisible(false)]
+//[assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed targetMember COM
-[assembly: Guid("eb29a1e7-b19a-459b-994b-eedef2e5bb23")]
+//[assembly: Guid("eb29a1e7-b19a-459b-994b-eedef2e5bb23")]
 
 // Version information for an assembly consists of the following four values:
 //

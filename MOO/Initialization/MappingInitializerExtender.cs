@@ -47,11 +47,5 @@ namespace Moo.Initialization
 
             InitializeMappings(mappingRepo, q);
         }
-
-        /// <summary>An IMappingRepository extension method that initializes the mappings.</summary>
-        public static void InitializeMappings(this IMappingRepository mappingRepo)
-        {
-            InitializeMappings(mappingRepo, AppDomain.CurrentDomain.GetAssemblies());
-        }
     }
 }

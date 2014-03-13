@@ -42,8 +42,7 @@ namespace Moo.Core
         {
             return typeof(TSource).GetProperties(
                             BindingFlags.Instance
-                            | BindingFlags.Public
-                            | BindingFlags.GetProperty);
+                            | BindingFlags.Public);
         }
 
         /// <summary>Gets all properties for a given target type.</summary>
@@ -53,8 +52,7 @@ namespace Moo.Core
         {
             return typeof(TTarget).GetProperties(
                             BindingFlags.Instance
-                            | BindingFlags.Public
-                            | BindingFlags.SetProperty);
+                            | BindingFlags.Public);
         }
 
         /// <summary>Enumerates get matches in this collection.</summary>

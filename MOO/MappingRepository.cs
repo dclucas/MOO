@@ -221,7 +221,7 @@ namespace Moo
             {
                 // HACK: turn this generic conversion into calls to non-generic methods. This will require
                 // the refactoring of a number of additional classes.
-                var methodInfo = this.GetType().GetMethod("ResolveMapper", Type.EmptyTypes);
+                var methodInfo = this.GetType().GetMethod("ResolveMapper", new Type[0]);
                 var genMethodInfo = methodInfo.MakeGenericMethod(sourceType, targetType);
                 res = (IMapper)genMethodInfo.Invoke(this, null);
             }

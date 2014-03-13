@@ -36,7 +36,6 @@ namespace Moo
     /// <summary>
     /// Represents a Moo mapping exception.
     /// </summary>
-    [global::System.Serializable]
     [DebuggerNonUserCode]
     public class MappingException : Exception
     {
@@ -143,23 +142,6 @@ namespace Moo
         {
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MappingException"/> class.
-        /// </summary>
-        /// <param name="info">The <see cref="T:System.Runtime.Serialization.SerializationInfo"/> that holds the serialized object data about the exception being thrown.</param>
-        /// <param name="context">The <see cref="T:System.Runtime.Serialization.StreamingContext"/> that contains contextual information about the source or destination.</param>
-        /// <exception cref="T:System.ArgumentNullException">
-        /// The <paramref name="info"/> parameter is null.
-        /// </exception>
-        /// <exception cref="T:System.Runtime.Serialization.SerializationException">
-        /// The class name is null or <see cref="P:System.Exception.HResult"/> is zero (0).
-        /// </exception>
-        protected MappingException(
-          System.Runtime.Serialization.SerializationInfo info,
-          System.Runtime.Serialization.StreamingContext context)
-            : base(info, context)
-        {
-        }
 
         #endregion Constructors
 
@@ -182,32 +164,5 @@ namespace Moo
         public string TargetMember { get; private set; }
 
         #endregion Properties
-
-        /// <summary>
-        ///     When overridden in a derived class, sets the
-        ///     <see cref="T:System.Runtime.Serialization.SerializationInfo" /> with information about
-        ///     the exception.
-        /// </summary>
-        /// <param name="info">
-        ///     The <see cref="T:System.Runtime.Serialization.SerializationInfo" /> that holds the
-        ///     serialized object data about the exception being thrown.
-        /// </param>
-        /// <param name="context">
-        ///     The <see cref="T:System.Runtime.Serialization.StreamingContext" /> that contains
-        ///     contextual information about the source or destination.
-        /// </param>
-        /// ### <exception cref="T:System.ArgumentNullException">
-        ///     The <paramref name="info" /> parameter is a null reference (Nothing in Visual Basic).
-        /// </exception>
-        public override void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            Guard.CheckArgumentNotNull(info, "info");
-            info.AddValue("SourceType", this.SourceType.AssemblyQualifiedName);
-            info.AddValue("TargetType", this.TargetType.AssemblyQualifiedName);
-            info.AddValue("SourceMember", this.SourceMember);
-            info.AddValue("TargetMember", this.TargetMember);
-
-            base.GetObjectData(info, context);
-        }
     }
 }
