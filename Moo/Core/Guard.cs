@@ -35,7 +35,7 @@ namespace Moo.Core
     /// <summary>
     /// Holds basic methods for argument validation.
     /// </summary>
-    internal static class Guard
+    public static class Guard
     {
         #region Methods
 

@@ -40,7 +40,7 @@ namespace Moo.TestScenarios
     using NUnit.Framework;
     using Ploeh.AutoFixture;
     using Shouldly;
-using Moo.Initialization;
+    using Moo.Initialization;
 
     [TestFixture]
     [Category("Integrated")]
@@ -224,7 +224,7 @@ using Moo.Initialization;
         {
             var source = this.CreateSource();
             var repo = new MappingRepository();
-            repo.InitializeMappings(AppDomain.CurrentDomain.GetAssemblies());
+            repo.InitializeMappings();
 
             SampleInitializer.Repos.ShouldContain(repo);
         }

@@ -103,7 +103,7 @@ namespace Moo.Mappers
         /// <returns>
         /// An enumerator that allows foreach to be used to get mappings in this collection.
         /// </returns>
-        protected internal override IEnumerable<MemberMappingInfo<TSource, TTarget>> GetMappings()
+        protected override IEnumerable<MemberMappingInfo<TSource, TTarget>> GetMappings()
         {
             TypeMappingElement element = GetTypeMapping();
             if (element != null)

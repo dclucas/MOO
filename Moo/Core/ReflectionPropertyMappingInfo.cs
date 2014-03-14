@@ -44,7 +44,7 @@ namespace Moo.Core
         /// <param name="targetProperty">The target property.</param>
         /// <param name="strict">if set to <c>true</c>, performs a strict mapping.</param>
         /// <param name="converter">The property converter to be used.</param>
-        internal ReflectionPropertyMappingInfo(
+        public ReflectionPropertyMappingInfo(
             PropertyInfo sourceProperty,
             PropertyInfo targetProperty,
             bool strict,
@@ -67,14 +67,26 @@ namespace Moo.Core
         /// <param name="sourceProperty">The source property.</param>
         /// <param name="targetProperty">The target property.</param>
         /// <param name="strict">if set to <c>true</c>, performs a strict mapping.</param>
-        internal ReflectionPropertyMappingInfo(
+        public ReflectionPropertyMappingInfo(
             PropertyInfo sourceProperty,
             PropertyInfo targetProperty,
-            bool strict = false)
+            bool strict)
             : this(sourceProperty, targetProperty, strict, PropertyConverter.Default)
         {
         }
 
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ReflectionPropertyMappingInfo&lt;TSource, TTarget&gt;"/> class.
+        /// </summary>
+        /// <param name="sourceProperty">The source property.</param>
+        /// <param name="targetProperty">The target property.</param>
+        public ReflectionPropertyMappingInfo(
+            PropertyInfo sourceProperty,
+            PropertyInfo targetProperty)
+            : this(sourceProperty, targetProperty, false, PropertyConverter.Default)
+        {
+        }
         #endregion Constructors
 
         #region Properties
