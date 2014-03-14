@@ -48,7 +48,6 @@
     <Compile Include="Core\IExpressionHandler.cs" />
     <Compile Include="Core\IPropertyConverter.cs" />
     <Compile Include="Core\IPropertyExplorer.cs" />
-    <Compile Include="Core\MapperPrecedenceAttribute.cs" />
     <Compile Include="Core\MapperSequenceSpec.cs" />
     <Compile Include="Core\MapperStartSpec.cs" />
     <Compile Include="Core\PropertyExplorer.cs" />

@@ -119,14 +119,6 @@ namespace Moo.Mappers
             string targetMemberName,
             MappingAction<TSource, TTarget> mappingAction)
         {
-            /*
-            var info = new DelegateMappingInfo<TSource, TTarget>(
-                sourceMember,
-                targetMember,
-                mappingAction);
-
-            this.AddMappingInfo(info);
-             */
             this.ExtensibleMapper.AddMappingAction(sourceMemberName, targetMemberName, mappingAction);
         }
 

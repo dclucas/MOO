@@ -99,21 +99,6 @@ namespace Moo.Core
         {
             var src = this.SourceProperty.GetValue(source, null);
             object val = null;
-            /*
-            if (MapMultiple)
-            {
-                if (src != null)
-                {
-                    var enumerable = (System.Collections.IEnumerable)src;
-                    var mm = this.Mapper.GetType().GetMethod("MapMultiple", new [] { src.GetType() });
-                    val = mm.Invoke(this.Mapper, new[] { src }); //this.Mapper.MapMultiple(enumerable);
-                }
-                //this.TargetProperty.SetValue(target, val, null);
-            }
-            else
-            {
-                val = this.Mapper.Map(src);
-            }*/
             val = this.Mapper.Map(src);
             this.TargetProperty.SetValue(target, val, null);
         }
