@@ -31,7 +31,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 using Moo.Core;
 
 namespace Moo.Mappers
@@ -224,7 +223,7 @@ namespace Moo.Mappers
         public virtual TTarget Map(TSource source, Func<TTarget> createTarget)
         {
             Guard.CheckArgumentNotNull(createTarget, "createTarget");
-            TTarget target = createTarget();
+            var target = createTarget();
             Map(source, target);
             return target;
         }
@@ -282,7 +281,7 @@ namespace Moo.Mappers
                 }
             }
 
-            IEnumerable<MemberMappingInfo<TSource, TTarget>> mappings = GetMappings();
+            var mappings = GetMappings();
             if (mappings != null)
             {
                 TypeMapping.AddRange(GetMappings());
@@ -291,47 +290,6 @@ namespace Moo.Mappers
             TypeMapping.Compile();
 
             CurrentStatus = MapperStatus.Active;
-        }
-
-        /// <summary>Maps the specified source to a target object asynchronously.</summary>
-        /// <remarks>
-        ///     This method relies on the <see cref="System.Activator.CreateInstance&lt;T&gt;" />
-        ///     method to create target objects. This means that both there are more efficient methods for
-        ///     that and that this limits the use of this overload to target classes that this framework
-        ///     method is able to construct.
-        /// </remarks>
-        /// <param name="source">The source object.</param>
-        /// <returns>
-        ///     The object representing the asynchronous operation. The task result will contain a
-        ///     filled target object.
-        /// </returns>
-        public async Task<TTarget> MapAsync(TSource source)
-        {
-            return await Task.Factory.StartNew((() => Map(source)));
-        }
-
-        /// <summary>Maps the specified source to a target object asynchronously.</summary>
-        /// <param name="source">The source object.</param>
-        /// <param name="target">The target object.</param>
-        /// <returns>
-        ///     The object representing the asynchronous operation. The task result will contain a
-        ///     filled target object.
-        /// </returns>
-        public async Task<TTarget> MapAsync(TSource source, TTarget target)
-        {
-            return await Task.Factory.StartNew((() => Map(source, target)));
-        }
-
-        /// <summary>Maps the specified source to a target object asynchronously.</summary>
-        /// <param name="source">The source object.</param>
-        /// <param name="createTarget">A function to create target objects.</param>
-        /// <returns>
-        ///     The object representing the asynchronous operation. The task result will contain a
-        ///     filled target object.
-        /// </returns>
-        public async Task<TTarget> MapAsync(TSource source, Func<TTarget> createTarget)
-        {
-            return await Task.Factory.StartNew((() => Map(source, createTarget)));
         }
 
         /// <summary>Adds an inner mapper, to map from the source to the target members.</summary>

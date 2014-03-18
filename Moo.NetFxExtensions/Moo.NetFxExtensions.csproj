@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AsyncExtender.cs" />
     <Compile Include="Configuration\MappingConfigurationSection.cs" />
     <Compile Include="Configuration\MemberMappingCollection.cs" />
     <Compile Include="Configuration\MemberMappingElement.cs" />
