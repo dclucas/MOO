@@ -24,12 +24,12 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System.Reflection;
+
 namespace Moo.Core
 {
-    using System.Reflection;
-
     /// <summary>
-    /// Represents a reflection-based mapping info for a given property pair.
+    ///     Represents a reflection-based mapping info for a given property pair.
     /// </summary>
     /// <typeparam name="TSource">The type of the source.</typeparam>
     /// <typeparam name="TTarget">The type of the target.</typeparam>
@@ -38,7 +38,7 @@ namespace Moo.Core
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ReflectionPropertyMappingInfo&lt;TSource, TTarget&gt;"/> class.
+        ///     Initializes a new instance of the <see cref="ReflectionPropertyMappingInfo&lt;TSource, TTarget&gt;" /> class.
         /// </summary>
         /// <param name="sourceProperty">The source property.</param>
         /// <param name="targetProperty">The target property.</param>
@@ -53,16 +53,16 @@ namespace Moo.Core
             Guard.CheckArgumentNotNull(sourceProperty, "sourceMemberName");
             Guard.CheckArgumentNotNull(targetProperty, "targetMemberName");
             Guard.CheckArgumentNotNull(converter, "converter");
-            this.SourceMemberName = sourceProperty.Name;
-            this.TargetMemberName = targetProperty.Name;
-            this.SourcePropertyInfo = sourceProperty;
-            this.TargetPropertyInfo = targetProperty;
-            this.Converter = converter;
-            this.Strict = strict;
+            SourceMemberName = sourceProperty.Name;
+            TargetMemberName = targetProperty.Name;
+            SourcePropertyInfo = sourceProperty;
+            TargetPropertyInfo = targetProperty;
+            Converter = converter;
+            Strict = strict;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ReflectionPropertyMappingInfo&lt;TSource, TTarget&gt;"/> class.
+        ///     Initializes a new instance of the <see cref="ReflectionPropertyMappingInfo&lt;TSource, TTarget&gt;" /> class.
         /// </summary>
         /// <param name="sourceProperty">The source property.</param>
         /// <param name="targetProperty">The target property.</param>
@@ -77,7 +77,7 @@ namespace Moo.Core
 
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ReflectionPropertyMappingInfo&lt;TSource, TTarget&gt;"/> class.
+        ///     Initializes a new instance of the <see cref="ReflectionPropertyMappingInfo&lt;TSource, TTarget&gt;" /> class.
         /// </summary>
         /// <param name="sourceProperty">The source property.</param>
         /// <param name="targetProperty">The target property.</param>
@@ -87,33 +87,34 @@ namespace Moo.Core
             : this(sourceProperty, targetProperty, false, PropertyConverter.Default)
         {
         }
+
         #endregion Constructors
 
         #region Properties
 
         /// <summary>
-        /// Gets the converter.
+        ///     Gets the converter.
         /// </summary>
         public PropertyConverter Converter { get; private set; }
 
         /// <summary>
-        /// Gets from property info.
+        ///     Gets from property info.
         /// </summary>
         public PropertyInfo SourcePropertyInfo { get; private set; }
 
         /// <summary>
-        /// Gets a value indicating whether this
-        /// <see cref="ReflectionPropertyMappingInfo&lt;TSource, TTarget&gt;"/> is strict.
+        ///     Gets a value indicating whether this
+        ///     <see cref="ReflectionPropertyMappingInfo&lt;TSource, TTarget&gt;" /> is strict.
         /// </summary>
         /// <remarks>
-        /// This property determines whether conversion needs to be strict (the exact same members in the
-        /// source and target) or liberal (which allows property folding/unfolding).
+        ///     This property determines whether conversion needs to be strict (the exact same members in the
+        ///     source and target) or liberal (which allows property folding/unfolding).
         /// </remarks>
         /// <value><c>true</c> if strict; otherwise, <c>false</c>.</value>
         public bool Strict { get; private set; }
 
         /// <summary>
-        /// Gets to property info.
+        ///     Gets to property info.
         /// </summary>
         public PropertyInfo TargetPropertyInfo { get; private set; }
 
@@ -122,13 +123,13 @@ namespace Moo.Core
         #region Methods
 
         /// <summary>
-        /// Maps from the specified source to the specified target.
+        ///     Maps from the specified source to the specified target.
         /// </summary>
         /// <param name="source">The mapping source.</param>
         /// <param name="target">The mapping target.</param>
         public override void Map(TSource source, TTarget target)
         {
-            this.Converter.Convert(source, this.SourcePropertyInfo, target, this.TargetPropertyInfo, this.Strict);
+            Converter.Convert(source, SourcePropertyInfo, target, TargetPropertyInfo, Strict);
         }
 
         #endregion Methods

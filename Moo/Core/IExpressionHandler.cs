@@ -23,12 +23,13 @@
 // Email: diogo.lucas@gmail.com
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
+using System;
+using System.Linq.Expressions;
+using System.Reflection;
+
 namespace Moo.Core
 {
-    using System;
-    using System.Linq.Expressions;
-    using System.Reflection;
-
     /// <summary>Interface for expression handler.</summary>
     internal interface IExpressionHandler
     {
@@ -39,23 +40,24 @@ namespace Moo.Core
         /// <param name="targetArgument">An expression fetching the target property.</param>
         /// <returns>A delegate that maps from the source to the target object</returns>
         /// <exception cref="ArgumentException">targetExpression is not a property access expression.</exception>
-        MappingAction<TSource, TTarget> GetAction<TSource, TTarget>(LambdaExpression sourceArgument, LambdaExpression targetArgument);
-        
+        MappingAction<TSource, TTarget> GetAction<TSource, TTarget>(LambdaExpression sourceArgument,
+            LambdaExpression targetArgument);
+
         /// <summary>Gets internal name to be used for an expression.</summary>
         /// <param name="expression">The expression to be named.</param>
         /// <returns>A name for the expression.</returns>
         /// <remarks>
-        /// This method will return the property name for a property access expression and the 
-        /// expression's ToString result other wise.
+        ///     This method will return the property name for a property access expression and the
+        ///     expression's ToString result other wise.
         /// </remarks>
         string GetMemberName(Expression expression);
-        
+
         /// <summary>Extracts a property from within an expression.</summary>
         /// <param name="expression">The expression to be checked.</param>
         /// <returns>The expression's internal property.</returns>
         /// <exception cref="ArgumentException">The expression is not for property access.</exception>
         PropertyInfo GetProperty(LambdaExpression expression);
-        
+
         /// <summary>Checks whether the expression represent a property access.</summary>
         /// <param name="argument">The argument to be validated.</param>
         /// <exception cref="ArgumentException">The expression is not for property access.</exception>

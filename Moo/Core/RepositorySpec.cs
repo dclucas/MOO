@@ -23,13 +23,11 @@
 // Email: diogo.lucas@gmail.com
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
+using System.Linq;
+
 namespace Moo.Core
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-
     /// <summary>Repository setup specification.</summary>
     internal class RepositorySpec : IRepositorySpec
     {
@@ -47,7 +45,7 @@ namespace Moo.Core
         /// <returns>The resulting mapping options.</returns>
         public MappingOptions GetOptions()
         {
-            var order = (MapperStartSpec)MapperOrder;
+            var order = (MapperStartSpec) MapperOrder;
             return new MappingOptions(order.MapperSequence.Reverse());
         }
     }

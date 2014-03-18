@@ -24,13 +24,14 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq.Expressions;
+
 namespace Moo
 {
-    using System;
-    using System.Linq.Expressions;
-
     /// <summary>
-    /// Base interface for fluent mapping of source objects.
+    ///     Base interface for fluent mapping of source objects.
     /// </summary>
     /// <typeparam name="TSource">Type of the source object.</typeparam>
     /// <typeparam name="TTarget">Type of the target object.</typeparam>
@@ -40,18 +41,22 @@ namespace Moo
         /// <typeparam name="TInnerSource">Type of the inner source property.</typeparam>
         /// <param name="argument">Expression to fetch data from the source object.</param>
         /// <returns>A ITargetSpec, allowing to define the mapping target.</returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures", Justification = "Easier said than done")]
-        ITargetSpec<TSource, TTarget, TInnerSource> From<TInnerSource>(Expression<Func<TSource, TInnerSource>> argument);
+        [SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures",
+            Justification = "Easier said than done")]
+        ITargetSpec<TSource, TTarget> From<TInnerSource>(Expression<Func<TSource, TInnerSource>> argument);
 
         /// <summary>
-        /// Instructs Moo to use an internal mapper for properties of <typeparamref name="TInnerSource"/>
-        /// type.
+        ///     Instructs Moo to use an internal mapper for properties of <typeparamref name="TInnerSource" />
+        ///     type.
         /// </summary>
         /// <typeparam name="TInnerSource">Type of the source property to map.</typeparam>
         /// <param name="argument">Expression to fetch data from the source object.</param>
         /// <returns>A ISourceSpec, allowing to define further mappings.</returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter", Justification = "Easier said than done")]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures", Justification = "Easier said than done")]
-        ITargetSpec<TSource, TTarget, TInnerSource> UseMapperFrom<TInnerSource>(Expression<Func<TSource, TInnerSource>> argument);
+        [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter",
+            Justification = "Easier said than done")]
+        [SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures",
+            Justification = "Easier said than done")]
+        ITargetSpec<TSource, TTarget> UseMapperFrom<TInnerSource>(
+            Expression<Func<TSource, TInnerSource>> argument);
     }
 }

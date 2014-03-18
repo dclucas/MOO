@@ -24,16 +24,16 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using Moo.Core;
+
 namespace Moo.Mappers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Reflection;
-    using Moo.Core;
-
     /// <summary>
-    /// Maps between two classes by using the mapping attributes in their members.
+    ///     Maps between two classes by using the mapping attributes in their members.
     /// </summary>
     /// <typeparam name="TSource">The type of the source.</typeparam>
     /// <typeparam name="TTarget">The type of the target.</typeparam>
@@ -42,14 +42,14 @@ namespace Moo.Mappers
         #region Constructors 
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AttributeMapper&lt;TSource, TTarget&gt;"/> class.
+        ///     Initializes a new instance of the <see cref="AttributeMapper&lt;TSource, TTarget&gt;" /> class.
         /// </summary>
         public AttributeMapper()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AttributeMapper{TSource,TTarget}"/> class. 
+        ///     Initializes a new instance of the <see cref="AttributeMapper{TSource,TTarget}" /> class.
         /// </summary>
         /// <param name="constructionInfo">Mapper construction information.</param>
         public AttributeMapper(MapperConstructionInfo constructionInfo)
@@ -62,18 +62,18 @@ namespace Moo.Mappers
         #region Methods
 
         /// <summary>
-        /// Gets the property mapping for two property types.
+        ///     Gets the property mapping for two property types.
         /// </summary>
         /// <param name="firstProp">The first property.</param>
         /// <param name="secondProp">The second property.</param>
         /// <param name="direction">The direction of the mapping.</param>
         /// <returns>A property mapping object.</returns>
         private static ReflectionPropertyMappingInfo<TSource, TTarget> GetMapping(
-            PropertyInfo firstProp, 
+            PropertyInfo firstProp,
             PropertyInfo secondProp,
             MappingDirections direction)
         {
-            ReflectionPropertyMappingInfo<TSource, TTarget> mappingInfo = null;
+            ReflectionPropertyMappingInfo<TSource, TTarget> mappingInfo;
             if (direction == MappingDirections.From)
             {
                 mappingInfo = new ReflectionPropertyMappingInfo<TSource, TTarget>(
@@ -93,7 +93,7 @@ namespace Moo.Mappers
         }
 
         /// <summary>
-        /// Adds the mappings based on the existing mapping attributes.
+        ///     Adds the mappings based on the existing mapping attributes.
         /// </summary>
         /// <param name="sourceType">Type of the source.</param>
         /// <param name="targetType">Type of the target.</param>
@@ -105,20 +105,20 @@ namespace Moo.Mappers
             MappingDirections direction)
         {
             return from prop in sourceType.GetProperties()
-                   from MappingAttribute m in prop.GetCustomAttributes(typeof(MappingAttribute), false)
-                   where (m.Direction & direction) == direction
-                   where m.OtherType.IsAssignableFrom(targetType)
-                   select GetMapping(prop, targetType.GetProperty(m.OtherMemberName), direction);
+                from MappingAttribute m in prop.GetCustomAttributes(typeof (MappingAttribute), false)
+                where (m.Direction & direction) == direction
+                where m.OtherType.IsAssignableFrom(targetType)
+                select GetMapping(prop, targetType.GetProperty(m.OtherMemberName), direction);
         }
 
         /// <summary>Enumerates get mappings in this collection.</summary>
         /// <returns>
-        /// An enumerator that allows foreach to be used to process get mappings in this collection.
+        ///     An enumerator that allows foreach to be used to process get mappings in this collection.
         /// </returns>
         protected internal override IEnumerable<MemberMappingInfo<TSource, TTarget>> GetMappings()
         {
-            return GetMappings(typeof(TSource), typeof(TTarget), MappingDirections.From)
-                .Concat(GetMappings(typeof(TTarget), typeof(TSource), MappingDirections.Target));
+            return GetMappings(typeof (TSource), typeof (TTarget), MappingDirections.From)
+                .Concat(GetMappings(typeof (TTarget), typeof (TSource), MappingDirections.Target));
         }
 
         #endregion Methods

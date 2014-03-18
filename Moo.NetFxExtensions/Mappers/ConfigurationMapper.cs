@@ -24,14 +24,16 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
+
 namespace Moo.Mappers
 {
     using System.Collections.Generic;
     using System.Configuration;
     using System.Linq;
 
-    using Moo.Configuration;
-    using Moo.Core;
+    using Configuration;
+    using Core;
 
     /// <summary>
     /// Uses configuration to determine mappings between two classes
@@ -90,13 +92,23 @@ namespace Moo.Mappers
             {
                 return
                     section.TypeMappings.Cast<TypeMappingElement>().FirstOrDefault(
-                        t => typeof(TTarget).AssemblyQualifiedName.Contains(t.TargetType)
-                             && typeof(TSource).AssemblyQualifiedName.Contains(t.SourceType));
+                        t => GetAssemblyQualifiedName(typeof(TTarget)).Contains(t.TargetType)
+                             && GetAssemblyQualifiedName(typeof(TSource)).Contains(t.SourceType));
             }
-            else
-            {
-                return null;
-            }
+            return null;
+        }
+
+        /// <summary>
+        /// Gets the name of the assembly qualified.
+        /// </summary>
+        /// <param name="t">The type.</param>
+        /// <returns>
+        /// A string containing the assembly qualified name, an empty string in case none exists.
+        /// </returns>
+        private static string GetAssemblyQualifiedName(Type t)
+        {
+            Guard.CheckArgumentNotNull(t, "t");
+            return t.AssemblyQualifiedName ?? String.Empty;
         }
 
         /// <summary>Returns all internal mappings from the mapper.</summary>
@@ -114,10 +126,7 @@ namespace Moo.Mappers
                         typeof(TTarget).GetProperty(propMapping.TargetMemberName),
                         true);
             }
-            else
-            {
-                return null;
-            }
+            return null;
         }
 
         #endregion Methods

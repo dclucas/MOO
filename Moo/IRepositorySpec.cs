@@ -23,20 +23,19 @@
 // Email: diogo.lucas@gmail.com
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
+using System;
+using System.Diagnostics.CodeAnalysis;
+
 namespace Moo
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-
     /// <summary>Interface for repository behavior specification.</summary>
     public interface IRepositorySpec
     {
         /// <summary>Gets the mapper order.</summary>
         /// <value>The mapper order.</value>
         IMapperStartSpec MapperOrder { get; }
-        
+
         /// <summary>Gets the resulting mapping options.</summary>
         /// <returns>The resulting mapping options.</returns>
         MappingOptions GetOptions();
@@ -62,16 +61,16 @@ namespace Moo
     }
 
     /// <summary>
-    /// Interface for mapper sequence specification.
+    ///     Interface for mapper sequence specification.
     /// </summary>
     public interface IMapperSequenceSpec
     {
         /// <summary>Gets the next mapper to use.</summary>
         /// <typeparam name="TMapper">Type of the mapper.</typeparam>
         /// <returns>An object allowing the fluent specification to continue</returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Microsoft.Naming", 
-            "CA1716:IdentifiersShouldNotMatchKeywords", 
+        [SuppressMessage(
+            "Microsoft.Naming",
+            "CA1716:IdentifiersShouldNotMatchKeywords",
             MessageId = "Then",
             Justification = "Hardly any good reason to override/implement this interface outside this assembly.")]
         IMapperSequenceSpec Then<TMapper>() where TMapper : IMapper;
@@ -79,10 +78,10 @@ namespace Moo
         /// <summary>Gets the last mapper to use.</summary>
         /// <typeparam name="TMapper">Type of the mapper.</typeparam>
         /// <returns>
-        /// An object allowing the return to the beginning of the fluent specification (the parent
-        /// repo spec).
+        ///     An object allowing the return to the beginning of the fluent specification (the parent
+        ///     repo spec).
         /// </returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+        [SuppressMessage(
             "Microsoft.Naming",
             "CA1716:IdentifiersShouldNotMatchKeywords",
             MessageId = "Finally",

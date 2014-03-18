@@ -45,7 +45,7 @@ namespace Moo.Configuration
         /// <param name="element">The type mapping element.</param>
         public void Add(TypeMappingElement element)
         {
-            this.BaseAdd(element);
+            BaseAdd(element);
         }
 
         /// <summary>

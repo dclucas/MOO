@@ -27,10 +27,18 @@
 namespace Moo.Mappers
 {
     /// <summary>
-    /// Base, non-generic, mapper class.
+    ///     Base, non-generic, mapper class.
     /// </summary>
     public abstract class BaseMapper
     {
+        /// <summary>
+        ///     Maps sourceProperty the source targetProperty the target object.
+        /// </summary>
+        /// <param name="source">The source object.</param>
+        /// <param name="target">The target object.</param>
+        /// <returns>The target object, with its properties mapped.</returns>
+        public abstract object Map(object source, object target);
+
         /// <summary>Values that represent the internal mapper status.</summary>
         protected internal enum MapperStatus
         {
@@ -43,13 +51,5 @@ namespace Moo.Mappers
             /// <summary>Mapper is active.</summary>
             Active
         }
-
-        /// <summary>
-        /// Maps sourceProperty the source targetProperty the target object.
-        /// </summary>
-        /// <param name="source">The source object.</param>
-        /// <param name="target">The target object.</param>
-        /// <returns>The target object, with its properties mapped.</returns>
-        public abstract object Map(object source, object target);
     }
 }

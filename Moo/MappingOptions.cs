@@ -24,63 +24,60 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
+using System.Collections.Generic;
+using Moo.Core;
+using Moo.Mappers;
+
 namespace Moo
 {
-    using System;
-    using System.Collections.Generic;
-    using Moo.Core;
-    using Moo.Mappers;
-
     /// <summary>
-    /// Contains mapping options
+    ///     Contains mapping options
     /// </summary>
     public class MappingOptions
     {
         /// <summary>
-        /// Backing field containing the internal mappers, in order.
+        ///     Backing field containing the internal mappers, in order.
         /// </summary>
-        private IEnumerable<Type> mapperOrder;
+        private IEnumerable<Type> _mapperOrder;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MappingOptions"/> class.
+        ///     Initializes a new instance of the <see cref="MappingOptions" /> class.
         /// </summary>
         public MappingOptions()
         {
-            this.MapperOrder = new Type[]
+            MapperOrder = new[]
             {
-                typeof(ConventionMapper<,>),
-                typeof(AttributeMapper<,>),
-                typeof(ManualMapper<,>)
+                typeof (ConventionMapper<,>),
+                typeof (AttributeMapper<,>),
+                typeof (ManualMapper<,>)
             };
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MappingOptions"/> class.
+        ///     Initializes a new instance of the <see cref="MappingOptions" /> class.
         /// </summary>
         /// <param name="mapperOrder">The internal mappers, in order.</param>
         public MappingOptions(IEnumerable<Type> mapperOrder)
         {
-            this.MapperOrder = mapperOrder;
+            MapperOrder = mapperOrder;
         }
 
         /// <summary>
-        /// Gets the list of internal mappers, in order.
+        ///     Gets the list of internal mappers, in order.
         /// </summary>
         public IEnumerable<Type> MapperOrder
         {
-            get 
-            {
-                return this.mapperOrder;
-            }
+            get { return _mapperOrder; }
 
             private set
             {
-               Guard.TrueForAll<Type>(
-                    value, 
-                    "sourceValue", 
-                    t => typeof(IMapper).IsAssignableFrom(t), 
+                Guard.TrueForAll(
+                    value,
+                    "sourceValue",
+                    t => typeof (IMapper).IsAssignableFrom(t),
                     "All types must implement the IMapper interface.");
-                this.mapperOrder = value; 
+                _mapperOrder = value;
             }
         }
     }

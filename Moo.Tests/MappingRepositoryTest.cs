@@ -61,7 +61,7 @@ namespace Moo.Tests
             var target = new MappingRepository();
             target.AddMapper(mapper);
             target.Clear();
-            var mappersField = target.GetType().GetField("mappers", BindingFlags.NonPublic | BindingFlags.Instance);
+            var mappersField = target.GetType().GetField("_mappers", BindingFlags.NonPublic | BindingFlags.Instance);
             var mappers = (IEnumerable)mappersField.GetValue(target);
             Assert.IsFalse(mappers.Cast<object>().Any());
         }

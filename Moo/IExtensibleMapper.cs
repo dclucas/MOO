@@ -23,16 +23,17 @@
 // Email: diogo.lucas@gmail.com
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
+using System.Reflection;
+
 namespace Moo
 {
-    using System.Reflection;
-
     /// <summary>Represents a property mapping method.</summary>
     /// <typeparam name="TSource">Source type.</typeparam>
     /// <typeparam name="TTarget">Destination type.</typeparam>
     /// <param name="source">Source object.</param>
     /// <param name="target">Destination object.</param>
-    public delegate void MappingAction<TSource, TTarget>(TSource source, TTarget target);
+    public delegate void MappingAction<in TSource, in TTarget>(TSource source, TTarget target);
 
     /// <summary>Interface for extensible mappers.</summary>
     /// <typeparam name="TSource">Origin type for the mapping.</typeparam>
@@ -43,10 +44,11 @@ namespace Moo
         /// <param name="sourceMemberName">Source member.</param>
         /// <param name="targetMemberName">Destination member.</param>
         /// <param name="mappingAction">   The delegate that will perform the conversion.</param>
-        void AddMappingAction(string sourceMemberName, string targetMemberName, MappingAction<TSource, TTarget> mappingAction);
+        void AddMappingAction(string sourceMemberName, string targetMemberName,
+            MappingAction<TSource, TTarget> mappingAction);
 
         /// <summary>
-        /// Adds new mapping actions to the mapper, with <c>From</c> and <c>To</c> statements.
+        ///     Adds new mapping actions to the mapper, with <c>From</c> and <c>To</c> statements.
         /// </summary>
         /// <returns>A ISourceSpec object, for fluent mapping.</returns>
         ISourceSpec<TSource, TTarget> AddMapping();

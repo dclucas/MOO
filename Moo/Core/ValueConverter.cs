@@ -24,41 +24,42 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
+
 namespace Moo.Core
 {
-    using System;
-    using System.Globalization;
-
     /// <summary>
-    /// Performs conversion between values.
+    ///     Performs conversion between values.
     /// </summary>
     public class ValueConverter
     {
         #region Methods
 
         /// <summary>
-        /// Checks whether this class can make the conversion between the two provided types.
+        ///     Checks whether this class can make the conversion between the two provided types.
         /// </summary>
         /// <param name="sourceType">
-        /// The source <see cref="Type"/>.
+        ///     The source <see cref="Type" />.
         /// </param>
         /// <param name="targetType">
-        /// The target <see cref="Type"/>.
+        ///     The target <see cref="Type" />.
         /// </param>
         /// <returns>
-        /// <c>true</c> if the converter can make the conversion,
-        /// <c>false</c> otherwise.
+        ///     <c>true</c> if the converter can make the conversion,
+        ///     <c>false</c> otherwise.
         /// </returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+        [SuppressMessage(
             "Microsoft.Design",
             "CA1062:Validate arguments of public methods",
             MessageId = "1",
             Justification = "The call to Guard does that."),
-        System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Microsoft.Design",
-            "CA1062:Validate arguments of public methods",
-            MessageId = "0",
-            Justification = "The call to Guard does that.")]
+         SuppressMessage(
+             "Microsoft.Design",
+             "CA1062:Validate arguments of public methods",
+             MessageId = "0",
+             Justification = "The call to Guard does that.")]
         public virtual bool CanConvert(Type sourceType, Type targetType)
         {
             Guard.CheckArgumentNotNull(sourceType, "sourceMemberName");
@@ -67,19 +68,19 @@ namespace Moo.Core
             return
                 targetType.IsAssignableFrom(sourceType)
                 || (sourceType.IsPrimitive && targetType.IsPrimitive)
-                || (targetType == typeof(string));
+                || (targetType == typeof (string));
         }
 
         /// <summary>
-        /// Converts the provided sourceValue targetMember the destination type.
+        ///     Converts the provided sourceValue targetMember the destination type.
         /// </summary>
         /// <param name="sourceValue">Value to be converted.</param>
         /// <param name="targetType">Destination type.</param>
         /// <returns>
-        /// Returns the provided sourceValue, converted targetMember the provided type.
+        ///     Returns the provided sourceValue, converted targetMember the provided type.
         /// </returns>
         /// <exception cref="InvalidOperationException">Conversion is not possible.</exception>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+        [SuppressMessage(
             "Microsoft.Design",
             "CA1062:Validate arguments of public methods",
             MessageId = "1",

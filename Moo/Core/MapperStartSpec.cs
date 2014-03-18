@@ -23,13 +23,12 @@
 // Email: diogo.lucas@gmail.com
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
+using System;
+using System.Collections.Generic;
+
 namespace Moo.Core
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-
     /// <summary>Mapper sequence start specification.</summary>
     internal class MapperStartSpec : IMapperStartSpec
     {
@@ -37,7 +36,7 @@ namespace Moo.Core
         /// <param name="repositorySpec">Information describing the repository.</param>
         public MapperStartSpec(IRepositorySpec repositorySpec)
         {
-            this.ParentSpec = repositorySpec;
+            ParentSpec = repositorySpec;
         }
 
         /// <summary>Gets or sets the parent specs.</summary>
@@ -53,8 +52,7 @@ namespace Moo.Core
         /// <returns>An object allowing to specify the target (To) of the mapping.</returns>
         public IMapperSequenceSpec Use<TMapper>() where TMapper : IMapper
         {
-            var currentList = new List<Type>();
-            currentList.Add(typeof(TMapper));
+            var currentList = new List<Type> {typeof (TMapper)};
             return new MapperSequenceSpec(ParentSpec, currentList);
         }
 
@@ -63,7 +61,7 @@ namespace Moo.Core
         /// <returns>The parent repo spec. Useful for chaining other "fluent" setup.</returns>
         public IRepositorySpec UseJust<TMapper>() where TMapper : IMapper
         {
-            return ParentSpec.MapperOrder.SetSequence(typeof(TMapper));
+            return ParentSpec.MapperOrder.SetSequence(typeof (TMapper));
         }
 
         /// <summary>Sets a mapper sequence.</summary>
@@ -71,7 +69,7 @@ namespace Moo.Core
         /// <returns>Sets the final ordered list of mappers.</returns>
         public IRepositorySpec SetSequence(params Type[] mapperSequence)
         {
-            this.MapperSequence = mapperSequence;
+            MapperSequence = mapperSequence;
             return ParentSpec;
         }
     }

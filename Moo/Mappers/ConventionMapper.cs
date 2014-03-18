@@ -24,17 +24,17 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using System.Reflection;
+using Moo.Core;
+
 namespace Moo.Mappers
 {
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Reflection;
-
-    using Moo.Core;
-
     /// <summary>
-    /// Uses naming and type conversion convention to create mappings between
-    /// two classes.
+    ///     Uses naming and type conversion convention to create mappings between
+    ///     two classes.
     /// </summary>
     /// <typeparam name="TSource">The type of the source.</typeparam>
     /// <typeparam name="TTarget">The type of the target.</typeparam>
@@ -43,9 +43,9 @@ namespace Moo.Mappers
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ConventionMapper&lt;TSource, TTarget&gt;"/> class.
+        ///     Initializes a new instance of the <see cref="ConventionMapper&lt;TSource, TTarget&gt;" /> class.
         /// </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+        [SuppressMessage(
             "Microsoft.Usage",
             "CA2214:DoNotCallOverridableMethodsInConstructors",
             Justification = "For the time being, this is the desired behavior.")]
@@ -54,7 +54,7 @@ namespace Moo.Mappers
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ConventionMapper{TSource,TTarget}"/> class. 
+        ///     Initializes a new instance of the <see cref="ConventionMapper{TSource,TTarget}" /> class.
         /// </summary>
         /// <param name="constructionInfo">Mapper construction information.</param>
         public ConventionMapper(MapperConstructionInfo constructionInfo)
@@ -67,18 +67,19 @@ namespace Moo.Mappers
         #region Methods
 
         /// <summary>
-        /// Creates a member mapping info object to map the selected properties
+        ///     Creates a member mapping info object to map the selected properties
         /// </summary>
         /// <param name="sourceProperty">
-        /// The source property
+        ///     The source property
         /// </param>
         /// <param name="targetProperty">
-        /// The target property
+        ///     The target property
         /// </param>
         /// <returns>
-        /// A new member mapping info object.
+        ///     A new member mapping info object.
         /// </returns>
-        protected virtual ReflectionPropertyMappingInfo<TSource, TTarget> CreateInfo(PropertyInfo sourceProperty, PropertyInfo targetProperty)
+        protected virtual ReflectionPropertyMappingInfo<TSource, TTarget> CreateInfo(PropertyInfo sourceProperty,
+            PropertyInfo targetProperty)
         {
             var mappingInfo = new ReflectionPropertyMappingInfo<TSource, TTarget>(sourceProperty, targetProperty, false);
             return mappingInfo;
@@ -86,14 +87,14 @@ namespace Moo.Mappers
 
         /// <summary>Enumerates get mappings in this collection.</summary>
         /// <returns>
-        /// An enumerator that allows foreach to be used to process get mappings in this collection.
+        ///     An enumerator that allows foreach to be used to process get mappings in this collection.
         /// </returns>
         protected internal override IEnumerable<MemberMappingInfo<TSource, TTarget>> GetMappings()
         {
-            var checker = GetPropertyConverter();
+            PropertyConverter checker = GetPropertyConverter();
 
-            return from p in PropertyExplorer.GetMatches<TSource, TTarget>((s, t) => checker.CanConvert(s, t))
-                   select this.CreateInfo(p.Key, p.Value);
+            return from p in PropertyExplorer.GetMatches<TSource, TTarget>(checker.CanConvert)
+                select CreateInfo(p.Key, p.Value);
         }
 
         #endregion Methods

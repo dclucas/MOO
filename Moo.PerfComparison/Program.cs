@@ -6,8 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Moo.PerfComparison
 {
@@ -30,7 +28,7 @@ namespace Moo.PerfComparison
                         sp,
                         tp);
 
-            ReflectionMapping = q;
+            _reflectionMapping = q;
         }
 
         static void Main(string[] args)
@@ -124,40 +122,36 @@ namespace Moo.PerfComparison
             }
         }
 
-        private static IEnumerable<Tuple<PropertyInfo, PropertyInfo>> ReflectionMapping;
+        private static IEnumerable<Tuple<PropertyInfo, PropertyInfo>> _reflectionMapping;
 
         private static void ReflectionMap(Contact source, ContactDataContract target)
         {
-            foreach (var x in ReflectionMapping)
+            foreach (var x in _reflectionMapping)
             {
                 var val = x.Item1.GetValue(source, null);
                 x.Item2.SetValue(target, val);
             }
         }
 
-        private static Action<Contact, ContactDataContract> LambdaAction;
+        private static Action<Contact, ContactDataContract> _lambdaAction;
 
         private static void GenerateLambdaAction()
         {
-            var exprList = new List<Expression>();
             var sourceParam = Expression.Parameter(typeof(Contact));
             var targetParam = Expression.Parameter(typeof(ContactDataContract));
 
-            foreach (var x in ReflectionMapping)
-            {
-                var sourceGet = Expression.Property(sourceParam, x.Item1);
-                var targetGet = Expression.Property(targetParam, x.Item2);
-                var assignment = Expression.Assign(targetGet, sourceGet);
-                exprList.Add(assignment);
-            }
+            var exprList = (from x in _reflectionMapping 
+                            let sourceGet = Expression.Property(sourceParam, x.Item1) 
+                            let targetGet = Expression.Property(targetParam, x.Item2) 
+                            select Expression.Assign(targetGet, sourceGet)).Cast<Expression>().ToList();
             var exprBlock = Expression.Block(exprList);
             var lambda = Expression.Lambda<Action<Contact, ContactDataContract>>(exprBlock, sourceParam, targetParam);
-            LambdaAction = lambda.Compile();
+            _lambdaAction = lambda.Compile();
         }
 
         private static void ExpressionMap(Contact source, ContactDataContract target)
         {
-            LambdaAction(source, target);
+            _lambdaAction(source, target);
         }
     }
 }

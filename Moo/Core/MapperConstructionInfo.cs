@@ -26,29 +26,24 @@
 
 namespace Moo.Core
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-
     /// <summary>
-    /// Context information for mapper construction.
+    ///     Context information for mapper construction.
     /// </summary>
     public class MapperConstructionInfo
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="MapperConstructionInfo"/> class. 
+        ///     Initializes a new instance of the <see cref="MapperConstructionInfo" /> class.
         /// </summary>
         /// <param name="parentRepo">
-        /// The parent repo.
+        ///     The parent repo.
         /// </param>
         public MapperConstructionInfo(IMappingRepository parentRepo)
         {
-            this.ParentRepo = parentRepo;
+            ParentRepo = parentRepo;
         }
 
         /// <summary>
-        /// Gets the parent mapping repository.
+        ///     Gets the parent mapping repository.
         /// </summary>
         public IMappingRepository ParentRepo { get; private set; }
     }

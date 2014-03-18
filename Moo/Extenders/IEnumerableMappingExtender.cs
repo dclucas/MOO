@@ -23,30 +23,29 @@
 // Email: diogo.lucas@gmail.com
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using Moo.Core;
+
 namespace Moo.Extenders
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using Moo.Core;
-
     /// <summary>
-    /// Extends IEnumerable objects, providing mapping functionalities.
+    ///     Extends IEnumerable objects, providing mapping functionalities.
     /// </summary>
-    public static class IEnumerableMappingExtender
+    public static class EnumerableMappingExtender
     {
         #region Methods
 
         /// <summary>
-        /// Maps all source elements to an enumerable of target elements.
+        ///     Maps all source elements to an enumerable of target elements.
         /// </summary>
         /// <typeparam name="TSource">The type of the source object.</typeparam>
         /// <typeparam name="TTarget">The type of the target object.</typeparam>
         /// <param name="source">The source object.</param>
         /// <returns>An enumerable of target elements</returns>
         /// <remarks>
-        /// This overload uses the default repository to resolve the mapper dependency.
+        ///     This overload uses the default repository to resolve the mapper dependency.
         /// </remarks>
         public static IEnumerable<TTarget> MapAll<TSource, TTarget>(this IEnumerable<TSource> source)
         {
@@ -54,31 +53,35 @@ namespace Moo.Extenders
         }
 
         /// <summary>
-        /// Maps all source elements to an enumerable of target elements.
+        ///     Maps all source elements to an enumerable of target elements.
         /// </summary>
         /// <typeparam name="TSource">The type of the source object.</typeparam>
         /// <typeparam name="TTarget">The type of the target object.</typeparam>
         /// <param name="source">The source object.</param>
         /// <param name="repo">The mapping repository.</param>
         /// <returns>An enumerable of target elements</returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "1", Justification = "The call to Guard does that.")]
-        public static IEnumerable<TTarget> MapAll<TSource, TTarget>(this IEnumerable<TSource> source, IMappingRepository repo)
+        [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "1",
+            Justification = "The call to Guard does that.")]
+        public static IEnumerable<TTarget> MapAll<TSource, TTarget>(this IEnumerable<TSource> source,
+            IMappingRepository repo)
         {
             Guard.CheckArgumentNotNull(repo, "repo");
-            var mapper = repo.ResolveMapper<TSource, TTarget>();
-            return MapAll<TSource, TTarget>(source, mapper);
+            IExtensibleMapper<TSource, TTarget> mapper = repo.ResolveMapper<TSource, TTarget>();
+            return MapAll(source, mapper);
         }
 
         /// <summary>
-        /// Maps all source elements to an enumerable of target elements.
+        ///     Maps all source elements to an enumerable of target elements.
         /// </summary>
         /// <typeparam name="TSource">The type of the source object.</typeparam>
         /// <typeparam name="TTarget">The type of the target object.</typeparam>
         /// <param name="source">The source object.</param>
         /// <param name="mapper">The mapper object.</param>
         /// <returns>An enumerable of target elements</returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "1", Justification = "The call to Guard does that.")]
-        public static IEnumerable<TTarget> MapAll<TSource, TTarget>(this IEnumerable<TSource> source, IMapper<TSource, TTarget> mapper)
+        [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "1",
+            Justification = "The call to Guard does that.")]
+        public static IEnumerable<TTarget> MapAll<TSource, TTarget>(this IEnumerable<TSource> source,
+            IMapper<TSource, TTarget> mapper)
         {
             Guard.CheckArgumentNotNull(mapper, "mapper");
             return mapper.MapMultiple(source);

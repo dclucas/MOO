@@ -23,12 +23,14 @@
 // Email: diogo.lucas@gmail.com
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
+using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Reflection;
+
 namespace Moo.Core
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Reflection;
-
     /// <summary>Interface for property explorer.</summary>
     public interface IPropertyExplorer
     {
@@ -36,14 +38,16 @@ namespace Moo.Core
         /// <typeparam name="TSource">Type of the source.</typeparam>
         /// <typeparam name="TTarget">Type of the target.</typeparam>
         /// <param name="checkAction">
-        /// A check function, that receives a source and a target property and determines if they
-        /// match.
+        ///     A check function, that receives a source and a target property and determines if they
+        ///     match.
         /// </param>
         /// <returns>
-        /// A list of all matches between the source and target types.
+        ///     A list of all matches between the source and target types.
         /// </returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures", Justification = "No can do.")]
-        IEnumerable<KeyValuePair<PropertyInfo, PropertyInfo>> GetMatches<TSource, TTarget>(Func<PropertyInfo, PropertyInfo, bool> checkAction);
+        [SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures",
+            Justification = "No can do.")]
+        IEnumerable<KeyValuePair<PropertyInfo, PropertyInfo>> GetMatches<TSource, TTarget>(
+            Func<PropertyInfo, PropertyInfo, bool> checkAction);
 
         /// <summary>Gets all properties for a given source type.</summary>
         /// <typeparam name="TSource">Type of the source.</typeparam>

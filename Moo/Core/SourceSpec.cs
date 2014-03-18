@@ -24,33 +24,31 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq.Expressions;
+
 namespace Moo.Core
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Linq.Expressions;
-    using System.Text;
-
     /// <summary>
-    /// Specs class for fluent mapping of source objects.
+    ///     Specs class for fluent mapping of source objects.
     /// </summary>
     /// <typeparam name="TSource">Type of the source object.</typeparam>
     /// <typeparam name="TTarget">Type of the target object.</typeparam>
     public class SourceSpec<TSource, TTarget> : ISourceSpec<TSource, TTarget>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="SourceSpec{TSource,TTarget}"/> class.
+        ///     Initializes a new instance of the <see cref="SourceSpec{TSource,TTarget}" /> class.
         /// </summary>
         /// <param name="mapper">Mapper to extend</param>
         public SourceSpec(IExtensibleMapper<TSource, TTarget> mapper)
         {
             Guard.CheckArgumentNotNull(mapper, "mapper");
-            this.Mapper = mapper;
+            Mapper = mapper;
         }
 
         /// <summary>
-        /// Gets the mapper that to be extended.
+        ///     Gets the mapper that to be extended.
         /// </summary>
         protected IExtensibleMapper<TSource, TTarget> Mapper { get; private set; }
 
@@ -58,21 +56,25 @@ namespace Moo.Core
         /// <typeparam name="TInnerSource">Type of the inner source property.</typeparam>
         /// <param name="argument">Expression to fetch data from the source object.</param>
         /// <returns>A ITargetSpec, allowing to define the mapping target.</returns>
-        public ITargetSpec<TSource, TTarget, TInnerSource> From<TInnerSource>(Expression<Func<TSource, TInnerSource>> argument)
+        public ITargetSpec<TSource, TTarget> From<TInnerSource>(
+            Expression<Func<TSource, TInnerSource>> argument)
         {
             return new TargetSpec<TSource, TTarget, TInnerSource>(Mapper, argument);
         }
 
         /// <summary>
-        /// Instructs Moo to use an internal mapper for properties of <typeparamref name="TInnerSource"/>
-        /// type.
+        ///     Instructs Moo to use an internal mapper for properties of <typeparamref name="TInnerSource" />
+        ///     type.
         /// </summary>
         /// <typeparam name="TInnerSource">Type of the source property to map.</typeparam>
         /// <param name="argument">Expression to fetch data from the source object.</param>
         /// <returns>A ISourceSpec, allowing to define further mappings.</returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter", Justification = "Easier said than done")]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures", Justification = "Easier said than done")]
-        public ITargetSpec<TSource, TTarget, TInnerSource> UseMapperFrom<TInnerSource>(Expression<Func<TSource, TInnerSource>> argument)
+        [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter",
+            Justification = "Easier said than done")]
+        [SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures",
+            Justification = "Easier said than done")]
+        public ITargetSpec<TSource, TTarget> UseMapperFrom<TInnerSource>(
+            Expression<Func<TSource, TInnerSource>> argument)
         {
             return new TargetSpec<TSource, TTarget, TInnerSource>(Mapper, argument, true);
         }

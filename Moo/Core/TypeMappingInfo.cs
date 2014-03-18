@@ -24,37 +24,38 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
+using System.Linq;
+using System.Linq.Expressions;
+
 namespace Moo.Core
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
-    using System.Linq;
-    using System.Linq.Expressions;
-
     /// <summary>
-    /// Determines behavior to use for mapping overwrites
+    ///     Determines behavior to use for mapping overwrites
     /// </summary>
     public enum MappingOverwriteBehavior
     {
         /// <summary>
-        /// Allows mapping overwrite
+        ///     Allows mapping overwrite
         /// </summary>
         AllowOverwrite,
 
         /// <summary>
-        /// Silently skips write operation if a mapping for a give source already exists
+        ///     Silently skips write operation if a mapping for a give source already exists
         /// </summary>
         SkipOverwrite,
 
         /// <summary>
-        /// Throws a <see cref="InvalidOperationException"/> if an overwrite attempt happens
+        ///     Throws a <see cref="InvalidOperationException" /> if an overwrite attempt happens
         /// </summary>
         ThrowOnOverwrite
     }
 
     /// <summary>
-    /// Contains information targetProperty map between two classes.
+    ///     Contains information targetProperty map between two classes.
     /// </summary>
     /// <typeparam name="TSource">The type of the source.</typeparam>
     /// <typeparam name="TTarget">The type of the target.</typeparam>
@@ -63,9 +64,9 @@ namespace Moo.Core
         #region Fields
 
         /// <summary>
-        /// Backing field for the internal member mapping collection.
+        ///     Backing field for the internal member mapping collection.
         /// </summary>
-        private Dictionary<string, MemberMappingInfo<TSource, TTarget>> memberMappings =
+        private readonly Dictionary<string, MemberMappingInfo<TSource, TTarget>> _memberMappings =
             new Dictionary<string, MemberMappingInfo<TSource, TTarget>>();
 
         #endregion Fields
@@ -81,7 +82,7 @@ namespace Moo.Core
         /// <param name="overwriteBehavior">The overwrite behavior.</param>
         public TypeMappingInfo(MappingOverwriteBehavior overwriteBehavior)
         {
-            this.OverwriteBehavior = overwriteBehavior;
+            OverwriteBehavior = overwriteBehavior;
         }
 
         #endregion
@@ -89,18 +90,18 @@ namespace Moo.Core
         #region Properties
 
         /// <summary>
-        /// Gets or sets the type of the source.
+        ///     Gets or sets the type of the source.
         /// </summary>
         /// <sourceValue>
-        /// The type of the source.
+        ///     The type of the source.
         /// </sourceValue>
         public Type SourceType { get; set; }
 
         /// <summary>
-        /// Gets or sets the type of the target.
+        ///     Gets or sets the type of the target.
         /// </summary>
         /// <sourceValue>
-        /// The type of the target.
+        ///     The type of the target.
         /// </sourceValue>
         public Type TargetType { get; set; }
 
@@ -113,10 +114,10 @@ namespace Moo.Core
         #region Methods
 
         /// <summary>
-        /// Adds the specified member mapping info.
+        ///     Adds the specified member mapping info.
         /// </summary>
         /// <param name="mappingInfo">The member mapping info.</param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+        [SuppressMessage(
             "Microsoft.Design",
             "CA1062:Validate arguments of public methods",
             MessageId = "0",
@@ -124,68 +125,69 @@ namespace Moo.Core
         public void Add(MemberMappingInfo<TSource, TTarget> mappingInfo)
         {
             Guard.CheckArgumentNotNull(mappingInfo, "mappingInfo");
-            switch (this.OverwriteBehavior)
+            switch (OverwriteBehavior)
             {
                 case MappingOverwriteBehavior.AllowOverwrite:
-                    this.memberMappings[mappingInfo.TargetMemberName] = mappingInfo;
+                    _memberMappings[mappingInfo.TargetMemberName] = mappingInfo;
                     break;
 
                 case MappingOverwriteBehavior.SkipOverwrite:
-                    if (!this.memberMappings.ContainsKey(mappingInfo.TargetMemberName))
+                    if (!_memberMappings.ContainsKey(mappingInfo.TargetMemberName))
                     {
-                        this.memberMappings[mappingInfo.TargetMemberName] = mappingInfo;
+                        _memberMappings[mappingInfo.TargetMemberName] = mappingInfo;
                     }
 
                     break;
 
                 case MappingOverwriteBehavior.ThrowOnOverwrite:
-                    if (!this.memberMappings.ContainsKey(mappingInfo.TargetMemberName))
+                    if (!_memberMappings.ContainsKey(mappingInfo.TargetMemberName))
                     {
                         throw new MappingException(
                             string.Format(
-                                System.Globalization.CultureInfo.InvariantCulture,
+                                CultureInfo.InvariantCulture,
                                 "Target {0}.{1} was defined multiple times.",
-                                typeof(TTarget).FullName,
+                                typeof (TTarget).FullName,
                                 mappingInfo.TargetMemberName),
-                            typeof(TSource),
-                            typeof(TTarget),
+                            typeof (TSource),
+                            typeof (TTarget),
                             mappingInfo.SourceMemberName,
                             mappingInfo.TargetMemberName,
                             null);
                     }
 
                     break;
-            }    
+            }
         }
 
         /// <summary>
-        /// Gets the member mappings.
+        ///     Gets the member mappings.
         /// </summary>
         /// <returns>
-        /// An <c>IEnumerable</c> containing all member mappings between
-        /// <typeparamref name="TSource"/> and <typeparamref name="TTarget"/>.
+        ///     An <c>IEnumerable</c> containing all member mappings between
+        ///     <typeparamref name="TSource" /> and <typeparamref name="TTarget" />.
         /// </returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+        [SuppressMessage(
             "Microsoft.Design",
             "CA1024:UsePropertiesWhereAppropriate",
-            Justification = "Optional rule, solemnly ignored here -- this get might be costly/have side effects in the future."),
-        System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Microsoft.Design",
-            "CA1006:DoNotNestGenericTypesInMemberSignatures",
-            Justification = "Easier said than done. Not willing to sacrifice type safety here.")]
+            Justification =
+                "Optional rule, solemnly ignored here -- this get might be costly/have side effects in the future."),
+         SuppressMessage(
+             "Microsoft.Design",
+             "CA1006:DoNotNestGenericTypesInMemberSignatures",
+             Justification = "Easier said than done. Not willing to sacrifice type safety here.")]
         public IEnumerable<MemberMappingInfo<TSource, TTarget>> GetMappings()
         {
-            return this.memberMappings.Values;
+            return _memberMappings.Values;
         }
 
         /// <summary>
-        /// Adds a list of mappings
+        ///     Adds a list of mappings
         /// </summary>
         /// <param name="mappingInfoList">
-        /// List to be added.
+        ///     List to be added.
         /// </param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Microsoft.Design", 
+        [SuppressMessage(
+            "Microsoft.Design",
             "CA1006:DoNotNestGenericTypesInMemberSignatures",
             Justification = "It's either that or using an array.")]
         public void AddRange(IEnumerable<MemberMappingInfo<TSource, TTarget>> mappingInfoList)
@@ -198,28 +200,29 @@ namespace Moo.Core
         }
 
         /// <summary>
-        /// Compiles multiple internal mapping entries into a single lambda, for faster execution.
+        ///     Compiles multiple internal mapping entries into a single lambda, for faster execution.
         /// </summary>
         public void Compile()
         {
-            var sourceParam = Expression.Parameter(typeof(TSource), "source");
-            var targetParam = Expression.Parameter(typeof(TTarget), "target");
+            ParameterExpression sourceParam = Expression.Parameter(typeof (TSource), "source");
+            ParameterExpression targetParam = Expression.Parameter(typeof (TTarget), "target");
 
-            var q = from m in memberMappings
-                    let rm = m.Value as ReflectionPropertyMappingInfo<TSource, TTarget>
-                    where rm != null
-                    select new
-                    {
-                        CurrentMapping = m,
-                        Expression = GetExpression(m.Key, rm, sourceParam, targetParam)
-                    };
+            var q = from m in _memberMappings
+                let rm = m.Value as ReflectionPropertyMappingInfo<TSource, TTarget>
+                where rm != null
+                select new
+                {
+                    CurrentMapping = m,
+                    Expression = GetExpression(m.Key, rm, sourceParam, targetParam)
+                };
 
             var innerExpressions = q.Where(i => i.Expression != null).ToArray();
             if (innerExpressions.Length > 0)
             {
-                var block = Expression.Block(innerExpressions.Select(i => i.Expression));
-                var lambda = Expression.Lambda<MappingAction<TSource, TTarget>>(block, sourceParam, targetParam);
-                var targetNames = innerExpressions.Select(i => i.CurrentMapping.Key);
+                BlockExpression block = Expression.Block(innerExpressions.Select(i => i.Expression));
+                Expression<MappingAction<TSource, TTarget>> lambda =
+                    Expression.Lambda<MappingAction<TSource, TTarget>>(block, sourceParam, targetParam);
+                IEnumerable<string> targetNames = innerExpressions.Select(i => i.CurrentMapping.Key);
                 var newMapping = new DelegateMappingInfo<TSource, TTarget>(
                     "Multiple sources -- see target.",
                     string.Join(",", targetNames),
@@ -227,10 +230,10 @@ namespace Moo.Core
 
                 foreach (var e in innerExpressions)
                 {
-                    this.memberMappings.Remove(e.CurrentMapping.Key);
+                    _memberMappings.Remove(e.CurrentMapping.Key);
                 }
 
-                this.Add(newMapping);
+                Add(newMapping);
             }
         }
 
@@ -240,9 +243,10 @@ namespace Moo.Core
         /// <param name="sourceParameter">     Source parameter.</param>
         /// <param name="targetParameter">     Target parameter.</param>
         /// <returns>The conversion expression.</returns>
-        [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "targetMemberName", Justification = "This is by design. Parameter may be required on other implementations.")]
+        [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "targetMemberName",
+            Justification = "This is by design. Parameter may be required on other implementations.")]
         protected Expression GetExpression(
-            string targetMemberName, 
+            string targetMemberName,
             ReflectionPropertyMappingInfo<TSource, TTarget> reflectionInfo,
             ParameterExpression sourceParameter,
             ParameterExpression targetParameter)

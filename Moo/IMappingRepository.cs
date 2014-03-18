@@ -23,17 +23,18 @@
 // Email: diogo.lucas@gmail.com
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
+using System;
+
 namespace Moo
 {
-    using System;
-
     /// <summary>
-    /// Base interface for mapping repositories.
+    ///     Base interface for mapping repositories.
     /// </summary>
     public interface IMappingRepository
     {
         /// <summary>
-        /// Adds the specified mapper to the repository.
+        ///     Adds the specified mapper to the repository.
         /// </summary>
         /// <typeparam name="TSource">The type of the source.</typeparam>
         /// <typeparam name="TTarget">The type of the target.</typeparam>
@@ -41,73 +42,74 @@ namespace Moo
         void AddMapper<TSource, TTarget>(IExtensibleMapper<TSource, TTarget> mapper);
 
         /// <summary>
-        /// Clears this instance, removing all mappers within it.
+        ///     Clears this instance, removing all mappers within it.
         /// </summary>
         void Clear();
 
         /// <summary>
-        /// Returns a mapper object for the two provided types, by
-        /// either creating a new instance or by getting an existing
-        /// one sourceMember the cache.
+        ///     Returns a mapper object for the two provided types, by
+        ///     either creating a new instance or by getting an existing
+        ///     one sourceMember the cache.
         /// </summary>
         /// <typeparam name="TSource">
-        /// The originating type.
+        ///     The originating type.
         /// </typeparam>
         /// <typeparam name="TTarget">
-        /// The destination type.
+        ///     The destination type.
         /// </typeparam>
         /// <returns>
-        /// An instance of a <see>IExtensibleMapper</see> object.
+        ///     An instance of a <see>IExtensibleMapper</see> object.
         /// </returns>
         IExtensibleMapper<TSource, TTarget> ResolveMapper<TSource, TTarget>();
 
         /// <summary>
-        /// Returns a mapper object for the two provided types, by
-        /// either creating a new instance or by getting an existing
-        /// one sourceMember the cache.
+        ///     Returns a mapper object for the two provided types, by
+        ///     either creating a new instance or by getting an existing
+        ///     one sourceMember the cache.
         /// </summary>
         /// <param name="sourceType">Type of the source.</param>
         /// <param name="targetType">Type of the target.</param>
         /// <returns>
-        /// An instance of a <see>IExtensibleMapper</see> object.
+        ///     An instance of a <see>IExtensibleMapper</see> object.
         /// </returns>
         IMapper ResolveMapper(Type sourceType, Type targetType);
 
         /// <summary>
-        /// Checks whether the repo already contains a mapper for the specified
-        /// classes and returns one if it does.
+        ///     Checks whether the repo already contains a mapper for the specified
+        ///     classes and returns one if it does.
         /// </summary>
         /// <param name="sourceType">Type of the source.</param>
         /// <param name="targetType">Type of the target.</param>
         /// <returns>
-        /// An instance of a <see>IMapper</see> object if any exists in the
-        /// repository, <c>null</c> otherwise.
+        ///     An instance of a <see>IMapper</see> object if any exists in the
+        ///     repository, <c>null</c> otherwise.
         /// </returns>
         IMapper TryGetMapper(Type sourceType, Type targetType);
 
         /// <summary>
-        /// Adds a mapping rule for the specified members.
+        ///     Adds a mapping rule for the specified members.
         /// </summary>
         /// <typeparam name="TSource">Type of the source.</typeparam>
         /// <typeparam name="TTarget">Type of the target.</typeparam>
         /// <param name="sourceMemberName">
-        /// Source member.
+        ///     Source member.
         /// </param>
         /// <param name="targetMemberName">
-        /// Destination member.
+        ///     Destination member.
         /// </param>
         /// <param name="mappingAction">
-        /// The delegate that will perform the conversion.
+        ///     The delegate that will perform the conversion.
         /// </param>
-        void AddMappingAction<TSource, TTarget>(string sourceMemberName, string targetMemberName, MappingAction<TSource, TTarget> mappingAction);
+        void AddMappingAction<TSource, TTarget>(string sourceMemberName, string targetMemberName,
+            MappingAction<TSource, TTarget> mappingAction);
 
         /// <summary>
-        /// Allows adding mapping actions through the fluent API.
+        ///     Allows adding mapping actions through the fluent API.
         /// </summary>
         /// <typeparam name="TSource">Type of the source object.</typeparam>
         /// <typeparam name="TTarget">Type of the target object.</typeparam>
         /// <returns>
-        /// A SourceSpec object, for property mapping.
+        ///     A SourceSpec object, for property mapping.
         /// </returns>
         ISourceSpec<TSource, TTarget> AddMapping<TSource, TTarget>();
     }

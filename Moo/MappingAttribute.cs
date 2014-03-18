@@ -24,51 +24,51 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
+
 namespace Moo
 {
-    using System;
-
     /// <summary>
-    /// Determines in which direction the mapping may occur.
+    ///     Determines in which direction the mapping may occur.
     /// </summary>
     [Flags]
     public enum MappingDirections
     {
         /// <summary>
-        /// The attributed member will be the mapping source.
+        ///     The attributed member will be the mapping source.
         /// </summary>
         From = 1,
 
         /// <summary>
-        /// The attributed member will be the mapping target.
+        ///     The attributed member will be the mapping target.
         /// </summary>
         Target = 2,
 
         /// <summary>
-        /// The attributed member can be used as either a mapping source or a target.
+        ///     The attributed member can be used as either a mapping source or a target.
         /// </summary>
         Both = From | Target
     }
 
     /// <summary>
-    /// Serves as a decoration to provide member mapping info within a class.
+    ///     Serves as a decoration to provide member mapping info within a class.
     /// </summary>
-    [global::System.AttributeUsage(AttributeTargets.Property, Inherited = true, AllowMultiple = true)]
+    [AttributeUsage(AttributeTargets.Property, Inherited = true, AllowMultiple = true)]
     public sealed class MappingAttribute : Attribute
     {
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MappingAttribute"/> class.
+        ///     Initializes a new instance of the <see cref="MappingAttribute" /> class.
         /// </summary>
         /// <param name="direction">The mapping direction.</param>
         /// <param name="otherType">The type of the other class involved in the mapping.</param>
         /// <param name="otherMemberName">Name of the otherType class's member.</param>
         public MappingAttribute(MappingDirections direction, Type otherType, string otherMemberName)
         {
-            this.Direction = direction;
-            this.OtherMemberName = otherMemberName;
-            this.OtherType = otherType;
+            Direction = direction;
+            OtherMemberName = otherMemberName;
+            OtherType = otherType;
         }
 
         #endregion Constructors
@@ -76,23 +76,23 @@ namespace Moo
         #region Properties
 
         /// <summary>
-        /// Gets the mapping direction.
+        ///     Gets the mapping direction.
         /// </summary>
         public MappingDirections Direction { get; private set; }
 
         /// <summary>
-        /// Gets the name of the otherType class member involved in the mapping.
+        ///     Gets the name of the otherType class member involved in the mapping.
         /// </summary>
         /// <sourceValue>
-        /// The name of the otherType class member involved in the mapping.
+        ///     The name of the otherType class member involved in the mapping.
         /// </sourceValue>
         public string OtherMemberName { get; private set; }
 
         /// <summary>
-        /// Gets the type of the otherType class involved in the mapping.
+        ///     Gets the type of the otherType class involved in the mapping.
         /// </summary>
         /// <sourceValue>
-        /// The type of the otherType class involved in the mapping.
+        ///     The type of the otherType class involved in the mapping.
         /// </sourceValue>
         public Type OtherType { get; private set; }
 

@@ -24,51 +24,50 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
+using System.Collections;
+using System.Reflection;
+
 namespace Moo.Core
 {
-    using System;
-    using System.Collections;
-    using System.Linq;
-    using System.Reflection;
-
     /// <summary>
-    /// Member mapping info for internal mapper usage.
+    ///     Member mapping info for internal mapper usage.
     /// </summary>
     /// <typeparam name="TSource">
-    /// Type of the source object.
+    ///     Type of the source object.
     /// </typeparam>
     /// <typeparam name="TTarget">
-    /// Type of the target object.
+    ///     Type of the target object.
     /// </typeparam>
     /// <remarks>
-    /// This class exists for internal usage only. Its usage by client code
-    /// is not recommended.
+    ///     This class exists for internal usage only. Its usage by client code
+    ///     is not recommended.
     /// </remarks>
     internal class MapperMappingInfo<TSource, TTarget> : MemberMappingInfo<TSource, TTarget>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="MapperMappingInfo{TSource,TTarget}"/> class.
+        ///     Initializes a new instance of the <see cref="MapperMappingInfo{TSource,TTarget}" /> class.
         /// </summary>
         /// <param name="mapper">
-        /// The internal mapper.
+        ///     The internal mapper.
         /// </param>
         /// <param name="sourceProperty">
-        /// The source property.
+        ///     The source property.
         /// </param>
         /// <param name="targetProperty">
-        /// The target property.
+        ///     The target property.
         /// </param>
         public MapperMappingInfo(IMapper mapper, PropertyInfo sourceProperty, PropertyInfo targetProperty)
         {
-            this.Mapper = mapper;
-            this.SourceProperty = sourceProperty;
-            this.TargetProperty = targetProperty;
-            this.SourceMemberName = sourceProperty.Name;
-            this.TargetMemberName = targetProperty.Name;
+            Mapper = mapper;
+            SourceProperty = sourceProperty;
+            TargetProperty = targetProperty;
+            SourceMemberName = sourceProperty.Name;
+            TargetMemberName = targetProperty.Name;
 
-            var enumerableType = typeof(IEnumerable);
-            this.MapMultiple = enumerableType.IsAssignableFrom(sourceProperty.PropertyType)
-                && enumerableType.IsAssignableFrom(targetProperty.PropertyType);
+            Type enumerableType = typeof (IEnumerable);
+            MapMultiple = enumerableType.IsAssignableFrom(sourceProperty.PropertyType)
+                          && enumerableType.IsAssignableFrom(targetProperty.PropertyType);
         }
 
         /// <summary>Gets or sets a value indicating whether the map multiple items instead of just one.</summary>
@@ -76,31 +75,30 @@ namespace Moo.Core
         public bool MapMultiple { get; set; }
 
         /// <summary>
-        /// Gets or sets the internal Mapper.
+        ///     Gets or sets the internal Mapper.
         /// </summary>
         private IMapper Mapper { get; set; }
 
         /// <summary>
-        /// Gets or sets the source property.
+        ///     Gets or sets the source property.
         /// </summary>
         private PropertyInfo SourceProperty { get; set; }
 
         /// <summary>
-        /// Gets or sets target property.
+        ///     Gets or sets target property.
         /// </summary>
         private PropertyInfo TargetProperty { get; set; }
 
         /// <summary>
-        /// Maps a given class member from the source to the target object.
+        ///     Maps a given class member from the source to the target object.
         /// </summary>
         /// <param name="source">Mapping sourceMember object</param>
         /// <param name="target">Mapping targetMember object</param>
         public override void Map(TSource source, TTarget target)
         {
-            var src = this.SourceProperty.GetValue(source, null);
-            object val = null;
-            val = this.Mapper.Map(src);
-            this.TargetProperty.SetValue(target, val, null);
+            object src = SourceProperty.GetValue(source, null);
+            object val = Mapper.Map(src);
+            TargetProperty.SetValue(target, val, null);
         }
     }
 }

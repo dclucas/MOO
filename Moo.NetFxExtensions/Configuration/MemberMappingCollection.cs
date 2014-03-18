@@ -63,7 +63,7 @@ namespace Moo.Configuration
         /// <param name="element">The element.</param>
         public void Add(MemberMappingElement element)
         {
-            this.BaseAdd(element);
+            BaseAdd(element);
         }
 
         /// <summary>

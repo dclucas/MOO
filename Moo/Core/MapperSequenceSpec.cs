@@ -23,13 +23,13 @@
 // Email: diogo.lucas@gmail.com
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
 namespace Moo.Core
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-
     /// <summary>Specifies a mapping sequence to use.</summary>
     internal class MapperSequenceSpec : IMapperSequenceSpec
     {
@@ -40,8 +40,8 @@ namespace Moo.Core
         {
             Guard.CheckArgumentNotNull(parentSpec, "parentSpec");
             Guard.CheckArgumentNotNull(currentSequence, "currentSequence");
-            this.ParentSpec = parentSpec;
-            this.CurrentSequence = currentSequence;
+            ParentSpec = parentSpec;
+            CurrentSequence = currentSequence;
         }
 
         /// <summary>Gets or sets the current mapper sequence.</summary>
@@ -57,8 +57,21 @@ namespace Moo.Core
         /// <returns>An object allowing the fluent specification to continue.</returns>
         public IMapperSequenceSpec Then<TMapper>() where TMapper : IMapper
         {
-            AddMapper(typeof(TMapper));
+            AddMapper(typeof (TMapper));
             return new MapperSequenceSpec(ParentSpec, CurrentSequence);
+        }
+
+        /// <summary>Gets the last mapper to use.</summary>
+        /// <typeparam name="TMapper">Type of the mapper.</typeparam>
+        /// <returns>
+        ///     An object allowing the return to the beginning of the fluent specification (the parent repo
+        ///     spec).
+        /// </returns>
+        public IRepositorySpec Finally<TMapper>() where TMapper : IMapper
+        {
+            AddMapper(typeof (TMapper));
+            ParentSpec.MapperOrder.SetSequence(CurrentSequence.ToArray());
+            return ParentSpec;
         }
 
         /// <summary>Adds a mapper to the existing sequence.</summary>
@@ -66,19 +79,6 @@ namespace Moo.Core
         private void AddMapper(Type mapperType)
         {
             CurrentSequence.Add(mapperType);
-        }
-
-        /// <summary>Gets the last mapper to use.</summary>
-        /// <typeparam name="TMapper">Type of the mapper.</typeparam>
-        /// <returns>
-        /// An object allowing the return to the beginning of the fluent specification (the parent repo
-        /// spec).
-        /// </returns>
-        public IRepositorySpec Finally<TMapper>() where TMapper : IMapper
-        {
-            AddMapper(typeof(TMapper));
-            ParentSpec.MapperOrder.SetSequence(CurrentSequence.ToArray());
-            return ParentSpec;
         }
     }
 }

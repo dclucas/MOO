@@ -23,141 +23,154 @@
 // Email: diogo.lucas@gmail.com
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
+using System.Diagnostics.CodeAnalysis;
+using Moo.Core;
+
 namespace Moo.Extenders
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using Moo.Core;
-
     /// <summary>
-    /// Extends the <c>Object</c> class, providing mapping capabilities for all objects.
+    ///     Extends the <c>Object</c> class, providing mapping capabilities for all objects.
     /// </summary>
     public static class ObjectMappingExtender
     {
         #region Methods
 
         /// <summary>
-        /// Maps the values on object the to a target type.
+        ///     Maps the values on object the to a target type.
         /// </summary>
         /// <typeparam name="TTarget">The type of the target.</typeparam>
         /// <param name="source">The source object.</param>
         /// <returns>
-        /// The target object, filled according to the mapping instructions in the mapper provided provided by the default repository.
+        ///     The target object, filled according to the mapping instructions in the mapper provided provided by the default
+        ///     repository.
         /// </returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0", Justification = "The call to Guard already does that.")]
+        [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0",
+            Justification = "The call to Guard already does that.")]
         public static TTarget MapTo<TTarget>(this object source)
         {
             return MapTo<TTarget>(source, MappingRepository.Default);
         }
 
         /// <summary>
-        /// Maps the values on object the to a target type.
+        ///     Maps the values on object the to a target type.
         /// </summary>
         /// <typeparam name="TTarget">The type of the target.</typeparam>
         /// <param name="source">The source object.</param>
         /// <param name="mapper">The mapper to be used.</param>
         /// <returns>
-        /// The target object, filled according to the mapping instructions in the provided mapper.
+        ///     The target object, filled according to the mapping instructions in the provided mapper.
         /// </returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0", Justification = "The call to Guard already does that."),
-        System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "1", Justification = "The call to Guard already does that.")]
+        [SuppressMessage(
+            "Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0",
+            Justification = "The call to Guard already does that."),
+         SuppressMessage(
+             "Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "1",
+             Justification = "The call to Guard already does that.")]
         public static TTarget MapTo<TTarget>(this object source, IMapper mapper)
         {
             Guard.CheckArgumentNotNull(source, "source");
             Guard.CheckArgumentNotNull(mapper, "mapper");
-            return (TTarget)mapper.Map(source);
+            return (TTarget) mapper.Map(source);
         }
 
         /// <summary>
-        /// Maps the values on object the to a target type.
+        ///     Maps the values on object the to a target type.
         /// </summary>
         /// <typeparam name="TTarget">The type of the target.</typeparam>
         /// <param name="source">The source object.</param>
         /// <param name="repo">The repository that will provide the mapper.</param>
         /// <returns>
-        /// The target object, filled according to the mapping instructions in the mapper provided provided by the repository.
+        ///     The target object, filled according to the mapping instructions in the mapper provided provided by the repository.
         /// </returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0", Justification = "The call to Guard already does that."),
-        System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "1", Justification = "The call to Guard already does that.")]
+        [SuppressMessage(
+            "Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0",
+            Justification = "The call to Guard already does that."),
+         SuppressMessage(
+             "Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "1",
+             Justification = "The call to Guard already does that.")]
         public static TTarget MapTo<TTarget>(this object source, IMappingRepository repo)
         {
             Guard.CheckArgumentNotNull(source, "source");
             Guard.CheckArgumentNotNull(repo, "repo");
-            var mapper = repo.ResolveMapper(source.GetType(), typeof(TTarget));
-            return (TTarget)mapper.Map(source);
+            IMapper mapper = repo.ResolveMapper(source.GetType(), typeof (TTarget));
+            return (TTarget) mapper.Map(source);
         }
 
         /// <summary>
-        /// Maps the values on object the to a target type.
+        ///     Maps the values on object the to a target type.
         /// </summary>
         /// <typeparam name="TTarget">The type of the target.</typeparam>
         /// <param name="source">The source object.</param>
         /// <param name="target">The target object.</param>
         /// <returns>
-        /// The target object, filled according to the mapping instructions in the mapper provided provided by the default repository.
+        ///     The target object, filled according to the mapping instructions in the mapper provided provided by the default
+        ///     repository.
         /// </returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0", Justification = "The call to Guard already does that."),
-        System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "1", Justification = "The call to Guard already does that.")]
+        [SuppressMessage(
+            "Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0",
+            Justification = "The call to Guard already does that."),
+         SuppressMessage(
+             "Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "1",
+             Justification = "The call to Guard already does that.")]
         public static TTarget MapTo<TTarget>(this object source, TTarget target)
         {
-            return MapTo<TTarget>(source, target, MappingRepository.Default);
+            return MapTo(source, target, MappingRepository.Default);
         }
 
         /// <summary>
-        /// Maps the values on the object to a target object.
+        ///     Maps the values on the object to a target object.
         /// </summary>
         /// <typeparam name="TTarget">The type of the target.</typeparam>
         /// <param name="source">The source object.</param>
         /// <param name="target">The target object.</param>
         /// <param name="mapper">The mapper to be used.</param>
         /// <returns>
-        /// The target object, filled according to the mapping instructions in the provided mapper.
+        ///     The target object, filled according to the mapping instructions in the provided mapper.
         /// </returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0", Justification = "The call to Guard already does that."),
-        System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "1", Justification = "The call to Guard already does that."),
-        System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "2", Justification = "The call to Guard already does that.")]
+        [SuppressMessage(
+            "Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0",
+            Justification = "The call to Guard already does that."),
+         SuppressMessage(
+             "Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "1",
+             Justification = "The call to Guard already does that."),
+         SuppressMessage(
+             "Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "2",
+             Justification = "The call to Guard already does that.")]
         public static TTarget MapTo<TTarget>(this object source, TTarget target, IMapper mapper)
         {
             Guard.CheckArgumentNotNull(source, "source");
             Guard.CheckArgumentNotNull(target, "target");
             Guard.CheckArgumentNotNull(mapper, "mapper");
-            return (TTarget)mapper.Map(source, target);
+            return (TTarget) mapper.Map(source, target);
         }
 
         /// <summary>
-        /// Maps the values on object the to a target type.
+        ///     Maps the values on object the to a target type.
         /// </summary>
         /// <typeparam name="TTarget">The type of the target.</typeparam>
         /// <param name="source">The source object.</param>
         /// <param name="target">The target object.</param>
         /// <param name="repo">The repository that will provide the mapper.</param>
         /// <returns>
-        /// The target object, filled according to the mapping instructions in the mapper provided provided by the repository.
+        ///     The target object, filled according to the mapping instructions in the mapper provided provided by the repository.
         /// </returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0", Justification = "The call to Guard already does that."),
-        System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "1", Justification = "The call to Guard already does that."),
-        System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "2", Justification = "The call to Guard already does that.")]
+        [SuppressMessage(
+            "Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0",
+            Justification = "The call to Guard already does that."),
+         SuppressMessage(
+             "Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "1",
+             Justification = "The call to Guard already does that."),
+         SuppressMessage(
+             "Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "2",
+             Justification = "The call to Guard already does that.")]
         public static TTarget MapTo<TTarget>(this object source, TTarget target, IMappingRepository repo)
         {
             Guard.CheckArgumentNotNull(source, "source");
             Guard.CheckArgumentNotNull(target, "target");
             Guard.CheckArgumentNotNull(repo, "repo");
-            var mapper = repo.ResolveMapper(source.GetType(), typeof(TTarget));
-            return (TTarget)mapper.Map(source, target);
+            IMapper mapper = repo.ResolveMapper(source.GetType(), typeof (TTarget));
+            return (TTarget) mapper.Map(source, target);
         }
 
         #endregion Methods

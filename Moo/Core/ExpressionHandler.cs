@@ -23,15 +23,14 @@
 // Email: diogo.lucas@gmail.com
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
+using System;
+using System.Globalization;
+using System.Linq.Expressions;
+using System.Reflection;
+
 namespace Moo.Core
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Linq.Expressions;
-    using System.Reflection;
-    using System.Text;
-
     /// <summary>Provides LINQ expression handling capabilities.</summary>
     internal class ExpressionHandler : IExpressionHandler
     {
@@ -44,7 +43,7 @@ namespace Moo.Core
             {
                 throw new ArgumentException(
                     string.Format(
-                        System.Globalization.CultureInfo.InvariantCulture,
+                        CultureInfo.InvariantCulture,
                         "'To' should be called with a property getter delegate, but instead got a {0} expression type, with a {1} expression body",
                         argument.NodeType,
                         argument.Body.NodeType));
@@ -56,7 +55,7 @@ namespace Moo.Core
         /// <returns>A name for the expression.</returns>
         public string GetMemberName(Expression expression)
         {
-            var memberExpr = expression as System.Linq.Expressions.MemberExpression;
+            var memberExpr = expression as MemberExpression;
             if (memberExpr != null)
             {
                 return memberExpr.Member.Name;
@@ -71,37 +70,49 @@ namespace Moo.Core
         /// <param name="sourceArgument">An expression fetching the source data.</param>
         /// <param name="targetArgument">An expression fetching the target property.</param>
         /// <returns>A delegate that maps from the source to the target object.</returns>
-        /// ### <exception cref="ArgumentException">
-        /// targetExpression is not a property access expression.
+        /// ###
+        /// <exception cref="ArgumentException">
+        ///     targetExpression is not a property access expression.
         /// </exception>
         public MappingAction<TSource, TTarget> GetAction<TSource, TTarget>(
-            LambdaExpression sourceArgument, 
+            LambdaExpression sourceArgument,
             LambdaExpression targetArgument)
         {
-            var sourceParam = Expression.Parameter(typeof(TSource));
-            var targetParam = Expression.Parameter(typeof(TTarget));
-            var targetPropName = ((MemberExpression)targetArgument.Body).Member.Name;
-            var targetProp = Expression.Property(targetParam, targetPropName);
-            var sourceGet = Expression.Convert(Expression.Invoke(sourceArgument, sourceParam), targetProp.Type);
-            var assignment = Expression.Assign(targetProp, sourceGet);
-            var finalExpr = Expression.Lambda<MappingAction<TSource, TTarget>>(assignment, sourceParam, targetParam);
+            ParameterExpression sourceParam = Expression.Parameter(typeof (TSource));
+            ParameterExpression targetParam = Expression.Parameter(typeof (TTarget));
+            string targetPropName = ((MemberExpression) targetArgument.Body).Member.Name;
+            MemberExpression targetProp = Expression.Property(targetParam, targetPropName);
+            UnaryExpression sourceGet = Expression.Convert(Expression.Invoke(sourceArgument, sourceParam),
+                targetProp.Type);
+            BinaryExpression assignment = Expression.Assign(targetProp, sourceGet);
+            Expression<MappingAction<TSource, TTarget>> finalExpr =
+                Expression.Lambda<MappingAction<TSource, TTarget>>(assignment, sourceParam, targetParam);
             return finalExpr.Compile();
         }
 
         /// <summary>Extracts a property from within an expression.</summary>
         /// <param name="expression">The expression to be checked.</param>
         /// <returns>The expression's internal property.</returns>
-        /// ### <exception cref="ArgumentException">
-        /// The expression is not for property access.
+        /// ###
+        /// <exception cref="ArgumentException">
+        ///     The expression is not for property access.
         /// </exception>
         public PropertyInfo GetProperty(LambdaExpression expression)
         {
             Guard.CheckArgumentNotNull(expression, "expression");
+            Guard.CheckArgumentNotNull(expression.Body, "expression.Body");
             var memberExpression = expression.Body as MemberExpression;
+            if (memberExpression == null)
+            {
+                throw new InvalidOperationException("Expression must contain a body.");
+            }
 
-            // TODO: either check if it's a property and throw accordingly
-            // or also deal with fields.
-            return (PropertyInfo)memberExpression.Member;
+            var propInfo = memberExpression.Member as PropertyInfo;
+            if (propInfo == null)
+            {
+                throw new InvalidOperationException("Mappers can only handle property expressions.");
+            }
+            return propInfo;
         }
     }
 }

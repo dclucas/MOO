@@ -24,11 +24,10 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System.Reflection;
+
 namespace Moo.Core
 {
-    using System;
-    using System.Reflection;
-
     /// <summary>Interface for property converters.</summary>
     public interface IPropertyConverter
     {
@@ -46,15 +45,15 @@ namespace Moo.Core
         void Convert(object source, PropertyInfo sourceProperty, object target, PropertyInfo targetProperty);
 
         /// <summary>
-        /// Converts from one source property and object to a target property and object.
+        ///     Converts from one source property and object to a target property and object.
         /// </summary>
         /// <param name="source">        Source for the conversion.</param>
         /// <param name="sourceProperty">Source property for the conversion.</param>
         /// <param name="target">        Target for the conversion.</param>
         /// <param name="targetProperty">Target property for the conversion.</param>
         /// <param name="strict">
-        /// Determines whether strict conversion should be performed. If <c>false</c>, the converter may
-        /// do property unfolding for the conversion.
+        ///     Determines whether strict conversion should be performed. If <c>false</c>, the converter may
+        ///     do property unfolding for the conversion.
         /// </param>
         void Convert(object source, PropertyInfo sourceProperty, object target, PropertyInfo targetProperty, bool strict);
     }

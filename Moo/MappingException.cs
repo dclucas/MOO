@@ -24,17 +24,14 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
+using System.Diagnostics;
+using System.Globalization;
+
 namespace Moo
 {
-    using System;
-    using System.Diagnostics;
-    using System.Globalization;
-    using System.Runtime.Serialization;
-
-    using Moo.Core;
-
     /// <summary>
-    /// Represents a Moo mapping exception.
+    ///     Represents a Moo mapping exception.
     /// </summary>
     [DebuggerNonUserCode]
     public class MappingException : Exception
@@ -42,7 +39,7 @@ namespace Moo
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MappingException"/> class.
+        ///     Initializes a new instance of the <see cref="MappingException" /> class.
         /// </summary>
         /// <param name="sourceType">Type of the source.</param>
         /// <param name="targetType">Type of the target.</param>
@@ -72,7 +69,7 @@ namespace Moo
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MappingException"/> class.
+        ///     Initializes a new instance of the <see cref="MappingException" /> class.
         /// </summary>
         /// <param name="message">The exception message.</param>
         /// <param name="sourceType">Type of the source.</param>
@@ -89,14 +86,14 @@ namespace Moo
             Exception innerException)
             : this(message, innerException)
         {
-            this.SourceType = sourceType;
-            this.TargetType = targetType;
-            this.SourceMember = sourceMember;
-            this.TargetMember = targetMember;
+            SourceType = sourceType;
+            TargetType = targetType;
+            SourceMember = sourceMember;
+            TargetMember = targetMember;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MappingException"/> class.
+        ///     Initializes a new instance of the <see cref="MappingException" /> class.
         /// </summary>
         /// <param name="sourceType">Type of the source.</param>
         /// <param name="targetType">Type of the target.</param>
@@ -117,7 +114,7 @@ namespace Moo
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MappingException"/> class.
+        ///     Initializes a new instance of the <see cref="MappingException" /> class.
         /// </summary>
         /// <param name="message">The exception message.</param>
         /// <param name="inner">The inner exception.</param>
@@ -127,7 +124,7 @@ namespace Moo
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MappingException"/> class.
+        ///     Initializes a new instance of the <see cref="MappingException" /> class.
         /// </summary>
         /// <param name="message">The message.</param>
         public MappingException(string message)
@@ -136,12 +133,11 @@ namespace Moo
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MappingException"/> class.
+        ///     Initializes a new instance of the <see cref="MappingException" /> class.
         /// </summary>
         public MappingException()
         {
         }
-
 
         #endregion Constructors
 

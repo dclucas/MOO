@@ -1,9 +1,8 @@
-﻿using Moo.Core;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
+using Moo.Core;
 
 namespace Moo.Initialization
 {
@@ -12,7 +11,7 @@ namespace Moo.Initialization
     {
         /// <summary>An IMappingRepository extension method that initializes the mappings.</summary>
         /// <exception cref="ArgumentNullException">
-        /// The <paramref name="initializers"/> parameter is null.
+        ///     The <paramref name="initializers" /> parameter is null.
         /// </exception>
         /// <param name="mappingRepo"> The mappingRepo to act on.</param>
         /// <param name="initializers">The initializers.</param>
@@ -21,7 +20,7 @@ namespace Moo.Initialization
             IEnumerable<IMappingInitializer> initializers)
         {
             Guard.CheckArgumentNotNull(initializers, "initializers");
-            foreach (var i in initializers)
+            foreach (IMappingInitializer i in initializers)
             {
                 i.InitializeMappings(mappingRepo);
             }
@@ -29,7 +28,7 @@ namespace Moo.Initialization
 
         /// <summary>An IMappingRepository extension method that initializes the mappings.</summary>
         /// <exception cref="ArgumentNullException">
-        /// The <paramref name="assemblies"/> parameter is null.
+        ///     The <paramref name="assemblies" /> parameter is null.
         /// </exception>
         /// <param name="mappingRepo"> The mappingRepo to act on.</param>
         /// <param name="assemblies">The initializers.</param>
@@ -39,11 +38,11 @@ namespace Moo.Initialization
         {
             Guard.CheckArgumentNotNull(assemblies, "assemblies");
 
-            var q = from assm in assemblies
-                    from t in assm.GetTypes()
-                    where !t.IsAbstract
-                    where typeof(IMappingInitializer).IsAssignableFrom(t)
-                    select (IMappingInitializer)Activator.CreateInstance(t);
+            IEnumerable<IMappingInitializer> q = from assm in assemblies
+                from t in assm.GetTypes()
+                where !t.IsAbstract
+                where typeof (IMappingInitializer).IsAssignableFrom(t)
+                select (IMappingInitializer) Activator.CreateInstance(t);
 
             InitializeMappings(mappingRepo, q);
         }

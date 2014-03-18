@@ -26,11 +26,6 @@
 
 namespace Moo.Initialization
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-
     /// <summary>Interface for mapping initializers.</summary>
     /// <remarks>Implement this interface if you want an easy way to set up custom mappings.</remarks>
     public interface IMappingInitializer

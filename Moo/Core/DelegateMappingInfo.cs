@@ -27,7 +27,7 @@
 namespace Moo.Core
 {
     /// <summary>
-    /// Basic information on how to map from one class member to another.
+    ///     Basic information on how to map from one class member to another.
     /// </summary>
     /// <typeparam name="TSource">The type of the source.</typeparam>
     /// <typeparam name="TTarget">The type of the target.</typeparam>
@@ -36,7 +36,7 @@ namespace Moo.Core
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DelegateMappingInfo&lt;TSource, TTarget&gt;"/> class.
+        ///     Initializes a new instance of the <see cref="DelegateMappingInfo&lt;TSource, TTarget&gt;" /> class.
         /// </summary>
         /// <param name="source">The source.</param>
         /// <param name="target">The target.</param>
@@ -48,7 +48,7 @@ namespace Moo.Core
             : base(source, target)
         {
             Guard.CheckArgumentNotNull(mappingAction, "mappingAction");
-            this.MappingAction = mappingAction;
+            MappingAction = mappingAction;
         }
 
         #endregion Constructors
@@ -56,7 +56,7 @@ namespace Moo.Core
         #region Properties
 
         /// <summary>
-        /// Gets the mapping action.
+        ///     Gets the mapping action.
         /// </summary>
         public MappingAction<TSource, TTarget> MappingAction { get; private set; }
 
@@ -65,13 +65,13 @@ namespace Moo.Core
         #region Methods
 
         /// <summary>
-        /// Maps from the specified source to the specified target.
+        ///     Maps from the specified source to the specified target.
         /// </summary>
         /// <param name="source">The source.</param>
         /// <param name="target">The target.</param>
         public override void Map(TSource source, TTarget target)
         {
-            this.MappingAction(source, target);
+            MappingAction(source, target);
         }
 
         #endregion Methods

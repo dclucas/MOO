@@ -24,54 +24,56 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
+using System.Linq;
+using System.Reflection;
+using System.Threading.Tasks;
+using Moo.Core;
+
 namespace Moo.Mappers
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Reflection;
-
-    using Moo.Core;
-
     /// <summary>
-    /// Base generic mapper class.
+    ///     Base generic mapper class.
     /// </summary>
     /// <typeparam name="TSource">The type of the mapping source.</typeparam>
     /// <typeparam name="TTarget">The type of the mapping target.</typeparam>
     /// <remarks>
-    /// This class exists targetProperty guarantee basic functioning and behavior on all mappers. All of them
-    /// should inherit sourceProperty it.
+    ///     This class exists targetProperty guarantee basic functioning and behavior on all mappers. All of them
+    ///     should inherit sourceProperty it.
     /// </remarks>
     public abstract class BaseMapper<TSource, TTarget> : BaseMapper, IMapper<TSource, TTarget>
     {
         /// <summary>Used for thread synchronization only.</summary>
-        private object syncRoot = new object();
+        private readonly object _syncRoot = new object();
 
         /// <summary>The property explorer to use.</summary>
-        private IPropertyExplorer propertyExplorer;
+        private IPropertyExplorer _propertyExplorer;
 
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BaseMapper&lt;TSource, TTarget&gt;"/> class.
+        ///     Initializes a new instance of the <see cref="BaseMapper&lt;TSource, TTarget&gt;" /> class.
         /// </summary>
         protected BaseMapper()
         {
-            this.TypeMapping = new TypeMappingInfo<TSource, TTarget>();
+            TypeMapping = new TypeMappingInfo<TSource, TTarget>();
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BaseMapper{TSource,TTarget}"/> class.
+        ///     Initializes a new instance of the <see cref="BaseMapper{TSource,TTarget}" /> class.
         /// </summary>
         /// <param name="constructionInfo">
-        /// Contains additional mapper construction information.
+        ///     Contains additional mapper construction information.
         /// </param>
         protected BaseMapper(MapperConstructionInfo constructionInfo)
             : this()
         {
             Guard.CheckArgumentNotNull(constructionInfo, "constructionInfo");
-            this.ParentRepository = constructionInfo.ParentRepo;
+            ParentRepository = constructionInfo.ParentRepo;
         }
 
         #endregion Constructors
@@ -83,7 +85,7 @@ namespace Moo.Mappers
         public TypeMappingInfo<TSource, TTarget> TypeMapping { get; protected set; }
 
         /// <summary>
-        /// Gets the parent mapping repository.
+        ///     Gets the parent mapping repository.
         /// </summary>
         protected IMappingRepository ParentRepository { get; private set; }
 
@@ -95,62 +97,73 @@ namespace Moo.Mappers
 
         #region Methods
 
+        /// <summary>Gets a property explorer instance.</summary>
+        /// <value>The property explorer.</value>
+        /// <remarks>This property is lazy loaded.</remarks>
+        protected internal virtual IPropertyExplorer PropertyExplorer
+        {
+            get { return _propertyExplorer ?? (_propertyExplorer = new PropertyExplorer()); }
+
+            private set { _propertyExplorer = value; }
+        }
+
         /// <summary>
-        /// Maps from the source to a new target object.
+        ///     Maps from the source to a new target object.
         /// </summary>
         /// <param name="source">The source object.</param>
         /// <returns>A filled target object.</returns>
         public object Map(object source)
         {
-            return this.Map((TSource)source);
+            return Map((TSource) source);
         }
 
         /// <summary>Maps the specified source to a target object.</summary>
         /// <remarks>
-        /// This method relies on the <see cref="System.Activator.CreateInstance&lt;T&gt;"/>
-        /// method to create target objects. This means that both there are more efficient methods for
-        /// that and that this limits the use of this overload to target classes that are passible of
-        /// construction through this framework method.
+        ///     This method relies on the <see cref="System.Activator.CreateInstance&lt;T&gt;" />
+        ///     method to create target objects. This means that both there are more efficient methods for
+        ///     that and that this limits the use of this overload to target classes that this framework
+        ///     method is able to construct.
         /// </remarks>
         /// <param name="source">The source.</param>
         /// <returns>A filled target object.</returns>
         public virtual TTarget Map(TSource source)
         {
             var target = Activator.CreateInstance<TTarget>();
-            this.Map(source, target);
+            Map(source, target);
             return target;
         }
 
         /// <summary>
-        /// Maps from the source to the target object.
+        ///     Maps from the source to the target object.
         /// </summary>
         /// <param name="source">The source object.</param>
         /// <param name="target">The target object.</param>
         /// <returns>The target object, with its properties filled.</returns>
         public override object Map(object source, object target)
         {
-            return this.Map((TSource)source, (TTarget)target);
+            return Map((TSource) source, (TTarget) target);
         }
 
         /// <summary>
-        /// Maps from the specified source to the target object.
+        ///     Maps from the specified source to the target object.
         /// </summary>
         /// <param name="source">The source object.</param>
         /// <param name="createTarget">A function to create target objects.</param>
         /// <returns>
-        /// A filled target object.
+        ///     A filled target object.
         /// </returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "1", Justification = "The call to Guard already does that.")]
+        [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "1",
+            Justification = "The call to Guard already does that.")]
         public object Map(object source, Func<object> createTarget)
         {
             Guard.CheckArgumentNotNull(source, "source");
             Guard.CheckArgumentNotNull(createTarget, "createTarget");
-            var target = (TTarget)createTarget();
-            return this.Map((TSource)source, target);
+            var target = (TTarget) createTarget();
+            return Map((TSource) source, target);
         }
 
         /// <summary>
-        /// Maps from the source to the target object.
+        ///     Maps from the source to the target object.
         /// </summary>
         /// <param name="source">The source object.</param>
         /// <param name="target">The target object.</param>
@@ -159,27 +172,27 @@ namespace Moo.Mappers
         {
             try
             {
-                if (this.CurrentStatus == MapperStatus.New)
+                if (CurrentStatus == MapperStatus.New)
                 {
-                    this.InitializeMapping();
+                    InitializeMapping();
                 }
             }
             catch (Exception exc)
             {
                 throw new MappingException(
                     string.Format(
-                            System.Globalization.CultureInfo.InvariantCulture,
-                            "Error getting mappings from type {0} to {1}. Please check inner exception for details.",
-                            typeof(TSource),
-                            typeof(TTarget)),
-                        typeof(TSource),
-                        typeof(TTarget),
-                        null,
-                        null,
-                        exc);
+                        CultureInfo.InvariantCulture,
+                        "Error getting mappings from type {0} to {1}. Please check inner exception for details.",
+                        typeof (TSource),
+                        typeof (TTarget)),
+                    typeof (TSource),
+                    typeof (TTarget),
+                    null,
+                    null,
+                    exc);
             }
 
-            foreach (var mapping in this.TypeMapping.GetMappings())
+            foreach (var mapping in TypeMapping.GetMappings())
             {
                 try
                 {
@@ -187,47 +200,23 @@ namespace Moo.Mappers
                 }
                 catch (Exception exc)
                 {
-                    throw new MappingException(typeof(TSource), typeof(TTarget), mapping.SourceMemberName, mapping.TargetMemberName, exc);
+                    throw new MappingException(typeof (TSource), typeof (TTarget), mapping.SourceMemberName,
+                        mapping.TargetMemberName, exc);
                 }
             }
 
             return target;
         }
 
-        /// <summary>Initializes the internal mapping.</summary>
-        private void InitializeMapping()
-        {
-            if (this.TypeMapping == null)
-            {
-                lock (this.syncRoot)
-                {
-                    if (this.TypeMapping == null)
-                    {
-                        this.TypeMapping = new TypeMappingInfo<TSource, TTarget>();
-                    }
-                }
-            }
-
-            var mappings = this.GetMappings();
-            if (mappings != null)
-            {
-                this.TypeMapping.AddRange(this.GetMappings());
-            }
-
-            this.TypeMapping.Compile();
-
-            this.CurrentStatus = MapperStatus.Active;
-        }
-
         /// <summary>
-        /// Maps the specified source.
+        ///     Maps the specified source.
         /// </summary>
         /// <param name="source">The source object.</param>
         /// <param name="createTarget">A function to create target objects.</param>
         /// <returns>
-        /// A filled target object.
+        ///     A filled target object.
         /// </returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+        [SuppressMessage(
             "Microsoft.Design",
             "CA1062:Validate arguments of public methods",
             MessageId = "1",
@@ -236,49 +225,113 @@ namespace Moo.Mappers
         {
             Guard.CheckArgumentNotNull(createTarget, "createTarget");
             TTarget target = createTarget();
-            this.Map(source, target);
+            Map(source, target);
             return target;
         }
 
+
         /// <summary>
-        /// Maps multiple source objects into multiple target objects.
+        ///     Maps multiple source objects into multiple target objects.
         /// </summary>
         /// <param name="sourceList">The source list.</param>
         /// <returns>
-        /// A list of target objects.
+        ///     A list of target objects.
         /// </returns>
         /// <remarks>
-        /// This method relies on the <c>TTarget Map(TSource source)</c> item
-        /// mapping overload. So the dependency to <see cref="System.Activator.CreateInstance&lt;T&gt;"/>
-        /// and its limitations also occurs here
+        ///     This method relies on the <c>TTarget Map(TSource source)</c> item
+        ///     mapping overload. So the dependency to <see cref="System.Activator.CreateInstance&lt;T&gt;" />
+        ///     and its limitations also occurs here
         /// </remarks>
         public virtual IEnumerable<TTarget> MapMultiple(IEnumerable<TSource> sourceList)
         {
-            return sourceList.Select(s => this.Map(s));
+            return sourceList.Select(s => Map(s));
         }
 
         /// <summary>Maps multiple source objects into multiple target objects.</summary>
         /// <param name="sourceList">The source list.</param>
         /// <returns>A list of target objects.</returns>
-        public System.Collections.IEnumerable MapMultiple(System.Collections.IEnumerable sourceList)
+        public IEnumerable MapMultiple(IEnumerable sourceList)
         {
-            foreach (var o in sourceList)
-            {
-                yield return this.Map(o);
-            }
+            return from object o in sourceList select Map(o);
         }
 
         /// <summary>
-        /// Maps multiple source objects into multiple target objects.
+        ///     Maps multiple source objects into multiple target objects.
         /// </summary>
         /// <param name="sourceList">The source list.</param>
         /// <param name="createTarget">A factory function to create target objects.</param>
         /// <returns>
-        /// A list of target objects.
+        ///     A list of target objects.
         /// </returns>
         public virtual IEnumerable<TTarget> MapMultiple(IEnumerable<TSource> sourceList, Func<TTarget> createTarget)
         {
-            return sourceList.Select(s => this.Map(s, createTarget));
+            return sourceList.Select(s => Map(s, createTarget));
+        }
+
+        /// <summary>Initializes the internal mapping.</summary>
+        private void InitializeMapping()
+        {
+            if (TypeMapping == null)
+            {
+                lock (_syncRoot)
+                {
+                    if (TypeMapping == null)
+                    {
+                        TypeMapping = new TypeMappingInfo<TSource, TTarget>();
+                    }
+                }
+            }
+
+            IEnumerable<MemberMappingInfo<TSource, TTarget>> mappings = GetMappings();
+            if (mappings != null)
+            {
+                TypeMapping.AddRange(GetMappings());
+            }
+
+            TypeMapping.Compile();
+
+            CurrentStatus = MapperStatus.Active;
+        }
+
+        /// <summary>Maps the specified source to a target object asynchronously.</summary>
+        /// <remarks>
+        ///     This method relies on the <see cref="System.Activator.CreateInstance&lt;T&gt;" />
+        ///     method to create target objects. This means that both there are more efficient methods for
+        ///     that and that this limits the use of this overload to target classes that this framework
+        ///     method is able to construct.
+        /// </remarks>
+        /// <param name="source">The source object.</param>
+        /// <returns>
+        ///     The object representing the asynchronous operation. The task result will contain a
+        ///     filled target object.
+        /// </returns>
+        public async Task<TTarget> MapAsync(TSource source)
+        {
+            return await Task.Factory.StartNew((() => Map(source)));
+        }
+
+        /// <summary>Maps the specified source to a target object asynchronously.</summary>
+        /// <param name="source">The source object.</param>
+        /// <param name="target">The target object.</param>
+        /// <returns>
+        ///     The object representing the asynchronous operation. The task result will contain a
+        ///     filled target object.
+        /// </returns>
+        public async Task<TTarget> MapAsync(TSource source, TTarget target)
+        {
+            return await Task.Factory.StartNew((() => Map(source, target)));
+        }
+
+        /// <summary>Maps the specified source to a target object asynchronously.</summary>
+        /// <param name="source">The source object.</param>
+        /// <param name="createTarget">A function to create target objects.</param>
+        /// <returns>
+        ///     The object representing the asynchronous operation. The task result will contain a
+        ///     filled target object.
+        /// </returns>
+        public async Task<TTarget> MapAsync(TSource source, Func<TTarget> createTarget)
+        {
+            return await Task.Factory.StartNew((() => Map(source, createTarget)));
         }
 
         /// <summary>Adds an inner mapper, to map from the source to the target members.</summary>
@@ -286,113 +339,95 @@ namespace Moo.Mappers
         /// <typeparam name="TInnerTarget">Type of the inner target.</typeparam>
         /// <param name="sourceMember">Name of the source member.</param>
         /// <param name="targetMember">Name of the target member.</param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter", Justification = "No can do.")]
-        public virtual void AddInnerMapper<TInnerSource, TInnerTarget>(PropertyInfo sourceMember, PropertyInfo targetMember)
+        [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter",
+            Justification = "No can do.")]
+        public virtual void AddInnerMapper<TInnerSource, TInnerTarget>(PropertyInfo sourceMember,
+            PropertyInfo targetMember)
         {
-            var innerMapper = this.GetInnerMapper<TInnerSource, TInnerTarget>();
-            this.AddMappingInfo(new MapperMappingInfo<TSource, TTarget>(innerMapper, sourceMember, targetMember));
+            IMapper innerMapper = GetInnerMapper<TInnerSource, TInnerTarget>();
+            AddMappingInfo(new MapperMappingInfo<TSource, TTarget>(innerMapper, sourceMember, targetMember));
         }
 
         /// <summary>Gets an inner mapper from the repository.</summary>
         /// <exception cref="InvalidOperationException">
-        /// Thrown when the mapper does not have a parent repository.
+        ///     Thrown when the mapper does not have a parent repository.
         /// </exception>
         /// <typeparam name="TInnerSource">Type of the source property.</typeparam>
         /// <typeparam name="TInnerTarget">Type of the target property.</typeparam>
         /// <returns>
-        /// A mapper capable of translating <typeparamref name="TInnerSource"/> objects into
-        /// <typeparamref name="TInnerTarget"/> ones.
+        ///     A mapper capable of translating <typeparamref name="TInnerSource" /> objects into
+        ///     <typeparamref name="TInnerTarget" /> ones.
         /// </returns>
         protected IMapper GetInnerMapper<TInnerSource, TInnerTarget>()
         {
-            if (this.ParentRepository == null)
+            if (ParentRepository == null)
             {
                 // TODO: review approach here -- this branch could lead to mapper "cloning"
-                throw new InvalidOperationException("Mapper must be contained in a repo in order to allow inner mappers.");
+                throw new InvalidOperationException(
+                    "Mapper must be contained in a repository in order to allow inner mappers.");
             }
 
-            var enumerableType = typeof(IEnumerable);
-            var innerSourceType = typeof(TInnerSource);
-            var innerTargetType = typeof(TInnerTarget);
+            Type enumerableType = typeof (IEnumerable);
+            Type innerSourceType = typeof (TInnerSource);
+            Type innerTargetType = typeof (TInnerTarget);
 
-            if (enumerableType.IsAssignableFrom(typeof(TInnerSource))
-                && enumerableType.IsAssignableFrom(typeof(TInnerTarget)))
+            if (enumerableType.IsAssignableFrom(typeof (TInnerSource))
+                && enumerableType.IsAssignableFrom(typeof (TInnerTarget)))
             {
-                var genericEnumerableType = typeof(IEnumerable<>);
-                var ts = innerSourceType.GetGenericTypeDefinition();
-                var tt = innerTargetType.GetGenericTypeDefinition();
+                Type genericEnumerableType = typeof (IEnumerable<>);
+                Type ts = innerSourceType.GetGenericTypeDefinition();
+                Type tt = innerTargetType.GetGenericTypeDefinition();
 
                 if ((tt != null)
                     && (ts != null)
                     && genericEnumerableType.IsAssignableFrom(tt)
                     && genericEnumerableType.IsAssignableFrom(ts))
                 {
-                    var innerSource = innerSourceType.GetGenericArguments()[0];
-                    var innerTarget = innerTargetType.GetGenericArguments()[0];
-                    var realMapper = this.ParentRepository.ResolveMapper(innerSource, innerTarget);
+                    Type innerSource = innerSourceType.GetGenericArguments()[0];
+                    Type innerTarget = innerTargetType.GetGenericArguments()[0];
+                    IMapper realMapper = ParentRepository.ResolveMapper(innerSource, innerTarget);
                     return new MultiMappingAdapter(realMapper, innerSourceType);
                 }
             }
 
-            return this.ParentRepository.ResolveMapper<TInnerSource, TInnerTarget>();
+            return ParentRepository.ResolveMapper<TInnerSource, TInnerTarget>();
         }
 
         /// <summary>Returns all internal mappings from the mapper.</summary>
         /// <returns>
-        /// An enumerator that allows foreach to be used to get mappings in this collection.
+        ///     An enumerator that allows foreach to be used to get mappings in this collection.
         /// </returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+        [SuppressMessage(
             "Microsoft.Design",
             "CA1006:DoNotNestGenericTypesInMemberSignatures",
             Justification = "Using a method communicates the possibly non-atomic nature of this operation.")]
         protected internal abstract IEnumerable<MemberMappingInfo<TSource, TTarget>> GetMappings();
 
         /// <summary>
-        /// Adds the specified mapping info to the internal mappings table.
+        ///     Adds the specified mapping info to the internal mappings table.
         /// </summary>
         /// <param name="mappingInfo">The mapping info targetProperty be added.</param>
         protected void AddMappingInfo(MemberMappingInfo<TSource, TTarget> mappingInfo)
         {
-            if (this.CurrentStatus == MapperStatus.Active)
+            if (CurrentStatus == MapperStatus.Active)
             {
                 throw new InvalidOperationException("Cannot add mappings to an already active mapper");
             }
-            else if (this.CurrentStatus == MapperStatus.New)
+            if (CurrentStatus == MapperStatus.New)
             {
-                this.CurrentStatus = MapperStatus.Initialized;
+                CurrentStatus = MapperStatus.Initialized;
             }
 
-            this.TypeMapping.Add(mappingInfo);
-        }
-
-        /// <summary>Gets a property explorer instance.</summary>
-        /// <value>The property explorer.</value>
-        /// <remarks>This property is lazy loaded.</remarks>
-        protected internal virtual IPropertyExplorer PropertyExplorer
-        {
-            get
-            {
-                if (this.propertyExplorer == null)
-                {
-                    this.propertyExplorer = new PropertyExplorer();
-                }
-
-                return this.propertyExplorer;
-            }
-
-            private set
-            {
-                this.propertyExplorer = value;
-            }
+            TypeMapping.Add(mappingInfo);
         }
 
         /// <summary>
-        /// Gets the default property converter.
+        ///     Gets the default property converter.
         /// </summary>
         /// <returns>
-        /// An instance of the default property converter.
+        ///     An instance of the default property converter.
         /// </returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+        [SuppressMessage(
             "Microsoft.Design",
             "CA1024:UsePropertiesWhereAppropriate",
             Justification = "This is a virtual getter, for chrissake's")]
@@ -413,8 +448,8 @@ namespace Moo.Mappers
             /// <param name="sourceType">Type of the source.</param>
             public MultiMappingAdapter(IMapper realMapper, Type sourceType)
             {
-                var methodInfo = realMapper.GetType().GetMethod("MapMultiple", new[] { sourceType });
-                this.MapMethod = (s) => methodInfo.Invoke(realMapper, new[] { s });
+                MethodInfo methodInfo = realMapper.GetType().GetMethod("MapMultiple", new[] {sourceType});
+                MapMethod = s => methodInfo.Invoke(realMapper, new[] {s});
             }
 
             /// <summary>Gets or sets the mapping method.</summary>
@@ -423,7 +458,7 @@ namespace Moo.Mappers
 
             /// <summary>Maps from the specified source to the target object.</summary>
             /// <exception cref="NotImplementedException">
-            /// Thrown when the requested operation is unimplemented.
+            ///     Thrown when the requested operation is unimplemented.
             /// </exception>
             /// <param name="source">The source object.</param>
             /// <param name="target">The target object.</param>
@@ -443,7 +478,7 @@ namespace Moo.Mappers
 
             /// <summary>Maps from the specified source to the target object.</summary>
             /// <exception cref="NotImplementedException">
-            /// Thrown when the requested operation is unimplemented.
+            ///     Thrown when the requested operation is unimplemented.
             /// </exception>
             /// <param name="source">      The source object.</param>
             /// <param name="createTarget">A function to create target objects.</param>
@@ -455,7 +490,7 @@ namespace Moo.Mappers
 
             /// <summary>Maps multiple source objects into multiple target objects.</summary>
             /// <exception cref="NotImplementedException">
-            /// Thrown when the requested operation is unimplemented.
+            ///     Thrown when the requested operation is unimplemented.
             /// </exception>
             /// <param name="sourceList">The source list.</param>
             /// <returns>A list of target objects.</returns>

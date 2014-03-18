@@ -49,7 +49,7 @@ namespace Moo.Tests.Core
             PropertyConverter target = new PropertyConverter();
             TestClassA source = new TestClassA();
             source.InnerClass = new TestClassC();
-            var expected = "test";
+            const string expected = "test";
             source.InnerClass.Name = expected;
             PropertyInfo fromProperty = typeof(TestClassA).GetProperty("InnerClass");
             TestClassB targetObject = new TestClassB();
@@ -68,7 +68,7 @@ namespace Moo.Tests.Core
         {
             PropertyConverter target = new PropertyConverter();
             TestClassA source = new TestClassA();
-            var expected = "test";
+            const string expected = "test";
             source.Name = expected;
             PropertyInfo fromProperty = typeof(TestClassA).GetProperty("Name");
             TestClassB targetObject = new TestClassB();
@@ -165,8 +165,7 @@ namespace Moo.Tests.Core
             PropertyConverter target = new PropertyConverter();
             PropertyInfo from = typeof(TestClassA).GetProperty(fromProp);
             PropertyInfo to = typeof(TestClassB).GetProperty(toProp);
-            bool actual;
-            actual = target.CanConvert(from, to);
+            bool actual = target.CanConvert(@from, to);
             Assert.AreEqual(expected, actual);
         }
 
