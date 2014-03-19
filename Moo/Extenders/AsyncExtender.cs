@@ -32,56 +32,6 @@ namespace Moo
 {
     public static class AsyncExtender
     {
-        #region IMapper extenders
-
-        /// <summary>Maps the specified source to a target object asynchronously.</summary>
-        /// <remarks>
-        ///     This method relies on the <see cref="System.Activator.CreateInstance&lt;T&gt;" />
-        ///     method to create target objects. This means that both there are more efficient methods for
-        ///     that and that this limits the use of this overload to target classes that this framework
-        ///     method is able to construct.
-        /// </remarks>
-        /// <param name="mapper">Mapper to extend</param>
-        /// <param name="source">The source object.</param>
-        /// <returns>
-        ///     The object representing the asynchronous operation. The task result will contain a
-        ///     filled target object.
-        /// </returns>
-        public static async Task<TTarget> MapAsync<TSource, TTarget>(this IMapper<TSource, TTarget> mapper, TSource source)
-        {
-            return await Task.Run(() => mapper.Map(source));
-        }
-
-        /// <summary>Maps the specified source to a target object asynchronously.</summary>
-        /// <param name="mapper">Mapper to extend</param>
-        /// <param name="source">The source object.</param>
-        /// <param name="target">The target object.</param>
-        /// <returns>
-        ///     The object representing the asynchronous operation. The task result will contain a
-        ///     filled target object.
-        /// </returns>
-        public static async Task<TTarget> MapAsync<TSource, TTarget>(this IMapper<TSource, TTarget> mapper, TSource source, TTarget target)
-        {
-            return await Task.Run((() => mapper.Map(source, target)));
-        }
-
-        /// <summary>Maps the specified source to a target object asynchronously.</summary>
-        /// <param name="mapper">Mapper to extend</param>
-        /// <param name="source">The source object.</param>
-        /// <param name="createTarget">A function to create target objects.</param>
-        /// <returns>
-        ///     The object representing the asynchronous operation. The task result will contain a
-        ///     filled target object.
-        /// </returns>
-        public static async Task<TTarget> MapAsync<TSource, TTarget>(this IMapper<TSource, TTarget> mapper, TSource source, Func<TTarget> createTarget)
-        {
-            return await Task.Run((() => mapper.Map(source, createTarget)));
-        }
-
-        #endregion
-
-        #region Object extenders
-
         public static async Task<TTarget> MapToAsync<TTarget>(this object source)
         {
             return await Task.Run(() => source.MapTo<TTarget>());
@@ -159,7 +109,5 @@ namespace Moo
         {
             return await Task.Run(() => source.MapTo(target, repo));
         }
-
-        #endregion
     }
 }

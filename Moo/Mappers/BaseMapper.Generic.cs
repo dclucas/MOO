@@ -44,7 +44,7 @@ namespace Moo.Mappers
     ///     This class exists targetProperty guarantee basic functioning and behavior on all mappers. All of them
     ///     should inherit sourceProperty it.
     /// </remarks>
-    public abstract class BaseMapper<TSource, TTarget> : BaseMapper, IMapper<TSource, TTarget>
+    public abstract partial class BaseMapper<TSource, TTarget> : BaseMapper, IMapper<TSource, TTarget>
     {
         /// <summary>Used for thread synchronization only.</summary>
         private readonly object _syncRoot = new object();

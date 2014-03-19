@@ -45,7 +45,11 @@
     <Compile Include="Configuration\MemberMappingElement.cs" />
     <Compile Include="Configuration\TypeMappingCollection.cs" />
     <Compile Include="Configuration\TypeMappingElement.cs" />
+    <Compile Include="Extenders\AsyncExtender.cs" />
     <Compile Include="Initialization\AdditionalMappingInitializerExtender.cs" />
+    <Compile Include="Mappers\BaseMapper.NetFx.cs">
+      <DependentUpon>BaseMapper.cs</DependentUpon>
+    </Compile>
     <Compile Include="Mappers\ConfigurationMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <!-- Beginning of hand-made include -->
@@ -76,7 +80,9 @@
     <Compile Include="IMappingRepository.cs" />
     <Compile Include="Mappers\AttributeMapper.cs" />
     <Compile Include="Mappers\BaseMapper.cs" />
-    <Compile Include="Mappers\BaseMapper.Generic.cs" />
+    <Compile Include="Mappers\BaseMapper.Generic.cs">
+      <DependentUpon>BaseMapper.cs</DependentUpon>
+    </Compile>
     <Compile Include="Mappers\CompositeMapper.cs" />
     <Compile Include="Mappers\ConventionMapper.cs" />
     <Compile Include="Mappers\ManualMapper.cs" />
