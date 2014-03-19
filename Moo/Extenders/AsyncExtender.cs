@@ -30,21 +30,34 @@ using Moo.Extenders;
 
 namespace Moo
 {
+    /// <summary>
+    ///     Extends all objects, providing async mapping functionalities.
+    /// </summary>
     public static class AsyncExtender
     {
+        /// <summary>
+        ///     Asynchronously maps the values on object the to a target type.
+        /// </summary>
+        /// <typeparam name="TTarget">The type of the target.</typeparam>
+        /// <param name="source">The source object.</param>
+        /// <returns>
+        ///     The object representing the asynchronous operation. The task result will contain a
+        ///     filled target object.
+        /// </returns>
         public static async Task<TTarget> MapToAsync<TTarget>(this object source)
         {
             return await Task.Run(() => source.MapTo<TTarget>());
         }
 
         /// <summary>
-        ///     Maps the values on object the to a target type.
+        ///     Asynchronously maps the values on object the to a target type.
         /// </summary>
         /// <typeparam name="TTarget">The type of the target.</typeparam>
         /// <param name="source">The source object.</param>
         /// <param name="mapper">The mapper to be used.</param>
         /// <returns>
-        ///     The target object, filled according to the mapping instructions in the provided mapper.
+        ///     The object representing the asynchronous operation. The task result will contain a
+        ///     filled target object.
         /// </returns>
         public static async Task<TTarget> MapToAsync<TTarget>(this object source, IMapper mapper)
         {
@@ -52,13 +65,14 @@ namespace Moo
         }
 
         /// <summary>
-        ///     Maps the values on object the to a target type.
+        ///     Asynchronously maps the values on object the to a target type.
         /// </summary>
         /// <typeparam name="TTarget">The type of the target.</typeparam>
         /// <param name="source">The source object.</param>
         /// <param name="repo">The repository that will provide the mapper.</param>
         /// <returns>
-        ///     The target object, filled according to the mapping instructions in the mapper provided provided by the repository.
+        ///     The object representing the asynchronous operation. The task result will contain a
+        ///     filled target object.
         /// </returns>
         public static async Task<TTarget> MapToAsync<TTarget>(this object source, IMappingRepository repo)
         {
@@ -66,14 +80,14 @@ namespace Moo
         }
 
         /// <summary>
-        ///     Maps the values on object the to a target type.
+        ///     Asynchronously maps the values on object the to a target type.
         /// </summary>
         /// <typeparam name="TTarget">The type of the target.</typeparam>
         /// <param name="source">The source object.</param>
         /// <param name="target">The target object.</param>
         /// <returns>
-        ///     The target object, filled according to the mapping instructions in the mapper provided provided by the default
-        ///     repository.
+        ///     The object representing the asynchronous operation. The task result will contain a
+        ///     filled target object.
         /// </returns>
         public static async Task<TTarget> MapToAsync<TTarget>(this object source, TTarget target)
         {
@@ -81,14 +95,15 @@ namespace Moo
         }
 
         /// <summary>
-        ///     Maps the values on the object to a target object.
+        ///     Asynchronously maps the values on object the to a target type.
         /// </summary>
         /// <typeparam name="TTarget">The type of the target.</typeparam>
         /// <param name="source">The source object.</param>
         /// <param name="target">The target object.</param>
         /// <param name="mapper">The mapper to be used.</param>
         /// <returns>
-        ///     The target object, filled according to the mapping instructions in the provided mapper.
+        ///     The object representing the asynchronous operation. The task result will contain a
+        ///     filled target object.
         /// </returns>
         public static async Task<TTarget> MapToAsync<TTarget>(this object source, TTarget target, IMapper mapper)
         {
@@ -96,14 +111,15 @@ namespace Moo
         }
 
         /// <summary>
-        ///     Maps the values on object the to a target type.
+        ///     Asynchronously maps the values on object the to a target type.
         /// </summary>
         /// <typeparam name="TTarget">The type of the target.</typeparam>
         /// <param name="source">The source object.</param>
         /// <param name="target">The target object.</param>
         /// <param name="repo">The repository that will provide the mapper.</param>
         /// <returns>
-        ///     The target object, filled according to the mapping instructions in the mapper provided provided by the repository.
+        ///     The object representing the asynchronous operation. The task result will contain a
+        ///     filled target object.
         /// </returns>
         public static async Task<TTarget> MapToAsync<TTarget>(this object source, TTarget target, IMappingRepository repo)
         {
