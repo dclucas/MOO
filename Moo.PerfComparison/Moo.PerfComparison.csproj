@@ -59,20 +59,20 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Moo.TestScenarios\Moo.TestScenarios.csproj">
-      <Project>{bf488f7b-96a2-4fbe-938c-58d3aabb90cd}</Project>
-      <Name>Moo.TestScenarios</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MOO\Moo.csproj">
-      <Project>{7eadf25d-6278-460f-9150-ef8a7f738657}</Project>
-      <Name>Moo</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="..\packages\AutoMapper.3.1.1\lib\net40\AutoMapper.Net4.dll">
       <Link>AutoMapper.Net4.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Moo.TestScenarios\Moo.TestScenarios.csproj">
+      <Project>{bf488f7b-96a2-4fbe-938c-58d3aabb90cd}</Project>
+      <Name>Moo.TestScenarios</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Moo\Moo.NetFx.csproj">
+      <Project>{2166679e-1905-4eb6-af3e-48b9e70831b5}</Project>
+      <Name>Moo.NetFx</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
