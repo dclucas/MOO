@@ -51,6 +51,9 @@
       <DependentUpon>BaseMapper.cs</DependentUpon>
     </Compile>
     <Compile Include="Mappers\ConfigurationMapper.cs" />
+    <Compile Include="MappingException.NetFx.cs">
+      <DependentUpon>MappingException.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <!-- Beginning of hand-made include -->
     <Compile Include="Core\DelegateMappingInfo.cs" />
