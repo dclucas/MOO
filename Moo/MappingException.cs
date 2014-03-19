@@ -34,7 +34,7 @@ namespace Moo
     ///     Represents a Moo mapping exception.
     /// </summary>
     [DebuggerNonUserCode]
-    public class MappingException : Exception
+    public partial class MappingException : Exception
     {
         #region Constructors
 

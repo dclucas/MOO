@@ -27,7 +27,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Moo.TestScenarios", "Moo.Te
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Moo.PerfComparison", "Moo.PerfComparison\Moo.PerfComparison.csproj", "{A42F9021-CFD7-42B5-AD65-3B489C99AA13}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Moo.NetFxExtensions", "Moo.NetFxExtensions\Moo.NetFxExtensions.csproj", "{2166679E-1905-4EB6-AF3E-48B9E70831B5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Moo.NetFx", "Moo\Moo.NetFx.csproj", "{2166679E-1905-4EB6-AF3E-48B9E70831B5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
