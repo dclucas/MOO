@@ -32,8 +32,8 @@ using NUnit.Framework;
 namespace Moo.Tests.Core
 {
     /// <summary>
-    ///     This is a test class for GuardTest and is intended
-    ///     targetMember contain all GuardTest Unit Tests
+    ///     This is a test class for Guard and is intended
+    ///     targetMember contain all Guard Unit Tests
     /// </summary>
     [TestFixture]
     public class GuardTest
