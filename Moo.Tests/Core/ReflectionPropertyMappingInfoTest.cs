@@ -23,52 +23,21 @@
 // Email: diogo.lucas@gmail.com
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
+using System;
+using System.Reflection;
+using Moo.Core;
+using NUnit.Framework;
+
 namespace Moo.Tests.Core
 {
-    using System;
-    using System.Reflection;
-    using NUnit.Framework;
-    using Moo.Core;
-
     /// <summary>
-    /// This is a test class for ReflectionPropertyMappingInfoTest and is intended
-    /// targetMember contain all ReflectionPropertyMappingInfoTest Unit Tests
+    ///     This is a test class for ReflectionPropertyMappingInfoTest and is intended
+    ///     targetMember contain all ReflectionPropertyMappingInfoTest Unit Tests
     /// </summary>
     [TestFixture]
     public class ReflectionPropertyMappingInfoTest
     {
-        #region Methods
-
-        [Test]
-        public void MapTest()
-        {
-            TestClassA a = new TestClassA();
-            TestClassC c = new TestClassC();
-            var fromProp = typeof(TestClassA).GetProperty("Name");
-            var toProp = typeof(TestClassA).GetProperty("Name");
-            ConverterMock mock = new ConverterMock();
-            bool executed = false;
-
-            mock.ConvertAction = (f, fp, t, tp, s) =>
-                {
-                    Assert.AreEqual(c, f);
-                    Assert.AreEqual(fromProp, fp);
-                    Assert.AreEqual(a, t);
-                    Assert.AreEqual(toProp, tp);
-                    Assert.IsTrue(s);
-                    executed = true;
-                };
-            var target = new ReflectionPropertyMappingInfo<TestClassC, TestClassA>(
-                fromProp, toProp, true, mock);
-            target.Map(c, a);
-
-            Assert.IsTrue(executed);
-        }
-
-        #endregion Methods
-
-        #region Nested Classes
-
         private class ConverterMock : PropertyConverter
         {
             #region Properties
@@ -79,14 +48,39 @@ namespace Moo.Tests.Core
 
             #region Methods
 
-            public override void Convert(object source, PropertyInfo fromProperty, object target, PropertyInfo toProperty, bool strict)
+            public override void Convert(object source, PropertyInfo fromProperty, object target,
+                PropertyInfo toProperty, bool strict)
             {
-                this.ConvertAction(source, fromProperty, target, toProperty, strict);
+                ConvertAction(source, fromProperty, target, toProperty, strict);
             }
 
             #endregion Methods
         }
 
-        #endregion Nested Classes
+        [Test]
+        public void MapTest()
+        {
+            var a = new TestClassA();
+            var c = new TestClassC();
+            PropertyInfo fromProp = typeof (TestClassA).GetProperty("Name");
+            PropertyInfo toProp = typeof (TestClassA).GetProperty("Name");
+            var mock = new ConverterMock();
+            bool executed = false;
+
+            mock.ConvertAction = (f, fp, t, tp, s) =>
+            {
+                Assert.AreEqual(c, f);
+                Assert.AreEqual(fromProp, fp);
+                Assert.AreEqual(a, t);
+                Assert.AreEqual(toProp, tp);
+                Assert.IsTrue(s);
+                executed = true;
+            };
+            var target = new ReflectionPropertyMappingInfo<TestClassC, TestClassA>(
+                fromProp, toProp, true, mock);
+            target.Map(c, a);
+
+            Assert.IsTrue(executed);
+        }
     }
 }

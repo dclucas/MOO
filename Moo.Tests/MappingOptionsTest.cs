@@ -23,46 +23,41 @@
 // Email: diogo.lucas@gmail.com
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
+using System;
+using System.Linq;
+using Moo.Mappers;
+using NUnit.Framework;
+
 namespace Moo.Tests
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using NUnit.Framework;
-    using Moo;
-    using Moo.Mappers;
-
     /// <summary>
-    /// This is a test class for MappingOptionsTest and is intended
-    /// targetMember contain all MappingOptionsTest Unit Tests
+    ///     This is a test class for MappingOptionsTest and is intended
+    ///     targetMember contain all MappingOptionsTest Unit Tests
     /// </summary>
     [TestFixture]
     public class MappingOptionsTest
     {
-        #region Methods
-
         /// <summary>
-        /// A test for MappingOptions Constructor
+        ///     A test for MappingOptions Constructor
         /// </summary>
         [Test]
         public void MappingOptionsConstructorTest()
         {
-            var mapperOrder = new Type[]
+            var mapperOrder = new[]
             {
-                typeof(AttributeMapper<,>),
-                typeof(ManualMapper<,>),
-                typeof(ConventionMapper<,>),
+                typeof (AttributeMapper<,>),
+                typeof (ManualMapper<,>),
+                typeof (ConventionMapper<,>)
             };
 
             var target = new MappingOptions(mapperOrder);
-            var targetOrder = target.MapperOrder.ToArray();
+            Type[] targetOrder = target.MapperOrder.ToArray();
 
-            for (var i = 0; i < mapperOrder.Length; ++i)
+            for (int i = 0; i < mapperOrder.Length; ++i)
             {
                 Assert.AreEqual(mapperOrder[i], targetOrder[i]);
             }
         }
-
-        #endregion Methods
     }
 }

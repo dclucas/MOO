@@ -23,50 +23,41 @@
 // Email: diogo.lucas@gmail.com
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
+using System;
+using System.Collections.Generic;
+using Moo.Core;
+using NUnit.Framework;
+using Shouldly;
+
 namespace Moo.Tests.Core
 {
-    using System;
-    using System.Collections.Generic;
-
-    using Moo.Core;
-    using NUnit.Framework;
-    using Shouldly;
-
     /// <summary>
-    /// This is a test class for ValueConverterTest and is intended
-    /// targetMember contain all ValueConverterTest Unit Tests
+    ///     This is a test class for ValueConverterTest and is intended
+    ///     targetMember contain all ValueConverterTest Unit Tests
     /// </summary>
     [TestFixture]
     public class ValueConverterTest
     {
-        #region Methods
-
-        [Test]
-        public void ConvertFailureTest()
-        {
-            ValueConverter target = new ValueConverter();
-            Should.Throw<InvalidOperationException>(() => target.Convert(null, typeof(int)));
-        }
-
-        [TestCase(typeof(IEnumerable<string>), typeof(IEnumerable<object>), true)]
-        [TestCase(typeof(TestClassE[]), typeof(TestClassA[]), true)]
-        [TestCase(typeof(IEnumerable<int>), typeof(IEnumerable<int>), true)]
-        [TestCase(typeof(int[]), typeof(IEnumerable<int>), true)]
-        [TestCase(typeof(string[]), typeof(string[]), true)]
-        [TestCase(typeof(string), typeof(string), true)]
-        [TestCase(typeof(int), typeof(long), true)]
-        [TestCase(typeof(int), typeof(string), true)]
-        [TestCase(typeof(int), typeof(double), true)]
-        [TestCase(typeof(TestClassE), typeof(TestClassA), true)]
-        [TestCase(typeof(TestClassA), typeof(TestClassE), false)]
-        [TestCase(typeof(TestClassB), typeof(TestClassD), false)]
-        [TestCase(typeof(string), typeof(TestClassC), false)]
-        [TestCase(typeof(DateTime?),typeof(DateTime?),true)]
+        [TestCase(typeof (IEnumerable<string>), typeof (IEnumerable<object>), true)]
+        [TestCase(typeof (TestClassE[]), typeof (TestClassA[]), true)]
+        [TestCase(typeof (IEnumerable<int>), typeof (IEnumerable<int>), true)]
+        [TestCase(typeof (int[]), typeof (IEnumerable<int>), true)]
+        [TestCase(typeof (string[]), typeof (string[]), true)]
+        [TestCase(typeof (string), typeof (string), true)]
+        [TestCase(typeof (int), typeof (long), true)]
+        [TestCase(typeof (int), typeof (string), true)]
+        [TestCase(typeof (int), typeof (double), true)]
+        [TestCase(typeof (TestClassE), typeof (TestClassA), true)]
+        [TestCase(typeof (TestClassA), typeof (TestClassE), false)]
+        [TestCase(typeof (TestClassB), typeof (TestClassD), false)]
+        [TestCase(typeof (string), typeof (TestClassC), false)]
+        [TestCase(typeof (DateTime?), typeof (DateTime?), true)]
         public void DoCanConverTest(Type fromType, Type toType, bool expected)
         {
-            ValueConverter target = new ValueConverter();
+            var target = new ValueConverter();
 
-            var result = target.CanConvert(fromType, toType);
+            bool result = target.CanConvert(fromType, toType);
             result.ShouldBe(expected);
         }
 
@@ -77,47 +68,53 @@ namespace Moo.Tests.Core
         [TestCase(5, 5.0)]
         [TestCase(3, 3f)]
         [TestCase(7, 7d)]
-        [TestCase(10, (long)10)]
-        [TestCase((long)10, 10)]
+        [TestCase(10, (long) 10)]
+        [TestCase((long) 10, 10)]
         [TestCase(11.0, 11)]
         [TestCase(3.14, 3)]
         public void DoConvertTest(object value, object expected)
         {
-            this.DoConvertTest(value, expected, expected.GetType());
+            DoConvertTest(value, expected, expected.GetType());
         }
 
-        [TestCase((TestClassA)null, null, typeof(TestClassB))]
+        [TestCase((TestClassA) null, null, typeof (TestClassB))]
         public void DoConvertTest(object value, object expected, Type expectedType)
         {
-            ValueConverter target = new ValueConverter();
-            var actual = target.Convert(value, expectedType);
+            var target = new ValueConverter();
+            object actual = target.Convert(value, expectedType);
             actual.ShouldBe(expected);
         }
 
-        [TestCase(typeof(DateTime))]
-        [TestCase(typeof(int))]
-        [TestCase(typeof(double))]
-        [TestCase(typeof(decimal))]
-        [TestCase(typeof(byte))]
+        [TestCase(typeof (DateTime))]
+        [TestCase(typeof (int))]
+        [TestCase(typeof (double))]
+        [TestCase(typeof (decimal))]
+        [TestCase(typeof (byte))]
         public void DoConvert_NullableNull_ConvertsToNull(Type innerType)
         {
-            ValueConverter target = new ValueConverter();
-            var genericNullableType = typeof(Nullable<>);
-            var concreteType = genericNullableType.MakeGenericType(innerType);
-            var value = Activator.CreateInstance(concreteType);
-            var actual = target.Convert(value, concreteType);
+            var target = new ValueConverter();
+            Type genericNullableType = typeof (Nullable<>);
+            Type concreteType = genericNullableType.MakeGenericType(innerType);
+            object value = Activator.CreateInstance(concreteType);
+            object actual = target.Convert(value, concreteType);
             actual.ShouldBe(null);
+        }
+
+        [Test]
+        public void ConvertFailureTest()
+        {
+            var target = new ValueConverter();
+            Should.Throw<InvalidOperationException>(() => target.Convert(null, typeof (int)));
         }
 
         [Test]
         public void DoConvert_NullableNotNull_ConvertsToNull()
         {
-            ValueConverter target = new ValueConverter();
+            var target = new ValueConverter();
             DateTime? value = DateTime.Now;
-            var actual = target.Convert(value, typeof(DateTime?));
+            object actual = target.Convert(value, typeof (DateTime?));
             actual.ShouldBe(value);
             actual.ShouldNotBeSameAs(value);
         }
-        #endregion Methods
     }
 }

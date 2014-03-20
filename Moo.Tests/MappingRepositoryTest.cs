@@ -23,35 +23,47 @@
 // Email: diogo.lucas@gmail.com
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
+using System.Collections;
+using System.Linq;
+using System.Reflection;
+using FakeItEasy;
+using Moo.Mappers;
+using NUnit.Framework;
+
 namespace Moo.Tests
 {
-    using System;
-    using System.Collections;
-    using System.Linq;
-    using System.Reflection;
-
-    using Moo.Mappers;
-
-    using NUnit.Framework;
-    using FakeItEasy;
-
     /// <summary>
-    /// This is a test class for MappingRepositoryTest and is intended
-    /// targetProperty contain all MappingRepositoryTest Unit Tests
+    ///     This is a test class for MappingRepositoryTest and is intended
+    ///     targetProperty contain all MappingRepositoryTest Unit Tests
     /// </summary>
-    [TestFixture(TypeArgs = new Type[] { typeof(TestClassA), typeof(TestClassF) })]
+    [TestFixture(TypeArgs = new[] {typeof (TestClassA), typeof (TestClassF)})]
     public class MappingRepositoryTest<TSource, TTarget>
     {
-        #region Methods
-
         [Test]
         public void AddMapperTest()
         {
             IExtensibleMapper<TSource, TTarget> expected = new ManualMapper<TSource, TTarget>();
             var target = new MappingRepository();
             target.AddMapper(expected);
-            var actual = target.ResolveMapper<TSource, TTarget>();
+            IExtensibleMapper<TSource, TTarget> actual = target.ResolveMapper<TSource, TTarget>();
             Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void AddMappingGeneric_DefaultCase_RedirectsToMapper()
+        {
+            var target = new MappingRepository();
+            var mapperMock = A.Fake<IExtensibleMapper<TSource, TTarget>>();
+            target.AddMapper(mapperMock);
+            string sourceMemberName = "source";
+            string targetMemberName = "target";
+            var mappingAction = new MappingAction<TSource, TTarget>((s, t) => { });
+
+            target.AddMappingAction(sourceMemberName, targetMemberName, mappingAction);
+
+            A.CallTo(() => mapperMock.AddMappingAction(sourceMemberName, targetMemberName, mappingAction))
+                .MustHaveHappened();
         }
 
         [Test]
@@ -61,8 +73,9 @@ namespace Moo.Tests
             var target = new MappingRepository();
             target.AddMapper(mapper);
             target.Clear();
-            var mappersField = target.GetType().GetField("_mappers", BindingFlags.NonPublic | BindingFlags.Instance);
-            var mappers = (IEnumerable)mappersField.GetValue(target);
+            FieldInfo mappersField = target.GetType()
+                .GetField("_mappers", BindingFlags.NonPublic | BindingFlags.Instance);
+            var mappers = (IEnumerable) mappersField.GetValue(target);
             Assert.IsFalse(mappers.Cast<object>().Any());
         }
 
@@ -73,41 +86,23 @@ namespace Moo.Tests
         }
 
         [Test]
-        public void ResolveMapper_ExistingMapper_ResolvesCorrectly()
-        {
-            var target = new MappingRepository();
-            var mapper = target.ResolveMapper<TTarget, TSource>();
-            Assert.IsNotNull(mapper);
-            Assert.IsInstanceOf<CompositeMapper<TTarget, TSource>>(mapper);
-            Assert.IsTrue(((CompositeMapper<TTarget, TSource>)mapper).InnerMappers.Any());
-        }
-
-        [Test]
         public void ResolveMapper2_ExistingMapper_ResolvesCorrectly()
         {
             var target = new MappingRepository();
-            var mapper = target.ResolveMapper(typeof(TTarget), typeof(TSource));
+            IMapper mapper = target.ResolveMapper(typeof (TTarget), typeof (TSource));
             Assert.IsNotNull(mapper);
             Assert.IsInstanceOf<CompositeMapper<TTarget, TSource>>(mapper);
-            Assert.IsTrue(((CompositeMapper<TTarget, TSource>)mapper).InnerMappers.Any());
+            Assert.IsTrue(((CompositeMapper<TTarget, TSource>) mapper).InnerMappers.Any());
         }
 
         [Test]
-        public void AddMappingGeneric_DefaultCase_RedirectsToMapper()
+        public void ResolveMapper_ExistingMapper_ResolvesCorrectly()
         {
             var target = new MappingRepository();
-            var mapperMock = A.Fake<IExtensibleMapper<TSource, TTarget>>();
-            target.AddMapper<TSource, TTarget>(mapperMock);
-            var sourceMemberName = "source";
-            var targetMemberName = "target";
-            var mappingAction = new MappingAction<TSource, TTarget>((s, t) => { });
-
-            target.AddMappingAction(sourceMemberName, targetMemberName, mappingAction);
-
-            A.CallTo(() => mapperMock.AddMappingAction(sourceMemberName, targetMemberName, mappingAction))
-                .MustHaveHappened();
+            IExtensibleMapper<TTarget, TSource> mapper = target.ResolveMapper<TTarget, TSource>();
+            Assert.IsNotNull(mapper);
+            Assert.IsInstanceOf<CompositeMapper<TTarget, TSource>>(mapper);
+            Assert.IsTrue(((CompositeMapper<TTarget, TSource>) mapper).InnerMappers.Any());
         }
-
-        #endregion Methods
     }
 }

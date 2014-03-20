@@ -23,31 +23,31 @@
 // Email: diogo.lucas@gmail.com
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using FakeItEasy;
+
 namespace Moo.Tests.Utils
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-
-    using FakeItEasy;
-
     /// <summary>
-    /// Internal factory class, for target instance construction.
+    ///     Internal factory class, for target instance construction.
     /// </summary>
     internal static class TestFactory
     {
         public static T CreateTarget<T>()
         {
-            var ctorInfo = typeof(T).GetConstructors().OrderByDescending(c => c.GetParameters().Count()).First();
-            var fakeFactory = typeof(FakeItEasy.A).GetMethod("Fake", System.Type.EmptyTypes);
+            ConstructorInfo ctorInfo =
+                typeof (T).GetConstructors().OrderByDescending(c => c.GetParameters().Count()).First();
+            MethodInfo fakeFactory = typeof (A).GetMethod("Fake", Type.EmptyTypes);
 
-            var ctorParams = from p in ctorInfo.GetParameters()
-                             select fakeFactory.MakeGenericMethod(p.ParameterType).Invoke(null, null);
-            var result = ctorInfo.Invoke(ctorParams.ToArray());
+            IEnumerable<object> ctorParams = from p in ctorInfo.GetParameters()
+                select fakeFactory.MakeGenericMethod(p.ParameterType).Invoke(null, null);
+            object result = ctorInfo.Invoke(ctorParams.ToArray());
 
-            return (T)result;
+            return (T) result;
         }
     }
 }

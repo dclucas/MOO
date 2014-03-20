@@ -23,21 +23,19 @@
 // Email: diogo.lucas@gmail.com
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
+using Moo.Mappers;
+using NUnit.Framework;
+
 namespace Moo.Tests.Mappers
 {
-    using NUnit.Framework;
-    using Moo.Mappers;
-    using Shouldly;
-
     /// <summary>
-    /// This is a test class for AttributeMapperTest and is intended
-    /// targetMember contain all AttributeMapperTest Unit Tests
+    ///     This is a test class for AttributeMapperTest and is intended
+    ///     targetMember contain all AttributeMapperTest Unit Tests
     /// </summary>
     [TestFixture]
     public class AttributeMapperTest
     {
-        #region Methods
-
         [Test]
         public void Map_MappedSource_SkipsMapping()
         {
@@ -45,7 +43,7 @@ namespace Moo.Tests.Mappers
             int expectedCode = 412;
 
             var a = new TestClassA();
-            var d = new TestClassD() { AnotherCode = expectedCode, SomeOtherName = expectedName };
+            var d = new TestClassD {AnotherCode = expectedCode, SomeOtherName = expectedName};
 
             var target = new AttributeMapper<TestClassD, TestClassA>();
             target.Map(d, a);
@@ -66,7 +64,7 @@ namespace Moo.Tests.Mappers
             string expectedName = "Test Name";
             int expectedCode = 412;
 
-            var a = new TestClassA() { Code = expectedCode, Name = expectedName };
+            var a = new TestClassA {Code = expectedCode, Name = expectedName};
             var d = new TestClassD();
 
             var target = new AttributeMapper<TestClassA, TestClassD>();
@@ -78,7 +76,5 @@ namespace Moo.Tests.Mappers
             Assert.AreEqual(expectedName, a.Name);
             Assert.AreEqual(expectedCode, a.Code);
         }
-
-        #endregion Methods
     }
 }

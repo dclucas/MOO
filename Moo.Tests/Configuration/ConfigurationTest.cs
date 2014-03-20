@@ -23,55 +23,53 @@
 // Email: diogo.lucas@gmail.com
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
+using System.Reflection;
+using System.Text;
+using System.Xml;
+using Moo.Configuration;
+using NUnit.Framework;
+
 namespace Moo.Tests.Configuration
 {
-    using System.Reflection;
-    using System.Text;
-    using System.Xml;
-    using NUnit.Framework;
-    using Moo.Configuration;
-
     /// <summary>
-    /// Summary description for ConfigurationTest
+    ///     Summary description for ConfigurationTest
     /// </summary>
     [TestFixture]
     public class ConfigurationTest
     {
-        #region Methods
-
         [Test]
         public void MappingConfigurationTest()
         {
-            MappingConfigurationSection target = new MappingConfigurationSection();
-            TypeMappingElement typeMapping = new TypeMappingElement();
-            typeMapping.TargetType = typeof(TestClassA).FullName;
-            typeMapping.SourceType = typeof(TestClassB).FullName;
+            var target = new MappingConfigurationSection();
+            var typeMapping = new TypeMappingElement();
+            typeMapping.TargetType = typeof (TestClassA).FullName;
+            typeMapping.SourceType = typeof (TestClassB).FullName;
 
-            MemberMappingElement propMapping = new MemberMappingElement();
+            var propMapping = new MemberMappingElement();
             propMapping.TargetMemberName = "A";
             propMapping.SourceMemberName = "B";
             typeMapping.MemberMappings.Add(propMapping);
             target.TypeMappings.Add(typeMapping);
 
             // TODO: change this call to SerializeSection
-            var methodInfo = target.GetType().GetMethod(
+            MethodInfo methodInfo = target.GetType().GetMethod(
                 "SerializeElement",
                 BindingFlags.Instance | BindingFlags.NonPublic);
             var sb = new StringBuilder();
 
-            using (var writer = XmlWriter.Create(sb))
+            using (XmlWriter writer = XmlWriter.Create(sb))
             {
-                var res = methodInfo.Invoke(
+                object res = methodInfo.Invoke(
                     target,
-                    new object[] { writer, false });
+                    new object[] {writer, false});
 
                 writer.Flush();
             }
 
-            const string Expected = @"<MemberMappings><add TargetMemberName=""A"" SourceMemberName=""B"" /></MemberMappings>";
+            const string Expected =
+                @"<MemberMappings><add TargetMemberName=""A"" SourceMemberName=""B"" /></MemberMappings>";
             StringAssert.Contains(Expected, sb.ToString());
         }
-
-        #endregion Methods
     }
 }

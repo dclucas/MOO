@@ -23,21 +23,27 @@
 // Email: diogo.lucas@gmail.com
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
+using System;
+using System.Collections.Generic;
+using FakeItEasy;
+using Moo.Initialization;
+using NUnit.Framework;
+using Shouldly;
+
 namespace Moo.Tests.Initialization
 {
-    using FakeItEasy;
-    using Moo;
-    using Moo.Initialization;
-    using NUnit.Framework;
-    using Shouldly;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-
     [TestFixture]
     public class MappingInitializerExtenderTest
     {
+        [Test]
+        public void InitializeMappings_NullAssemblies_Throws()
+        {
+            var fakeMapper = A.Fake<IMappingRepository>();
+            Should.Throw<ArgumentNullException>(
+                () => fakeMapper.InitializeMappings(assemblies: null));
+        }
+
         [Test]
         public void InitializeMappings_NullInitializers_Throws()
         {
@@ -50,22 +56,14 @@ namespace Moo.Tests.Initialization
         public void InitializeMappings_WithInitializers_CallsInitializers()
         {
             var fakeRepo = A.Fake<IMappingRepository>();
-            var fakeInitializers = A.CollectionOfFake<IMappingInitializer>(5);
-            
+            IList<IMappingInitializer> fakeInitializers = A.CollectionOfFake<IMappingInitializer>(5);
+
             fakeRepo.InitializeMappings(fakeInitializers);
 
-            foreach (var i in fakeInitializers)
+            foreach (IMappingInitializer i in fakeInitializers)
             {
                 A.CallTo(() => i.InitializeMappings(fakeRepo)).MustHaveHappened();
             }
-        }
-
-        [Test]
-        public void InitializeMappings_NullAssemblies_Throws()
-        {
-            var fakeMapper = A.Fake<IMappingRepository>();
-            Should.Throw<ArgumentNullException>(
-                () => fakeMapper.InitializeMappings(assemblies: null));
         }
     }
 }

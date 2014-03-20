@@ -23,20 +23,16 @@
 // Email: diogo.lucas@gmail.com
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
+using System;
+using Moo.Core;
+using Moo.Tests.Utils;
+using NUnit.Framework;
+using Shouldly;
+
 namespace Moo.Tests.Core
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-
-    using FakeItEasy;
-    using Moo.Core;
-    using Moo.Tests.Utils;
-    using NUnit.Framework;
-    using Shouldly;
-
-    [TestFixture(TypeArgs = new Type[] { typeof(TestClassA), typeof(TestClassB) })]
+    [TestFixture(TypeArgs = new[] {typeof (TestClassA), typeof (TestClassB)})]
     public class SourceSpecTest<TSource, TTarget>
     {
         [Test]
@@ -44,7 +40,7 @@ namespace Moo.Tests.Core
         {
             var target = TestFactory.CreateTarget<SourceSpec<TSource, TTarget>>();
 
-            var from = target.From(s => 1);
+            ITargetSpec<TSource, TTarget> from = target.From(s => 1);
 
             from.ShouldNotBe(null);
         }

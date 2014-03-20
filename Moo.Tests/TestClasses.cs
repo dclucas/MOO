@@ -23,10 +23,11 @@
 // Email: diogo.lucas@gmail.com
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
+using System;
+
 namespace Moo.Tests
 {
-    using System;
-
     public class TestClassA
     {
         #region Properties
@@ -74,10 +75,10 @@ namespace Moo.Tests
     {
         #region Properties
 
-        [Mapping(MappingDirections.Target, typeof(TestClassA), "Code")]
+        [Mapping(MappingDirections.Target, typeof (TestClassA), "Code")]
         public int AnotherCode { get; set; }
 
-        [Mapping(MappingDirections.Both, typeof(TestClassA), "Name")]
+        [Mapping(MappingDirections.Both, typeof (TestClassA), "Name")]
         public string SomeOtherName { get; set; }
 
         #endregion Properties

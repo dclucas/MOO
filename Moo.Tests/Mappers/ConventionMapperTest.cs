@@ -23,119 +23,27 @@
 // Email: diogo.lucas@gmail.com
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Moo.Mappers;
+using NUnit.Framework;
+
 namespace Moo.Tests.Mappers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using NUnit.Framework;
-    using Moo.Mappers;
-
     /// <summary>
-    /// This is a test class for ConventionMapperTest and is intended
-    /// targetProperty contain all ConventionMapperTest Unit Tests
+    ///     This is a test class for ConventionMapperTest and is intended
+    ///     targetProperty contain all ConventionMapperTest Unit Tests
     /// </summary>
     [TestFixture]
     public class ConventionMapperTest
     {
-        #region Methods (11)
-
-        [Test]
-        public void Map_NonGeneric_MappingWorks()
-        {
-            var target = new ConventionMapper<TestClassA, TestClassB>();
-            var source = this.GenerateSource();
-            var result = new TestClassB();
-            target.Map((object)source, (object)result);
-            this.CheckMapping(source, result);
-        }
-
-        [Test]
-        public void Map_NOTarget_MappingWorks()
-        {
-            var target = new ConventionMapper<TestClassA, TestClassB>();
-            var source = this.GenerateSource();
-            var result = (TestClassB)target.Map((object)source);
-            this.CheckMapping(source, result);
-        }
-
-        [Test]
-        public void Map_NullInner_PropertySkipped()
-        {
-            var target = new ConventionMapper<TestClassA, TestClassB>();
-            var mapSource = new TestClassA()
-            {
-                Name = "TestName",
-                Code = 123,
-                InnerClass = null, // this needs to be null for this scenario. Making it explicit here.
-            };
-
-            var result = target.Map(mapSource);
-
-            Assert.IsNull(result.InnerClassName);
-            Assert.AreEqual(mapSource.Name, result.Name);
-        }
-
-        [Test]
-        public void Map_WithFactory_MappingWorks()
-        {
-            var target = new ConventionMapper<TestClassA, TestClassB>();
-            var source = this.GenerateSource();
-            var result = new TestClassB();
-            target.Map((object)source, () => result);
-            this.CheckMapping(source, result);
-        }
-
-        [Test]
-        public void MapMultipleFunctionTest()
-        {
-            var target = new ConventionMapper<TestClassA, TestClassB>();
-            var source = this.GenerateList(50).ToList();
-            var defaultDate = new DateTime(1789, 7, 14);
-            var result = target.MapMultiple(source, () => new TestClassB() { Code = defaultDate }).ToList();
-            this.CheckLists(source, result);
-            Assert.IsTrue(result.All(r => r.Code == defaultDate));
-        }
-
-        [Test]
-        public void MapMultipleTest()
-        {
-            var target = new ConventionMapper<TestClassA, TestClassB>();
-            var source = this.GenerateList(50).ToList();
-            var result = target.MapMultiple(source).ToList();
-            this.CheckLists(source, result);
-        }
-
-        [Test]
-        public void MapTest()
-        {
-            var target = new ConventionMapper<TestClassA, TestClassB>();
-            var from = new TestClassA();
-            var to = new TestClassB();
-            from.Code = 123;
-            var expectedName = "Test123";
-            from.Name = expectedName;
-            from.InnerClass = new TestClassC();
-            var expectedInnerName = "InnerName234";
-            var expectedInnerFraction = Math.PI;
-            from.InnerClass.Name = expectedInnerName;
-            from.InnerClass.Fraction = expectedInnerFraction;
-            target.Map(from, to);
-            Assert.AreEqual(expectedName, to.Name);
-            Assert.AreEqual(expectedInnerName, to.InnerClassName);
-            Assert.AreEqual(expectedInnerFraction, to.InnerClassFraction);
-
-            // making sure the mapping didn't mess with the "sourceMember" object.
-            Assert.AreEqual(expectedName, from.Name);
-            Assert.AreEqual(expectedInnerName, from.InnerClass.Name);
-            Assert.AreEqual(expectedInnerFraction, from.InnerClass.Fraction);
-        }
-
         private void CheckLists(IList<TestClassA> sourceList, IList<TestClassB> resultList)
         {
             for (int i = 0; i < sourceList.Count; ++i)
             {
-                this.CheckMapping(sourceList[i], resultList[i]);
+                CheckMapping(sourceList[i], resultList[i]);
             }
         }
 
@@ -150,19 +58,19 @@ namespace Moo.Tests.Mappers
         {
             while (count-- > 0)
             {
-                yield return this.GenerateSource();
+                yield return GenerateSource();
             }
         }
 
         private TestClassA GenerateSource()
         {
-            Random rnd = new Random();
-            TestClassA source = new TestClassA()
+            var rnd = new Random();
+            var source = new TestClassA
             {
-                Name = "Name" + rnd.Next(1000).ToString(),
-                InnerClass = new TestClassC()
+                Name = "Name" + rnd.Next(1000),
+                InnerClass = new TestClassC
                 {
-                    Name = "InnerName" + rnd.Next(1000).ToString(),
+                    Name = "InnerName" + rnd.Next(1000),
                     Fraction = rnd.NextDouble()
                 }
             };
@@ -170,6 +78,95 @@ namespace Moo.Tests.Mappers
             return source;
         }
 
-        #endregion Methods
+        [Test]
+        public void MapMultipleFunctionTest()
+        {
+            var target = new ConventionMapper<TestClassA, TestClassB>();
+            List<TestClassA> source = GenerateList(50).ToList();
+            var defaultDate = new DateTime(1789, 7, 14);
+            List<TestClassB> result = target.MapMultiple(source, () => new TestClassB {Code = defaultDate}).ToList();
+            CheckLists(source, result);
+            Assert.IsTrue(result.All(r => r.Code == defaultDate));
+        }
+
+        [Test]
+        public void MapMultipleTest()
+        {
+            var target = new ConventionMapper<TestClassA, TestClassB>();
+            List<TestClassA> source = GenerateList(50).ToList();
+            List<TestClassB> result = target.MapMultiple(source).ToList();
+            CheckLists(source, result);
+        }
+
+        [Test]
+        public void MapTest()
+        {
+            var target = new ConventionMapper<TestClassA, TestClassB>();
+            var from = new TestClassA();
+            var to = new TestClassB();
+            from.Code = 123;
+            string expectedName = "Test123";
+            from.Name = expectedName;
+            from.InnerClass = new TestClassC();
+            string expectedInnerName = "InnerName234";
+            double expectedInnerFraction = Math.PI;
+            from.InnerClass.Name = expectedInnerName;
+            from.InnerClass.Fraction = expectedInnerFraction;
+            target.Map(from, to);
+            Assert.AreEqual(expectedName, to.Name);
+            Assert.AreEqual(expectedInnerName, to.InnerClassName);
+            Assert.AreEqual(expectedInnerFraction, to.InnerClassFraction);
+
+            // making sure the mapping didn't mess with the "sourceMember" object.
+            Assert.AreEqual(expectedName, from.Name);
+            Assert.AreEqual(expectedInnerName, from.InnerClass.Name);
+            Assert.AreEqual(expectedInnerFraction, from.InnerClass.Fraction);
+        }
+
+        [Test]
+        public void Map_NOTarget_MappingWorks()
+        {
+            var target = new ConventionMapper<TestClassA, TestClassB>();
+            TestClassA source = GenerateSource();
+            var result = (TestClassB) target.Map((object) source);
+            CheckMapping(source, result);
+        }
+
+        [Test]
+        public void Map_NonGeneric_MappingWorks()
+        {
+            var target = new ConventionMapper<TestClassA, TestClassB>();
+            TestClassA source = GenerateSource();
+            var result = new TestClassB();
+            target.Map(source, (object) result);
+            CheckMapping(source, result);
+        }
+
+        [Test]
+        public void Map_NullInner_PropertySkipped()
+        {
+            var target = new ConventionMapper<TestClassA, TestClassB>();
+            var mapSource = new TestClassA
+            {
+                Name = "TestName",
+                Code = 123,
+                InnerClass = null, // this needs to be null for this scenario. Making it explicit here.
+            };
+
+            TestClassB result = target.Map(mapSource);
+
+            Assert.IsNull(result.InnerClassName);
+            Assert.AreEqual(mapSource.Name, result.Name);
+        }
+
+        [Test]
+        public void Map_WithFactory_MappingWorks()
+        {
+            var target = new ConventionMapper<TestClassA, TestClassB>();
+            TestClassA source = GenerateSource();
+            var result = new TestClassB();
+            target.Map((object) source, () => result);
+            CheckMapping(source, result);
+        }
     }
 }

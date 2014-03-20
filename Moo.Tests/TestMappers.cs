@@ -23,12 +23,14 @@
 // Email: diogo.lucas@gmail.com
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using Moo.Core;
+
 namespace Moo.Tests
 {
-    using System;
-
-    using Moo.Core;
-
     public class Mapper1<TSource, TTarget> : IMapper<TSource, TTarget>
     {
         public TTarget Map(TSource source, TTarget target)
@@ -46,12 +48,12 @@ namespace Moo.Tests
             throw new NotImplementedException();
         }
 
-        public System.Collections.Generic.IEnumerable<TTarget> MapMultiple(System.Collections.Generic.IEnumerable<TSource> sourceList)
+        public IEnumerable<TTarget> MapMultiple(IEnumerable<TSource> sourceList)
         {
             throw new NotImplementedException();
         }
 
-        public System.Collections.Generic.IEnumerable<TTarget> MapMultiple(System.Collections.Generic.IEnumerable<TSource> sourceList, Func<TTarget> createTarget)
+        public IEnumerable<TTarget> MapMultiple(IEnumerable<TSource> sourceList, Func<TTarget> createTarget)
         {
             throw new NotImplementedException();
         }
@@ -71,7 +73,7 @@ namespace Moo.Tests
             throw new NotImplementedException();
         }
 
-        public System.Collections.IEnumerable MapMultiple(System.Collections.IEnumerable sourceList)
+        public IEnumerable MapMultiple(IEnumerable sourceList)
         {
             throw new NotImplementedException();
         }
@@ -81,7 +83,7 @@ namespace Moo.Tests
     {
         public Mapper2(MapperConstructionInfo constructionInfo)
         {
-            this.ConstructionInfo = constructionInfo;
+            ConstructionInfo = constructionInfo;
         }
 
         public MapperConstructionInfo ConstructionInfo { get; private set; }

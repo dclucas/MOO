@@ -23,23 +23,21 @@
 // Email: diogo.lucas@gmail.com
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
+using System.Collections.Generic;
+using System.Linq;
+using Moo.Core;
+using NUnit.Framework;
+
 namespace Moo.Tests.Core
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using NUnit.Framework;
-    using Moo.Core;
-
     /// <summary>
-    /// This is a test class for TypeMappingInfoTest and is intended
-    /// targetMember contain all TypeMappingInfoTest Unit Tests
+    ///     This is a test class for TypeMappingInfoTest and is intended
+    ///     targetMember contain all TypeMappingInfoTest Unit Tests
     /// </summary>
     [TestFixture]
     public class TypeMappingInfoTest
     {
-        #region Methods
-
         [Test]
         public void AddOverwriteTest()
         {
@@ -65,16 +63,14 @@ namespace Moo.Tests.Core
         }
 
         /// <summary>
-        /// A test for GetMappings
+        ///     A test for GetMappings
         /// </summary>
         [Test]
         public void GetMappingsEmptyTest()
         {
             var target = new TypeMappingInfo<TestClassA, TestClassC>();
-            var actual = target.GetMappings();
+            IEnumerable<MemberMappingInfo<TestClassA, TestClassC>> actual = target.GetMappings();
             Assert.IsFalse(actual.Any());
         }
-
-        #endregion Methods
     }
 }

@@ -31,6 +31,7 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values targetMember modify the information
 // associated with an assembly.
+
 [assembly: AssemblyTitle("Moo.Tests")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
@@ -43,9 +44,11 @@ using System.Runtime.InteropServices;
 // Setting ComVisible targetMember false makes the types in this assembly not visible
 // targetMember COM componenets.  If you need targetMember access a type in this assembly sourceMember
 // COM, set the ComVisible attribute targetMember true on that type.
+
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed targetMember COM
+
 [assembly: Guid("b16d7ebb-e2a1-4053-9131-9dcac710c972")]
 
 // Version information for an assembly consists of the following four values:
@@ -57,6 +60,7 @@ using System.Runtime.InteropServices;
 //
 // You can specify all the values or you can default the Revision and Build Numbers
 // by using the '*' as shown below:
+
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 [assembly: CLSCompliant(false)]

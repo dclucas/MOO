@@ -23,30 +23,18 @@
 // Email: diogo.lucas@gmail.com
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
+using System;
+using FakeItEasy;
+using Moo.Core;
+using NUnit.Framework;
+using Shouldly;
+
 namespace Moo.Tests.Core
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-
-    using NUnit.Framework;
-    using Shouldly;
-    using Moo.Core;
-    using FakeItEasy;
-
     [TestFixture]
     public class MapperSequenceSpecTest
     {
-        [Test]
-        public void Constructor_NullParentSpec_Throws()
-        {
-            var exc = Should.Throw<ArgumentNullException>(
-                () => new MapperSequenceSpec(null, new Type[0]));
-            
-            exc.ParamName.ShouldBe("parentSpec");
-        }
-
         [Test]
         public void Constructor_NullCurrentSequence_Throws()
         {
@@ -54,6 +42,15 @@ namespace Moo.Tests.Core
                 () => new MapperSequenceSpec(A.Fake<IRepositorySpec>(), null));
 
             exc.ParamName.ShouldBe("currentSequence");
+        }
+
+        [Test]
+        public void Constructor_NullParentSpec_Throws()
+        {
+            var exc = Should.Throw<ArgumentNullException>(
+                () => new MapperSequenceSpec(null, new Type[0]));
+
+            exc.ParamName.ShouldBe("parentSpec");
         }
     }
 }

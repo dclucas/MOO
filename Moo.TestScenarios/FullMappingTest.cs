@@ -53,7 +53,7 @@ namespace Moo.TestScenarios
 
             var targetObj = target.Map(sourceObj);
 
-            this.CheckMappings(sourceObj, targetObj, innerMappers);
+            CheckMappings(sourceObj, targetObj, innerMappers);
         }
 
         protected void CheckMappings(TSource sourceObj, TTarget targetObj, Type[] innerMappers)
@@ -127,12 +127,8 @@ namespace Moo.TestScenarios
             fixture.Register(() => (IEnumerable<Contact>)fixture.CreateMany<Contact>());
             fixture.Register(() => (IEnumerable<Person>)fixture.CreateMany<Person>());
             fixture.Register(() => (DateTime?)null);
-            var result = fixture
-                .Build<Manager>()
-                .Without(m => m.Managees)
-                .Without(m => m.Manager)
-                .CreateAnonymous<TSource>();
-            return result;
+            fixture.Register(() => new Manager() { Id = 1234 });
+            return fixture.Create<TSource>();
         }
 
         private object GetValue(string propName, object obj)
@@ -142,7 +138,7 @@ namespace Moo.TestScenarios
             {
                 var part = propName.Substring(0, fp);
                 var inner = this.GetValue(part, obj);
-                return this.GetValue(propName.Substring(fp + 1), inner);
+                return GetValue(propName.Substring(fp + 1), inner);
             }
 
             return obj.GetType().GetProperty(propName).GetValue(obj, null);

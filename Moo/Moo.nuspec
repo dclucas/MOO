@@ -17,11 +17,15 @@
     <files>
         <file src="bin-net4\Release\Moo.dll" target="lib\net4\Moo.dll" />
         <file src="bin-net4\Release\Moo.XML" target="lib\net4\Moo.XML" />
+        <file src="bin-net4\Release\Moo.pdb" target="lib\net4\Moo.pdb" />
         <file src="bin-net45\Release\Moo.dll" target="lib\net45\Moo.dll" />
         <file src="bin-net45\Release\Moo.XML" target="lib\net45\Moo.XML" />
+        <file src="bin-net45\Release\Moo.pdb" target="lib\net45\Moo.pdb" />
         <file src="bin-net451\Release\Moo.dll" target="lib\net451\Moo.dll" />
         <file src="bin-net451\Release\Moo.XML" target="lib\net451\Moo.XML" />
+        <file src="bin-net451\Release\Moo.pdb" target="lib\net451\Moo.pdb" />
         <file src="bin-portable\Release\Moo.dll" target="lib\portable-net4+sl4+wp7+win8\Moo.dll" />
         <file src="bin-portable\Release\Moo.XML" target="lib\portable-net4+sl4+wp7+win8\Moo.XML" />
+        <file src="bin-portable\Release\Moo.pdb" target="lib\portable-net4+sl4+wp7+win8\Moo.pdb" />
     </files>
 </package>

@@ -23,56 +23,23 @@
 // Email: diogo.lucas@gmail.com
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
+using System;
+using FakeItEasy;
+using Moo.Mappers;
+using NUnit.Framework;
+using Shouldly;
+using System.Threading.Tasks;
+
 namespace Moo.Tests.Mappers
 {
-    using System;
-    using System.Linq;
-    using System.Reflection;
-
-    using NUnit.Framework;
-    using Moo.Mappers;
-    using Shouldly;
-
     /// <summary>
-    /// This is a test class for ManualMapperTest and is intended
-    /// targetProperty contain all ManualMapperTest Unit Tests
+    ///     This is a test class for ManualMapperTest and is intended
+    ///     targetProperty contain all ManualMapperTest Unit Tests
     /// </summary>
     [TestFixture]
     public class ManualMapperTest
     {
-        #region Methods
-
-        [ExpectedException(typeof(MappingException))]
-        [Test]
-        public void ManualMapperMapErrorTest()
-        {
-            var target = new ManualMapper<FromTestClass, ToTestClass>();
-            var source = new FromTestClass() { Id = 5, Description = "test" };
-
-            var targetObj = new ToTestClass();
-            target.AddMappingAction("Id", "Code", (f, t) => { throw new InvalidOperationException(); });
-            target.Map(source, targetObj);
-        }
-
-        [Test]
-        public void ManualMapperMapTest()
-        {
-            var target = new ManualMapper<FromTestClass, ToTestClass>();
-            FromTestClass source = new FromTestClass() { Id = 5, Description = "test" };
-            var targetObj = new ToTestClass();
-            target.AddMappingAction("Id", "Code", (f, t) => t.Code = f.Id);
-            target.AddMappingAction("Description", "Name", (f, t) => t.Name = f.Description);
-            target.AddMappingAction("SampleDate", "SampleDateInStrFormat", (f, t) => t.SampleDateInStrFormat = f.SampleDate.ToShortDateString());
-            target.Map(source, targetObj);
-            Assert.AreEqual(source.Id, targetObj.Code);
-            Assert.AreEqual(source.Description, targetObj.Name);
-            Assert.AreEqual(source.SampleDate.ToShortDateString(), targetObj.SampleDateInStrFormat);
-        }
-
-        #endregion Methods
-
-        #region Nested Classes
-
         public class FromTestClass
         {
             #region Properties
@@ -99,6 +66,67 @@ namespace Moo.Tests.Mappers
             #endregion Properties
         }
 
-        #endregion Nested Classes
+        [Test]
+        public void Map_InvalidMappingAction_WrapsAndThrows()
+        {
+            var sut = new ManualMapper<FromTestClass, ToTestClass>();
+            var source = new FromTestClass {Id = 5, Description = "test"};
+
+            var targetObj = new ToTestClass();
+            sut.AddMappingAction("Id", "Code", (f, t) => { throw new InvalidOperationException(); });
+            Should.Throw<MappingException>(() => sut.Map(source, targetObj));
+        }
+
+        private ManualMapper<FromTestClass, ToTestClass> SetupTest(FromTestClass source)
+        {
+            var sut = new ManualMapper<FromTestClass, ToTestClass>();
+            source.Id = 5;
+            source.Description = "test";
+            source.SampleDate = DateTime.Now;
+            sut.AddMappingAction("Id", "Code", (f, t) => t.Code = f.Id);
+            sut.AddMappingAction("Description", "Name", (f, t) => t.Name = f.Description);
+            sut.AddMappingAction("SampleDate", "SampleDateInStrFormat",
+                (f, t) => t.SampleDateInStrFormat = f.SampleDate.ToShortDateString());
+            return sut;
+        }
+
+        private void CheckMapping(FromTestClass source, ToTestClass target)
+        {
+            source.Id.ShouldBe(target.Code);
+            source.Description.ShouldBe(target.Name);
+            source.SampleDate.ToShortDateString().ShouldBe(target.SampleDateInStrFormat);            
+        }
+
+        [Test]
+        public async Task Map_ManualMappingsWithTarget_MapsCorrectly()
+        {
+            var source = new FromTestClass();
+            var sut = SetupTest(source);
+            var target = new ToTestClass();
+            await sut.MapAsync(source, target);
+            CheckMapping(source, target);
+        }
+
+        [Test]
+        public async Task Map_ManualMappings_CreatesTargetAndMapsCorrectly()
+        {
+            var source = new FromTestClass();
+            var sut = SetupTest(source);
+            var target = await sut.MapAsync(source);
+            CheckMapping(source, target);
+        }
+
+
+        [Test]
+        public async Task Map_ManualMappingsWithFactory_CreatesTargetAndMapsCorrectly()
+        {
+            var source = new FromTestClass();
+            var sut = SetupTest(source);
+            var factoryMethod = A.Fake<Func<ToTestClass>>();
+            A.CallTo(() => factoryMethod()).Returns(new ToTestClass());
+            var target = await sut.MapAsync(source, factoryMethod);
+            A.CallTo(() => factoryMethod()).MustHaveHappened();
+            CheckMapping(source, target);
+        }
     }
 }

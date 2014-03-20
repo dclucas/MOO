@@ -23,32 +23,31 @@
 // Email: diogo.lucas@gmail.com
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
+using System;
+using Moo.Configuration;
+using Moo.Mappers;
+using NUnit.Framework;
+
 namespace Moo.Tests.Mappers
 {
-    using System;
-    using System.Reflection;
-    using NUnit.Framework;
-    using Moo.Configuration;
-    using Moo.Mappers;
-
     /// <summary>
-    /// This is a test class for ConfigurationMapperTest and is intended
-    /// targetMember contain all ConfigurationMapperTest Unit Tests
+    ///     This is a test class for ConfigurationMapperTest and is intended
+    ///     targetMember contain all ConfigurationMapperTest Unit Tests
     /// </summary>
     [TestFixture]
     public class ConfigurationMapperTest
     {
-        #region Methods
-
         [Test]
         public void GetTypeMappingNoSectionTest()
         {
-            var actual = ConfigurationMapper<TestClassA, TestClassB>.GetTypeMapping("thisConfigDoesNotExist");
+            TypeMappingElement actual =
+                ConfigurationMapper<TestClassA, TestClassB>.GetTypeMapping("thisConfigDoesNotExist");
             Assert.IsNull(actual);
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentNullException))]
+        [ExpectedException(typeof (ArgumentNullException))]
         public void GetTypeMappingNullSectionTest()
         {
             ConfigurationMapper<TestClassA, TestClassB>.GetTypeMapping(null);
@@ -57,20 +56,18 @@ namespace Moo.Tests.Mappers
         [Test]
         public void GetTypeMappingTest()
         {
-            var actual = ConfigurationMapper<TestClassA, TestClassB>.GetTypeMapping();
+            TypeMappingElement actual = ConfigurationMapper<TestClassA, TestClassB>.GetTypeMapping();
             Assert.IsNotNull(actual);
         }
 
         [Test]
         public void MapTest()
         {
-            ConfigurationMapper<TestClassA, TestClassB> target = new ConfigurationMapper<TestClassA, TestClassB>();
-            TestClassA from = new TestClassA() { Name = "test" };
-            TestClassB to = new TestClassB();
+            var target = new ConfigurationMapper<TestClassA, TestClassB>();
+            var from = new TestClassA {Name = "test"};
+            var to = new TestClassB();
             target.Map(from, to);
             Assert.AreEqual(from.Name, to.InnerClassName);
         }
-
-        #endregion Methods
     }
 }

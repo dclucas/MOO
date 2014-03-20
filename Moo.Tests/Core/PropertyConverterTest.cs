@@ -23,57 +23,98 @@
 // Email: diogo.lucas@gmail.com
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
+using System;
+using System.Linq.Expressions;
+using System.Reflection;
+using Moo.Core;
+using NUnit.Framework;
+using Ploeh.AutoFixture;
+using Shouldly;
+
 namespace Moo.Tests.Core
 {
-    using System;
-    using System.Linq.Expressions;
-    using System.Reflection;
-
-    using NUnit.Framework;
-    using Moo.Core;
-    using Ploeh.AutoFixture;
-    using Shouldly;
-
     /// <summary>
-    /// This is a test class for PropertyMatcherTest and is intended
-    /// targetProperty contain all PropertyMatcherTest Unit Tests
+    ///     This is a test class for PropertyMatcherTest and is intended
+    ///     targetProperty contain all PropertyMatcherTest Unit Tests
     /// </summary>
     [TestFixture]
     public class PropertyConverterTest
     {
-        #region Methods
+        [TestCase(typeof (TestClassA), typeof (TestClassB), "InnerClass", "InnerClassName", null)]
+        public void CreateConvertExpression_MultipleCases_ConvertsCorrectly(
+            Type sourceType,
+            Type targetType,
+            string sourcePropertyName,
+            string targetPropertyName,
+            object sourcePropertyValue)
+        {
+            var target = new PropertyConverter();
+            var fixture = new Fixture();
+            MethodInfo createMethod = fixture.GetType().GetMethod("CreateAnonymous");
+            object sourceObject = Activator.CreateInstance(sourceType);
+            object targetObject = Activator.CreateInstance(targetType);
+            ParameterExpression sourceParam = Expression.Parameter(sourceType);
+            ParameterExpression targetParam = Expression.Parameter(targetType);
+            PropertyInfo sourceProp = sourceType.GetProperty(sourcePropertyName);
+            PropertyInfo targetProp = targetType.GetProperty(targetPropertyName);
+            if (sourcePropertyValue != null)
+            {
+                sourceProp.SetValue(sourceObject, sourcePropertyValue, null);
+            }
+
+            var expr = target.CreateConvertExpression(
+                sourceProp,
+                targetProp,
+                sourceParam,
+                targetParam);
+
+            var actionType = typeof (MappingAction<,>).MakeGenericType(sourceType, targetType);
+            var lambda = Expression.Lambda(actionType, expr, sourceParam, targetParam);
+            var action = lambda.Compile();
+            action.DynamicInvoke(sourceObject, targetObject);
+            var resultProp = targetProp.GetValue(targetObject, null);
+            resultProp.ShouldBe(sourcePropertyValue);
+        }
+
+        private void TestMatch(string fromProp, string toProp, bool expected)
+        {
+            var target = new PropertyConverter();
+            var from = typeof (TestClassA).GetProperty(fromProp);
+            var to = typeof (TestClassB).GetProperty(toProp);
+            var actual = target.CanConvert(@from, to);
+            Assert.AreEqual(expected, actual);
+        }
 
         [Test]
         public void ConvertTestComplex()
         {
-            PropertyConverter target = new PropertyConverter();
-            TestClassA source = new TestClassA();
-            source.InnerClass = new TestClassC();
+            var target = new PropertyConverter();
+            var source = new TestClassA {InnerClass = new TestClassC()};
             const string expected = "test";
             source.InnerClass.Name = expected;
-            PropertyInfo fromProperty = typeof(TestClassA).GetProperty("InnerClass");
-            TestClassB targetObject = new TestClassB();
-            targetObject.InnerClassName = "wrongstring";
-            PropertyInfo toProperty = typeof(TestClassB).GetProperty("InnerClassName");
+            var fromProperty = typeof (TestClassA).GetProperty("InnerClass");
+            var targetObject = new TestClassB {InnerClassName = "wrongstring"};
+            var toProperty = typeof (TestClassB).GetProperty("InnerClassName");
             target.Convert(source, fromProperty, targetObject, toProperty);
             Assert.AreEqual(expected, targetObject.InnerClassName);
             Assert.AreEqual(expected, source.InnerClass.Name);
         }
 
         /// <summary>
-        /// A test for Convert
+        ///     A test for Convert
         /// </summary>
         [Test]
         public void ConvertTestSimple()
         {
-            PropertyConverter target = new PropertyConverter();
-            TestClassA source = new TestClassA();
+            var target = new PropertyConverter();
+            var source = new TestClassA();
             const string expected = "test";
             source.Name = expected;
-            PropertyInfo fromProperty = typeof(TestClassA).GetProperty("Name");
-            TestClassB targetObject = new TestClassB();
+            var fromProperty = typeof (TestClassA).GetProperty("Name");
+            var targetObject = new TestClassB();
             targetObject.Name = "wrongstring";
-            PropertyInfo toProperty = typeof(TestClassB).GetProperty("Name");
+            var toProperty = typeof (TestClassB).GetProperty("Name");
             target.Convert(source, fromProperty, targetObject, toProperty);
             Assert.AreEqual(expected, targetObject.Name);
             Assert.AreEqual(expected, source.Name);
@@ -82,35 +123,35 @@ namespace Moo.Tests.Core
         [Test]
         public void PropertiesMatchFlattenNegativeTest()
         {
-            this.TestMatch("InnerClass", "InnerClassCode", false);
+            TestMatch("InnerClass", "InnerClassCode", false);
         }
 
         [Test]
         public void PropertiesMatchFlattenTest()
         {
-            this.TestMatch("InnerClass", "InnerClassName", true);
+            TestMatch("InnerClass", "InnerClassName", true);
         }
 
         [Test]
         public void PropertiesMatchSimpleNegativeTest()
         {
-            this.TestMatch("Code", "Code", false);
+            TestMatch("Code", "Code", false);
         }
 
         /// <summary>
-        /// A test for PropertiesMatch
+        ///     A test for PropertiesMatch
         /// </summary>
         [Test]
         public void PropertiesMatchSimpleTest()
         {
-            this.TestMatch("Name", "Name", true);
+            TestMatch("Name", "Name", true);
         }
 
         [Test]
-        [ExpectedException(typeof(InvalidOperationException))]
+        [ExpectedException(typeof (InvalidOperationException))]
         public void PropertyConverterNegativeTest()
         {
-            PropertyConverter target = new PropertyConverter();
+            var target = new PropertyConverter();
             var source = new TestClassA();
             var sourceProperty = source.GetType().GetProperty("InnerClass");
             var result = new TestClassB();
@@ -123,52 +164,5 @@ namespace Moo.Tests.Core
                 resultProperty,
                 false);
         }
-
-        [TestCase(typeof(TestClassA), typeof(TestClassB), "InnerClass", "InnerClassName", null)]
-        public void CreateConvertExpression_MultipleCases_ConvertsCorrectly(
-            Type sourceType,
-            Type targetType,
-            string sourcePropertyName,
-            string targetPropertyName,
-            object sourcePropertyValue)
-        {
-            var target = new PropertyConverter();
-            var fixture = new Fixture();
-            var createMethod = fixture.GetType().GetMethod("CreateAnonymous");
-            var sourceObject = Activator.CreateInstance(sourceType);
-            var targetObject = Activator.CreateInstance(targetType);
-            var sourceParam = Expression.Parameter(sourceType);
-            var targetParam = Expression.Parameter(targetType);
-            var sourceProp = sourceType.GetProperty(sourcePropertyName);
-            var targetProp = targetType.GetProperty(targetPropertyName);
-            if (sourcePropertyValue != null)
-            {
-                sourceProp.SetValue(sourceObject, sourcePropertyValue, null);
-            }
-
-            var expr = target.CreateConvertExpression(
-                sourceProp,
-                targetProp,
-                sourceParam,
-                targetParam);
-
-            var actionType = typeof(MappingAction<,>).MakeGenericType(sourceType, targetType);
-            var lambda = Expression.Lambda(actionType, expr, sourceParam, targetParam);
-            var action = lambda.Compile();
-            action.DynamicInvoke(sourceObject, targetObject);
-            var resultProp = targetProp.GetValue(targetObject, null);
-            resultProp.ShouldBe(sourcePropertyValue);
-        }
-
-        private void TestMatch(string fromProp, string toProp, bool expected)
-        {
-            PropertyConverter target = new PropertyConverter();
-            PropertyInfo from = typeof(TestClassA).GetProperty(fromProp);
-            PropertyInfo to = typeof(TestClassB).GetProperty(toProp);
-            bool actual = target.CanConvert(@from, to);
-            Assert.AreEqual(expected, actual);
-        }
-
-        #endregion Methods
     }
 }

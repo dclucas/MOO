@@ -23,60 +23,57 @@
 // Email: diogo.lucas@gmail.com
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
+using Guard = Moo.Core.Guard;
+using System;
+using System.Linq;
+using NUnit.Framework;
+
 namespace Moo.Tests.Core
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Linq;
-    using NUnit.Framework;
-    using Moo.Core;
-
     /// <summary>
-    /// This is a test class for GuardTest and is intended
-    /// targetMember contain all GuardTest Unit Tests
+    ///     This is a test class for GuardTest and is intended
+    ///     targetMember contain all GuardTest Unit Tests
     /// </summary>
     [TestFixture]
     public class GuardTest
     {
-        #region Methods
-
         /// <summary>
-        /// A test for CheckArgumentNotNull
+        ///     A test for CheckArgumentNotNull
         /// </summary>
         [Test]
-        [ExpectedException(typeof(ArgumentNullException))]
+        [ExpectedException(typeof (ArgumentNullException))]
         public void CheckArgumentNotNullTest()
         {
             Guard.CheckArgumentNotNull(null, "argumentName");
         }
 
         /// <summary>
-        /// A test for CheckEnumerableNotNullOrEmpty
+        ///     A test for CheckEnumerableNotNullOrEmpty
         /// </summary>
         [Test]
-        [ExpectedException(typeof(ArgumentException))]
+        [ExpectedException(typeof (ArgumentException))]
         public void CheckEnumerableNotNullOrEmptyEmptyTest()
         {
             Guard.CheckEnumerableNotNullOrEmpty(new object[0], "argumentName");
         }
 
         /// <summary>
-        /// A test for CheckEnumerableNotNullOrEmpty
+        ///     A test for CheckEnumerableNotNullOrEmpty
         /// </summary>
         [Test]
-        [ExpectedException(typeof(ArgumentNullException))]
+        [ExpectedException(typeof (ArgumentNullException))]
         public void CheckEnumerableNotNullOrEmptyNullTest()
         {
             Guard.CheckEnumerableNotNullOrEmpty(null, "argumentName");
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentException))]
+        [ExpectedException(typeof (ArgumentException))]
         public void TrueForAllNegativeTest()
         {
             Guard.TrueForAll<bool>(
-                new bool[] { true, true, true, false },
+                new[] {true, true, true, false},
                 "argumentName",
                 b => b);
         }
@@ -87,13 +84,11 @@ namespace Moo.Tests.Core
             var passed = new bool[4];
 
             Guard.TrueForAll<int>(
-                new int[] { 0, 1, 2, 3 },
+                new[] {0, 1, 2, 3},
                 "argumentName",
                 b => passed[b] = true);
 
             Assert.IsTrue(passed.All(b => b));
         }
-
-        #endregion Methods
     }
 }

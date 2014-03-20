@@ -23,29 +23,24 @@
 // Email: diogo.lucas@gmail.com
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
-namespace Moo.Tests
+
+using System;
+using System.Collections.Generic;
+using FakeItEasy;
+using Moo.Extenders;
+using NUnit.Framework;
+
+namespace Moo.Tests.Extenders
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-
-    using FakeItEasy;
-    using NUnit.Framework;
-    using Moo;
-    using Moo.Extenders;
-
     [TestFixture]
     public class IEnumerableMappingExtenderTest
     {
-        #region Methods
-
         [Test]
-        [ExpectedException(typeof(ArgumentNullException))]
+        [ExpectedException(typeof (ArgumentNullException))]
         public void MapAll_NullMapper_Throws()
         {
             var target = new TestClassC[1];
-            target.MapAll<TestClassC, TestClassA>((IMapper<TestClassC, TestClassA>)null);
+            target.MapAll((IMapper<TestClassC, TestClassA>) null);
         }
 
         [Test]
@@ -56,8 +51,8 @@ namespace Moo.Tests
             var target = new TestClassE[10];
             var output = new TestClassC[10];
             A.CallTo(() => mapperMock.MapMultiple(target)).Returns(output);
-            MappingRepository.Default.AddMapper<TestClassE, TestClassC>(mapperMock);
-            var result = target.MapAll<TestClassE, TestClassC>();
+            MappingRepository.Default.AddMapper(mapperMock);
+            IEnumerable<TestClassC> result = target.MapAll<TestClassE, TestClassC>();
             Assert.AreEqual(output, result);
             MappingRepository.Default.Clear();
         }
@@ -69,7 +64,7 @@ namespace Moo.Tests
             var target = new TestClassA[10];
             var output = new TestClassB[10];
             A.CallTo(() => mapperMock.MapMultiple(target)).Returns(output);
-            var result = target.MapAll<TestClassA, TestClassB>(mapperMock);
+            IEnumerable<TestClassB> result = target.MapAll(mapperMock);
             Assert.AreEqual(output, result);
         }
 
@@ -82,10 +77,8 @@ namespace Moo.Tests
             A.CallTo(() => mapperMock.MapMultiple(target)).Returns(output);
             var repoMock = A.Fake<IMappingRepository>();
             A.CallTo(() => repoMock.ResolveMapper<TestClassE, TestClassC>()).Returns(mapperMock);
-            var result = target.MapAll<TestClassE, TestClassC>(repoMock);
+            IEnumerable<TestClassC> result = target.MapAll<TestClassE, TestClassC>(repoMock);
             Assert.AreEqual(output, result);
         }
-
-        #endregion Methods
     }
 }

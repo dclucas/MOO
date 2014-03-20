@@ -23,81 +23,44 @@
 // Email: diogo.lucas@gmail.com
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using FakeItEasy;
+using Moo.Core;
+using Moo.Mappers;
+using NUnit.Framework;
+using Shouldly;
+
 namespace Moo.Tests.Mappers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-
-    using FakeItEasy;
-    using NUnit.Framework;
-    using Moo.Core;
-    using Moo.Mappers;
-    using Ploeh.AutoFixture;
-    using Shouldly;
-
     /// <summary>
-    /// This is a test class for CompositeMapperTest and is intended
-    /// targetProperty contain all CompositeMapperTest Unit Tests
+    ///     This is a test class for CompositeMapperTest and is intended
+    ///     targetProperty contain all CompositeMapperTest Unit Tests
     /// </summary>
     [TestFixture]
     public class CompositeMapperTest
     {
-        #region Methods
-
-        [Test]
-        public void Map_MockedInternalMappers_Redirects()
-        {
-            var mapperMocks = A.CollectionOfFake<BaseMapper<TestClassB, TestClassD>>(5).ToArray();
-            var results = new List<IEnumerable<MemberMappingInfo<TestClassB, TestClassD>>>();
-            for (int i = 0; i < mapperMocks.Length; ++i)
-            {
-                var res = new MemberMappingInfo<TestClassB, TestClassD>[]
-                {
-                    A.Fake<MemberMappingInfo<TestClassB, TestClassD>>(
-                        o => o.WithArgumentsForConstructor(
-                            new object[] 
-                            {
-                                Guid.NewGuid().ToString(), 
-                                Guid.NewGuid().ToString()
-                            }))
-                };
-
-                results.Add(res);
-                A.CallTo(() => mapperMocks[i].GetMappings())
-                    .Returns(res);
-            }
-
-            var target = new CompositeMapper<TestClassB, TestClassD>(mapperMocks);
-            var source = new TestClassB();
-            var result = new TestClassD();
-
-            target.Map(source, result);
-
-            foreach (var m in results.SelectMany(e => e))
-            {
-                A.CallTo(() => m.Map(source, result)).MustHaveHappened();
-            }
-        }
-
         [Test]
         public void AddMapping_MockedInternalMappers_Redirects()
         {
-            var mapperMocks = A.CollectionOfFake<BaseMapper<TestClassB, TestClassD>>(5).ToArray();
+            BaseMapper<TestClassB, TestClassD>[] mapperMocks =
+                A.CollectionOfFake<BaseMapper<TestClassB, TestClassD>>(5).ToArray();
             var extMock = A.Fake<BaseMapper<TestClassB, TestClassD>>(
-                o => o.Implements(typeof(IExtensibleMapper<TestClassB, TestClassD>)));
+                o => o.Implements(typeof (IExtensibleMapper<TestClassB, TestClassD>)));
             var results = new List<IEnumerable<MemberMappingInfo<TestClassB, TestClassD>>>();
-            var rnd = NUnit.Framework.Randomizer.GetRandomizer(typeof(CompositeMapper<,>).GetMethod("AddMapping"));
-            var extPos = rnd.Next(mapperMocks.Length);
+            Randomizer rnd = Randomizer.GetRandomizer(typeof (CompositeMapper<,>).GetMethod("AddMapping"));
+            int extPos = rnd.Next(mapperMocks.Length);
             for (int i = 0; i < mapperMocks.Length; ++i)
             {
-                var res = new MemberMappingInfo<TestClassB, TestClassD>[]
+                var res = new[]
                 {
                     A.Fake<MemberMappingInfo<TestClassB, TestClassD>>(
                         o => o.WithArgumentsForConstructor(
-                            new object[] 
+                            new object[]
                             {
-                                Guid.NewGuid().ToString(), 
+                                Guid.NewGuid().ToString(),
                                 Guid.NewGuid().ToString()
                             }))
                 };
@@ -120,31 +83,65 @@ namespace Moo.Tests.Mappers
 
             target.ExtensibleMapper.ShouldBeSameAs(extMock);
             A.CallTo(() =>
-                ((IExtensibleMapper<TestClassB, TestClassD>)extMock).AddMappingAction("foo", "bar", action))
+                ((IExtensibleMapper<TestClassB, TestClassD>) extMock).AddMappingAction("foo", "bar", action))
                 .MustHaveHappened();
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentException))]
+        [ExpectedException(typeof (ArgumentException))]
         public void MapTestEmptyTest()
         {
             new CompositeMapper<TestClassA, TestClassB>(new BaseMapper<TestClassA, TestClassB>[0]);
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentException))]
+        [ExpectedException(typeof (ArgumentException))]
         public void MapTestNullMapperTest()
         {
             new CompositeMapper<TestClassA, TestClassB>(new BaseMapper<TestClassA, TestClassB>[1]);
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentNullException))]
+        [ExpectedException(typeof (ArgumentNullException))]
         public void MapTestNullTest()
         {
-            new CompositeMapper<TestClassA, TestClassB>((MapperConstructionInfo)null, null);
+            new CompositeMapper<TestClassA, TestClassB>((MapperConstructionInfo) null, null);
         }
 
-        #endregion Methods
+        [Test]
+        public void Map_MockedInternalMappers_Redirects()
+        {
+            BaseMapper<TestClassB, TestClassD>[] mapperMocks =
+                A.CollectionOfFake<BaseMapper<TestClassB, TestClassD>>(5).ToArray();
+            var results = new List<IEnumerable<MemberMappingInfo<TestClassB, TestClassD>>>();
+            for (int i = 0; i < mapperMocks.Length; ++i)
+            {
+                var res = new[]
+                {
+                    A.Fake<MemberMappingInfo<TestClassB, TestClassD>>(
+                        o => o.WithArgumentsForConstructor(
+                            new object[]
+                            {
+                                Guid.NewGuid().ToString(),
+                                Guid.NewGuid().ToString()
+                            }))
+                };
+
+                results.Add(res);
+                A.CallTo(() => mapperMocks[i].GetMappings())
+                    .Returns(res);
+            }
+
+            var target = new CompositeMapper<TestClassB, TestClassD>(mapperMocks);
+            var source = new TestClassB();
+            var result = new TestClassD();
+
+            target.Map(source, result);
+
+            foreach (var m in results.SelectMany(e => e))
+            {
+                A.CallTo(() => m.Map(source, result)).MustHaveHappened();
+            }
+        }
     }
 }

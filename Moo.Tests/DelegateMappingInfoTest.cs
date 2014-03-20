@@ -23,21 +23,19 @@
 // Email: diogo.lucas@gmail.com
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
+using Moo.Core;
+using NUnit.Framework;
+
 namespace Moo.Tests
 {
-    using Moo.Core;
-
-    using NUnit.Framework;
-
     /// <summary>
-    /// This is a test class for DelegateMappingInfoTest and is intended
-    /// targetMember contain all DelegateMappingInfoTest Unit Tests
+    ///     This is a test class for DelegateMappingInfoTest and is intended
+    ///     targetMember contain all DelegateMappingInfoTest Unit Tests
     /// </summary>
     [TestFixture]
     public class DelegateMappingInfoTest
     {
-        #region Methods
-
         [Test]
         public void MapTest()
         {
@@ -51,7 +49,5 @@ namespace Moo.Tests
 
             Assert.IsTrue(executed);
         }
-
-        #endregion Methods
     }
 }
