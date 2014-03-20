@@ -137,3 +137,4 @@ Future features
 
 * Planned: Set factory methods in Repo (as in repo.CreateObjects.With(t => Activator.CreateInstance(t)).Create<MyClass>.With(() => new MyClass)) 
 
+[![Build status](https://ci.appveyor.com/api/projects/status/dttjmcyl29mv7o10)](https://ci.appveyor.com/project/diogo_lucas/moo)

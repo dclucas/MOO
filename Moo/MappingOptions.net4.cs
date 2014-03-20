@@ -24,48 +24,27 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-using Moo.Core;
-using Moo.Mappers;
-
 namespace Moo
 {
+    using Moo.Mappers;
+
     /// <summary>
     ///     Contains mapping options
     /// </summary>
     public partial class MappingOptions
     {
         /// <summary>
-        ///     Backing field containing the internal mappers, in order.
-        /// </summary>
-        private IEnumerable<Type> _mapperOrder;
-
-        /// <summary>
         ///     Initializes a new instance of the <see cref="MappingOptions" /> class.
         /// </summary>
-        /// <param name="mapperOrder">The internal mappers, in order.</param>
-        public MappingOptions(IEnumerable<Type> mapperOrder)
+        public MappingOptions()
         {
-            MapperOrder = mapperOrder;
-        }
-
-        /// <summary>
-        ///     Gets the list of internal mappers, in order.
-        /// </summary>
-        public IEnumerable<Type> MapperOrder
-        {
-            get { return _mapperOrder; }
-
-            private set
+            MapperOrder = new[]
             {
-                Guard.TrueForAll(
-                    value,
-                    "sourceValue",
-                    t => typeof (IMapper).IsAssignableFrom(t),
-                    "All types must implement the IMapper interface.");
-                _mapperOrder = value;
-            }
+                typeof (ConventionMapper<,>),
+                typeof (AttributeMapper<,>),
+                typeof (ConfigurationMapper<,>),
+                typeof (ManualMapper<,>),
+            };
         }
     }
 }

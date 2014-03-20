@@ -1,66 +1,64 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{1CE74362-535C-4C1B-B8CA-388045C03ED7}</ProjectGuid>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{66B4059C-F2F8-4751-918F-D536DF285871}</ProjectGuid>
+    <ProjectTypeGuids>{A1591282-1198-4647-A2B1-27E5FF5F6F3B};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Moo</RootNamespace>
-    <AssemblyName>Moo</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
-    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
-    <BaseIntermediateOutputPath>obj-net45</BaseIntermediateOutputPath>
-    <BaseOutputPath>bin-net45</BaseOutputPath>
+    <RootNamespace>Moo.sl50</RootNamespace>
+    <AssemblyName>Moo.sl50</AssemblyName>
+    <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v5.0</TargetFrameworkVersion>
+    <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
+    <SilverlightApplication>false</SilverlightApplication>
+    <ValidateXaml>true</ValidateXaml>
+    <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
+    <BaseIntermediateOutputPath>obj-sl50</BaseIntermediateOutputPath>
+    <BaseOutputPath>bin-sl50</BaseOutputPath>
+  </PropertyGroup>
+  <!-- This property group is only here to support building this project using the 
+       MSBuild 3.5 toolset. In order to work correctly with this older toolset, it needs 
+       to set the TargetFrameworkVersion to v3.5 -->
+  <PropertyGroup Condition="'$(MSBuildToolsVersion)' == '3.5'">
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin-net45\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <OutputPath>bin-sl50\Debug</OutputPath>
+    <DefineConstants>DEBUG;TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin-net45\Release\</OutputPath>
-    <DocumentationFile>bin-net45\Release\Moo.XML</DocumentationFile>
-    <DefineConstants>TRACE</DefineConstants>
+    <OutputPath>bin-sl50\Release</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Configuration" />
-    <Reference Include="System.Core" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Net" />
+    <Reference Include="mscorlib" />
+    <Reference Include="System.Windows" />
+    <Reference Include="system" />
+    <Reference Include="System.Core">
+      <HintPath>$(TargetFrameworkDirectory)System.Core.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Windows.Browser" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Configuration\MappingConfigurationSection.cs" />
-    <Compile Include="Configuration\MemberMappingCollection.cs" />
-    <Compile Include="Configuration\MemberMappingElement.cs" />
-    <Compile Include="Configuration\TypeMappingCollection.cs" />
-    <Compile Include="Configuration\TypeMappingElement.cs" />
-    <Compile Include="Extenders\AsyncExtender.cs" />
-    <Compile Include="Initialization\AdditionalMappingInitializerExtender.cs" />
-    <Compile Include="Mappers\BaseMapper.net4.cs">
-      <DependentUpon>BaseMapper.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Mappers\ConfigurationMapper.cs" />
-    <Compile Include="MappingException.net4.cs">
-      <DependentUpon>MappingException.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MappingOptions.net4.cs">
-      <DependentUpon>MappingOptions.cs</DependentUpon>
-    </Compile>    
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Core\DelegateMappingInfo.cs" />
     <Compile Include="Core\ExpressionHandler.cs" />
     <Compile Include="Core\IExpressionHandler.cs" />
@@ -88,9 +86,7 @@
     <Compile Include="IMappingRepository.cs" />
     <Compile Include="Mappers\AttributeMapper.cs" />
     <Compile Include="Mappers\BaseMapper.cs" />
-    <Compile Include="Mappers\BaseMapper.Generic.cs">
-      <DependentUpon>BaseMapper.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Mappers\BaseMapper.Generic.cs" />
     <Compile Include="Mappers\CompositeMapper.cs" />
     <Compile Include="Mappers\ConventionMapper.cs" />
     <Compile Include="Mappers\ManualMapper.cs" />
@@ -100,19 +96,23 @@
     <Compile Include="MappingOptions.cs" />
     <Compile Include="MappingRepository.cs" />
     <Compile Include="Extenders\ObjectMappingExtender.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Core\Guard.cs" />
     <Compile Include="Core\PropertyConverter.cs" />
     <Compile Include="Core\ValueConverter.cs" />
-    <Compile Include="Properties\AssemblyInfo.net4.cs" />
+    <Compile Include="Properties\AssemblyInfo.sl50.cs" />
+    <Compile Include="MappingOptions.other.cs">
+      <DependentUpon>MappingOptions.cs</DependentUpon>
+    </Compile>    
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
-  </Target>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{A1591282-1198-4647-A2B1-27E5FF5F6F3B}">
+        <SilverlightProjectProperties />
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

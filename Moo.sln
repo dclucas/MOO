@@ -33,6 +33,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Moo.net451", "Moo\Moo.net45
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Moo.portable", "Moo\Moo.portable.csproj", "{7EADF25D-6278-460F-9150-EF8A7F738657}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Moo.sl50", "Moo\Moo.sl50.csproj", "{66B4059C-F2F8-4751-918F-D536DF285871}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -113,6 +115,16 @@ Global
 		{7EADF25D-6278-460F-9150-EF8A7F738657}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{7EADF25D-6278-460F-9150-EF8A7F738657}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{7EADF25D-6278-460F-9150-EF8A7F738657}.Release|x86.ActiveCfg = Release|Any CPU
+		{66B4059C-F2F8-4751-918F-D536DF285871}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66B4059C-F2F8-4751-918F-D536DF285871}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66B4059C-F2F8-4751-918F-D536DF285871}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{66B4059C-F2F8-4751-918F-D536DF285871}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{66B4059C-F2F8-4751-918F-D536DF285871}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{66B4059C-F2F8-4751-918F-D536DF285871}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66B4059C-F2F8-4751-918F-D536DF285871}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66B4059C-F2F8-4751-918F-D536DF285871}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{66B4059C-F2F8-4751-918F-D536DF285871}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{66B4059C-F2F8-4751-918F-D536DF285871}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
