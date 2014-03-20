@@ -36,7 +36,7 @@ namespace Moo.Tests.Core
     ///     targetMember contain all ReflectionPropertyMappingInfoTest Unit Tests
     /// </summary>
     [TestFixture]
-    public class ReflectionPropertyMappingInfoTest
+    public class ReflectionPropertyMappingInfoTests
     {
         private class ConverterMock : PropertyConverter
         {

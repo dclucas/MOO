@@ -38,7 +38,7 @@ namespace Moo.Tests.Mappers
     ///     targetProperty contain all ManualMapperTest Unit Tests
     /// </summary>
     [TestFixture]
-    public class ManualMapperTest
+    public class ManualMapperTests
     {
         public class FromTestClass
         {

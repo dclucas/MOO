@@ -37,7 +37,7 @@ namespace Moo.Tests.Mappers
     ///     targetProperty contain all ConventionMapperTest Unit Tests
     /// </summary>
     [TestFixture]
-    public class ConventionMapperTest
+    public class ConventionMapperTests
     {
         private void CheckLists(IList<TestClassA> sourceList, IList<TestClassB> resultList)
         {

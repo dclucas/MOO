@@ -36,7 +36,7 @@ namespace Moo.Tests.Core
     ///     targetMember contain all Guard Unit Tests
     /// </summary>
     [TestFixture]
-    public class GuardTest
+    public class GuardTests
     {
         /// <summary>
         ///     A test for CheckArgumentNotNull

@@ -39,7 +39,7 @@ namespace Moo.Tests.Core
     ///     targetProperty contain all PropertyMatcherTest Unit Tests
     /// </summary>
     [TestFixture]
-    public class PropertyConverterTest
+    public class PropertyConverterTests
     {
         [TestCase(typeof (TestClassA), typeof (TestClassB), "InnerClass", "InnerClassName", null)]
         public void CreateConvertExpression_MultipleCases_ConvertsCorrectly(

@@ -36,7 +36,7 @@ namespace Moo.Tests.Configuration
     ///     Summary description for ConfigurationTest
     /// </summary>
     [TestFixture]
-    public class ConfigurationTest
+    public class ConfigurationTests
     {
         [Test]
         public void MappingConfigurationTest()

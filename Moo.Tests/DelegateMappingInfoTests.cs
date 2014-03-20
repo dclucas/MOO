@@ -34,7 +34,7 @@ namespace Moo.Tests
     ///     targetMember contain all DelegateMappingInfoTest Unit Tests
     /// </summary>
     [TestFixture]
-    public class DelegateMappingInfoTest
+    public class DelegateMappingInfoTests
     {
         [Test]
         public void MapTest()

@@ -33,7 +33,7 @@ using Shouldly;
 namespace Moo.Tests.Core
 {
     [TestFixture]
-    public class MapperSequenceSpecTest
+    public class MapperSequenceSpecTests
     {
         [Test]
         public void Constructor_NullCurrentSequence_Throws()

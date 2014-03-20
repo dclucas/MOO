@@ -33,7 +33,7 @@ namespace Moo.Tests.Extenders
     using System.Threading.Tasks;
 
     [TestFixture]
-    public class AsyncExtenderTest
+    public class AsyncExtenderTests
     {
         [Test]
         [ExpectedException(typeof (ArgumentNullException))]

@@ -40,7 +40,7 @@ namespace Moo.Tests.Mappers
     ///     targetProperty contain all CompositeMapperTest Unit Tests
     /// </summary>
     [TestFixture]
-    public class CompositeMapperTest
+    public class CompositeMapperTests
     {
         [Test]
         public void AddMapping_MockedInternalMappers_Redirects()

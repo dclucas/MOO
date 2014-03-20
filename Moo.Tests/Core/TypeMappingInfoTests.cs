@@ -36,7 +36,7 @@ namespace Moo.Tests.Core
     ///     targetMember contain all TypeMappingInfoTest Unit Tests
     /// </summary>
     [TestFixture]
-    public class TypeMappingInfoTest
+    public class TypeMappingInfoTests
     {
         [Test]
         public void AddOverwriteTest()

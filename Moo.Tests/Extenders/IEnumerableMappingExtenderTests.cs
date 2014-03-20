@@ -33,7 +33,7 @@ using NUnit.Framework;
 namespace Moo.Tests.Extenders
 {
     [TestFixture]
-    public class IEnumerableMappingExtenderTest
+    public class IEnumerableMappingExtenderTests
     {
         [Test]
         [ExpectedException(typeof (ArgumentNullException))]

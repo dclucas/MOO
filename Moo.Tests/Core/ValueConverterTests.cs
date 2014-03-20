@@ -37,7 +37,7 @@ namespace Moo.Tests.Core
     ///     targetMember contain all ValueConverterTest Unit Tests
     /// </summary>
     [TestFixture]
-    public class ValueConverterTest
+    public class ValueConverterTests
     {
         [TestCase(typeof (IEnumerable<string>), typeof (IEnumerable<object>), true)]
         [TestCase(typeof (TestClassE[]), typeof (TestClassA[]), true)]

@@ -36,7 +36,7 @@ namespace Moo.Tests
     ///     targetMember contain all MappingOptionsTest Unit Tests
     /// </summary>
     [TestFixture]
-    public class MappingOptionsTest
+    public class MappingOptionsTests
     {
         /// <summary>
         ///     A test for MappingOptions Constructor

@@ -36,7 +36,7 @@ using Shouldly;
 namespace Moo.Tests.Core
 {
     [TestFixture(TypeArgs = new[] {typeof (TestClassA), typeof (TestClassB)})]
-    public class TargetSpecTest<TSource, TTarget>
+    public class TargetSpecTests<TSource, TTarget>
         where TSource : new()
         where TTarget : new()
     {

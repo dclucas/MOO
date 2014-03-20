@@ -34,7 +34,7 @@ namespace Moo.Tests.Mappers
     ///     targetMember contain all AttributeMapperTest Unit Tests
     /// </summary>
     [TestFixture]
-    public class AttributeMapperTest
+    public class AttributeMapperTests
     {
         [Test]
         public void Map_MappedSource_SkipsMapping()

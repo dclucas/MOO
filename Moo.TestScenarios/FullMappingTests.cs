@@ -42,7 +42,7 @@ namespace Moo.TestScenarios
     [TestFixture(TypeArgs = new Type[] { typeof(PersonEditModel), typeof(Person) })]
     [TestFixture(TypeArgs = new Type[] { typeof(PersonIndexModel), typeof(Person) })]
     [Category("Integrated")]
-    public class FullMappingTest<TSource, TTarget>
+    public class FullMappingTests<TSource, TTarget>
         where TSource : new()
     {
         [TestCase(new object[] { null })]

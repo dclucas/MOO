@@ -58,7 +58,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FullMappingTest.cs" />
+    <Compile Include="FullMappingTests.cs" />
     <Compile Include="MappedClasses\DataContracts\AccountDataContract.cs" />
     <Compile Include="MappedClasses\DataContracts\ContactDataContract.cs" />
     <Compile Include="MappedClasses\DataContracts\PersonDetailsDataContract.cs" />

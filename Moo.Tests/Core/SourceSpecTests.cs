@@ -33,7 +33,7 @@ using Shouldly;
 namespace Moo.Tests.Core
 {
     [TestFixture(TypeArgs = new[] {typeof (TestClassA), typeof (TestClassB)})]
-    public class SourceSpecTest<TSource, TTarget>
+    public class SourceSpecTests<TSource, TTarget>
     {
         [Test]
         public void From_DefaultCase_ReturnsCorrectly()

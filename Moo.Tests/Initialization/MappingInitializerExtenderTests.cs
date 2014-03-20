@@ -34,7 +34,7 @@ using Shouldly;
 namespace Moo.Tests.Initialization
 {
     [TestFixture]
-    public class MappingInitializerExtenderTest
+    public class MappingInitializerExtenderTests
     {
         [Test]
         public void InitializeMappings_NullAssemblies_Throws()

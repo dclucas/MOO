@@ -38,7 +38,7 @@ namespace Moo.Tests
     ///     targetProperty contain all MappingRepositoryTest Unit Tests
     /// </summary>
     [TestFixture(TypeArgs = new[] {typeof (TestClassA), typeof (TestClassF)})]
-    public class MappingRepositoryTest<TSource, TTarget>
+    public class MappingRepositoryTests<TSource, TTarget>
     {
         [Test]
         public void AddMapperTest()

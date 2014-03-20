@@ -36,7 +36,7 @@ namespace Moo.Tests.Mappers
     ///     targetMember contain all ConfigurationMapperTest Unit Tests
     /// </summary>
     [TestFixture]
-    public class ConfigurationMapperTest
+    public class ConfigurationMapperTests
     {
         [Test]
         public void GetTypeMappingNoSectionTest()
