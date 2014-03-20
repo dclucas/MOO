@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{2166679E-1905-4EB6-AF3E-48B9E70831B5}</ProjectGuid>
+    <ProjectGuid>{1CE74362-535C-4C1B-B8CA-388045C03ED7}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Moo</RootNamespace>
@@ -13,12 +13,14 @@
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <BaseIntermediateOutputPath>obj-net45</BaseIntermediateOutputPath>
+    <BaseOutputPath>bin-net45</BaseOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>bin-net45\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -26,11 +28,11 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin-NetFx\Release\</OutputPath>
+    <OutputPath>bin-net45\Release\</OutputPath>
+    <DocumentationFile>bin-net45\Release\Moo.XML</DocumentationFile>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin-NetFx\Release\Moo.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -56,7 +58,6 @@
       <DependentUpon>MappingException.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <!-- Beginning of hand-made include -->
     <Compile Include="Core\DelegateMappingInfo.cs" />
     <Compile Include="Core\ExpressionHandler.cs" />
     <Compile Include="Core\IExpressionHandler.cs" />

@@ -223,7 +223,7 @@ namespace Moo.Mappers
         public virtual TTarget Map(TSource source, Func<TTarget> createTarget)
         {
             Guard.CheckArgumentNotNull(createTarget, "createTarget");
-            var target = createTarget();
+            TTarget target = createTarget();
             Map(source, target);
             return target;
         }
@@ -281,7 +281,7 @@ namespace Moo.Mappers
                 }
             }
 
-            var mappings = GetMappings();
+            IEnumerable<MemberMappingInfo<TSource, TTarget>> mappings = GetMappings();
             if (mappings != null)
             {
                 TypeMapping.AddRange(GetMappings());

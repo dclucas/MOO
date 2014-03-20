@@ -42,7 +42,6 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: NeutralResourcesLanguage("en")]
-
 [assembly: AssemblyVersion("0.10")]
 [assembly: AssemblyFileVersion("0.10")]
 [assembly: CLSCompliant(true)]

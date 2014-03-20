@@ -25,18 +25,16 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Linq;
+using Moo.Configuration;
+using Moo.Core;
 
 namespace Moo.Mappers
 {
-    using System.Collections.Generic;
-    using System.Configuration;
-    using System.Linq;
-
-    using Configuration;
-    using Core;
-
     /// <summary>
-    /// Uses configuration to determine mappings between two classes
+    ///     Uses configuration to determine mappings between two classes
     /// </summary>
     /// <typeparam name="TSource">The type of the source.</typeparam>
     /// <typeparam name="TTarget">The type of the target.</typeparam>
@@ -45,14 +43,14 @@ namespace Moo.Mappers
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ConfigurationMapper&lt;TSource, TTarget&gt;"/> class.
+        ///     Initializes a new instance of the <see cref="ConfigurationMapper&lt;TSource, TTarget&gt;" /> class.
         /// </summary>
         public ConfigurationMapper()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ConfigurationMapper{TSource,TTarget}"/> class. 
+        ///     Initializes a new instance of the <see cref="ConfigurationMapper{TSource,TTarget}" /> class.
         /// </summary>
         /// <param name="constructionInfo">Mapper construction information.</param>
         public ConfigurationMapper(MapperConstructionInfo constructionInfo)
@@ -65,11 +63,11 @@ namespace Moo.Mappers
         #region Methods
 
         /// <summary>
-        /// Gets the type mapping configuration element.
+        ///     Gets the type mapping configuration element.
         /// </summary>
         /// <returns>
-        /// A <see cref="TypeMappingElement"/> instance in case one has been found in the config file,
-        /// <c>null</c> otherwise.
+        ///     A <see cref="TypeMappingElement" /> instance in case one has been found in the config file,
+        ///     <c>null</c> otherwise.
         /// </returns>
         internal static TypeMappingElement GetTypeMapping()
         {
@@ -77,33 +75,33 @@ namespace Moo.Mappers
         }
 
         /// <summary>
-        /// Gets the type mapping configuration element.
+        ///     Gets the type mapping configuration element.
         /// </summary>
         /// <param name="sectionName">Name of the section.</param>
         /// <returns>
-        /// A <see cref="TypeMappingElement"/> instance in case one has been found in the config file,
-        /// <c>null</c> otherwise.
+        ///     A <see cref="TypeMappingElement" /> instance in case one has been found in the config file,
+        ///     <c>null</c> otherwise.
         /// </returns>
         internal static TypeMappingElement GetTypeMapping(string sectionName)
         {
             Guard.CheckArgumentNotNull(sectionName, "sectionName");
-            var section = (MappingConfigurationSection)ConfigurationManager.GetSection(sectionName);
+            var section = (MappingConfigurationSection) ConfigurationManager.GetSection(sectionName);
             if (section != null)
             {
                 return
                     section.TypeMappings.Cast<TypeMappingElement>().FirstOrDefault(
-                        t => GetAssemblyQualifiedName(typeof(TTarget)).Contains(t.TargetType)
-                             && GetAssemblyQualifiedName(typeof(TSource)).Contains(t.SourceType));
+                        t => GetAssemblyQualifiedName(typeof (TTarget)).Contains(t.TargetType)
+                             && GetAssemblyQualifiedName(typeof (TSource)).Contains(t.SourceType));
             }
             return null;
         }
 
         /// <summary>
-        /// Gets the name of the assembly qualified.
+        ///     Gets the name of the assembly qualified.
         /// </summary>
         /// <param name="t">The type.</param>
         /// <returns>
-        /// A string containing the assembly qualified name, an empty string in case none exists.
+        ///     A string containing the assembly qualified name, an empty string in case none exists.
         /// </returns>
         private static string GetAssemblyQualifiedName(Type t)
         {
@@ -113,7 +111,7 @@ namespace Moo.Mappers
 
         /// <summary>Returns all internal mappings from the mapper.</summary>
         /// <returns>
-        /// An enumerator that allows foreach to be used to get mappings in this collection.
+        ///     An enumerator that allows foreach to be used to get mappings in this collection.
         /// </returns>
         protected internal override IEnumerable<MemberMappingInfo<TSource, TTarget>> GetMappings()
         {
@@ -121,9 +119,9 @@ namespace Moo.Mappers
             if (element != null)
             {
                 return from propMapping in element.MemberMappings.Cast<MemberMappingElement>()
-                       select new ReflectionPropertyMappingInfo<TSource, TTarget>(
-                        typeof(TSource).GetProperty(propMapping.SourceMemberName),
-                        typeof(TTarget).GetProperty(propMapping.TargetMemberName),
+                    select new ReflectionPropertyMappingInfo<TSource, TTarget>(
+                        typeof (TSource).GetProperty(propMapping.SourceMemberName),
+                        typeof (TTarget).GetProperty(propMapping.TargetMemberName),
                         true);
             }
             return null;

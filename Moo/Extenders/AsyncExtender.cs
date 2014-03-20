@@ -24,11 +24,9 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System;
 using System.Threading.Tasks;
-using Moo.Extenders;
 
-namespace Moo
+namespace Moo.Extenders
 {
     /// <summary>
     ///     Extends all objects, providing async mapping functionalities.
@@ -121,7 +119,8 @@ namespace Moo
         ///     The object representing the asynchronous operation. The task result will contain a
         ///     filled target object.
         /// </returns>
-        public static async Task<TTarget> MapToAsync<TTarget>(this object source, TTarget target, IMappingRepository repo)
+        public static async Task<TTarget> MapToAsync<TTarget>(this object source, TTarget target,
+            IMappingRepository repo)
         {
             return await Task.Run(() => source.MapTo(target, repo));
         }

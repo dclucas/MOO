@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Moo.Mappers
 {
-    public abstract partial class BaseMapper<TSource, TTarget> : BaseMapper, IMapper<TSource, TTarget>
+    public abstract partial class BaseMapper<TSource, TTarget>
     {
         /// <summary>Maps the specified source to a target object asynchronously.</summary>
         /// <remarks>
@@ -47,6 +44,6 @@ namespace Moo.Mappers
         public async Task<TTarget> MapAsync(TSource source, Func<TTarget> createTarget)
         {
             return await Task.Run((() => Map(source, createTarget)));
-        }         
+        }
     }
 }

@@ -159,9 +159,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Moo\Moo.NetFx.csproj">
+    <ProjectReference Include="..\Moo\Moo.net451.csproj">
       <Project>{2166679e-1905-4eb6-af3e-48b9e70831b5}</Project>
-      <Name>Moo.NetFx</Name>
+      <Name>Moo.net451</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

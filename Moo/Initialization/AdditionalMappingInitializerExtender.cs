@@ -23,6 +23,7 @@
 // Email: diogo.lucas@gmail.com
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
 using System;
 
 namespace Moo.Initialization

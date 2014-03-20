@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <MinimumVisualStudioVersion>10.0</MinimumVisualStudioVersion>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{7EADF25D-6278-460F-9150-EF8A7F738657}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Moo</RootNamespace>
+    <AssemblyName>Moo</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Profile158</TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <BaseIntermediateOutputPath>obj-portable</BaseIntermediateOutputPath>
+    <BaseOutputPath>bin-portable</BaseOutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin-portable\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin-portable\Release\</OutputPath>
+    <DefineConstants>TRACE;CODE_ANALYSIS</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin-portable\Release\Moo.XML</DocumentationFile>
+    <CodeAnalysisRuleSet>..\Moo.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Core\DelegateMappingInfo.cs" />
+    <Compile Include="Core\ExpressionHandler.cs" />
+    <Compile Include="Core\IExpressionHandler.cs" />
+    <Compile Include="Core\IPropertyConverter.cs" />
+    <Compile Include="Core\IPropertyExplorer.cs" />
+    <Compile Include="Core\MapperSequenceSpec.cs" />
+    <Compile Include="Core\MapperStartSpec.cs" />
+    <Compile Include="Core\PropertyExplorer.cs" />
+    <Compile Include="Core\RepositorySpec.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Initialization\IMappingInitializer.cs" />
+    <Compile Include="Initialization\MappingInitializerExtender.cs" />
+    <Compile Include="IRepositorySpec.cs" />
+    <Compile Include="ISourceSpec.cs" />
+    <Compile Include="ITargetSpec.cs" />
+    <Compile Include="Core\MapperConstructionInfo.cs" />
+    <Compile Include="Core\MapperMappingInfo.cs" />
+    <Compile Include="Core\ReflectionPropertyMappingInfo.cs" />
+    <Compile Include="Core\SourceSpec.cs" />
+    <Compile Include="Core\TargetSpec.cs" />
+    <Compile Include="Core\TypeMappingInfo.cs" />
+    <Compile Include="Extenders\IEnumerableMappingExtender.cs" />
+    <Compile Include="IExtensibleMapper.cs" />
+    <Compile Include="IMapper.cs" />
+    <Compile Include="IMappingRepository.cs" />
+    <Compile Include="Mappers\AttributeMapper.cs" />
+    <Compile Include="Mappers\BaseMapper.cs" />
+    <Compile Include="Mappers\BaseMapper.Generic.cs" />
+    <Compile Include="Mappers\CompositeMapper.cs" />
+    <Compile Include="Mappers\ConventionMapper.cs" />
+    <Compile Include="Mappers\ManualMapper.cs" />
+    <Compile Include="Core\MemberMappingInfo.cs" />
+    <Compile Include="MappingAttribute.cs" />
+    <Compile Include="MappingException.cs" />
+    <Compile Include="MappingOptions.cs" />
+    <Compile Include="MappingRepository.cs" />
+    <Compile Include="Extenders\ObjectMappingExtender.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Core\Guard.cs" />
+    <Compile Include="Core\PropertyConverter.cs" />
+    <Compile Include="Core\ValueConverter.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

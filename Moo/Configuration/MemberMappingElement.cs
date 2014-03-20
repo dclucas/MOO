@@ -24,40 +24,40 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System.Configuration;
+
 namespace Moo.Configuration
 {
-    using System.Configuration;
-
     /// <summary>
-    /// Represents a configuration element to map one class member into another.
+    ///     Represents a configuration element to map one class member into another.
     /// </summary>
     public class MemberMappingElement : ConfigurationElement
     {
         #region Properties
 
         /// <summary>
-        /// Gets or sets the name of the source member.
+        ///     Gets or sets the name of the source member.
         /// </summary>
         /// <sourceValue>
-        /// The name of the source member.
+        ///     The name of the source member.
         /// </sourceValue>
         [ConfigurationProperty("SourceMemberName")]
         public string SourceMemberName
         {
-            get { return (string)this["SourceMemberName"]; }
+            get { return (string) this["SourceMemberName"]; }
             set { this["SourceMemberName"] = value; }
         }
 
         /// <summary>
-        /// Gets or sets the name of the target member.
+        ///     Gets or sets the name of the target member.
         /// </summary>
         /// <sourceValue>
-        /// The name of the target member.
+        ///     The name of the target member.
         /// </sourceValue>
         [ConfigurationProperty("TargetMemberName")]
         public string TargetMemberName
         {
-            get { return (string)this["TargetMemberName"]; }
+            get { return (string) this["TargetMemberName"]; }
             set { this["TargetMemberName"] = value; }
         }
 

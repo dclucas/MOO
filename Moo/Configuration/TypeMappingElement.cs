@@ -24,49 +24,49 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System.Configuration;
+
 namespace Moo.Configuration
 {
-    using System.Configuration;
-
     /// <summary>
-    /// Contains configuration to map between two classes.
+    ///     Contains configuration to map between two classes.
     /// </summary>
     public class TypeMappingElement : ConfigurationElement
     {
         #region Properties
 
         /// <summary>
-        /// Gets the member mappings.
+        ///     Gets the member mappings.
         /// </summary>
         [ConfigurationProperty("MemberMappings")]
         public MemberMappingCollection MemberMappings
         {
-            get { return (MemberMappingCollection)this["MemberMappings"]; }
+            get { return (MemberMappingCollection) this["MemberMappings"]; }
         }
 
         /// <summary>
-        /// Gets or sets the name of the source type.
+        ///     Gets or sets the name of the source type.
         /// </summary>
         /// <sourceValue>
-        /// The name of the source type.
+        ///     The name of the source type.
         /// </sourceValue>
         [ConfigurationProperty("SourceType")]
         public string SourceType
         {
-            get { return (string)this["SourceType"]; }
+            get { return (string) this["SourceType"]; }
             set { this["SourceType"] = value; }
         }
 
         /// <summary>
-        /// Gets or sets the name of the target type.
+        ///     Gets or sets the name of the target type.
         /// </summary>
         /// <sourceValue>
-        /// The name of the target type.
+        ///     The name of the target type.
         /// </sourceValue>
         [ConfigurationProperty("TargetType")]
         public string TargetType
         {
-            get { return (string)this["TargetType"]; }
+            get { return (string) this["TargetType"]; }
             set { this["TargetType"] = value; }
         }
 
