@@ -15,8 +15,13 @@
         <tags>Mapping Mapper Object-to-object</tags>
     </metadata>
     <files>
-        <file src="bin-NetFx\Release\Moo.dll" target="lib\net45\Moo.dll" />
-        <file src="bin-NetFx\Release\Moo.XML" target="lib\net45\Moo.XML" />
-        <file src="bin-Plm\Release\Moo.dll" target="lib\portable-net4+sl4+wp7+win8\Moo.dll" />
+        <file src="bin-net4\Release\Moo.dll" target="lib\net4\Moo.dll" />
+        <file src="bin-net4\Release\Moo.XML" target="lib\net4\Moo.XML" />
+        <file src="bin-net45\Release\Moo.dll" target="lib\net45\Moo.dll" />
+        <file src="bin-net45\Release\Moo.XML" target="lib\net45\Moo.XML" />
+        <file src="bin-net451\Release\Moo.dll" target="lib\net451\Moo.dll" />
+        <file src="bin-net451\Release\Moo.XML" target="lib\net451\Moo.XML" />
+        <file src="bin-portable\Release\Moo.dll" target="lib\portable-net4+sl4+wp7+win8\Moo.dll" />
+        <file src="bin-portable\Release\Moo.XML" target="lib\portable-net4+sl4+wp7+win8\Moo.XML" />
     </files>
 </package>
