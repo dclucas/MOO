@@ -27,5 +27,6 @@
         <file src="bin-portable\Release\Moo.dll" target="lib\portable-net4+sl4+wp7+win8\Moo.dll" />
         <file src="bin-portable\Release\Moo.XML" target="lib\portable-net4+sl4+wp7+win8\Moo.XML" />
         <file src="bin-portable\Release\Moo.pdb" target="lib\portable-net4+sl4+wp7+win8\Moo.pdb" />
+        <file src="**\*.cs" target="src" />
     </files>
 </package>
