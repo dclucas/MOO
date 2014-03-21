@@ -178,6 +178,29 @@ namespace Moo.TestScenarios
             result.Id.ShouldBe(source.Id);
         }
 
+        [Test]
+        public void Sample_SingleMapperSequenceOverride_CreatesCorrectly()
+        {
+            var source = this.CreateSource();
+
+            var repo = new MappingRepository(o =>
+                o.MapperOrder
+                    .UseJust<ManualMapper<object, object>>()
+                    );
+                    
+            repo.AddMapping<Person, PersonEditModel>()
+                .From(s => 111)
+                .To(t => t.Id);
+
+            var mapper = repo.ResolveMapper<Person, PersonEditModel>();
+            
+            var result = mapper.Map(source);
+
+            result.ShouldNotBe(null);
+            result.Id.ShouldBe(111);
+        }
+
+
         public void Sample_ErrorHandling_NoTest()
         {
             var source = this.CreateSource();
@@ -227,6 +250,11 @@ namespace Moo.TestScenarios
             repo.InitializeMappings();
 
             SampleInitializer.Repos.ShouldContain(repo);
+        }
+
+        public void Sample_RepoFluentConfig_ConfiguresCorrectly()
+        {
+            
         }
 
         private void CheckMapping(Person p, PersonEditModel pe)

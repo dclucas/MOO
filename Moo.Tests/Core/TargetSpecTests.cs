@@ -54,19 +54,19 @@ namespace Moo.Tests.Core
         public void To_DefaultCase_DoesNotThrow()
         {
             var mapper = A.Fake<IExtensibleMapper<TSource, TTarget>>();
-            const string resultstring = "foo";
-            Expression<Func<TSource, string>> fromExpr = s => resultstring;
+            const string resultString = "foo";
+            Expression<Func<TSource, string>> fromExpr = s => resultString;
             var target = new TargetSpec<TSource, TTarget, string>(mapper, fromExpr);
-            PropertyInfo prop = typeof (TTarget).GetProperties(
+            var prop = typeof (TTarget).GetProperties(
                 BindingFlags.GetProperty
                 | BindingFlags.SetProperty
                 | BindingFlags.Instance
                 | BindingFlags.Public)
                 .First(p => p.PropertyType == typeof (string));
-            ParameterExpression propParam = Expression.Parameter(typeof (TTarget));
-            MemberExpression propExpr = Expression.Property(propParam, prop);
-            UnaryExpression propCast = Expression.Convert(propExpr, typeof (object));
-            Expression<Func<TTarget, object>> propLambda = Expression.Lambda<Func<TTarget, object>>(propExpr, propParam);
+            var propParam = Expression.Parameter(typeof (TTarget));
+            var propExpr = Expression.Property(propParam, prop);
+            var propCast = Expression.Convert(propExpr, typeof (object));
+            var propLambda = Expression.Lambda<Func<TTarget, object>>(propExpr, propParam);
             MappingAction<TSource, TTarget> resultingAction = null;
             A.CallTo(
                 () => mapper.AddMappingAction(
@@ -75,12 +75,12 @@ namespace Moo.Tests.Core
                     A<MappingAction<TSource, TTarget>>.Ignored))
                 .Invokes(a => { resultingAction = (MappingAction<TSource, TTarget>) a.Arguments[2]; });
 
-            ISourceSpec<TSource, TTarget> res = target.To(propLambda);
+            var res = target.To(propLambda);
 
             var sourceObj = new TSource();
             var targetObj = new TTarget();
             resultingAction(sourceObj, targetObj);
-            prop.GetValue(targetObj, null).ShouldBe(resultstring);
+            prop.GetValue(targetObj, null).ShouldBe(resultString);
         }
 
         [Test]

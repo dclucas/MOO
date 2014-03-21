@@ -97,6 +97,7 @@
   <ItemGroup>
     <Compile Include="Configuration\ConfigurationTests.cs" />
     <Compile Include="Core\MapperSequenceSpecTests.cs" />
+    <Compile Include="Core\RepositorySpecTests.cs" />
     <Compile Include="Core\SourceSpecTests.cs" />
     <Compile Include="Core\TargetSpecTests.cs" />
     <Compile Include="DelegateMappingInfoTests.cs" />
@@ -104,13 +105,13 @@
     <Compile Include="Extenders\IEnumerableMappingExtenderTests.cs" />
     <Compile Include="Extenders\AsyncExtenderTests.cs" />
     <Compile Include="Initialization\MappingInitializerExtenderTests.cs" />
+    <Compile Include="Mappers\BaseMapperTests.cs" />
     <Compile Include="Mappers\CompositeMapperTests.cs" />
     <Compile Include="Mappers\ConfigurationMapperTests.cs" />
     <Compile Include="Mappers\ConventionMapperTests.cs" />
     <Compile Include="Mappers\AttributeMapperTests.cs" />
     <Compile Include="Mappers\ManualMapperTests.cs" />
     <Compile Include="MappingOptionsTests.cs" />
-    <Compile Include="MappingRepositoryTests.cs" />
     <Compile Include="Extenders\ObjectMappingExtenderTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Core\ReflectionPropertyMappingInfoTests.cs" />

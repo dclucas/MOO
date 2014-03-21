@@ -36,6 +36,7 @@ namespace Moo
     /// <summary>
     ///     Repository for mapper objects.
     /// </summary>
+    // ReSharper disable ClassWithVirtualMembersNeverInherited.Global
     public class MappingRepository : IMappingRepository
     {
         #region Fields
